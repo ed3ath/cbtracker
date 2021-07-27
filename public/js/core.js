@@ -314,8 +314,7 @@ function import_data() {
         toggleHelper(hideAddress)
         currCurrency = currency
         localStorage.setItem('currency', currCurrency)    
-        getPrices()
-        reload_data()
+        refresh()
         $('#modal-import').modal('hide')
     });  
 }
