@@ -59,8 +59,8 @@ function add_account() {
         if(result.valid) {
             $('#modal-add-account').modal('hide');
             storeAccounts.push(address)
-            storeNames[address] = name
-            reload_data()
+            storeNames[address] = name            
+            refresh()
         }
     })
 }
@@ -264,9 +264,8 @@ $('#btn-privacy').on('change' , (e) => {
 
 $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
-    localStorage.setItem('currency', currCurrency)    
-    getPrices()
-    reload_data()
+    localStorage.setItem('currency', currCurrency)
+    refresh()
 })
 
 function togglePrivacy (hide) {
@@ -277,7 +276,7 @@ function togglePrivacy (hide) {
         hideAddress = false
         localStorage.setItem('hideAddress', false)
     }
-    reload_data()
+    refresh()
 }
 
 function export_data() {
