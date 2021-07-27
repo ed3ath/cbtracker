@@ -1,0 +1,13 @@
+.bg-main {
+    background-image: url('/assets/images/bg.png');
+    background-size:100% 100%;
+}
+.text-common {
+    color: #1aa3ff !important;
+}
+.text-rare {
+    color: #02a102 !important;
+}
+.text-legendary {
+    color: #ffac0a !important;
+}

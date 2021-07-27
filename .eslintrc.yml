@@ -1,0 +1,35 @@
+env:
+  commonjs: true
+  es6: true
+  node: true
+  mocha: true
+extends:
+  - 'eslint:recommended'
+  - 'airbnb-base'
+plugins:
+  - import
+rules:
+  indent:
+    - error
+    - 2
+  linebreak-style: 0
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  no-unused-vars:
+    - error
+    - argsIgnorePattern: next
+  eol-last:
+    - error
+    - always
+  import/no-unresolved: 0
+  no-console: 0
+  no-param-reassign: 0
+  radix: 0
+  max-len: 0
+  no-bitwise: 0
+  no-mixed-operators: 0
+  no-plusplus: 0

@@ -1,0 +1,318 @@
+{
+  "contractName": "IRandoms",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getRandomSeed",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "seed",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.5+commit.f956cc89\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getRandomSeed\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/F/vscode/cblades/contracts/interfaces/IRandoms.sol\":\"IRandoms\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/F/vscode/cblades/contracts/interfaces/IRandoms.sol\":{\"keccak256\":\"0x3ae177ddd5e6cea78f4dd0f0ca15da119bf44210a1cfbd21cafdbf687844bf18\",\"urls\":[\"bzz-raw://0e177de21e310d6056dcb467a3bf51f794fd1028d2802e5dd12b65ee6fb1bc6f\",\"dweb:/ipfs/QmamtMGEZmEEsVe1LcYDZrAZQyPL6A2nJtqXbvYMZHAsnE\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.6.5;\r\n\r\ninterface IRandoms {\r\n    // Views\r\n    function getRandomSeed(address user) external view returns (uint256 seed);\r\n}\r\n",
+  "sourcePath": "F:\\vscode\\cblades\\contracts\\interfaces\\IRandoms.sol",
+  "ast": {
+    "absolutePath": "/F/vscode/cblades/contracts/interfaces/IRandoms.sol",
+    "exportedSymbols": {
+      "IRandoms": [
+        6854
+      ]
+    },
+    "id": 6855,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 6846,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".5"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:19"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 6854,
+        "linearizedBaseContracts": [
+          6854
+        ],
+        "name": "IRandoms",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "functionSelector": "3883d854",
+            "id": 6853,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getRandomSeed",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 6849,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6848,
+                  "name": "user",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 6853,
+                  "src": "90:12:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6847,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "90:7:19",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "89:14:19"
+            },
+            "returnParameters": {
+              "id": 6852,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6851,
+                  "name": "seed",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 6853,
+                  "src": "127:12:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 6850,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "127:7:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "126:14:19"
+            },
+            "scope": 6854,
+            "src": "67:74:19",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 6855,
+        "src": "27:117:19"
+      }
+    ],
+    "src": "0:146:19"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/F/vscode/cblades/contracts/interfaces/IRandoms.sol",
+      "exportedSymbols": {
+        "IRandoms": [
+          6854
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.6",
+            ".5"
+          ]
+        },
+        "id": 6846,
+        "name": "PragmaDirective",
+        "src": "0:23:19"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            6854
+          ],
+          "name": "IRandoms",
+          "scope": 6855
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "functionSelector": "3883d854",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getRandomSeed",
+              "overrides": null,
+              "scope": 6854,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "user",
+                      "overrides": null,
+                      "scope": 6853,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 6847,
+                        "name": "ElementaryTypeName",
+                        "src": "90:7:19"
+                      }
+                    ],
+                    "id": 6848,
+                    "name": "VariableDeclaration",
+                    "src": "90:12:19"
+                  }
+                ],
+                "id": 6849,
+                "name": "ParameterList",
+                "src": "89:14:19"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "seed",
+                      "overrides": null,
+                      "scope": 6853,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 6850,
+                        "name": "ElementaryTypeName",
+                        "src": "127:7:19"
+                      }
+                    ],
+                    "id": 6851,
+                    "name": "VariableDeclaration",
+                    "src": "127:12:19"
+                  }
+                ],
+                "id": 6852,
+                "name": "ParameterList",
+                "src": "126:14:19"
+              }
+            ],
+            "id": 6853,
+            "name": "FunctionDefinition",
+            "src": "67:74:19"
+          }
+        ],
+        "id": 6854,
+        "name": "ContractDefinition",
+        "src": "27:117:19"
+      }
+    ],
+    "id": 6855,
+    "name": "SourceUnit",
+    "src": "0:146:19"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.5+commit.f956cc89.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-07-22T21:42:32.091Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

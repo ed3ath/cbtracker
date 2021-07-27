@@ -1,0 +1,110 @@
+{
+  "_from": "bs-custom-file-input",
+  "_id": "bs-custom-file-input@1.3.4",
+  "_inBundle": false,
+  "_integrity": "sha512-NBsQzTnef3OW1MvdKBbMHAYHssCd613MSeJV7z2McXznWtVMnJCy7Ckyc+PwxV6Pk16cu6YBcYWh/ZE0XWNKCA==",
+  "_location": "/bs-custom-file-input",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "bs-custom-file-input",
+    "name": "bs-custom-file-input",
+    "escapedName": "bs-custom-file-input",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bs-custom-file-input/-/bs-custom-file-input-1.3.4.tgz",
+  "_shasum": "c275cb8d4f1c02ba026324292509fa9a747dbda8",
+  "_spec": "bs-custom-file-input",
+  "_where": "/Users/rokaux/Sites/around",
+  "author": {
+    "name": "Johann-S",
+    "email": "johann.servoire@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Johann-S/bs-custom-file-input/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "XhmikosR",
+      "email": "xhmikosr@gmail.com"
+    }
+  ],
+  "dependencies": {},
+  "deprecated": false,
+  "description": "A little plugin for Bootstrap 4 custom file input",
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-istanbul": "^6.0.0",
+    "bootstrap": "^4.4.1",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.0",
+    "eslint": "^6.8.0",
+    "ip": "^1.1.5",
+    "karma": "^4.4.1",
+    "karma-browserstack-launcher": "1.4.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage-istanbul-reporter": "^2.1.1",
+    "karma-mocha": "^1.3.0",
+    "karma-sinon": "^1.0.5",
+    "mocha": "^7.0.1",
+    "rollup": "^1.30.1",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-uglify": "^6.0.4",
+    "shx": "^0.3.2",
+    "sinon": "^7.5.0",
+    "standard-version": "^7.1.0"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "files": [
+    "dist/*.{js,map}",
+    "bs-custom-file-input.d.ts"
+  ],
+  "homepage": "https://github.com/Johann-S/bs-custom-file-input",
+  "keywords": [
+    "bootstrap",
+    "bootstrap 4",
+    "custom file input",
+    "vanillajs",
+    "react",
+    "angular"
+  ],
+  "license": "MIT",
+  "main": "dist/bs-custom-file-input.js",
+  "name": "bs-custom-file-input",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Johann-S/bs-custom-file-input.git"
+  },
+  "scripts": {
+    "browserstack": "npm run build && cross-env browser=true karma start tests/karma.conf.js",
+    "build": "rollup -c && rollup -c --environment PROD",
+    "deploy:docs": "shx cp -r dist/ demo/dist/",
+    "dev": "rollup --environment DEV -c -w",
+    "js-lint": "eslint .",
+    "js-test": "karma start tests/karma.conf.js",
+    "prejs-test": "rollup -c --environment TEST,NODE_ENV:test",
+    "release": "standard-version -a",
+    "test": "npm run js-lint && npm run js-test"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "npm run build",
+      "precommit": "git add dist"
+    }
+  },
+  "types": "bs-custom-file-input.d.ts",
+  "version": "1.3.4"
+}

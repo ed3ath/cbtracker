@@ -1,0 +1,78 @@
+{
+  "_from": "parallax-js",
+  "_id": "parallax-js@3.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-UONoPKSQykeNvFcemDPxYYDU/T89LSffoaZAwOMhDp0ABhmFPwthgn2GrfB7An9Qo+8nPZIuQeZsh2pWn1qN3A==",
+  "_location": "/parallax-js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "parallax-js",
+    "name": "parallax-js",
+    "escapedName": "parallax-js",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/parallax-js/-/parallax-js-3.1.0.tgz",
+  "_shasum": "cc8a5d7dd5e2529b94b9a34f3d4cd13a22eb049e",
+  "_spec": "parallax-js",
+  "_where": "/Users/rokaux/Sites/around",
+  "author": {
+    "name": "Matthew Wagerfield",
+    "email": "matthew@wagerfield.com"
+  },
+  "bugs": {
+    "url": "https://github.com/wagerfield/parallax/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "object-assign": "^4.1.1",
+    "raf": "^3.3.0"
+  },
+  "deprecated": false,
+  "description": "Parallax Engine that reacts to the orientation of a smart device.",
+  "devDependencies": {
+    "autoprefixer": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.18.13",
+    "browserify": "^14.0.0",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "node-notifier": "^5.0.2",
+    "rimraf": "^2.5.4",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "homepage": "http://wagerfield.github.io/parallax/",
+  "keywords": [
+    "parallax",
+    "gyroscope",
+    "jquery",
+    "javascript",
+    "library"
+  ],
+  "license": "MIT",
+  "main": "dist/parallax.js",
+  "name": "parallax-js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wagerfield/parallax.git"
+  },
+  "scripts": {},
+  "version": "3.1.0"
+}

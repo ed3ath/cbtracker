@@ -1,0 +1,3419 @@
+{
+  "contractName": "VRFConsumerBase",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_vrfCoordinator",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_link",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "requestId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "randomness",
+          "type": "uint256"
+        }
+      ],
+      "name": "rawFulfillRandomness",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.5+commit.f956cc89\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_vrfCoordinator\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_link\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"randomness\",\"type\":\"uint256\"}],\"name\":\"rawFulfillRandomness\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"PURPOSEReggie the Random Oracle (not his real job) wants to provide randomnessto Vera the verifier in such a way that Vera can be sure he's notmaking his output up to suit himself. Reggie provides Vera a public keyto which he knows the secret key. Each time Vera provides a seed toReggie, he gives back a value which is computed completelydeterministically from the seed and the secret key.Reggie provides a proof by which Vera can verify that the output wascorrectly computed once Reggie tells it to her, but without that proof,the output is indistinguishable to her from a uniform random samplefrom the output space.The purpose of this contract is to make it easy for unrelated contractsto talk to Vera the verifier about the work Reggie is doing, to providesimple access to a verifiable source of randomness. *****************************************************************************USAGECalling contracts must inherit from VRFConsumerBase, and caninitialize VRFConsumerBase's attributes in their constructor asshown:contract VRFConsumer {constuctor(<other arguments>, address _vrfCoordinator, address _link)VRFConsumerBase(_vrfCoordinator, _link) public {<initialization with other arguments goes here>}}The oracle will have given you an ID for the VRF keypair they havecommitted to (let's call it keyHash), and have told you the minimum LINKprice for VRF service. Make sure your contract has sufficient LINK, andcall requestRandomness(keyHash, fee, seed), where seed is the input youwant to generate randomness from.Once the VRFCoordinator has received and validated the oracle's responseto your request, it will call your contract's fulfillRandomness method.The randomness argument to fulfillRandomness is the actual random valuegenerated from your seed.The requestId argument is generated from the keyHash and the seed bymakeRequestId(keyHash, seed). If your contract could have concurrentrequests open, you can use the requestId to track which seed isassociated with which randomness. See VRFRequestIDBase.sol for moredetails. (See \\\"SECURITY CONSIDERATIONS\\\" for principles to keep in mind,if your contract could have multiple requests in flight simultaneously.)Colliding `requestId`s are cryptographically impossible as long as seedsdiffer. (Which is critical to making unpredictable randomness! See thenext section.) * *****************************************************************************SECURITY CONSIDERATIONSA method with the ability to call your fulfillRandomness method directlycould spoof a VRF response with any random value, so it's critical thatit cannot be directly called by anything other than this base contract(specifically, by the VRFConsumerBase.rawFulfillRandomness method).For your users to trust that your contract's random behavior is freefrom malicious interference, it's best if you can write it so that allbehaviors implied by a VRF response are executed *during* yourfulfillRandomness method. If your contract must store the response (oranything derived from it) and use it later, you must ensure that anyuser-significant behavior which depends on that stored value cannot bemanipulated by a subsequent VRF request.Similarly, both miners and the VRF oracle itself have some influenceover the order in which VRF responses appear on the blockchain, so ifyour contract could have multiple VRF requests in flight simultaneously,you must ensure that the order in which the VRF responses arrive cannotbe used to manipulate your contract's user-significant behavior.Since the ultimate input to the VRF is mixed with the block hash of theblock in which the request is made, user-provided seeds have no impacton its economic security properties. They are only included for APIcompatability with previous versions of this contract.Since the block hash of the block which contains the requestRandomnesscall is mixed into the input to the VRF *last*, a sufficiently powerfulminer could, in principle, fork the blockchain to evict the blockcontaining the request, forcing the request to be included in adifferent block with a different hash, and therefore a different inputto the VRF. However, such an attack would incur a substantial economiccost. This cost scales with the number of blocks the VRF oracle waitsuntil it calls responds to a request.\",\"methods\":{\"constructor\":{\"details\":\"https://docs.chain.link/docs/link-token-contracts\",\"params\":{\"_link\":\"address of LINK token contract\",\"_vrfCoordinator\":\"address of VRFCoordinator contract\"}}}},\"userdoc\":{\"methods\":{},\"notice\":\"****************************************************************************Interface for contracts using VRF randomness *****************************************************************************\"}},\"settings\":{\"compilationTarget\":{\"/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/VRFConsumerBase.sol\":\"VRFConsumerBase\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/VRFConsumerBase.sol\":{\"keccak256\":\"0xbb84a6411e071d5b04b36d7dda59eaf1cb5a28b3b289757a5ac849ddf9befac3\",\"urls\":[\"bzz-raw://6bc702d1ec269920a3f0cf371155b6c4800d36233949873144e95ce3c4427eb3\",\"dweb:/ipfs/QmUrYPpfh7TAcUBx3B5ugW2jCAeWThMssY5oyRgQXQRkbE\"]},\"/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/VRFRequestIDBase.sol\":{\"keccak256\":\"0x0c3bd40c63dac8398a979b1228c8ecb1c269c157dd16f2dce2086d2270b65b22\",\"urls\":[\"bzz-raw://ed9db87be9dfb0f763a556d8d80356b08282b8ea48484838cdf470a5c3cd15d5\",\"dweb:/ipfs/QmPLhwDAS3TPDiEQmTyqXnWBqwEMBSbXtjEiQDSGejoiPt\"]},\"/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol\":{\"keccak256\":\"0xe245a7be950c94d87bb775ae9ee9fbd693fbe2987778e6ce0b04605ea44b7b68\",\"urls\":[\"bzz-raw://bd2c3165d949fc66fe407b96eb3dc2092c7e800f4c073b411bf7b96de3e156c9\",\"dweb:/ipfs/QmcfJhR1Np4GsLWnww2Duqks2wEzYk8VDTvCAYy7MisG1r\"]},\"/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol\":{\"keccak256\":\"0x105f5e9491f3d0bbdd4f1c7627eb839d69b944bfd803028a01cc083597692c1f\",\"urls\":[\"bzz-raw://ec45a2748a024a947a921183d4102d5e206808588501d85ddc4f5668a009bc73\",\"dweb:/ipfs/QmRNAMpq7LdWFnJ7wWKGbUuAcURaGSS42PMxtQ4vjrHmp9\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.6.0;\n\nimport \"./vendor/SafeMathChainlink.sol\";\n\nimport \"./interfaces/LinkTokenInterface.sol\";\n\nimport \"./VRFRequestIDBase.sol\";\n\n/** ****************************************************************************\n * @notice Interface for contracts using VRF randomness\n * *****************************************************************************\n * @dev PURPOSE\n *\n * @dev Reggie the Random Oracle (not his real job) wants to provide randomness\n * @dev to Vera the verifier in such a way that Vera can be sure he's not\n * @dev making his output up to suit himself. Reggie provides Vera a public key\n * @dev to which he knows the secret key. Each time Vera provides a seed to\n * @dev Reggie, he gives back a value which is computed completely\n * @dev deterministically from the seed and the secret key.\n *\n * @dev Reggie provides a proof by which Vera can verify that the output was\n * @dev correctly computed once Reggie tells it to her, but without that proof,\n * @dev the output is indistinguishable to her from a uniform random sample\n * @dev from the output space.\n *\n * @dev The purpose of this contract is to make it easy for unrelated contracts\n * @dev to talk to Vera the verifier about the work Reggie is doing, to provide\n * @dev simple access to a verifiable source of randomness.\n * *****************************************************************************\n * @dev USAGE\n *\n * @dev Calling contracts must inherit from VRFConsumerBase, and can\n * @dev initialize VRFConsumerBase's attributes in their constructor as\n * @dev shown:\n *\n * @dev   contract VRFConsumer {\n * @dev     constuctor(<other arguments>, address _vrfCoordinator, address _link)\n * @dev       VRFConsumerBase(_vrfCoordinator, _link) public {\n * @dev         <initialization with other arguments goes here>\n * @dev       }\n * @dev   }\n *\n * @dev The oracle will have given you an ID for the VRF keypair they have\n * @dev committed to (let's call it keyHash), and have told you the minimum LINK\n * @dev price for VRF service. Make sure your contract has sufficient LINK, and\n * @dev call requestRandomness(keyHash, fee, seed), where seed is the input you\n * @dev want to generate randomness from.\n *\n * @dev Once the VRFCoordinator has received and validated the oracle's response\n * @dev to your request, it will call your contract's fulfillRandomness method.\n *\n * @dev The randomness argument to fulfillRandomness is the actual random value\n * @dev generated from your seed.\n *\n * @dev The requestId argument is generated from the keyHash and the seed by\n * @dev makeRequestId(keyHash, seed). If your contract could have concurrent\n * @dev requests open, you can use the requestId to track which seed is\n * @dev associated with which randomness. See VRFRequestIDBase.sol for more\n * @dev details. (See \"SECURITY CONSIDERATIONS\" for principles to keep in mind,\n * @dev if your contract could have multiple requests in flight simultaneously.)\n *\n * @dev Colliding `requestId`s are cryptographically impossible as long as seeds\n * @dev differ. (Which is critical to making unpredictable randomness! See the\n * @dev next section.)\n *\n * *****************************************************************************\n * @dev SECURITY CONSIDERATIONS\n *\n * @dev A method with the ability to call your fulfillRandomness method directly\n * @dev could spoof a VRF response with any random value, so it's critical that\n * @dev it cannot be directly called by anything other than this base contract\n * @dev (specifically, by the VRFConsumerBase.rawFulfillRandomness method).\n *\n * @dev For your users to trust that your contract's random behavior is free\n * @dev from malicious interference, it's best if you can write it so that all\n * @dev behaviors implied by a VRF response are executed *during* your\n * @dev fulfillRandomness method. If your contract must store the response (or\n * @dev anything derived from it) and use it later, you must ensure that any\n * @dev user-significant behavior which depends on that stored value cannot be\n * @dev manipulated by a subsequent VRF request.\n *\n * @dev Similarly, both miners and the VRF oracle itself have some influence\n * @dev over the order in which VRF responses appear on the blockchain, so if\n * @dev your contract could have multiple VRF requests in flight simultaneously,\n * @dev you must ensure that the order in which the VRF responses arrive cannot\n * @dev be used to manipulate your contract's user-significant behavior.\n *\n * @dev Since the ultimate input to the VRF is mixed with the block hash of the\n * @dev block in which the request is made, user-provided seeds have no impact\n * @dev on its economic security properties. They are only included for API\n * @dev compatability with previous versions of this contract.\n *\n * @dev Since the block hash of the block which contains the requestRandomness\n * @dev call is mixed into the input to the VRF *last*, a sufficiently powerful\n * @dev miner could, in principle, fork the blockchain to evict the block\n * @dev containing the request, forcing the request to be included in a\n * @dev different block with a different hash, and therefore a different input\n * @dev to the VRF. However, such an attack would incur a substantial economic\n * @dev cost. This cost scales with the number of blocks the VRF oracle waits\n * @dev until it calls responds to a request.\n */\nabstract contract VRFConsumerBase is VRFRequestIDBase {\n\n  using SafeMathChainlink for uint256;\n\n  /**\n   * @notice fulfillRandomness handles the VRF response. Your contract must\n   * @notice implement it. See \"SECURITY CONSIDERATIONS\" above for important\n   * @notice principles to keep in mind when implementing your fulfillRandomness\n   * @notice method.\n   *\n   * @dev VRFConsumerBase expects its subcontracts to have a method with this\n   * @dev signature, and will call it once it has verified the proof\n   * @dev associated with the randomness. (It is triggered via a call to\n   * @dev rawFulfillRandomness, below.)\n   *\n   * @param requestId The Id initially returned by requestRandomness\n   * @param randomness the VRF output\n   */\n  function fulfillRandomness(bytes32 requestId, uint256 randomness)\n    internal virtual;\n\n  /**\n   * @notice requestRandomness initiates a request for VRF output given _seed\n   *\n   * @dev The fulfillRandomness method receives the output, once it's provided\n   * @dev by the Oracle, and verified by the vrfCoordinator.\n   *\n   * @dev The _keyHash must already be registered with the VRFCoordinator, and\n   * @dev the _fee must exceed the fee specified during registration of the\n   * @dev _keyHash.\n   *\n   * @dev The _seed parameter is vestigial, and is kept only for API\n   * @dev compatibility with older versions. It can't *hurt* to mix in some of\n   * @dev your own randomness, here, but it's not necessary because the VRF\n   * @dev oracle will mix the hash of the block containing your request into the\n   * @dev VRF seed it ultimately uses.\n   *\n   * @param _keyHash ID of public key against which randomness is generated\n   * @param _fee The amount of LINK to send with the request\n   * @param _seed seed mixed into the input of the VRF.\n   *\n   * @return requestId unique ID for this request\n   *\n   * @dev The returned requestId can be used to distinguish responses to\n   * @dev concurrent requests. It is passed as the first argument to\n   * @dev fulfillRandomness.\n   */\n  function requestRandomness(bytes32 _keyHash, uint256 _fee, uint256 _seed)\n    internal returns (bytes32 requestId)\n  {\n    LINK.transferAndCall(vrfCoordinator, _fee, abi.encode(_keyHash, _seed));\n    // This is the seed passed to VRFCoordinator. The oracle will mix this with\n    // the hash of the block containing this request to obtain the seed/input\n    // which is finally passed to the VRF cryptographic machinery.\n    uint256 vRFSeed  = makeVRFInputSeed(_keyHash, _seed, address(this), nonces[_keyHash]);\n    // nonces[_keyHash] must stay in sync with\n    // VRFCoordinator.nonces[_keyHash][this], which was incremented by the above\n    // successful LINK.transferAndCall (in VRFCoordinator.randomnessRequest).\n    // This provides protection against the user repeating their input seed,\n    // which would result in a predictable/duplicate output, if multiple such\n    // requests appeared in the same block.\n    nonces[_keyHash] = nonces[_keyHash].add(1);\n    return makeRequestId(_keyHash, vRFSeed);\n  }\n\n  LinkTokenInterface immutable internal LINK;\n  address immutable private vrfCoordinator;\n\n  // Nonces for each VRF key from which randomness has been requested.\n  //\n  // Must stay in sync with VRFCoordinator[_keyHash][this]\n  mapping(bytes32 /* keyHash */ => uint256 /* nonce */) private nonces;\n\n  /**\n   * @param _vrfCoordinator address of VRFCoordinator contract\n   * @param _link address of LINK token contract\n   *\n   * @dev https://docs.chain.link/docs/link-token-contracts\n   */\n  constructor(address _vrfCoordinator, address _link) public {\n    vrfCoordinator = _vrfCoordinator;\n    LINK = LinkTokenInterface(_link);\n  }\n\n  // rawFulfillRandomness is called by VRFCoordinator when it receives a valid VRF\n  // proof. rawFulfillRandomness then calls fulfillRandomness, after validating\n  // the origin of the call\n  function rawFulfillRandomness(bytes32 requestId, uint256 randomness) external {\n    require(msg.sender == vrfCoordinator, \"Only VRFCoordinator can fulfill\");\n    fulfillRandomness(requestId, randomness);\n  }\n}\n",
+  "sourcePath": "F:\\vscode\\cblades\\node_modules\\@chainlink\\contracts\\src\\v0.6\\VRFConsumerBase.sol",
+  "ast": {
+    "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/VRFConsumerBase.sol",
+    "exportedSymbols": {
+      "VRFConsumerBase": [
+        12276
+      ]
+    },
+    "id": 12277,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 12155,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:37"
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol",
+        "file": "./vendor/SafeMathChainlink.sol",
+        "id": 12156,
+        "nodeType": "ImportDirective",
+        "scope": 12277,
+        "sourceUnit": 12561,
+        "src": "57:40:37",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol",
+        "file": "./interfaces/LinkTokenInterface.sol",
+        "id": 12157,
+        "nodeType": "ImportDirective",
+        "scope": 12277,
+        "sourceUnit": 12422,
+        "src": "99:45:37",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/VRFRequestIDBase.sol",
+        "file": "./VRFRequestIDBase.sol",
+        "id": 12158,
+        "nodeType": "ImportDirective",
+        "scope": 12277,
+        "sourceUnit": 12327,
+        "src": "146:32:37",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 12160,
+              "name": "VRFRequestIDBase",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 12326,
+              "src": "5438:16:37",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_VRFRequestIDBase_$12326",
+                "typeString": "contract VRFRequestIDBase"
+              }
+            },
+            "id": 12161,
+            "nodeType": "InheritanceSpecifier",
+            "src": "5438:16:37"
+          }
+        ],
+        "contractDependencies": [
+          12326
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 12159,
+          "nodeType": "StructuredDocumentation",
+          "src": "180:5220:37",
+          "text": "****************************************************************************\n@notice Interface for contracts using VRF randomness\n*****************************************************************************\n@dev PURPOSE\n * @dev Reggie the Random Oracle (not his real job) wants to provide randomness\n@dev to Vera the verifier in such a way that Vera can be sure he's not\n@dev making his output up to suit himself. Reggie provides Vera a public key\n@dev to which he knows the secret key. Each time Vera provides a seed to\n@dev Reggie, he gives back a value which is computed completely\n@dev deterministically from the seed and the secret key.\n * @dev Reggie provides a proof by which Vera can verify that the output was\n@dev correctly computed once Reggie tells it to her, but without that proof,\n@dev the output is indistinguishable to her from a uniform random sample\n@dev from the output space.\n * @dev The purpose of this contract is to make it easy for unrelated contracts\n@dev to talk to Vera the verifier about the work Reggie is doing, to provide\n@dev simple access to a verifiable source of randomness.\n*****************************************************************************\n@dev USAGE\n * @dev Calling contracts must inherit from VRFConsumerBase, and can\n@dev initialize VRFConsumerBase's attributes in their constructor as\n@dev shown:\n * @dev   contract VRFConsumer {\n@dev     constuctor(<other arguments>, address _vrfCoordinator, address _link)\n@dev       VRFConsumerBase(_vrfCoordinator, _link) public {\n@dev         <initialization with other arguments goes here>\n@dev       }\n@dev   }\n * @dev The oracle will have given you an ID for the VRF keypair they have\n@dev committed to (let's call it keyHash), and have told you the minimum LINK\n@dev price for VRF service. Make sure your contract has sufficient LINK, and\n@dev call requestRandomness(keyHash, fee, seed), where seed is the input you\n@dev want to generate randomness from.\n * @dev Once the VRFCoordinator has received and validated the oracle's response\n@dev to your request, it will call your contract's fulfillRandomness method.\n * @dev The randomness argument to fulfillRandomness is the actual random value\n@dev generated from your seed.\n * @dev The requestId argument is generated from the keyHash and the seed by\n@dev makeRequestId(keyHash, seed). If your contract could have concurrent\n@dev requests open, you can use the requestId to track which seed is\n@dev associated with which randomness. See VRFRequestIDBase.sol for more\n@dev details. (See \"SECURITY CONSIDERATIONS\" for principles to keep in mind,\n@dev if your contract could have multiple requests in flight simultaneously.)\n * @dev Colliding `requestId`s are cryptographically impossible as long as seeds\n@dev differ. (Which is critical to making unpredictable randomness! See the\n@dev next section.)\n * *****************************************************************************\n@dev SECURITY CONSIDERATIONS\n * @dev A method with the ability to call your fulfillRandomness method directly\n@dev could spoof a VRF response with any random value, so it's critical that\n@dev it cannot be directly called by anything other than this base contract\n@dev (specifically, by the VRFConsumerBase.rawFulfillRandomness method).\n * @dev For your users to trust that your contract's random behavior is free\n@dev from malicious interference, it's best if you can write it so that all\n@dev behaviors implied by a VRF response are executed *during* your\n@dev fulfillRandomness method. If your contract must store the response (or\n@dev anything derived from it) and use it later, you must ensure that any\n@dev user-significant behavior which depends on that stored value cannot be\n@dev manipulated by a subsequent VRF request.\n * @dev Similarly, both miners and the VRF oracle itself have some influence\n@dev over the order in which VRF responses appear on the blockchain, so if\n@dev your contract could have multiple VRF requests in flight simultaneously,\n@dev you must ensure that the order in which the VRF responses arrive cannot\n@dev be used to manipulate your contract's user-significant behavior.\n * @dev Since the ultimate input to the VRF is mixed with the block hash of the\n@dev block in which the request is made, user-provided seeds have no impact\n@dev on its economic security properties. They are only included for API\n@dev compatability with previous versions of this contract.\n * @dev Since the block hash of the block which contains the requestRandomness\n@dev call is mixed into the input to the VRF *last*, a sufficiently powerful\n@dev miner could, in principle, fork the blockchain to evict the block\n@dev containing the request, forcing the request to be included in a\n@dev different block with a different hash, and therefore a different input\n@dev to the VRF. However, such an attack would incur a substantial economic\n@dev cost. This cost scales with the number of blocks the VRF oracle waits\n@dev until it calls responds to a request."
+        },
+        "fullyImplemented": false,
+        "id": 12276,
+        "linearizedBaseContracts": [
+          12276,
+          12326
+        ],
+        "name": "VRFConsumerBase",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 12164,
+            "libraryName": {
+              "contractScope": null,
+              "id": 12162,
+              "name": "SafeMathChainlink",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 12560,
+              "src": "5466:17:37",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SafeMathChainlink_$12560",
+                "typeString": "library SafeMathChainlink"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "5460:36:37",
+            "typeName": {
+              "id": 12163,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "5488:7:37",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "body": null,
+            "documentation": {
+              "id": 12165,
+              "nodeType": "StructuredDocumentation",
+              "src": "5500:641:37",
+              "text": "@notice fulfillRandomness handles the VRF response. Your contract must\n@notice implement it. See \"SECURITY CONSIDERATIONS\" above for important\n@notice principles to keep in mind when implementing your fulfillRandomness\n@notice method.\n   * @dev VRFConsumerBase expects its subcontracts to have a method with this\n@dev signature, and will call it once it has verified the proof\n@dev associated with the randomness. (It is triggered via a call to\n@dev rawFulfillRandomness, below.)\n   * @param requestId The Id initially returned by requestRandomness\n@param randomness the VRF output"
+            },
+            "id": 12172,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "fulfillRandomness",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 12170,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 12167,
+                  "name": "requestId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12172,
+                  "src": "6171:17:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 12166,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6171:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 12169,
+                  "name": "randomness",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12172,
+                  "src": "6190:18:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 12168,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6190:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "6170:39:37"
+            },
+            "returnParameters": {
+              "id": 12171,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "6230:0:37"
+            },
+            "scope": 12276,
+            "src": "6144:87:37",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 12226,
+              "nodeType": "Block",
+              "src": "7545:896:37",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 12187,
+                        "name": "vrfCoordinator",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12231,
+                        "src": "7572:14:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 12188,
+                        "name": "_fee",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12177,
+                        "src": "7588:4:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 12191,
+                            "name": "_keyHash",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 12175,
+                            "src": "7605:8:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          },
+                          {
+                            "argumentTypes": null,
+                            "id": 12192,
+                            "name": "_seed",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 12179,
+                            "src": "7615:5:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            },
+                            {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 12189,
+                            "name": "abi",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -1,
+                            "src": "7594:3:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_abi",
+                              "typeString": "abi"
+                            }
+                          },
+                          "id": 12190,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "memberName": "encode",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "7594:10:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
+                            "typeString": "function () pure returns (bytes memory)"
+                          }
+                        },
+                        "id": 12193,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "7594:27:37",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 12184,
+                        "name": "LINK",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12229,
+                        "src": "7551:4:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_LinkTokenInterface_$12421",
+                          "typeString": "contract LinkTokenInterface"
+                        }
+                      },
+                      "id": 12186,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "transferAndCall",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 12409,
+                      "src": "7551:20:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$returns$_t_bool_$",
+                        "typeString": "function (address,uint256,bytes memory) external returns (bool)"
+                      }
+                    },
+                    "id": 12194,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "7551:71:37",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 12195,
+                  "nodeType": "ExpressionStatement",
+                  "src": "7551:71:37"
+                },
+                {
+                  "assignments": [
+                    12197
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 12197,
+                      "name": "vRFSeed",
+                      "nodeType": "VariableDeclaration",
+                      "overrides": null,
+                      "scope": 12226,
+                      "src": "7853:15:37",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 12196,
+                        "name": "uint256",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "7853:7:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 12209,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 12199,
+                        "name": "_keyHash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12175,
+                        "src": "7889:8:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 12200,
+                        "name": "_seed",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12179,
+                        "src": "7899:5:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 12203,
+                            "name": "this",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -28,
+                            "src": "7914:4:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_VRFConsumerBase_$12276",
+                              "typeString": "contract VRFConsumerBase"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_contract$_VRFConsumerBase_$12276",
+                              "typeString": "contract VRFConsumerBase"
+                            }
+                          ],
+                          "id": 12202,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "7906:7:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_address_$",
+                            "typeString": "type(address)"
+                          },
+                          "typeName": {
+                            "id": 12201,
+                            "name": "address",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "7906:7:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": null,
+                              "typeString": null
+                            }
+                          }
+                        },
+                        "id": 12204,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "7906:13:37",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 12205,
+                          "name": "nonces",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 12235,
+                          "src": "7921:6:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
+                            "typeString": "mapping(bytes32 => uint256)"
+                          }
+                        },
+                        "id": 12207,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 12206,
+                          "name": "_keyHash",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 12175,
+                          "src": "7928:8:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "7921:16:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 12198,
+                      "name": "makeVRFInputSeed",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12306,
+                      "src": "7872:16:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_uint256_$_t_address_$_t_uint256_$returns$_t_uint256_$",
+                        "typeString": "function (bytes32,uint256,address,uint256) pure returns (uint256)"
+                      }
+                    },
+                    "id": 12208,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "7872:66:37",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "7853:85:37"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 12219,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 12210,
+                        "name": "nonces",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12235,
+                        "src": "8349:6:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
+                          "typeString": "mapping(bytes32 => uint256)"
+                        }
+                      },
+                      "id": 12212,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 12211,
+                        "name": "_keyHash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12175,
+                        "src": "8356:8:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "8349:16:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "hexValue": "31",
+                          "id": 12217,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "8389:1:37",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_1_by_1",
+                            "typeString": "int_const 1"
+                          },
+                          "value": "1"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_rational_1_by_1",
+                            "typeString": "int_const 1"
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 12213,
+                            "name": "nonces",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 12235,
+                            "src": "8368:6:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
+                              "typeString": "mapping(bytes32 => uint256)"
+                            }
+                          },
+                          "id": 12215,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 12214,
+                            "name": "_keyHash",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 12175,
+                            "src": "8375:8:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "8368:16:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 12216,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "add",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 12450,
+                        "src": "8368:20:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
+                          "typeString": "function (uint256,uint256) pure returns (uint256)"
+                        }
+                      },
+                      "id": 12218,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "8368:23:37",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "8349:42:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 12220,
+                  "nodeType": "ExpressionStatement",
+                  "src": "8349:42:37"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 12222,
+                        "name": "_keyHash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12175,
+                        "src": "8418:8:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 12223,
+                        "name": "vRFSeed",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12197,
+                        "src": "8428:7:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 12221,
+                      "name": "makeRequestId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12325,
+                      "src": "8404:13:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_uint256_$returns$_t_bytes32_$",
+                        "typeString": "function (bytes32,uint256) pure returns (bytes32)"
+                      }
+                    },
+                    "id": 12224,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "8404:32:37",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "functionReturnParameters": 12183,
+                  "id": 12225,
+                  "nodeType": "Return",
+                  "src": "8397:39:37"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 12173,
+              "nodeType": "StructuredDocumentation",
+              "src": "6235:1190:37",
+              "text": "@notice requestRandomness initiates a request for VRF output given _seed\n   * @dev The fulfillRandomness method receives the output, once it's provided\n@dev by the Oracle, and verified by the vrfCoordinator.\n   * @dev The _keyHash must already be registered with the VRFCoordinator, and\n@dev the _fee must exceed the fee specified during registration of the\n@dev _keyHash.\n   * @dev The _seed parameter is vestigial, and is kept only for API\n@dev compatibility with older versions. It can't *hurt* to mix in some of\n@dev your own randomness, here, but it's not necessary because the VRF\n@dev oracle will mix the hash of the block containing your request into the\n@dev VRF seed it ultimately uses.\n   * @param _keyHash ID of public key against which randomness is generated\n@param _fee The amount of LINK to send with the request\n@param _seed seed mixed into the input of the VRF.\n   * @return requestId unique ID for this request\n   * @dev The returned requestId can be used to distinguish responses to\n@dev concurrent requests. It is passed as the first argument to\n@dev fulfillRandomness."
+            },
+            "id": 12227,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "requestRandomness",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 12180,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 12175,
+                  "name": "_keyHash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12227,
+                  "src": "7455:16:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 12174,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7455:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 12177,
+                  "name": "_fee",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12227,
+                  "src": "7473:12:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 12176,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7473:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 12179,
+                  "name": "_seed",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12227,
+                  "src": "7487:13:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 12178,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7487:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "7454:47:37"
+            },
+            "returnParameters": {
+              "id": 12183,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 12182,
+                  "name": "requestId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12227,
+                  "src": "7524:17:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 12181,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7524:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "7523:19:37"
+            },
+            "scope": 12276,
+            "src": "7428:1013:37",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 12229,
+            "name": "LINK",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 12276,
+            "src": "8445:42:37",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_LinkTokenInterface_$12421",
+              "typeString": "contract LinkTokenInterface"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 12228,
+              "name": "LinkTokenInterface",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 12421,
+              "src": "8445:18:37",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_LinkTokenInterface_$12421",
+                "typeString": "contract LinkTokenInterface"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 12231,
+            "name": "vrfCoordinator",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 12276,
+            "src": "8491:40:37",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 12230,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "8491:7:37",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "private"
+          },
+          {
+            "constant": false,
+            "id": 12235,
+            "name": "nonces",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 12276,
+            "src": "8671:68:37",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
+              "typeString": "mapping(bytes32 => uint256)"
+            },
+            "typeName": {
+              "id": 12234,
+              "keyType": {
+                "id": 12232,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "8679:7:37",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "8671:53:37",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
+                "typeString": "mapping(bytes32 => uint256)"
+              },
+              "valueType": {
+                "id": 12233,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "8704:7:37",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 12253,
+              "nodeType": "Block",
+              "src": "8992:81:37",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 12245,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 12243,
+                      "name": "vrfCoordinator",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12231,
+                      "src": "8998:14:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 12244,
+                      "name": "_vrfCoordinator",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12238,
+                      "src": "9015:15:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "8998:32:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 12246,
+                  "nodeType": "ExpressionStatement",
+                  "src": "8998:32:37"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 12251,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 12247,
+                      "name": "LINK",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12229,
+                      "src": "9036:4:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_LinkTokenInterface_$12421",
+                        "typeString": "contract LinkTokenInterface"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 12249,
+                          "name": "_link",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 12240,
+                          "src": "9062:5:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 12248,
+                        "name": "LinkTokenInterface",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12421,
+                        "src": "9043:18:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_LinkTokenInterface_$12421_$",
+                          "typeString": "type(contract LinkTokenInterface)"
+                        }
+                      },
+                      "id": 12250,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "9043:25:37",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_LinkTokenInterface_$12421",
+                        "typeString": "contract LinkTokenInterface"
+                      }
+                    },
+                    "src": "9036:32:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_LinkTokenInterface_$12421",
+                      "typeString": "contract LinkTokenInterface"
+                    }
+                  },
+                  "id": 12252,
+                  "nodeType": "ExpressionStatement",
+                  "src": "9036:32:37"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 12236,
+              "nodeType": "StructuredDocumentation",
+              "src": "8744:186:37",
+              "text": "@param _vrfCoordinator address of VRFCoordinator contract\n@param _link address of LINK token contract\n   * @dev https://docs.chain.link/docs/link-token-contracts"
+            },
+            "id": 12254,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 12241,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 12238,
+                  "name": "_vrfCoordinator",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12254,
+                  "src": "8945:23:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 12237,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8945:7:37",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 12240,
+                  "name": "_link",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12254,
+                  "src": "8970:13:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 12239,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8970:7:37",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "8944:40:37"
+            },
+            "returnParameters": {
+              "id": 12242,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "8992:0:37"
+            },
+            "scope": 12276,
+            "src": "8933:140:37",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 12274,
+              "nodeType": "Block",
+              "src": "9346:129:37",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 12265,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 12262,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -15,
+                            "src": "9360:3:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 12263,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "9360:10:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "id": 12264,
+                          "name": "vrfCoordinator",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 12231,
+                          "src": "9374:14:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "9360:28:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "4f6e6c7920565246436f6f7264696e61746f722063616e2066756c66696c6c",
+                        "id": 12266,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "9390:33:37",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_aa31d97d949424087cac59e348924584a13a8784d3590fa798a0967391035445",
+                          "typeString": "literal_string \"Only VRFCoordinator can fulfill\""
+                        },
+                        "value": "Only VRFCoordinator can fulfill"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_aa31d97d949424087cac59e348924584a13a8784d3590fa798a0967391035445",
+                          "typeString": "literal_string \"Only VRFCoordinator can fulfill\""
+                        }
+                      ],
+                      "id": 12261,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "9352:7:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 12267,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "9352:72:37",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 12268,
+                  "nodeType": "ExpressionStatement",
+                  "src": "9352:72:37"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 12270,
+                        "name": "requestId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12256,
+                        "src": "9448:9:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 12271,
+                        "name": "randomness",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12258,
+                        "src": "9459:10:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 12269,
+                      "name": "fulfillRandomness",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12172,
+                      "src": "9430:17:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_bytes32_$_t_uint256_$returns$__$",
+                        "typeString": "function (bytes32,uint256)"
+                      }
+                    },
+                    "id": 12272,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "9430:40:37",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 12273,
+                  "nodeType": "ExpressionStatement",
+                  "src": "9430:40:37"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "94985ddd",
+            "id": 12275,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "rawFulfillRandomness",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 12259,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 12256,
+                  "name": "requestId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12275,
+                  "src": "9298:17:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 12255,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "9298:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 12258,
+                  "name": "randomness",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 12275,
+                  "src": "9317:18:37",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 12257,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "9317:7:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "9297:39:37"
+            },
+            "returnParameters": {
+              "id": 12260,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "9346:0:37"
+            },
+            "scope": 12276,
+            "src": "9268:207:37",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 12277,
+        "src": "5401:4076:37"
+      }
+    ],
+    "src": "32:9446:37"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/VRFConsumerBase.sol",
+      "exportedSymbols": {
+        "VRFConsumerBase": [
+          12276
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.6",
+            ".0"
+          ]
+        },
+        "id": 12155,
+        "name": "PragmaDirective",
+        "src": "32:23:37"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 12561,
+          "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol",
+          "file": "./vendor/SafeMathChainlink.sol",
+          "scope": 12277,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 12156,
+        "name": "ImportDirective",
+        "src": "57:40:37"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 12422,
+          "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol",
+          "file": "./interfaces/LinkTokenInterface.sol",
+          "scope": 12277,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 12157,
+        "name": "ImportDirective",
+        "src": "99:45:37"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 12327,
+          "absolutePath": "/F/vscode/cblades/node_modules/@chainlink/contracts/src/v0.6/VRFRequestIDBase.sol",
+          "file": "./VRFRequestIDBase.sol",
+          "scope": 12277,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 12158,
+        "name": "ImportDirective",
+        "src": "146:32:37"
+      },
+      {
+        "attributes": {
+          "abstract": true,
+          "contractDependencies": [
+            12326
+          ],
+          "contractKind": "contract",
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            12276,
+            12326
+          ],
+          "name": "VRFConsumerBase",
+          "scope": 12277
+        },
+        "children": [
+          {
+            "attributes": {
+              "text": "****************************************************************************\n@notice Interface for contracts using VRF randomness\n*****************************************************************************\n@dev PURPOSE\n * @dev Reggie the Random Oracle (not his real job) wants to provide randomness\n@dev to Vera the verifier in such a way that Vera can be sure he's not\n@dev making his output up to suit himself. Reggie provides Vera a public key\n@dev to which he knows the secret key. Each time Vera provides a seed to\n@dev Reggie, he gives back a value which is computed completely\n@dev deterministically from the seed and the secret key.\n * @dev Reggie provides a proof by which Vera can verify that the output was\n@dev correctly computed once Reggie tells it to her, but without that proof,\n@dev the output is indistinguishable to her from a uniform random sample\n@dev from the output space.\n * @dev The purpose of this contract is to make it easy for unrelated contracts\n@dev to talk to Vera the verifier about the work Reggie is doing, to provide\n@dev simple access to a verifiable source of randomness.\n*****************************************************************************\n@dev USAGE\n * @dev Calling contracts must inherit from VRFConsumerBase, and can\n@dev initialize VRFConsumerBase's attributes in their constructor as\n@dev shown:\n * @dev   contract VRFConsumer {\n@dev     constuctor(<other arguments>, address _vrfCoordinator, address _link)\n@dev       VRFConsumerBase(_vrfCoordinator, _link) public {\n@dev         <initialization with other arguments goes here>\n@dev       }\n@dev   }\n * @dev The oracle will have given you an ID for the VRF keypair they have\n@dev committed to (let's call it keyHash), and have told you the minimum LINK\n@dev price for VRF service. Make sure your contract has sufficient LINK, and\n@dev call requestRandomness(keyHash, fee, seed), where seed is the input you\n@dev want to generate randomness from.\n * @dev Once the VRFCoordinator has received and validated the oracle's response\n@dev to your request, it will call your contract's fulfillRandomness method.\n * @dev The randomness argument to fulfillRandomness is the actual random value\n@dev generated from your seed.\n * @dev The requestId argument is generated from the keyHash and the seed by\n@dev makeRequestId(keyHash, seed). If your contract could have concurrent\n@dev requests open, you can use the requestId to track which seed is\n@dev associated with which randomness. See VRFRequestIDBase.sol for more\n@dev details. (See \"SECURITY CONSIDERATIONS\" for principles to keep in mind,\n@dev if your contract could have multiple requests in flight simultaneously.)\n * @dev Colliding `requestId`s are cryptographically impossible as long as seeds\n@dev differ. (Which is critical to making unpredictable randomness! See the\n@dev next section.)\n * *****************************************************************************\n@dev SECURITY CONSIDERATIONS\n * @dev A method with the ability to call your fulfillRandomness method directly\n@dev could spoof a VRF response with any random value, so it's critical that\n@dev it cannot be directly called by anything other than this base contract\n@dev (specifically, by the VRFConsumerBase.rawFulfillRandomness method).\n * @dev For your users to trust that your contract's random behavior is free\n@dev from malicious interference, it's best if you can write it so that all\n@dev behaviors implied by a VRF response are executed *during* your\n@dev fulfillRandomness method. If your contract must store the response (or\n@dev anything derived from it) and use it later, you must ensure that any\n@dev user-significant behavior which depends on that stored value cannot be\n@dev manipulated by a subsequent VRF request.\n * @dev Similarly, both miners and the VRF oracle itself have some influence\n@dev over the order in which VRF responses appear on the blockchain, so if\n@dev your contract could have multiple VRF requests in flight simultaneously,\n@dev you must ensure that the order in which the VRF responses arrive cannot\n@dev be used to manipulate your contract's user-significant behavior.\n * @dev Since the ultimate input to the VRF is mixed with the block hash of the\n@dev block in which the request is made, user-provided seeds have no impact\n@dev on its economic security properties. They are only included for API\n@dev compatability with previous versions of this contract.\n * @dev Since the block hash of the block which contains the requestRandomness\n@dev call is mixed into the input to the VRF *last*, a sufficiently powerful\n@dev miner could, in principle, fork the blockchain to evict the block\n@dev containing the request, forcing the request to be included in a\n@dev different block with a different hash, and therefore a different input\n@dev to the VRF. However, such an attack would incur a substantial economic\n@dev cost. This cost scales with the number of blocks the VRF oracle waits\n@dev until it calls responds to a request."
+            },
+            "id": 12159,
+            "name": "StructuredDocumentation",
+            "src": "180:5220:37"
+          },
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "VRFRequestIDBase",
+                  "referencedDeclaration": 12326,
+                  "type": "contract VRFRequestIDBase"
+                },
+                "id": 12160,
+                "name": "UserDefinedTypeName",
+                "src": "5438:16:37"
+              }
+            ],
+            "id": 12161,
+            "name": "InheritanceSpecifier",
+            "src": "5438:16:37"
+          },
+          {
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "SafeMathChainlink",
+                  "referencedDeclaration": 12560,
+                  "type": "library SafeMathChainlink"
+                },
+                "id": 12162,
+                "name": "UserDefinedTypeName",
+                "src": "5466:17:37"
+              },
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 12163,
+                "name": "ElementaryTypeName",
+                "src": "5488:7:37"
+              }
+            ],
+            "id": 12164,
+            "name": "UsingForDirective",
+            "src": "5460:36:37"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "fulfillRandomness",
+              "overrides": null,
+              "scope": 12276,
+              "stateMutability": "nonpayable",
+              "virtual": true,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice fulfillRandomness handles the VRF response. Your contract must\n@notice implement it. See \"SECURITY CONSIDERATIONS\" above for important\n@notice principles to keep in mind when implementing your fulfillRandomness\n@notice method.\n   * @dev VRFConsumerBase expects its subcontracts to have a method with this\n@dev signature, and will call it once it has verified the proof\n@dev associated with the randomness. (It is triggered via a call to\n@dev rawFulfillRandomness, below.)\n   * @param requestId The Id initially returned by requestRandomness\n@param randomness the VRF output"
+                },
+                "id": 12165,
+                "name": "StructuredDocumentation",
+                "src": "5500:641:37"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "requestId",
+                      "overrides": null,
+                      "scope": 12172,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 12166,
+                        "name": "ElementaryTypeName",
+                        "src": "6171:7:37"
+                      }
+                    ],
+                    "id": 12167,
+                    "name": "VariableDeclaration",
+                    "src": "6171:17:37"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "randomness",
+                      "overrides": null,
+                      "scope": 12172,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 12168,
+                        "name": "ElementaryTypeName",
+                        "src": "6190:7:37"
+                      }
+                    ],
+                    "id": 12169,
+                    "name": "VariableDeclaration",
+                    "src": "6190:18:37"
+                  }
+                ],
+                "id": 12170,
+                "name": "ParameterList",
+                "src": "6170:39:37"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 12171,
+                "name": "ParameterList",
+                "src": "6230:0:37"
+              }
+            ],
+            "id": 12172,
+            "name": "FunctionDefinition",
+            "src": "6144:87:37"
+          },
+          {
+            "attributes": {
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "requestRandomness",
+              "overrides": null,
+              "scope": 12276,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice requestRandomness initiates a request for VRF output given _seed\n   * @dev The fulfillRandomness method receives the output, once it's provided\n@dev by the Oracle, and verified by the vrfCoordinator.\n   * @dev The _keyHash must already be registered with the VRFCoordinator, and\n@dev the _fee must exceed the fee specified during registration of the\n@dev _keyHash.\n   * @dev The _seed parameter is vestigial, and is kept only for API\n@dev compatibility with older versions. It can't *hurt* to mix in some of\n@dev your own randomness, here, but it's not necessary because the VRF\n@dev oracle will mix the hash of the block containing your request into the\n@dev VRF seed it ultimately uses.\n   * @param _keyHash ID of public key against which randomness is generated\n@param _fee The amount of LINK to send with the request\n@param _seed seed mixed into the input of the VRF.\n   * @return requestId unique ID for this request\n   * @dev The returned requestId can be used to distinguish responses to\n@dev concurrent requests. It is passed as the first argument to\n@dev fulfillRandomness."
+                },
+                "id": 12173,
+                "name": "StructuredDocumentation",
+                "src": "6235:1190:37"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_keyHash",
+                      "overrides": null,
+                      "scope": 12227,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 12174,
+                        "name": "ElementaryTypeName",
+                        "src": "7455:7:37"
+                      }
+                    ],
+                    "id": 12175,
+                    "name": "VariableDeclaration",
+                    "src": "7455:16:37"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_fee",
+                      "overrides": null,
+                      "scope": 12227,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 12176,
+                        "name": "ElementaryTypeName",
+                        "src": "7473:7:37"
+                      }
+                    ],
+                    "id": 12177,
+                    "name": "VariableDeclaration",
+                    "src": "7473:12:37"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_seed",
+                      "overrides": null,
+                      "scope": 12227,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 12178,
+                        "name": "ElementaryTypeName",
+                        "src": "7487:7:37"
+                      }
+                    ],
+                    "id": 12179,
+                    "name": "VariableDeclaration",
+                    "src": "7487:13:37"
+                  }
+                ],
+                "id": 12180,
+                "name": "ParameterList",
+                "src": "7454:47:37"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "requestId",
+                      "overrides": null,
+                      "scope": 12227,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 12181,
+                        "name": "ElementaryTypeName",
+                        "src": "7524:7:37"
+                      }
+                    ],
+                    "id": 12182,
+                    "name": "VariableDeclaration",
+                    "src": "7524:17:37"
+                  }
+                ],
+                "id": 12183,
+                "name": "ParameterList",
+                "src": "7523:19:37"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "bool",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "transferAndCall",
+                              "referencedDeclaration": 12409,
+                              "type": "function (address,uint256,bytes memory) external returns (bool)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12229,
+                                  "type": "contract LinkTokenInterface",
+                                  "value": "LINK"
+                                },
+                                "id": 12184,
+                                "name": "Identifier",
+                                "src": "7551:4:37"
+                              }
+                            ],
+                            "id": 12186,
+                            "name": "MemberAccess",
+                            "src": "7551:20:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12231,
+                              "type": "address",
+                              "value": "vrfCoordinator"
+                            },
+                            "id": 12187,
+                            "name": "Identifier",
+                            "src": "7572:14:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12177,
+                              "type": "uint256",
+                              "value": "_fee"
+                            },
+                            "id": 12188,
+                            "name": "Identifier",
+                            "src": "7588:4:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "bytes memory",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_bytes32",
+                                      "typeString": "bytes32"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "member_name": "encode",
+                                  "referencedDeclaration": null,
+                                  "type": "function () pure returns (bytes memory)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": -1,
+                                      "type": "abi",
+                                      "value": "abi"
+                                    },
+                                    "id": 12189,
+                                    "name": "Identifier",
+                                    "src": "7594:3:37"
+                                  }
+                                ],
+                                "id": 12190,
+                                "name": "MemberAccess",
+                                "src": "7594:10:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12175,
+                                  "type": "bytes32",
+                                  "value": "_keyHash"
+                                },
+                                "id": 12191,
+                                "name": "Identifier",
+                                "src": "7605:8:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12179,
+                                  "type": "uint256",
+                                  "value": "_seed"
+                                },
+                                "id": 12192,
+                                "name": "Identifier",
+                                "src": "7615:5:37"
+                              }
+                            ],
+                            "id": 12193,
+                            "name": "FunctionCall",
+                            "src": "7594:27:37"
+                          }
+                        ],
+                        "id": 12194,
+                        "name": "FunctionCall",
+                        "src": "7551:71:37"
+                      }
+                    ],
+                    "id": 12195,
+                    "name": "ExpressionStatement",
+                    "src": "7551:71:37"
+                  },
+                  {
+                    "attributes": {
+                      "assignments": [
+                        12197
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "vRFSeed",
+                          "overrides": null,
+                          "scope": 12226,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "uint256",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "uint256",
+                              "type": "uint256"
+                            },
+                            "id": 12196,
+                            "name": "ElementaryTypeName",
+                            "src": "7853:7:37"
+                          }
+                        ],
+                        "id": 12197,
+                        "name": "VariableDeclaration",
+                        "src": "7853:15:37"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "uint256",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes32",
+                                  "typeString": "bytes32"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12306,
+                              "type": "function (bytes32,uint256,address,uint256) pure returns (uint256)",
+                              "value": "makeVRFInputSeed"
+                            },
+                            "id": 12198,
+                            "name": "Identifier",
+                            "src": "7872:16:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12175,
+                              "type": "bytes32",
+                              "value": "_keyHash"
+                            },
+                            "id": 12199,
+                            "name": "Identifier",
+                            "src": "7889:8:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12179,
+                              "type": "uint256",
+                              "value": "_seed"
+                            },
+                            "id": 12200,
+                            "name": "Identifier",
+                            "src": "7899:5:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "address",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_contract$_VRFConsumerBase_$12276",
+                                      "typeString": "contract VRFConsumerBase"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "type": "type(address)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "name": "address",
+                                      "type": null
+                                    },
+                                    "id": 12201,
+                                    "name": "ElementaryTypeName",
+                                    "src": "7906:7:37"
+                                  }
+                                ],
+                                "id": 12202,
+                                "name": "ElementaryTypeNameExpression",
+                                "src": "7906:7:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": -28,
+                                  "type": "contract VRFConsumerBase",
+                                  "value": "this"
+                                },
+                                "id": 12203,
+                                "name": "Identifier",
+                                "src": "7914:4:37"
+                              }
+                            ],
+                            "id": 12204,
+                            "name": "FunctionCall",
+                            "src": "7906:13:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12235,
+                                  "type": "mapping(bytes32 => uint256)",
+                                  "value": "nonces"
+                                },
+                                "id": 12205,
+                                "name": "Identifier",
+                                "src": "7921:6:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12175,
+                                  "type": "bytes32",
+                                  "value": "_keyHash"
+                                },
+                                "id": 12206,
+                                "name": "Identifier",
+                                "src": "7928:8:37"
+                              }
+                            ],
+                            "id": 12207,
+                            "name": "IndexAccess",
+                            "src": "7921:16:37"
+                          }
+                        ],
+                        "id": 12208,
+                        "name": "FunctionCall",
+                        "src": "7872:66:37"
+                      }
+                    ],
+                    "id": 12209,
+                    "name": "VariableDeclarationStatement",
+                    "src": "7853:85:37"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12235,
+                                  "type": "mapping(bytes32 => uint256)",
+                                  "value": "nonces"
+                                },
+                                "id": 12210,
+                                "name": "Identifier",
+                                "src": "8349:6:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12175,
+                                  "type": "bytes32",
+                                  "value": "_keyHash"
+                                },
+                                "id": 12211,
+                                "name": "Identifier",
+                                "src": "8356:8:37"
+                              }
+                            ],
+                            "id": 12212,
+                            "name": "IndexAccess",
+                            "src": "8349:16:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "uint256",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_rational_1_by_1",
+                                      "typeString": "int_const 1"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "add",
+                                  "referencedDeclaration": 12450,
+                                  "type": "function (uint256,uint256) pure returns (uint256)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "type": "uint256"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 12235,
+                                          "type": "mapping(bytes32 => uint256)",
+                                          "value": "nonces"
+                                        },
+                                        "id": 12213,
+                                        "name": "Identifier",
+                                        "src": "8368:6:37"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 12175,
+                                          "type": "bytes32",
+                                          "value": "_keyHash"
+                                        },
+                                        "id": 12214,
+                                        "name": "Identifier",
+                                        "src": "8375:8:37"
+                                      }
+                                    ],
+                                    "id": 12215,
+                                    "name": "IndexAccess",
+                                    "src": "8368:16:37"
+                                  }
+                                ],
+                                "id": 12216,
+                                "name": "MemberAccess",
+                                "src": "8368:20:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "31",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 1",
+                                  "value": "1"
+                                },
+                                "id": 12217,
+                                "name": "Literal",
+                                "src": "8389:1:37"
+                              }
+                            ],
+                            "id": 12218,
+                            "name": "FunctionCall",
+                            "src": "8368:23:37"
+                          }
+                        ],
+                        "id": 12219,
+                        "name": "Assignment",
+                        "src": "8349:42:37"
+                      }
+                    ],
+                    "id": 12220,
+                    "name": "ExpressionStatement",
+                    "src": "8349:42:37"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 12183
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "bytes32",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes32",
+                                  "typeString": "bytes32"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12325,
+                              "type": "function (bytes32,uint256) pure returns (bytes32)",
+                              "value": "makeRequestId"
+                            },
+                            "id": 12221,
+                            "name": "Identifier",
+                            "src": "8404:13:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12175,
+                              "type": "bytes32",
+                              "value": "_keyHash"
+                            },
+                            "id": 12222,
+                            "name": "Identifier",
+                            "src": "8418:8:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12197,
+                              "type": "uint256",
+                              "value": "vRFSeed"
+                            },
+                            "id": 12223,
+                            "name": "Identifier",
+                            "src": "8428:7:37"
+                          }
+                        ],
+                        "id": 12224,
+                        "name": "FunctionCall",
+                        "src": "8404:32:37"
+                      }
+                    ],
+                    "id": 12225,
+                    "name": "Return",
+                    "src": "8397:39:37"
+                  }
+                ],
+                "id": 12226,
+                "name": "Block",
+                "src": "7545:896:37"
+              }
+            ],
+            "id": 12227,
+            "name": "FunctionDefinition",
+            "src": "7428:1013:37"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "LINK",
+              "overrides": null,
+              "scope": 12276,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract LinkTokenInterface",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "LinkTokenInterface",
+                  "referencedDeclaration": 12421,
+                  "type": "contract LinkTokenInterface"
+                },
+                "id": 12228,
+                "name": "UserDefinedTypeName",
+                "src": "8445:18:37"
+              }
+            ],
+            "id": 12229,
+            "name": "VariableDeclaration",
+            "src": "8445:42:37"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "vrfCoordinator",
+              "overrides": null,
+              "scope": 12276,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "private"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 12230,
+                "name": "ElementaryTypeName",
+                "src": "8491:7:37"
+              }
+            ],
+            "id": 12231,
+            "name": "VariableDeclaration",
+            "src": "8491:40:37"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "nonces",
+              "overrides": null,
+              "scope": 12276,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(bytes32 => uint256)",
+              "value": null,
+              "visibility": "private"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(bytes32 => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes32",
+                      "type": "bytes32"
+                    },
+                    "id": 12232,
+                    "name": "ElementaryTypeName",
+                    "src": "8679:7:37"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 12233,
+                    "name": "ElementaryTypeName",
+                    "src": "8704:7:37"
+                  }
+                ],
+                "id": 12234,
+                "name": "Mapping",
+                "src": "8671:53:37"
+              }
+            ],
+            "id": 12235,
+            "name": "VariableDeclaration",
+            "src": "8671:68:37"
+          },
+          {
+            "attributes": {
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "overrides": null,
+              "scope": 12276,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@param _vrfCoordinator address of VRFCoordinator contract\n@param _link address of LINK token contract\n   * @dev https://docs.chain.link/docs/link-token-contracts"
+                },
+                "id": 12236,
+                "name": "StructuredDocumentation",
+                "src": "8744:186:37"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_vrfCoordinator",
+                      "overrides": null,
+                      "scope": 12254,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 12237,
+                        "name": "ElementaryTypeName",
+                        "src": "8945:7:37"
+                      }
+                    ],
+                    "id": 12238,
+                    "name": "VariableDeclaration",
+                    "src": "8945:23:37"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_link",
+                      "overrides": null,
+                      "scope": 12254,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 12239,
+                        "name": "ElementaryTypeName",
+                        "src": "8970:7:37"
+                      }
+                    ],
+                    "id": 12240,
+                    "name": "VariableDeclaration",
+                    "src": "8970:13:37"
+                  }
+                ],
+                "id": 12241,
+                "name": "ParameterList",
+                "src": "8944:40:37"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 12242,
+                "name": "ParameterList",
+                "src": "8992:0:37"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12231,
+                              "type": "address",
+                              "value": "vrfCoordinator"
+                            },
+                            "id": 12243,
+                            "name": "Identifier",
+                            "src": "8998:14:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12238,
+                              "type": "address",
+                              "value": "_vrfCoordinator"
+                            },
+                            "id": 12244,
+                            "name": "Identifier",
+                            "src": "9015:15:37"
+                          }
+                        ],
+                        "id": 12245,
+                        "name": "Assignment",
+                        "src": "8998:32:37"
+                      }
+                    ],
+                    "id": 12246,
+                    "name": "ExpressionStatement",
+                    "src": "8998:32:37"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract LinkTokenInterface"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12229,
+                              "type": "contract LinkTokenInterface",
+                              "value": "LINK"
+                            },
+                            "id": 12247,
+                            "name": "Identifier",
+                            "src": "9036:4:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "contract LinkTokenInterface",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12421,
+                                  "type": "type(contract LinkTokenInterface)",
+                                  "value": "LinkTokenInterface"
+                                },
+                                "id": 12248,
+                                "name": "Identifier",
+                                "src": "9043:18:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12240,
+                                  "type": "address",
+                                  "value": "_link"
+                                },
+                                "id": 12249,
+                                "name": "Identifier",
+                                "src": "9062:5:37"
+                              }
+                            ],
+                            "id": 12250,
+                            "name": "FunctionCall",
+                            "src": "9043:25:37"
+                          }
+                        ],
+                        "id": 12251,
+                        "name": "Assignment",
+                        "src": "9036:32:37"
+                      }
+                    ],
+                    "id": 12252,
+                    "name": "ExpressionStatement",
+                    "src": "9036:32:37"
+                  }
+                ],
+                "id": 12253,
+                "name": "Block",
+                "src": "8992:81:37"
+              }
+            ],
+            "id": 12254,
+            "name": "FunctionDefinition",
+            "src": "8933:140:37"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "94985ddd",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "rawFulfillRandomness",
+              "overrides": null,
+              "scope": 12276,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "requestId",
+                      "overrides": null,
+                      "scope": 12275,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 12255,
+                        "name": "ElementaryTypeName",
+                        "src": "9298:7:37"
+                      }
+                    ],
+                    "id": 12256,
+                    "name": "VariableDeclaration",
+                    "src": "9298:17:37"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "randomness",
+                      "overrides": null,
+                      "scope": 12275,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 12257,
+                        "name": "ElementaryTypeName",
+                        "src": "9317:7:37"
+                      }
+                    ],
+                    "id": 12258,
+                    "name": "VariableDeclaration",
+                    "src": "9317:18:37"
+                  }
+                ],
+                "id": 12259,
+                "name": "ParameterList",
+                "src": "9297:39:37"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 12260,
+                "name": "ParameterList",
+                "src": "9346:0:37"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                },
+                                {
+                                  "typeIdentifier": "t_stringliteral_aa31d97d949424087cac59e348924584a13a8784d3590fa798a0967391035445",
+                                  "typeString": "literal_string \"Only VRFCoordinator can fulfill\""
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                -18,
+                                -18
+                              ],
+                              "referencedDeclaration": -18,
+                              "type": "function (bool,string memory) pure",
+                              "value": "require"
+                            },
+                            "id": 12261,
+                            "name": "Identifier",
+                            "src": "9352:7:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "sender",
+                                  "referencedDeclaration": null,
+                                  "type": "address payable"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": -15,
+                                      "type": "msg",
+                                      "value": "msg"
+                                    },
+                                    "id": 12262,
+                                    "name": "Identifier",
+                                    "src": "9360:3:37"
+                                  }
+                                ],
+                                "id": 12263,
+                                "name": "MemberAccess",
+                                "src": "9360:10:37"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12231,
+                                  "type": "address",
+                                  "value": "vrfCoordinator"
+                                },
+                                "id": 12264,
+                                "name": "Identifier",
+                                "src": "9374:14:37"
+                              }
+                            ],
+                            "id": 12265,
+                            "name": "BinaryOperation",
+                            "src": "9360:28:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "4f6e6c7920565246436f6f7264696e61746f722063616e2066756c66696c6c",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "string",
+                              "type": "literal_string \"Only VRFCoordinator can fulfill\"",
+                              "value": "Only VRFCoordinator can fulfill"
+                            },
+                            "id": 12266,
+                            "name": "Literal",
+                            "src": "9390:33:37"
+                          }
+                        ],
+                        "id": 12267,
+                        "name": "FunctionCall",
+                        "src": "9352:72:37"
+                      }
+                    ],
+                    "id": 12268,
+                    "name": "ExpressionStatement",
+                    "src": "9352:72:37"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes32",
+                                  "typeString": "bytes32"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12172,
+                              "type": "function (bytes32,uint256)",
+                              "value": "fulfillRandomness"
+                            },
+                            "id": 12269,
+                            "name": "Identifier",
+                            "src": "9430:17:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12256,
+                              "type": "bytes32",
+                              "value": "requestId"
+                            },
+                            "id": 12270,
+                            "name": "Identifier",
+                            "src": "9448:9:37"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 12258,
+                              "type": "uint256",
+                              "value": "randomness"
+                            },
+                            "id": 12271,
+                            "name": "Identifier",
+                            "src": "9459:10:37"
+                          }
+                        ],
+                        "id": 12272,
+                        "name": "FunctionCall",
+                        "src": "9430:40:37"
+                      }
+                    ],
+                    "id": 12273,
+                    "name": "ExpressionStatement",
+                    "src": "9430:40:37"
+                  }
+                ],
+                "id": 12274,
+                "name": "Block",
+                "src": "9346:129:37"
+              }
+            ],
+            "id": 12275,
+            "name": "FunctionDefinition",
+            "src": "9268:207:37"
+          }
+        ],
+        "id": 12276,
+        "name": "ContractDefinition",
+        "src": "5401:4076:37"
+      }
+    ],
+    "id": 12277,
+    "name": "SourceUnit",
+    "src": "32:9446:37"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.5+commit.f956cc89.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-07-22T21:42:32.315Z",
+  "devdoc": {
+    "details": "PURPOSEReggie the Random Oracle (not his real job) wants to provide randomnessto Vera the verifier in such a way that Vera can be sure he's notmaking his output up to suit himself. Reggie provides Vera a public keyto which he knows the secret key. Each time Vera provides a seed toReggie, he gives back a value which is computed completelydeterministically from the seed and the secret key.Reggie provides a proof by which Vera can verify that the output wascorrectly computed once Reggie tells it to her, but without that proof,the output is indistinguishable to her from a uniform random samplefrom the output space.The purpose of this contract is to make it easy for unrelated contractsto talk to Vera the verifier about the work Reggie is doing, to providesimple access to a verifiable source of randomness. *****************************************************************************USAGECalling contracts must inherit from VRFConsumerBase, and caninitialize VRFConsumerBase's attributes in their constructor asshown:contract VRFConsumer {constuctor(<other arguments>, address _vrfCoordinator, address _link)VRFConsumerBase(_vrfCoordinator, _link) public {<initialization with other arguments goes here>}}The oracle will have given you an ID for the VRF keypair they havecommitted to (let's call it keyHash), and have told you the minimum LINKprice for VRF service. Make sure your contract has sufficient LINK, andcall requestRandomness(keyHash, fee, seed), where seed is the input youwant to generate randomness from.Once the VRFCoordinator has received and validated the oracle's responseto your request, it will call your contract's fulfillRandomness method.The randomness argument to fulfillRandomness is the actual random valuegenerated from your seed.The requestId argument is generated from the keyHash and the seed bymakeRequestId(keyHash, seed). If your contract could have concurrentrequests open, you can use the requestId to track which seed isassociated with which randomness. See VRFRequestIDBase.sol for moredetails. (See \"SECURITY CONSIDERATIONS\" for principles to keep in mind,if your contract could have multiple requests in flight simultaneously.)Colliding `requestId`s are cryptographically impossible as long as seedsdiffer. (Which is critical to making unpredictable randomness! See thenext section.) * *****************************************************************************SECURITY CONSIDERATIONSA method with the ability to call your fulfillRandomness method directlycould spoof a VRF response with any random value, so it's critical thatit cannot be directly called by anything other than this base contract(specifically, by the VRFConsumerBase.rawFulfillRandomness method).For your users to trust that your contract's random behavior is freefrom malicious interference, it's best if you can write it so that allbehaviors implied by a VRF response are executed *during* yourfulfillRandomness method. If your contract must store the response (oranything derived from it) and use it later, you must ensure that anyuser-significant behavior which depends on that stored value cannot bemanipulated by a subsequent VRF request.Similarly, both miners and the VRF oracle itself have some influenceover the order in which VRF responses appear on the blockchain, so ifyour contract could have multiple VRF requests in flight simultaneously,you must ensure that the order in which the VRF responses arrive cannotbe used to manipulate your contract's user-significant behavior.Since the ultimate input to the VRF is mixed with the block hash of theblock in which the request is made, user-provided seeds have no impacton its economic security properties. They are only included for APIcompatability with previous versions of this contract.Since the block hash of the block which contains the requestRandomnesscall is mixed into the input to the VRF *last*, a sufficiently powerfulminer could, in principle, fork the blockchain to evict the blockcontaining the request, forcing the request to be included in adifferent block with a different hash, and therefore a different inputto the VRF. However, such an attack would incur a substantial economiccost. This cost scales with the number of blocks the VRF oracle waitsuntil it calls responds to a request.",
+    "methods": {
+      "constructor": {
+        "details": "https://docs.chain.link/docs/link-token-contracts",
+        "params": {
+          "_link": "address of LINK token contract",
+          "_vrfCoordinator": "address of VRFCoordinator contract"
+        }
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {},
+    "notice": "****************************************************************************Interface for contracts using VRF randomness *****************************************************************************"
+  }
+}

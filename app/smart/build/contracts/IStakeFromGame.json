@@ -1,0 +1,320 @@
+{
+  "contractName": "IStakeFromGame",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "player",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stakeFromGame",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.5+commit.f956cc89\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"player\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"stakeFromGame\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/F/vscode/cblades/contracts/interfaces/IStakeFromGame.sol\":\"IStakeFromGame\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/F/vscode/cblades/contracts/interfaces/IStakeFromGame.sol\":{\"keccak256\":\"0x9b192e89c359ec2948dde4e81454299a87e93916751a8c109fd44760f95f31a2\",\"urls\":[\"bzz-raw://016c65ef318a70d4d27c4fc8f4c5361ac3671c665f8bbbf4b45eeab331f11440\",\"dweb:/ipfs/QmaC1UCyU9nV2XEWLKF7cQuLGtNkvZd2vCKrWCvMZzEroW\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.6.5;\r\n\r\ninterface IStakeFromGame {\r\n    function stakeFromGame(address player, uint256 amount) external;\r\n}\r\n",
+  "sourcePath": "F:\\vscode\\cblades\\contracts\\interfaces\\IStakeFromGame.sol",
+  "ast": {
+    "absolutePath": "/F/vscode/cblades/contracts/interfaces/IStakeFromGame.sol",
+    "exportedSymbols": {
+      "IStakeFromGame": [
+        6864
+      ]
+    },
+    "id": 6865,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 6856,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".5"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:20"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 6864,
+        "linearizedBaseContracts": [
+          6864
+        ],
+        "name": "IStakeFromGame",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "functionSelector": "668e0122",
+            "id": 6863,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stakeFromGame",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 6861,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6858,
+                  "name": "player",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 6863,
+                  "src": "82:14:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6857,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "82:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 6860,
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 6863,
+                  "src": "98:14:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 6859,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "98:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "81:32:20"
+            },
+            "returnParameters": {
+              "id": 6862,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "122:0:20"
+            },
+            "scope": 6864,
+            "src": "59:64:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 6865,
+        "src": "27:99:20"
+      }
+    ],
+    "src": "0:128:20"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/F/vscode/cblades/contracts/interfaces/IStakeFromGame.sol",
+      "exportedSymbols": {
+        "IStakeFromGame": [
+          6864
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.6",
+            ".5"
+          ]
+        },
+        "id": 6856,
+        "name": "PragmaDirective",
+        "src": "0:23:20"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            6864
+          ],
+          "name": "IStakeFromGame",
+          "scope": 6865
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "functionSelector": "668e0122",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "stakeFromGame",
+              "overrides": null,
+              "scope": 6864,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "player",
+                      "overrides": null,
+                      "scope": 6863,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 6857,
+                        "name": "ElementaryTypeName",
+                        "src": "82:7:20"
+                      }
+                    ],
+                    "id": 6858,
+                    "name": "VariableDeclaration",
+                    "src": "82:14:20"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "amount",
+                      "overrides": null,
+                      "scope": 6863,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 6859,
+                        "name": "ElementaryTypeName",
+                        "src": "98:7:20"
+                      }
+                    ],
+                    "id": 6860,
+                    "name": "VariableDeclaration",
+                    "src": "98:14:20"
+                  }
+                ],
+                "id": 6861,
+                "name": "ParameterList",
+                "src": "81:32:20"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 6862,
+                "name": "ParameterList",
+                "src": "122:0:20"
+              }
+            ],
+            "id": 6863,
+            "name": "FunctionDefinition",
+            "src": "59:64:20"
+          }
+        ],
+        "id": 6864,
+        "name": "ContractDefinition",
+        "src": "27:99:20"
+      }
+    ],
+    "id": 6865,
+    "name": "SourceUnit",
+    "src": "0:128:20"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.5+commit.f956cc89.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-07-22T21:42:32.094Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

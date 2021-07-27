@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width')
+    title= title
+    link(rel='apple-touch-icon', href='/favicon/apple-touch-icon.png')
+    link(rel='icon', sizes='32x32', type='image/png', href='/favicon/favicon.png')
+    link(rel='stylesheet' media='screen' href='./css/theme.min.css')
+    link(rel='stylesheet' media='screen' href='/css/bootstrap-table.min.css')
+    link(rel='stylesheet' media='screen' href='/css/bootstrap-toggle.min.css')
+    script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-2C7J6DL9GR')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2C7J6DL9GR');
+    script(async='' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3817915416599313' crossorigin='anonymous')
+    
+  body(style='background-color: #12263f')
+    block content
+
+    script(type="text/javascript" src='./libs/jquery/dist/jquery.min.js')
+    script(type="text/javascript" src='./vendor/bootstrap/dist/js/bootstrap.bundle.min.js' )
+    script(type="text/javascript" src='./vendor/simplebar/dist/simplebar.min.js')
+    script(type="text/javascript" src='./vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js')
+    script(type="text/javascript" src='./js/bootstrap-table.min.js')
+    script(type="text/javascript" src='./js/bootstrap-toggle.min.js')
+    script(type="text/javascript" src='./js/theme.min.js')
+    script(type="text/javascript" src='./js/core.js')

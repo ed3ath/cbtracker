@@ -1,0 +1,42 @@
+{
+  "name": "express-mvc-boilerplate",
+  "version": "1.0.0",
+  "description": "A simple mvc boilerplate for express.js",
+  "private": true,
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "gulp": "gulp",
+    "test": "mocha -R spec ./test/*.js",
+    "lint": "eslint ./ || exit 0",
+    "lint-fix": "eslint ./ --fix || exit 0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^3.1.0",
+    "express": "^4.16.2",
+    "mongoose": "^5.13.3",
+    "morgan": "^1.9.0",
+    "pug": "^3.0.2",
+    "serve-favicon": "^2.4.5",
+    "web3": "^1.4.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.7",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-stylus": "^2.5.0",
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "express-mvc-boilerplate",
+  "description": "A simple mvc boilerplate for express.js",
+  "version": "0.0.1",
+  "main": "app.js",
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}

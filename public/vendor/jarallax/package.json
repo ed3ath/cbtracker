@@ -1,0 +1,103 @@
+{
+  "_from": "jarallax@1.12.1",
+  "_id": "jarallax@1.12.1",
+  "_inBundle": false,
+  "_integrity": "sha512-8AKPKjLz8JcjZFwdMMbf3W7QG9BTzB3rN0k47Xx+tWpkPeGgHodxEUB2OGsj3eOzLCpSvolfW0PtwTp7i3CrhA==",
+  "_location": "/jarallax",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "jarallax@1.12.1",
+    "name": "jarallax",
+    "escapedName": "jarallax",
+    "rawSpec": "1.12.1",
+    "saveSpec": null,
+    "fetchSpec": "1.12.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/jarallax/-/jarallax-1.12.1.tgz",
+  "_shasum": "5f8c539f54244264c7a53ade11adf49c0634dd99",
+  "_spec": "jarallax@1.12.1",
+  "_where": "/Users/rokaux/Sites/around",
+  "author": {
+    "name": "nK",
+    "email": "https://nkdev.info"
+  },
+  "bugs": {
+    "url": "https://github.com/nk-o/jarallax/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "global": "^4.4.0",
+    "lite-ready": "^1.0.4",
+    "video-worker": "^1.1.8"
+  },
+  "deprecated": false,
+  "description": "Smooth parallax scrolling effect for background images, videos and inline elements. Code in pure JavaScript with NO dependencies + jQuery supported. Youtube, Vimeo and Local Videos parallax supported.",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
+    "@babel/plugin-transform-async-to-generator": "^7.8.3",
+    "@babel/plugin-transform-block-scoping": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/register": "^7.9.0",
+    "@types/jquery": "^3.3.36",
+    "babel-loader": "^8.1.0",
+    "browser-sync": "^2.26.7",
+    "del": "^5.1.0",
+    "eslint-config-nk": "^0.0.17",
+    "gulp": "^4.0.2",
+    "gulp-header": "^2.0.9",
+    "gulp-if": "^3.0.0",
+    "gulp-load-plugins": "^2.0.3",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "gulp-watch": "^5.0.1",
+    "husky": "^3.1.0",
+    "jquery": "^3.5.0",
+    "json-file": "^0.1.0",
+    "lint-staged": "^10.1.7",
+    "micromatch": "^4.0.2",
+    "node-qunit-phantomjs": "^2.1.1",
+    "object-fit-images": "^3.2.4",
+    "qunitjs": "^2.4.1",
+    "vinyl-named": "^1.1.0",
+    "webpack-stream": "^5.2.1"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "homepage": "https://github.com/nk-o/jarallax",
+  "keywords": [
+    "parallax",
+    "image",
+    "background",
+    "youtube",
+    "vimeo",
+    "video"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "jarallax",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nk-o/jarallax.git"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "dev": "gulp dev",
+    "js-lint": "eslint src/",
+    "js-lint-fix": "eslint --fix src/",
+    "test": "gulp test"
+  },
+  "types": "./typings/index.d.ts",
+  "version": "1.12.1"
+}

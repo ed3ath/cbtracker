@@ -1,0 +1,64 @@
+{
+  "_from": "smooth-scroll@16.1.3",
+  "_id": "smooth-scroll@16.1.3",
+  "_inBundle": false,
+  "_integrity": "sha512-ca9U+neJS/cbdScTBuUTCZvUWNF2EuMCk7oAx3ImdeRK5FPm+xRo9XsVHIkeEVkn7MBRx+ufVEhyveM4ZhaTGA==",
+  "_location": "/smooth-scroll",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "smooth-scroll@16.1.3",
+    "name": "smooth-scroll",
+    "escapedName": "smooth-scroll",
+    "rawSpec": "16.1.3",
+    "saveSpec": null,
+    "fetchSpec": "16.1.3"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/smooth-scroll/-/smooth-scroll-16.1.3.tgz",
+  "_shasum": "c5b68194b4186173f9f61065103ae4e26ce36885",
+  "_spec": "smooth-scroll@16.1.3",
+  "_where": "/Users/rokaux/Sites/around",
+  "author": {
+    "name": "Chris Ferdinandi",
+    "url": "http://gomakethings.com"
+  },
+  "bugs": {
+    "url": "https://github.com/cferdinandi/smooth-scroll/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Animate scrolling to anchor links",
+  "devDependencies": {
+    "browser-sync": "2.26.3",
+    "del": "3.0.0",
+    "gulp": "4.0.0",
+    "gulp-autoprefixer": "6.0.0",
+    "gulp-concat": "2.6.1",
+    "gulp-cssnano": "2.1.3",
+    "gulp-flatmap": "1.0.2",
+    "gulp-header": "2.0.5",
+    "gulp-jshint": "2.1.0",
+    "gulp-optimize-js": "1.1.0",
+    "gulp-rename": "1.4.0",
+    "gulp-sass": "4.0.2",
+    "gulp-svgmin": "2.1.0",
+    "gulp-uglify": "3.0.1",
+    "jshint": "2.9.6",
+    "jshint-stylish": "2.2.1",
+    "lazypipe": "1.0.1"
+  },
+  "homepage": "https://github.com/cferdinandi/smooth-scroll#readme",
+  "license": "MIT",
+  "main": "./dist/smooth-scroll.polyfills.min.js",
+  "name": "smooth-scroll",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cferdinandi/smooth-scroll.git"
+  },
+  "version": "16.1.3"
+}

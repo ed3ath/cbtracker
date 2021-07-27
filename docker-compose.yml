@@ -1,0 +1,16 @@
+version: '2'
+services:
+  mongo:
+    image: mongo:3.4
+    ports:
+     - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+  web:
+    build: .
+    ports:
+     - "8080:3200"
+    links:
+     - mongo 
+    depends_on: 
+     - mongo
+     

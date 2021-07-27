@@ -1,0 +1,85 @@
+{
+  "_from": "lg-fullscreen.js",
+  "_id": "lg-fullscreen.js@1.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-/GVqIWyF4+gSeIllPksmpS+ukTljY1xder2Fgn4Y8y7o1yPZY0yuS2JuNMIQspkF0KiZu1PBQOgBUkgQm5eO4w==",
+  "_location": "/lg-fullscreen.js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "lg-fullscreen.js",
+    "name": "lg-fullscreen.js",
+    "escapedName": "lg-fullscreen.js",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/lg-fullscreen.js/-/lg-fullscreen.js-1.1.0.tgz",
+  "_shasum": "f2af474bd6b0febfc24c4a7cc44bac032bc8f84b",
+  "_spec": "lg-fullscreen.js",
+  "_where": "/Users/rokaux/Sites/around",
+  "author": {
+    "name": "Sachin N",
+    "email": "sachi77n@gmail.com",
+    "url": "https://github.com/sachinchoolur"
+  },
+  "bugs": {
+    "url": "https://github.com/sachinchoolur/lg-fullscreen.js/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Fullscreen module for lightgallery.",
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.5.2",
+    "babel-plugin-transform-es2015-modules-umd": "^6.5.0",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babelify": "^7.2.0",
+    "bannerify": "^1.0.1",
+    "browserify": "^13.0.0",
+    "install": "^0.4.4",
+    "jshint": "^2.9.2",
+    "uglify-js": "^2.4.24",
+    "watchify": "^3.4.0"
+  },
+  "homepage": "http://sachinchoolur.github.io/lg-fullscreen.js",
+  "keywords": [
+    "gallery",
+    "lightbox",
+    "image",
+    "youtube",
+    "vimeo",
+    "dailymotion",
+    "html5 videos",
+    "thumbnails",
+    "zoom",
+    "fullscreen",
+    "responsive",
+    "touch",
+    "drag"
+  ],
+  "license": "GPLv3",
+  "main": "dist/lg-fullscreen.js",
+  "name": "lg-fullscreen.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sachinchoolur/lg-fullscreen.js.git"
+  },
+  "scripts": {
+    "build": "npm run lint && npm run build-debug && npm run build-min",
+    "build-debug": "browserify src/lg-fullscreen.js -s LgFullscreen -t [babelify] -p [bannerify --file .banner ] -o dist/lg-fullscreen.js",
+    "build-min": "uglifyjs dist/lg-fullscreen.js --comments '/@license/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/lg-fullscreen.min.js",
+    "build-watch": "watchify src/lg-fullscreen.js -s LgFullscreen -t [babelify] -o dist/lg-fullscreen.js -v",
+    "dev": "watchify src/lg-fullscreen.js -s LgFullscreen -t [babelify] -o /Users/sachin/workspace/lightgallery-js/gh-pages/lightgallery.js/lightgallery/js/lg-fullscreen.js -v",
+    "lint": "jshint src"
+  },
+  "version": "1.1.0"
+}

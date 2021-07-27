@@ -1,0 +1,85 @@
+{
+  "_from": "lg-zoom.js",
+  "_id": "lg-zoom.js@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-XhzcV0CfXjMbVz0P2T3CZHnIDN4=",
+  "_location": "/lg-zoom.js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "lg-zoom.js",
+    "name": "lg-zoom.js",
+    "escapedName": "lg-zoom.js",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/lg-zoom.js/-/lg-zoom.js-1.0.1.tgz",
+  "_shasum": "5e1cdc57409f5e331b573d0fd93dc26479c80cde",
+  "_spec": "lg-zoom.js",
+  "_where": "/Users/rokaux/Sites/around",
+  "author": {
+    "name": "Sachin N",
+    "email": "sachi77n@gmail.com",
+    "url": "https://github.com/sachinchoolur"
+  },
+  "bugs": {
+    "url": "https://github.com/sachinchoolur/lg-zoom.js/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Zoom module for lightgallery.",
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.5.2",
+    "babel-plugin-transform-es2015-modules-umd": "^6.5.0",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babelify": "^7.2.0",
+    "bannerify": "^1.0.1",
+    "browserify": "^13.0.0",
+    "install": "^0.4.4",
+    "jshint": "^2.9.2",
+    "uglify-js": "^2.4.24",
+    "watchify": "^3.4.0"
+  },
+  "homepage": "http://sachinchoolur.github.io/lg-zoom.js",
+  "keywords": [
+    "gallery",
+    "lightbox",
+    "image",
+    "youtube",
+    "vimeo",
+    "dailymotion",
+    "html5 videos",
+    "thumbnails",
+    "zoom",
+    "fullscreen",
+    "responsive",
+    "touch",
+    "drag"
+  ],
+  "license": "GPLv3",
+  "main": "dist/lg-zoom.js",
+  "name": "lg-zoom.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sachinchoolur/lg-zoom.js.git"
+  },
+  "scripts": {
+    "build": "npm run lint && npm run build-debug && npm run build-min",
+    "build-debug": "browserify src/lg-zoom.js -s LgZoom -t [babelify] -p [bannerify --file .banner ] -o dist/lg-zoom.js",
+    "build-min": "uglifyjs dist/lg-zoom.js --comments '/@license/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/lg-zoom.min.js",
+    "build-watch": "watchify src/lg-zoom.js -s LgZoom -t [babelify] -o dist/lg-zoom.js -v",
+    "dev": "watchify src/lg-zoom.js -s LgZoom -t [babelify] -o ../lg/lightgallery.js/lightgallery/js/lg-zoom.js -v",
+    "lint": "jshint src"
+  },
+  "version": "1.0.1"
+}

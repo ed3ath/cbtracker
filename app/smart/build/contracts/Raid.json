@@ -1,0 +1,4866 @@
+{
+  "contractName": "Raid",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "RaidCompleted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "RaidReset",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "character",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "weapon",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint24",
+          "name": "power",
+          "type": "uint24"
+        }
+      ],
+      "name": "RaiderJoined",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "grantAccess",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        }
+      ],
+      "name": "revokeAccess",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "gameContract",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "reset",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "character",
+          "type": "uint256"
+        }
+      ],
+      "name": "isRaider",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getRaiderCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getExpectedFinishTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "setExpectedFinishTime",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "characterID",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "weaponID",
+          "type": "uint256"
+        }
+      ],
+      "name": "addRaider",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "seed",
+          "type": "uint256"
+        }
+      ],
+      "name": "completeRaid",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.5+commit.f956cc89\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[],\"name\":\"RaidCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"RaidReset\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"character\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"weapon\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint24\",\"name\":\"power\",\"type\":\"uint24\"}],\"name\":\"RaiderJoined\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"characterID\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"weaponID\",\"type\":\"uint256\"}],\"name\":\"addRaider\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"}],\"name\":\"completeRaid\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getExpectedFinishTime\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getRaiderCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"grantAccess\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"gameContract\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"character\",\"type\":\"uint256\"}],\"name\":\"isRaider\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"reset\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"}],\"name\":\"revokeAccess\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"time\",\"type\":\"uint256\"}],\"name\":\"setExpectedFinishTime\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/F/vscode/cblades/contracts/raid.sol\":\"Raid\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/F/vscode/cblades/contracts/Promos.sol\":{\"keccak256\":\"0x24cdbc5bf8e3b27a872467bd8a1551c9857741a2558b73d1fcced457e4268e73\",\"urls\":[\"bzz-raw://b127af940d848f54e4cfb190d242e4408413af3a3135408f9d858d710d0a53dd\",\"dweb:/ipfs/QmaPJx3qbQGEWQsMndk9vRhiWKxLAUohTVAmF2ov3kVm4V\"]},\"/F/vscode/cblades/contracts/characters.sol\":{\"keccak256\":\"0x0ee6adeb2adc62d28465ca338d7aae3fa4239dfd8f99f9d450dffd24e4147cee\",\"urls\":[\"bzz-raw://b2e0df826e94a9980ee44fdbbd93d98c0e347b130d06df848496431650c5175c\",\"dweb:/ipfs/QmSHNUvTZasKKmmhQJLRjEhC1uktHjjDmmf7kAaydLUkX4\"]},\"/F/vscode/cblades/contracts/cryptoblades.sol\":{\"keccak256\":\"0x76aeb38a0600aa2638f23389a335f74d87a7b61b57e8526d9a6a23311164b956\",\"urls\":[\"bzz-raw://dd639787edd01ce0bd49e71282a41f850c249231235dc9044f02f2528e6dc3d0\",\"dweb:/ipfs/QmPKru7Z1jdbjK4fGEMqhHzPkNFou9sFM7LqSoQoo38AYE\"]},\"/F/vscode/cblades/contracts/interfaces/IPriceOracle.sol\":{\"keccak256\":\"0x09772fba4e015bbb5f3f81a00d9963f309f8adf0595491ff8ba33eed857a80ca\",\"urls\":[\"bzz-raw://95490028b56a0c3353ec1a46ef405a2ee87e32a6541f32dd29e1e6adfdaf3ec6\",\"dweb:/ipfs/Qme5P8PYrzD2mZ94y7r3LmPV455UK7Zr9pYPU9EcWCbZmp\"]},\"/F/vscode/cblades/contracts/interfaces/IRandoms.sol\":{\"keccak256\":\"0x3ae177ddd5e6cea78f4dd0f0ca15da119bf44210a1cfbd21cafdbf687844bf18\",\"urls\":[\"bzz-raw://0e177de21e310d6056dcb467a3bf51f794fd1028d2802e5dd12b65ee6fb1bc6f\",\"dweb:/ipfs/QmamtMGEZmEEsVe1LcYDZrAZQyPL6A2nJtqXbvYMZHAsnE\"]},\"/F/vscode/cblades/contracts/interfaces/IStakeFromGame.sol\":{\"keccak256\":\"0x9b192e89c359ec2948dde4e81454299a87e93916751a8c109fd44760f95f31a2\",\"urls\":[\"bzz-raw://016c65ef318a70d4d27c4fc8f4c5361ac3671c665f8bbbf4b45eeab331f11440\",\"dweb:/ipfs/QmaC1UCyU9nV2XEWLKF7cQuLGtNkvZd2vCKrWCvMZzEroW\"]},\"/F/vscode/cblades/contracts/interfaces/ITransferCooldownable.sol\":{\"keccak256\":\"0xeef98c630b40272746bec39ad7b137e9d766eb8d34bcdd71bf1efeaef0ce676a\",\"urls\":[\"bzz-raw://765b15f720f6ec179d682a1a0194d07293bed35788cd74e0262c49d3a2e636b1\",\"dweb:/ipfs/QmbBq5DqkGxVYysoSLmfxiU8eWJXRDfqMgvRgvDC8k9dvT\"]},\"/F/vscode/cblades/contracts/multiAccessUpgradeable.sol\":{\"keccak256\":\"0x469839577d6a6fcbf8208091351d037eb28085c0d2bb8106c5ec5b0b65da07f0\",\"urls\":[\"bzz-raw://b82bcf3f814ff26841f2abf4b81e41363c16733d7f12fa9843d214c735cc98dc\",\"dweb:/ipfs/QmNvEgaJUMtbYBnqeYgsAvDMXrVQENmwYswZ4g8YHt8NUt\"]},\"/F/vscode/cblades/contracts/raid.sol\":{\"keccak256\":\"0xaab12b1752bd948d135d79f18abd3f53900613dabd10a4ffc7a24a4284e10994\",\"urls\":[\"bzz-raw://7bf0638f45823ad41a27f40007e50c9c854e388c6df1e4363b3b0412371ea3d2\",\"dweb:/ipfs/QmXq792fCqTh1HT5oMBbgUWsZMPDBSZfmehYQyDFK3THqG\"]},\"/F/vscode/cblades/contracts/util.sol\":{\"keccak256\":\"0x25691f7d275dbe9fd3a80de256d954fd188092c5e444b43bd639f56414768f3d\",\"urls\":[\"bzz-raw://276d503db7360cebd62a1df46a1d28a7e1b08fc25abb2ccd9d35cd7e19d590d6\",\"dweb:/ipfs/QmaRZwe6s2Fo1iKmxfCQdb3uXyjDogRj6UDMKMkG2iGUBw\"]},\"/F/vscode/cblades/contracts/weapons.sol\":{\"keccak256\":\"0x55e744d1ff870f008e1679b5e6d7f71ec0253173fb820dd1ea2f07f7eabb5aaa\",\"urls\":[\"bzz-raw://6669c406d6309e6c56885388e31b9b2674a33c31f3d3de6cb7b6422235267ed7\",\"dweb:/ipfs/QmRAqNYEoLHig19vsRXAZqwzAsopkJ7xdH1XTzfWBBZf8d\"]},\"/F/vscode/cblades/node_modules/@openzeppelin/contracts/math/SafeMath.sol\":{\"keccak256\":\"0xcc78a17dd88fa5a2edc60c8489e2f405c0913b377216a5b26b35656b2d0dab52\",\"urls\":[\"bzz-raw://526dc85e1f9b9b45830e202568d267d93dde7a4fcccf4ad7798dadcd92304d3c\",\"dweb:/ipfs/QmaoXMB972J3cSDLtBq3xBo4jLwqD2uzXTwujtSPqkYVhR\"]},\"/F/vscode/cblades/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol\":{\"keccak256\":\"0xca0c2396dbeb3503b51abf4248ebf77a1461edad513c01529df51850a012bee3\",\"urls\":[\"bzz-raw://991b44ff44e0496e8554a90f4c0512c28faed45104d40430019f3c67ea67740e\",\"dweb:/ipfs/Qmc3nRapVbcctELoZS5qe17zLkFB3bETBfwzCTMF1CSuGE\"]},\"/F/vscode/cblades/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5\",\"urls\":[\"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08\",\"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC\"]},\"/F/vscode/cblades/node_modules/@openzeppelin/contracts/utils/Context.sol\":{\"keccak256\":\"0x8d3cb350f04ff49cfb10aef08d87f19dcbaecc8027b0bed12f3275cd12f38cf0\",\"urls\":[\"bzz-raw://ded47ec7c96750f9bd04bbbc84f659992d4ba901cb7b532a52cd468272cf378f\",\"dweb:/ipfs/QmfBrGtQP7rZEqEg6Wz6jh2N2Kukpj1z5v3CGWmAqrzm96\"]},\"/F/vscode/cblades/node_modules/abdk-libraries-solidity/ABDKMath64x64.sol\":{\"keccak256\":\"0x67609bc0923563d05d3a8a7c681056f9702a92120777cb0bcbb40d0afbb4a015\",\"urls\":[\"bzz-raw://55e817969394d4e0201a8cd3763ad6776bc9fddc986febe9b4acf120e8b7ad0d\",\"dweb:/ipfs/QmNMve5ZjUfA8DJYic4sYTrDEAN6VyxcC7jWUTX25Wmnnp\"]},\"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol\":{\"keccak256\":\"0xa3c77c9ea6b47301c7ab5bf3addc1d809d13a27a179c4629a1b55308e8633d14\",\"urls\":[\"bzz-raw://77a789173aa9454336023580d52fedfb2d5ef0a1ccb3040ba20f5aa56e300aef\",\"dweb:/ipfs/Qme3CQYH1AywEH1w3mDV3UT6NhMQmjspNnUA6V8yBg77Ac\"]},\"@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol\":{\"keccak256\":\"0xc6dbbc2f50a7c104377798a37b2acd1a41c1242544b0bb7a9a7c863f0520eb50\",\"urls\":[\"bzz-raw://ff3a66f685a49d3750c9b3588770d1ee43ce3cb718e1dc911ac65d8a6d1c1f0d\",\"dweb:/ipfs/QmVK2mdcbZTZ81YQ1rxWWNbYgy3Gpb3yz3L2qtDPTdx9hu\"]},\"@openzeppelin/contracts-upgradeable/introspection/IERC165Upgradeable.sol\":{\"keccak256\":\"0x4784c3f8a520a739dd25d76f514833a653990902d0e21601aed45bda44c87524\",\"urls\":[\"bzz-raw://359411cc44a4499f37d46562ef3f348db443f9a699138c1797264d20b14697b7\",\"dweb:/ipfs/QmUmeQNUwve4MFCc1ace6zMnstqa8S9SZe1nXG9THcpQ5v\"]},\"@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol\":{\"keccak256\":\"0x0dd1e9b19801e3e7d900fbf4182d81e1afd23ad7be39504e33df6bbcba91d724\",\"urls\":[\"bzz-raw://5e30d594df25d0651c2cd6f85d856e5fc9f3dbae68d017e1da33eb3c7e2f1ecc\",\"dweb:/ipfs/QmPgkV99jZr3Zs9ex8dJ5j22oX4wDuDtMCnXNy67bTwgAB\"]},\"@openzeppelin/contracts-upgradeable/proxy/Initializable.sol\":{\"keccak256\":\"0xd8e4eb08dcc1d1860fb347ba5ffd595242b9a1b66d49a47f2b4cb51c3f35017e\",\"urls\":[\"bzz-raw://7dbc89479d30592e82442edc38053b380f611037a5e6ceafc7bf57a7aa1f0305\",\"dweb:/ipfs/QmcdYtt56WmjeYvsFjK69FnahnAriw88VzY3XRZwXkQKKN\"]},\"@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol\":{\"keccak256\":\"0x83d830f0835976a5b7bb9c416edf06c865208127eb35445dd6c49b20481d7282\",\"urls\":[\"bzz-raw://2e023290150a3ec557e4f437164cb5240641cf0a7443fb0a07e3ae52fdcc596b\",\"dweb:/ipfs/QmYTCHMdzbpgGsCrNVQ5LmfJA6W32YF29vjppn9zSsCRYe\"]},\"@openzeppelin/contracts-upgradeable/token/ERC721/IERC721EnumerableUpgradeable.sol\":{\"keccak256\":\"0x529f3ab127aace61d7d47f3df7a6a2c42dc79bbb3a0ca459d6a861f33698aee6\",\"urls\":[\"bzz-raw://dcd2091f8d2b7264c5267aaf72b870f27c5de4eb649313e94836e4b677f7dcfb\",\"dweb:/ipfs/QmRTBY7izTxqBmAxQ7Mth2khWJZ1uPebsjwbPPfbUdL4xx\"]},\"@openzeppelin/contracts-upgradeable/token/ERC721/IERC721MetadataUpgradeable.sol\":{\"keccak256\":\"0xa981b1f67f60771c18d39e21bad0a2f0f952e2c3faa90b45b982060fc14ee2bd\",\"urls\":[\"bzz-raw://dcf9db2d0bd009e25874ee428267c45455613c967f29895e94358914fd4c879d\",\"dweb:/ipfs/QmYuwT44WF9imBdokjpuFL27eJVh4jqhmaR8DTdVSG5EhC\"]},\"@openzeppelin/contracts-upgradeable/token/ERC721/IERC721ReceiverUpgradeable.sol\":{\"keccak256\":\"0x53552243cd7de0d57a876cbaee3485d4bdc2b1c7d58ff15447cd623a3ddb5cd0\",\"urls\":[\"bzz-raw://795c6d0e2058529f2b9e190207bb6dbe208cf793e70cf99999d5bb39029a3887\",\"dweb:/ipfs/QmTDtUmqY2BwMZjqLPEtz4k1c4DLhEt8p2rSAMN9wNJKQd\"]},\"@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol\":{\"keccak256\":\"0x3dab19bb4a63bcbda1ee153ca291694f92f9009fad28626126b15a8503b0e5ff\",\"urls\":[\"bzz-raw://ecc8ae8f1f85e11b6f749e147ac298d1d66879f3bfe3d4518b919f7b6151a73b\",\"dweb:/ipfs/QmYXZfcnCd1N1AaxUTfNQjNHJXAAfVGvae6Bte1SfTCKEz\"]},\"@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol\":{\"keccak256\":\"0xfc5ea91fa9ceb1961023b2a6c978b902888c52b90847ac7813fe3b79524165f6\",\"urls\":[\"bzz-raw://a6b81dcc816857a9d981386f6d8de49198420ee41cdc0ecade366ab412174d03\",\"dweb:/ipfs/QmV2vznMT6m9qo3pFMAWi3Nz3UDhwesgwFxeXe6Tod3v8A\"]},\"@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol\":{\"keccak256\":\"0xbbf8a21b9a66c48d45ff771b8563c6df19ba451d63dfb8380a865c1e1f29d1a0\",\"urls\":[\"bzz-raw://062688aac76e27ab50157a9d645700cf92e3c0d51d3d860be1d2e1a0c04a87d0\",\"dweb:/ipfs/QmfXxppWAiSTeH8YNn2EtMPDgzrLeJ5rjRq8knEbje88mX\"]},\"@openzeppelin/contracts-upgradeable/utils/EnumerableMapUpgradeable.sol\":{\"keccak256\":\"0x6a8e34d051fc71ce49a8a47d050c5b7e77909008c6be7d6780ee9ed87d2d3797\",\"urls\":[\"bzz-raw://9764cb2c147e132a2c37be98bde62cd1d66011708d0d3077bab6aa58b00b0472\",\"dweb:/ipfs/QmWURB8hvNHKd7J7MoMvCxYHSW9LoZGSSJYFhXNX7o4tow\"]},\"@openzeppelin/contracts-upgradeable/utils/EnumerableSetUpgradeable.sol\":{\"keccak256\":\"0x20714cf126a1a984613579156d3cbc726db8025d8400e1db1d2bb714edaba335\",\"urls\":[\"bzz-raw://8d6e8cc57f51f6c73eccd5b2dbaf3d8486a35148fe0e8bea4b002fbf2a78f381\",\"dweb:/ipfs/QmawvgjwaqMxyfbFnjxfap1FZ1sPwVgGHaEC41whKdP7N4\"]},\"@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol\":{\"keccak256\":\"0x8d1ac29b8a8ed3cfebe5d8774b465441ae8931aaca549f84408e0b29a1191964\",\"urls\":[\"bzz-raw://1ddb2fde1fb47d755362333f64099a63ef37c12f2b4b38f80050cb967952058b\",\"dweb:/ipfs/QmYD25vdrQ1WyzD8png1nStRRPJBmnkf6fY8FthNrKfmmb\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.6.0;\r\n\r\nimport \"@openzeppelin/contracts-upgradeable/proxy/Initializable.sol\";\r\nimport \"./multiAccessUpgradeable.sol\";\r\nimport \"./cryptoblades.sol\";\r\nimport \"./characters.sol\";\r\nimport \"./weapons.sol\";\r\nimport \"../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol\";\r\n\r\nabstract contract Raid is Initializable, MultiAccessUpgradeable {\r\n\r\n    // Outline raids contract that we can iterate on and deploy multiple of.\r\n    // Needs to be granted access to NFT contracts to interact with them\r\n\r\n    bool internal completed;\r\n    uint256 internal expectedFinishTime; // not a guarantee since we don't automate this (atm)\r\n\r\n    CryptoBlades internal game;\r\n    Characters internal characters;\r\n    Weapons internal weapons;\r\n\r\n    struct Raider {\r\n        uint256 owner;\r\n        uint256 charID;\r\n        uint256 wepID;\r\n        uint24 power;\r\n    }\r\n    Raider[] internal raiders;\r\n    mapping(uint256 => bool) internal participation;\r\n\r\n    event RaidReset();\r\n    event RaiderJoined(address owner, uint256 character, uint256 weapon, uint24 power);\r\n    event RaidCompleted();\r\n\r\n    function initialize(address gameContract) public virtual initializer {\r\n        MultiAccessUpgradeable.initialize();\r\n\r\n        grantAccess(gameContract);\r\n        game = CryptoBlades(gameContract);\r\n        // maybe just use extra params for NFT addresses?\r\n        characters = Characters(game.characters());\r\n        weapons = Weapons(game.weapons());\r\n    }\r\n\r\n    function reset() public virtual restricted {\r\n        for(uint i = 0; i < raiders.length; i++) {\r\n            delete participation[raiders[i].charID]; // we cant clear all mappings in one delete call\r\n        }\r\n        delete raiders;\r\n        completed = false;\r\n        emit RaidReset();\r\n    }\r\n\r\n    function isRaider(uint256 character) public view returns(bool) {\r\n        return participation[character];\r\n    }\r\n\r\n    function getRaiderCount() public view returns(uint256) {\r\n        return raiders.length;\r\n    }\r\n\r\n    function getExpectedFinishTime() public view returns(uint256) {\r\n        return expectedFinishTime;\r\n    }\r\n\r\n    function setExpectedFinishTime(uint256 time) public restricted {\r\n        expectedFinishTime = time;\r\n    }\r\n\r\n    function addRaider(uint256 characterID, uint256 weaponID) public virtual;\r\n    function completeRaid(uint256 seed) public virtual;\r\n}",
+  "sourcePath": "F:\\vscode\\cblades\\contracts\\raid.sol",
+  "ast": {
+    "absolutePath": "/F/vscode/cblades/contracts/raid.sol",
+    "exportedSymbols": {
+      "Raid": [
+        7153
+      ]
+    },
+    "id": 7154,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 6973,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:23"
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
+        "file": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
+        "id": 6974,
+        "nodeType": "ImportDirective",
+        "scope": 7154,
+        "sourceUnit": 19087,
+        "src": "27:69:23",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/contracts/multiAccessUpgradeable.sol",
+        "file": "./multiAccessUpgradeable.sol",
+        "id": 6975,
+        "nodeType": "ImportDirective",
+        "scope": 7154,
+        "sourceUnit": 6972,
+        "src": "98:38:23",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/contracts/cryptoblades.sol",
+        "file": "./cryptoblades.sol",
+        "id": 6976,
+        "nodeType": "ImportDirective",
+        "scope": 7154,
+        "sourceUnit": 6828,
+        "src": "138:28:23",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/contracts/characters.sol",
+        "file": "./characters.sol",
+        "id": 6977,
+        "nodeType": "ImportDirective",
+        "scope": 7154,
+        "sourceUnit": 4464,
+        "src": "168:26:23",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/contracts/weapons.sol",
+        "file": "./weapons.sol",
+        "id": 6978,
+        "nodeType": "ImportDirective",
+        "scope": 7154,
+        "sourceUnit": 12154,
+        "src": "196:23:23",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/F/vscode/cblades/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "file": "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "id": 6979,
+        "nodeType": "ImportDirective",
+        "scope": 7154,
+        "sourceUnit": 14015,
+        "src": "221:71:23",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 6980,
+              "name": "Initializable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 19086,
+              "src": "322:13:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Initializable_$19086",
+                "typeString": "contract Initializable"
+              }
+            },
+            "id": 6981,
+            "nodeType": "InheritanceSpecifier",
+            "src": "322:13:23"
+          },
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 6982,
+              "name": "MultiAccessUpgradeable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 6971,
+              "src": "337:22:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_MultiAccessUpgradeable_$6971",
+                "typeString": "contract MultiAccessUpgradeable"
+              }
+            },
+            "id": 6983,
+            "nodeType": "InheritanceSpecifier",
+            "src": "337:22:23"
+          }
+        ],
+        "contractDependencies": [
+          6971,
+          19086
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 7153,
+        "linearizedBaseContracts": [
+          7153,
+          6971,
+          19086
+        ],
+        "name": "Raid",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 6985,
+            "name": "completed",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 7153,
+            "src": "523:23:23",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 6984,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "523:4:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 6987,
+            "name": "expectedFinishTime",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 7153,
+            "src": "553:35:23",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 6986,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "553:7:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 6989,
+            "name": "game",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 7153,
+            "src": "651:26:23",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_CryptoBlades_$6827",
+              "typeString": "contract CryptoBlades"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 6988,
+              "name": "CryptoBlades",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 6827,
+              "src": "651:12:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_CryptoBlades_$6827",
+                "typeString": "contract CryptoBlades"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 6991,
+            "name": "characters",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 7153,
+            "src": "684:30:23",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_Characters_$4463",
+              "typeString": "contract Characters"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 6990,
+              "name": "Characters",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4463,
+              "src": "684:10:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Characters_$4463",
+                "typeString": "contract Characters"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 6993,
+            "name": "weapons",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 7153,
+            "src": "721:24:23",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_Weapons_$12153",
+              "typeString": "contract Weapons"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 6992,
+              "name": "Weapons",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 12153,
+              "src": "721:7:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Weapons_$12153",
+                "typeString": "contract Weapons"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "canonicalName": "Raid.Raider",
+            "id": 7002,
+            "members": [
+              {
+                "constant": false,
+                "id": 6995,
+                "name": "owner",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 7002,
+                "src": "779:13:23",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 6994,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "779:7:23",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 6997,
+                "name": "charID",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 7002,
+                "src": "803:14:23",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 6996,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "803:7:23",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 6999,
+                "name": "wepID",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 7002,
+                "src": "828:13:23",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 6998,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "828:7:23",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 7001,
+                "name": "power",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 7002,
+                "src": "852:12:23",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint24",
+                  "typeString": "uint24"
+                },
+                "typeName": {
+                  "id": 7000,
+                  "name": "uint24",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "852:6:23",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint24",
+                    "typeString": "uint24"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Raider",
+            "nodeType": "StructDefinition",
+            "scope": 7153,
+            "src": "754:118:23",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 7005,
+            "name": "raiders",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 7153,
+            "src": "878:25:23",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_struct$_Raider_$7002_storage_$dyn_storage",
+              "typeString": "struct Raid.Raider[]"
+            },
+            "typeName": {
+              "baseType": {
+                "contractScope": null,
+                "id": 7003,
+                "name": "Raider",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 7002,
+                "src": "878:6:23",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Raider_$7002_storage_ptr",
+                  "typeString": "struct Raid.Raider"
+                }
+              },
+              "id": 7004,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "878:8:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_struct$_Raider_$7002_storage_$dyn_storage_ptr",
+                "typeString": "struct Raid.Raider[]"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 7009,
+            "name": "participation",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 7153,
+            "src": "910:47:23",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_bool_$",
+              "typeString": "mapping(uint256 => bool)"
+            },
+            "typeName": {
+              "id": 7008,
+              "keyType": {
+                "id": 7006,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "918:7:23",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "910:24:23",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_bool_$",
+                "typeString": "mapping(uint256 => bool)"
+              },
+              "valueType": {
+                "id": 7007,
+                "name": "bool",
+                "nodeType": "ElementaryTypeName",
+                "src": "929:4:23",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 7011,
+            "name": "RaidReset",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 7010,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "981:2:23"
+            },
+            "src": "966:18:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 7021,
+            "name": "RaiderJoined",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 7020,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7013,
+                  "indexed": false,
+                  "name": "owner",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7021,
+                  "src": "1009:13:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7012,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1009:7:23",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7015,
+                  "indexed": false,
+                  "name": "character",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7021,
+                  "src": "1024:17:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7014,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1024:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7017,
+                  "indexed": false,
+                  "name": "weapon",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7021,
+                  "src": "1043:14:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7016,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1043:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7019,
+                  "indexed": false,
+                  "name": "power",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7021,
+                  "src": "1059:12:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint24",
+                    "typeString": "uint24"
+                  },
+                  "typeName": {
+                    "id": 7018,
+                    "name": "uint24",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1059:6:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint24",
+                      "typeString": "uint24"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1008:64:23"
+            },
+            "src": "990:83:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 7023,
+            "name": "RaidCompleted",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 7022,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1098:2:23"
+            },
+            "src": "1079:22:23"
+          },
+          {
+            "body": {
+              "id": 7061,
+              "nodeType": "Block",
+              "src": "1178:292:23",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 7030,
+                        "name": "MultiAccessUpgradeable",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 6971,
+                        "src": "1189:22:23",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_MultiAccessUpgradeable_$6971_$",
+                          "typeString": "type(contract MultiAccessUpgradeable)"
+                        }
+                      },
+                      "id": 7032,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 6929,
+                      "src": "1189:33:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 7033,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1189:35:23",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7034,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1189:35:23"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 7036,
+                        "name": "gameContract",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7025,
+                        "src": "1249:12:23",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 7035,
+                      "name": "grantAccess",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 6943,
+                      "src": "1237:11:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 7037,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1237:25:23",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7038,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1237:25:23"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 7043,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 7039,
+                      "name": "game",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 6989,
+                      "src": "1273:4:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CryptoBlades_$6827",
+                        "typeString": "contract CryptoBlades"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 7041,
+                          "name": "gameContract",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 7025,
+                          "src": "1293:12:23",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 7040,
+                        "name": "CryptoBlades",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 6827,
+                        "src": "1280:12:23",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_CryptoBlades_$6827_$",
+                          "typeString": "type(contract CryptoBlades)"
+                        }
+                      },
+                      "id": 7042,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1280:26:23",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CryptoBlades_$6827",
+                        "typeString": "contract CryptoBlades"
+                      }
+                    },
+                    "src": "1273:33:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CryptoBlades_$6827",
+                      "typeString": "contract CryptoBlades"
+                    }
+                  },
+                  "id": 7044,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1273:33:23"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 7051,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 7045,
+                      "name": "characters",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 6991,
+                      "src": "1376:10:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Characters_$4463",
+                        "typeString": "contract Characters"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 7047,
+                              "name": "game",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 6989,
+                              "src": "1400:4:23",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_CryptoBlades_$6827",
+                                "typeString": "contract CryptoBlades"
+                              }
+                            },
+                            "id": 7048,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "characters",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 4503,
+                            "src": "1400:15:23",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_view$__$returns$_t_contract$_Characters_$4463_$",
+                              "typeString": "function () view external returns (contract Characters)"
+                            }
+                          },
+                          "id": 7049,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1400:17:23",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Characters_$4463",
+                            "typeString": "contract Characters"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_contract$_Characters_$4463",
+                            "typeString": "contract Characters"
+                          }
+                        ],
+                        "id": 7046,
+                        "name": "Characters",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4463,
+                        "src": "1389:10:23",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_Characters_$4463_$",
+                          "typeString": "type(contract Characters)"
+                        }
+                      },
+                      "id": 7050,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1389:29:23",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Characters_$4463",
+                        "typeString": "contract Characters"
+                      }
+                    },
+                    "src": "1376:42:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Characters_$4463",
+                      "typeString": "contract Characters"
+                    }
+                  },
+                  "id": 7052,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1376:42:23"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 7059,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 7053,
+                      "name": "weapons",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 6993,
+                      "src": "1429:7:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Weapons_$12153",
+                        "typeString": "contract Weapons"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 7055,
+                              "name": "game",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 6989,
+                              "src": "1447:4:23",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_CryptoBlades_$6827",
+                                "typeString": "contract CryptoBlades"
+                              }
+                            },
+                            "id": 7056,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "weapons",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 4505,
+                            "src": "1447:12:23",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_view$__$returns$_t_contract$_Weapons_$12153_$",
+                              "typeString": "function () view external returns (contract Weapons)"
+                            }
+                          },
+                          "id": 7057,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1447:14:23",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Weapons_$12153",
+                            "typeString": "contract Weapons"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_contract$_Weapons_$12153",
+                            "typeString": "contract Weapons"
+                          }
+                        ],
+                        "id": 7054,
+                        "name": "Weapons",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12153,
+                        "src": "1439:7:23",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_Weapons_$12153_$",
+                          "typeString": "type(contract Weapons)"
+                        }
+                      },
+                      "id": 7058,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1439:23:23",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Weapons_$12153",
+                        "typeString": "contract Weapons"
+                      }
+                    },
+                    "src": "1429:33:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Weapons_$12153",
+                      "typeString": "contract Weapons"
+                    }
+                  },
+                  "id": 7060,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1429:33:23"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "c4d66de8",
+            "id": 7062,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 7028,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 7027,
+                  "name": "initializer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19069,
+                  "src": "1166:11:23",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1166:11:23"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7026,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7025,
+                  "name": "gameContract",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7062,
+                  "src": "1129:20:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7024,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1129:7:23",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1128:22:23"
+            },
+            "returnParameters": {
+              "id": 7029,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1178:0:23"
+            },
+            "scope": 7153,
+            "src": "1109:361:23",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7098,
+              "nodeType": "Block",
+              "src": "1521:254:23",
+              "statements": [
+                {
+                  "body": {
+                    "id": 7086,
+                    "nodeType": "Block",
+                    "src": "1573:115:23",
+                    "statements": [
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 7084,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "UnaryOperation",
+                          "operator": "delete",
+                          "prefix": true,
+                          "src": "1588:39:23",
+                          "subExpression": {
+                            "argumentTypes": null,
+                            "baseExpression": {
+                              "argumentTypes": null,
+                              "id": 7078,
+                              "name": "participation",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 7009,
+                              "src": "1595:13:23",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_bool_$",
+                                "typeString": "mapping(uint256 => bool)"
+                              }
+                            },
+                            "id": 7083,
+                            "indexExpression": {
+                              "argumentTypes": null,
+                              "expression": {
+                                "argumentTypes": null,
+                                "baseExpression": {
+                                  "argumentTypes": null,
+                                  "id": 7079,
+                                  "name": "raiders",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 7005,
+                                  "src": "1609:7:23",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_array$_t_struct$_Raider_$7002_storage_$dyn_storage",
+                                    "typeString": "struct Raid.Raider storage ref[] storage ref"
+                                  }
+                                },
+                                "id": 7081,
+                                "indexExpression": {
+                                  "argumentTypes": null,
+                                  "id": 7080,
+                                  "name": "i",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 7068,
+                                  "src": "1617:1:23",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "IndexAccess",
+                                "src": "1609:10:23",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_Raider_$7002_storage",
+                                  "typeString": "struct Raid.Raider storage ref"
+                                }
+                              },
+                              "id": 7082,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "charID",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 6997,
+                              "src": "1609:17:23",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "nodeType": "IndexAccess",
+                            "src": "1595:32:23",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 7085,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1588:39:23"
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "argumentTypes": null,
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 7074,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "argumentTypes": null,
+                      "id": 7071,
+                      "name": "i",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7068,
+                      "src": "1548:1:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "<",
+                    "rightExpression": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 7072,
+                        "name": "raiders",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7005,
+                        "src": "1552:7:23",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_struct$_Raider_$7002_storage_$dyn_storage",
+                          "typeString": "struct Raid.Raider storage ref[] storage ref"
+                        }
+                      },
+                      "id": 7073,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "length",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "1552:14:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "1548:18:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 7087,
+                  "initializationExpression": {
+                    "assignments": [
+                      7068
+                    ],
+                    "declarations": [
+                      {
+                        "constant": false,
+                        "id": 7068,
+                        "name": "i",
+                        "nodeType": "VariableDeclaration",
+                        "overrides": null,
+                        "scope": 7087,
+                        "src": "1536:6:23",
+                        "stateVariable": false,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "typeName": {
+                          "id": 7067,
+                          "name": "uint",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "1536:4:23",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "value": null,
+                        "visibility": "internal"
+                      }
+                    ],
+                    "id": 7070,
+                    "initialValue": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 7069,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1545:1:23",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "nodeType": "VariableDeclarationStatement",
+                    "src": "1536:10:23"
+                  },
+                  "loopExpression": {
+                    "expression": {
+                      "argumentTypes": null,
+                      "id": 7076,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "++",
+                      "prefix": false,
+                      "src": "1568:3:23",
+                      "subExpression": {
+                        "argumentTypes": null,
+                        "id": 7075,
+                        "name": "i",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7068,
+                        "src": "1568:1:23",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 7077,
+                    "nodeType": "ExpressionStatement",
+                    "src": "1568:3:23"
+                  },
+                  "nodeType": "ForStatement",
+                  "src": "1532:156:23"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 7089,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "delete",
+                    "prefix": true,
+                    "src": "1698:14:23",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 7088,
+                      "name": "raiders",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7005,
+                      "src": "1705:7:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_array$_t_struct$_Raider_$7002_storage_$dyn_storage",
+                        "typeString": "struct Raid.Raider storage ref[] storage ref"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7090,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1698:14:23"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 7093,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 7091,
+                      "name": "completed",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 6985,
+                      "src": "1723:9:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "66616c7365",
+                      "id": 7092,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1735:5:23",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "false"
+                    },
+                    "src": "1723:17:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 7094,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1723:17:23"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 7095,
+                      "name": "RaidReset",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7011,
+                      "src": "1756:9:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 7096,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1756:11:23",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7097,
+                  "nodeType": "EmitStatement",
+                  "src": "1751:16:23"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "d826f88f",
+            "id": 7099,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 7065,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 7064,
+                  "name": "restricted",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 6970,
+                  "src": "1510:10:23",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1510:10:23"
+              }
+            ],
+            "name": "reset",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7063,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1492:2:23"
+            },
+            "returnParameters": {
+              "id": 7066,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1521:0:23"
+            },
+            "scope": 7153,
+            "src": "1478:297:23",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7110,
+              "nodeType": "Block",
+              "src": "1846:50:23",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "baseExpression": {
+                      "argumentTypes": null,
+                      "id": 7106,
+                      "name": "participation",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7009,
+                      "src": "1864:13:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_bool_$",
+                        "typeString": "mapping(uint256 => bool)"
+                      }
+                    },
+                    "id": 7108,
+                    "indexExpression": {
+                      "argumentTypes": null,
+                      "id": 7107,
+                      "name": "character",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7101,
+                      "src": "1878:9:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "1864:24:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 7105,
+                  "id": 7109,
+                  "nodeType": "Return",
+                  "src": "1857:31:23"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "da574c58",
+            "id": 7111,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isRaider",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7102,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7101,
+                  "name": "character",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7111,
+                  "src": "1801:17:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7100,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1801:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1800:19:23"
+            },
+            "returnParameters": {
+              "id": 7105,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7104,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7111,
+                  "src": "1840:4:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 7103,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1840:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1839:6:23"
+            },
+            "scope": 7153,
+            "src": "1783:113:23",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7119,
+              "nodeType": "Block",
+              "src": "1959:40:23",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "id": 7116,
+                      "name": "raiders",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7005,
+                      "src": "1977:7:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_array$_t_struct$_Raider_$7002_storage_$dyn_storage",
+                        "typeString": "struct Raid.Raider storage ref[] storage ref"
+                      }
+                    },
+                    "id": 7117,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "length",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": null,
+                    "src": "1977:14:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 7115,
+                  "id": 7118,
+                  "nodeType": "Return",
+                  "src": "1970:21:23"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "8fcc2c3a",
+            "id": 7120,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getRaiderCount",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7112,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1927:2:23"
+            },
+            "returnParameters": {
+              "id": 7115,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7114,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7120,
+                  "src": "1950:7:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7113,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1950:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1949:9:23"
+            },
+            "scope": 7153,
+            "src": "1904:95:23",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7127,
+              "nodeType": "Block",
+              "src": "2069:44:23",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 7125,
+                    "name": "expectedFinishTime",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 6987,
+                    "src": "2087:18:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 7124,
+                  "id": 7126,
+                  "nodeType": "Return",
+                  "src": "2080:25:23"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "bde13ade",
+            "id": 7128,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getExpectedFinishTime",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7121,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2037:2:23"
+            },
+            "returnParameters": {
+              "id": 7124,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7123,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7128,
+                  "src": "2060:7:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7122,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2060:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2059:9:23"
+            },
+            "scope": 7153,
+            "src": "2007:106:23",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7139,
+              "nodeType": "Block",
+              "src": "2184:44:23",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 7137,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 7135,
+                      "name": "expectedFinishTime",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 6987,
+                      "src": "2195:18:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 7136,
+                      "name": "time",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7130,
+                      "src": "2216:4:23",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "2195:25:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 7138,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2195:25:23"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "72362611",
+            "id": 7140,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 7133,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 7132,
+                  "name": "restricted",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 6970,
+                  "src": "2173:10:23",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "2173:10:23"
+              }
+            ],
+            "name": "setExpectedFinishTime",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7131,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7130,
+                  "name": "time",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7140,
+                  "src": "2152:12:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7129,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2152:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2151:14:23"
+            },
+            "returnParameters": {
+              "id": 7134,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2184:0:23"
+            },
+            "scope": 7153,
+            "src": "2121:107:23",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "functionSelector": "3330c1dc",
+            "id": 7147,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "addRaider",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7145,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7142,
+                  "name": "characterID",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7147,
+                  "src": "2255:19:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7141,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2255:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7144,
+                  "name": "weaponID",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7147,
+                  "src": "2276:16:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7143,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2276:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2254:39:23"
+            },
+            "returnParameters": {
+              "id": 7146,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2308:0:23"
+            },
+            "scope": 7153,
+            "src": "2236:73:23",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "functionSelector": "7fcf0cd7",
+            "id": 7152,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "completeRaid",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 7150,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7149,
+                  "name": "seed",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 7152,
+                  "src": "2337:12:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7148,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2337:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2336:14:23"
+            },
+            "returnParameters": {
+              "id": 7151,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2365:0:23"
+            },
+            "scope": 7153,
+            "src": "2315:51:23",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7154,
+        "src": "296:2073:23"
+      }
+    ],
+    "src": "0:2369:23"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/F/vscode/cblades/contracts/raid.sol",
+      "exportedSymbols": {
+        "Raid": [
+          7153
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.6",
+            ".0"
+          ]
+        },
+        "id": 6973,
+        "name": "PragmaDirective",
+        "src": "0:23:23"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 19087,
+          "absolutePath": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
+          "file": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
+          "scope": 7154,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 6974,
+        "name": "ImportDirective",
+        "src": "27:69:23"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 6972,
+          "absolutePath": "/F/vscode/cblades/contracts/multiAccessUpgradeable.sol",
+          "file": "./multiAccessUpgradeable.sol",
+          "scope": 7154,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 6975,
+        "name": "ImportDirective",
+        "src": "98:38:23"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 6828,
+          "absolutePath": "/F/vscode/cblades/contracts/cryptoblades.sol",
+          "file": "./cryptoblades.sol",
+          "scope": 7154,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 6976,
+        "name": "ImportDirective",
+        "src": "138:28:23"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 4464,
+          "absolutePath": "/F/vscode/cblades/contracts/characters.sol",
+          "file": "./characters.sol",
+          "scope": 7154,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 6977,
+        "name": "ImportDirective",
+        "src": "168:26:23"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 12154,
+          "absolutePath": "/F/vscode/cblades/contracts/weapons.sol",
+          "file": "./weapons.sol",
+          "scope": 7154,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 6978,
+        "name": "ImportDirective",
+        "src": "196:23:23"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 14015,
+          "absolutePath": "/F/vscode/cblades/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol",
+          "file": "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol",
+          "scope": 7154,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 6979,
+        "name": "ImportDirective",
+        "src": "221:71:23"
+      },
+      {
+        "attributes": {
+          "abstract": true,
+          "contractDependencies": [
+            6971,
+            19086
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            7153,
+            6971,
+            19086
+          ],
+          "name": "Raid",
+          "scope": 7154
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Initializable",
+                  "referencedDeclaration": 19086,
+                  "type": "contract Initializable"
+                },
+                "id": 6980,
+                "name": "UserDefinedTypeName",
+                "src": "322:13:23"
+              }
+            ],
+            "id": 6981,
+            "name": "InheritanceSpecifier",
+            "src": "322:13:23"
+          },
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "MultiAccessUpgradeable",
+                  "referencedDeclaration": 6971,
+                  "type": "contract MultiAccessUpgradeable"
+                },
+                "id": 6982,
+                "name": "UserDefinedTypeName",
+                "src": "337:22:23"
+              }
+            ],
+            "id": 6983,
+            "name": "InheritanceSpecifier",
+            "src": "337:22:23"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "completed",
+              "overrides": null,
+              "scope": 7153,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 6984,
+                "name": "ElementaryTypeName",
+                "src": "523:4:23"
+              }
+            ],
+            "id": 6985,
+            "name": "VariableDeclaration",
+            "src": "523:23:23"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "expectedFinishTime",
+              "overrides": null,
+              "scope": 7153,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 6986,
+                "name": "ElementaryTypeName",
+                "src": "553:7:23"
+              }
+            ],
+            "id": 6987,
+            "name": "VariableDeclaration",
+            "src": "553:35:23"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "game",
+              "overrides": null,
+              "scope": 7153,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract CryptoBlades",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "CryptoBlades",
+                  "referencedDeclaration": 6827,
+                  "type": "contract CryptoBlades"
+                },
+                "id": 6988,
+                "name": "UserDefinedTypeName",
+                "src": "651:12:23"
+              }
+            ],
+            "id": 6989,
+            "name": "VariableDeclaration",
+            "src": "651:26:23"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "characters",
+              "overrides": null,
+              "scope": 7153,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract Characters",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Characters",
+                  "referencedDeclaration": 4463,
+                  "type": "contract Characters"
+                },
+                "id": 6990,
+                "name": "UserDefinedTypeName",
+                "src": "684:10:23"
+              }
+            ],
+            "id": 6991,
+            "name": "VariableDeclaration",
+            "src": "684:30:23"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "weapons",
+              "overrides": null,
+              "scope": 7153,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract Weapons",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Weapons",
+                  "referencedDeclaration": 12153,
+                  "type": "contract Weapons"
+                },
+                "id": 6992,
+                "name": "UserDefinedTypeName",
+                "src": "721:7:23"
+              }
+            ],
+            "id": 6993,
+            "name": "VariableDeclaration",
+            "src": "721:24:23"
+          },
+          {
+            "attributes": {
+              "canonicalName": "Raid.Raider",
+              "name": "Raider",
+              "scope": 7153,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "owner",
+                  "overrides": null,
+                  "scope": 7002,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 6994,
+                    "name": "ElementaryTypeName",
+                    "src": "779:7:23"
+                  }
+                ],
+                "id": 6995,
+                "name": "VariableDeclaration",
+                "src": "779:13:23"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "charID",
+                  "overrides": null,
+                  "scope": 7002,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 6996,
+                    "name": "ElementaryTypeName",
+                    "src": "803:7:23"
+                  }
+                ],
+                "id": 6997,
+                "name": "VariableDeclaration",
+                "src": "803:14:23"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "wepID",
+                  "overrides": null,
+                  "scope": 7002,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 6998,
+                    "name": "ElementaryTypeName",
+                    "src": "828:7:23"
+                  }
+                ],
+                "id": 6999,
+                "name": "VariableDeclaration",
+                "src": "828:13:23"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "power",
+                  "overrides": null,
+                  "scope": 7002,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint24",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint24",
+                      "type": "uint24"
+                    },
+                    "id": 7000,
+                    "name": "ElementaryTypeName",
+                    "src": "852:6:23"
+                  }
+                ],
+                "id": 7001,
+                "name": "VariableDeclaration",
+                "src": "852:12:23"
+              }
+            ],
+            "id": 7002,
+            "name": "StructDefinition",
+            "src": "754:118:23"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "raiders",
+              "overrides": null,
+              "scope": 7153,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "struct Raid.Raider[]",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "length": null,
+                  "type": "struct Raid.Raider[]"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "Raider",
+                      "referencedDeclaration": 7002,
+                      "type": "struct Raid.Raider"
+                    },
+                    "id": 7003,
+                    "name": "UserDefinedTypeName",
+                    "src": "878:6:23"
+                  }
+                ],
+                "id": 7004,
+                "name": "ArrayTypeName",
+                "src": "878:8:23"
+              }
+            ],
+            "id": 7005,
+            "name": "VariableDeclaration",
+            "src": "878:25:23"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "participation",
+              "overrides": null,
+              "scope": 7153,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => bool)",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => bool)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 7006,
+                    "name": "ElementaryTypeName",
+                    "src": "918:7:23"
+                  },
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 7007,
+                    "name": "ElementaryTypeName",
+                    "src": "929:4:23"
+                  }
+                ],
+                "id": 7008,
+                "name": "Mapping",
+                "src": "910:24:23"
+              }
+            ],
+            "id": 7009,
+            "name": "VariableDeclaration",
+            "src": "910:47:23"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "documentation": null,
+              "name": "RaidReset"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7010,
+                "name": "ParameterList",
+                "src": "981:2:23"
+              }
+            ],
+            "id": 7011,
+            "name": "EventDefinition",
+            "src": "966:18:23"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "documentation": null,
+              "name": "RaiderJoined"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "owner",
+                      "overrides": null,
+                      "scope": 7021,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 7012,
+                        "name": "ElementaryTypeName",
+                        "src": "1009:7:23"
+                      }
+                    ],
+                    "id": 7013,
+                    "name": "VariableDeclaration",
+                    "src": "1009:13:23"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "character",
+                      "overrides": null,
+                      "scope": 7021,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7014,
+                        "name": "ElementaryTypeName",
+                        "src": "1024:7:23"
+                      }
+                    ],
+                    "id": 7015,
+                    "name": "VariableDeclaration",
+                    "src": "1024:17:23"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "weapon",
+                      "overrides": null,
+                      "scope": 7021,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7016,
+                        "name": "ElementaryTypeName",
+                        "src": "1043:7:23"
+                      }
+                    ],
+                    "id": 7017,
+                    "name": "VariableDeclaration",
+                    "src": "1043:14:23"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "power",
+                      "overrides": null,
+                      "scope": 7021,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint24",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint24",
+                          "type": "uint24"
+                        },
+                        "id": 7018,
+                        "name": "ElementaryTypeName",
+                        "src": "1059:6:23"
+                      }
+                    ],
+                    "id": 7019,
+                    "name": "VariableDeclaration",
+                    "src": "1059:12:23"
+                  }
+                ],
+                "id": 7020,
+                "name": "ParameterList",
+                "src": "1008:64:23"
+              }
+            ],
+            "id": 7021,
+            "name": "EventDefinition",
+            "src": "990:83:23"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "documentation": null,
+              "name": "RaidCompleted"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7022,
+                "name": "ParameterList",
+                "src": "1098:2:23"
+              }
+            ],
+            "id": 7023,
+            "name": "EventDefinition",
+            "src": "1079:22:23"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "c4d66de8",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "name": "initialize",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "nonpayable",
+              "virtual": true,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "gameContract",
+                      "overrides": null,
+                      "scope": 7062,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 7024,
+                        "name": "ElementaryTypeName",
+                        "src": "1129:7:23"
+                      }
+                    ],
+                    "id": 7025,
+                    "name": "VariableDeclaration",
+                    "src": "1129:20:23"
+                  }
+                ],
+                "id": 7026,
+                "name": "ParameterList",
+                "src": "1128:22:23"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7029,
+                "name": "ParameterList",
+                "src": "1178:0:23"
+              },
+              {
+                "attributes": {
+                  "arguments": null
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 19069,
+                      "type": "modifier ()",
+                      "value": "initializer"
+                    },
+                    "id": 7027,
+                    "name": "Identifier",
+                    "src": "1166:11:23"
+                  }
+                ],
+                "id": 7028,
+                "name": "ModifierInvocation",
+                "src": "1166:11:23"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "initialize",
+                              "referencedDeclaration": 6929,
+                              "type": "function ()"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 6971,
+                                  "type": "type(contract MultiAccessUpgradeable)",
+                                  "value": "MultiAccessUpgradeable"
+                                },
+                                "id": 7030,
+                                "name": "Identifier",
+                                "src": "1189:22:23"
+                              }
+                            ],
+                            "id": 7032,
+                            "name": "MemberAccess",
+                            "src": "1189:33:23"
+                          }
+                        ],
+                        "id": 7033,
+                        "name": "FunctionCall",
+                        "src": "1189:35:23"
+                      }
+                    ],
+                    "id": 7034,
+                    "name": "ExpressionStatement",
+                    "src": "1189:35:23"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6943,
+                              "type": "function (address)",
+                              "value": "grantAccess"
+                            },
+                            "id": 7035,
+                            "name": "Identifier",
+                            "src": "1237:11:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7025,
+                              "type": "address",
+                              "value": "gameContract"
+                            },
+                            "id": 7036,
+                            "name": "Identifier",
+                            "src": "1249:12:23"
+                          }
+                        ],
+                        "id": 7037,
+                        "name": "FunctionCall",
+                        "src": "1237:25:23"
+                      }
+                    ],
+                    "id": 7038,
+                    "name": "ExpressionStatement",
+                    "src": "1237:25:23"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract CryptoBlades"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6989,
+                              "type": "contract CryptoBlades",
+                              "value": "game"
+                            },
+                            "id": 7039,
+                            "name": "Identifier",
+                            "src": "1273:4:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "contract CryptoBlades",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 6827,
+                                  "type": "type(contract CryptoBlades)",
+                                  "value": "CryptoBlades"
+                                },
+                                "id": 7040,
+                                "name": "Identifier",
+                                "src": "1280:12:23"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 7025,
+                                  "type": "address",
+                                  "value": "gameContract"
+                                },
+                                "id": 7041,
+                                "name": "Identifier",
+                                "src": "1293:12:23"
+                              }
+                            ],
+                            "id": 7042,
+                            "name": "FunctionCall",
+                            "src": "1280:26:23"
+                          }
+                        ],
+                        "id": 7043,
+                        "name": "Assignment",
+                        "src": "1273:33:23"
+                      }
+                    ],
+                    "id": 7044,
+                    "name": "ExpressionStatement",
+                    "src": "1273:33:23"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract Characters"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6991,
+                              "type": "contract Characters",
+                              "value": "characters"
+                            },
+                            "id": 7045,
+                            "name": "Identifier",
+                            "src": "1376:10:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "contract Characters",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_contract$_Characters_$4463",
+                                      "typeString": "contract Characters"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4463,
+                                  "type": "type(contract Characters)",
+                                  "value": "Characters"
+                                },
+                                "id": 7046,
+                                "name": "Identifier",
+                                "src": "1389:10:23"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "arguments": [
+                                    null
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "tryCall": false,
+                                  "type": "contract Characters",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        null
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "characters",
+                                      "referencedDeclaration": 4503,
+                                      "type": "function () view external returns (contract Characters)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 6989,
+                                          "type": "contract CryptoBlades",
+                                          "value": "game"
+                                        },
+                                        "id": 7047,
+                                        "name": "Identifier",
+                                        "src": "1400:4:23"
+                                      }
+                                    ],
+                                    "id": 7048,
+                                    "name": "MemberAccess",
+                                    "src": "1400:15:23"
+                                  }
+                                ],
+                                "id": 7049,
+                                "name": "FunctionCall",
+                                "src": "1400:17:23"
+                              }
+                            ],
+                            "id": 7050,
+                            "name": "FunctionCall",
+                            "src": "1389:29:23"
+                          }
+                        ],
+                        "id": 7051,
+                        "name": "Assignment",
+                        "src": "1376:42:23"
+                      }
+                    ],
+                    "id": 7052,
+                    "name": "ExpressionStatement",
+                    "src": "1376:42:23"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract Weapons"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6993,
+                              "type": "contract Weapons",
+                              "value": "weapons"
+                            },
+                            "id": 7053,
+                            "name": "Identifier",
+                            "src": "1429:7:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "contract Weapons",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_contract$_Weapons_$12153",
+                                      "typeString": "contract Weapons"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 12153,
+                                  "type": "type(contract Weapons)",
+                                  "value": "Weapons"
+                                },
+                                "id": 7054,
+                                "name": "Identifier",
+                                "src": "1439:7:23"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "arguments": [
+                                    null
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "tryCall": false,
+                                  "type": "contract Weapons",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        null
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "weapons",
+                                      "referencedDeclaration": 4505,
+                                      "type": "function () view external returns (contract Weapons)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 6989,
+                                          "type": "contract CryptoBlades",
+                                          "value": "game"
+                                        },
+                                        "id": 7055,
+                                        "name": "Identifier",
+                                        "src": "1447:4:23"
+                                      }
+                                    ],
+                                    "id": 7056,
+                                    "name": "MemberAccess",
+                                    "src": "1447:12:23"
+                                  }
+                                ],
+                                "id": 7057,
+                                "name": "FunctionCall",
+                                "src": "1447:14:23"
+                              }
+                            ],
+                            "id": 7058,
+                            "name": "FunctionCall",
+                            "src": "1439:23:23"
+                          }
+                        ],
+                        "id": 7059,
+                        "name": "Assignment",
+                        "src": "1429:33:23"
+                      }
+                    ],
+                    "id": 7060,
+                    "name": "ExpressionStatement",
+                    "src": "1429:33:23"
+                  }
+                ],
+                "id": 7061,
+                "name": "Block",
+                "src": "1178:292:23"
+              }
+            ],
+            "id": 7062,
+            "name": "FunctionDefinition",
+            "src": "1109:361:23"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "d826f88f",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "name": "reset",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "nonpayable",
+              "virtual": true,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7063,
+                "name": "ParameterList",
+                "src": "1492:2:23"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7066,
+                "name": "ParameterList",
+                "src": "1521:0:23"
+              },
+              {
+                "attributes": {
+                  "arguments": null
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 6970,
+                      "type": "modifier ()",
+                      "value": "restricted"
+                    },
+                    "id": 7064,
+                    "name": "Identifier",
+                    "src": "1510:10:23"
+                  }
+                ],
+                "id": 7065,
+                "name": "ModifierInvocation",
+                "src": "1510:10:23"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "assignments": [
+                            7068
+                          ]
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "constant": false,
+                              "name": "i",
+                              "overrides": null,
+                              "scope": 7087,
+                              "stateVariable": false,
+                              "storageLocation": "default",
+                              "type": "uint256",
+                              "value": null,
+                              "visibility": "internal"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "name": "uint",
+                                  "type": "uint256"
+                                },
+                                "id": 7067,
+                                "name": "ElementaryTypeName",
+                                "src": "1536:4:23"
+                              }
+                            ],
+                            "id": 7068,
+                            "name": "VariableDeclaration",
+                            "src": "1536:6:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 7069,
+                            "name": "Literal",
+                            "src": "1545:1:23"
+                          }
+                        ],
+                        "id": 7070,
+                        "name": "VariableDeclarationStatement",
+                        "src": "1536:10:23"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "<",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7068,
+                              "type": "uint256",
+                              "value": "i"
+                            },
+                            "id": 7071,
+                            "name": "Identifier",
+                            "src": "1548:1:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "length",
+                              "referencedDeclaration": null,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 7005,
+                                  "type": "struct Raid.Raider storage ref[] storage ref",
+                                  "value": "raiders"
+                                },
+                                "id": 7072,
+                                "name": "Identifier",
+                                "src": "1552:7:23"
+                              }
+                            ],
+                            "id": 7073,
+                            "name": "MemberAccess",
+                            "src": "1552:14:23"
+                          }
+                        ],
+                        "id": 7074,
+                        "name": "BinaryOperation",
+                        "src": "1548:18:23"
+                      },
+                      {
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "++",
+                              "prefix": false,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 7068,
+                                  "type": "uint256",
+                                  "value": "i"
+                                },
+                                "id": 7075,
+                                "name": "Identifier",
+                                "src": "1568:1:23"
+                              }
+                            ],
+                            "id": 7076,
+                            "name": "UnaryOperation",
+                            "src": "1568:3:23"
+                          }
+                        ],
+                        "id": 7077,
+                        "name": "ExpressionStatement",
+                        "src": "1568:3:23"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "delete",
+                                  "prefix": true,
+                                  "type": "tuple()"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": true,
+                                      "type": "bool"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 7009,
+                                          "type": "mapping(uint256 => bool)",
+                                          "value": "participation"
+                                        },
+                                        "id": 7078,
+                                        "name": "Identifier",
+                                        "src": "1595:13:23"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "isConstant": false,
+                                          "isLValue": true,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "member_name": "charID",
+                                          "referencedDeclaration": 6997,
+                                          "type": "uint256"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "isConstant": false,
+                                              "isLValue": true,
+                                              "isPure": false,
+                                              "lValueRequested": false,
+                                              "type": "struct Raid.Raider storage ref"
+                                            },
+                                            "children": [
+                                              {
+                                                "attributes": {
+                                                  "argumentTypes": null,
+                                                  "overloadedDeclarations": [
+                                                    null
+                                                  ],
+                                                  "referencedDeclaration": 7005,
+                                                  "type": "struct Raid.Raider storage ref[] storage ref",
+                                                  "value": "raiders"
+                                                },
+                                                "id": 7079,
+                                                "name": "Identifier",
+                                                "src": "1609:7:23"
+                                              },
+                                              {
+                                                "attributes": {
+                                                  "argumentTypes": null,
+                                                  "overloadedDeclarations": [
+                                                    null
+                                                  ],
+                                                  "referencedDeclaration": 7068,
+                                                  "type": "uint256",
+                                                  "value": "i"
+                                                },
+                                                "id": 7080,
+                                                "name": "Identifier",
+                                                "src": "1617:1:23"
+                                              }
+                                            ],
+                                            "id": 7081,
+                                            "name": "IndexAccess",
+                                            "src": "1609:10:23"
+                                          }
+                                        ],
+                                        "id": 7082,
+                                        "name": "MemberAccess",
+                                        "src": "1609:17:23"
+                                      }
+                                    ],
+                                    "id": 7083,
+                                    "name": "IndexAccess",
+                                    "src": "1595:32:23"
+                                  }
+                                ],
+                                "id": 7084,
+                                "name": "UnaryOperation",
+                                "src": "1588:39:23"
+                              }
+                            ],
+                            "id": 7085,
+                            "name": "ExpressionStatement",
+                            "src": "1588:39:23"
+                          }
+                        ],
+                        "id": 7086,
+                        "name": "Block",
+                        "src": "1573:115:23"
+                      }
+                    ],
+                    "id": 7087,
+                    "name": "ForStatement",
+                    "src": "1532:156:23"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "delete",
+                          "prefix": true,
+                          "type": "tuple()"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7005,
+                              "type": "struct Raid.Raider storage ref[] storage ref",
+                              "value": "raiders"
+                            },
+                            "id": 7088,
+                            "name": "Identifier",
+                            "src": "1705:7:23"
+                          }
+                        ],
+                        "id": 7089,
+                        "name": "UnaryOperation",
+                        "src": "1698:14:23"
+                      }
+                    ],
+                    "id": 7090,
+                    "name": "ExpressionStatement",
+                    "src": "1698:14:23"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6985,
+                              "type": "bool",
+                              "value": "completed"
+                            },
+                            "id": 7091,
+                            "name": "Identifier",
+                            "src": "1723:9:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "66616c7365",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "bool",
+                              "type": "bool",
+                              "value": "false"
+                            },
+                            "id": 7092,
+                            "name": "Literal",
+                            "src": "1735:5:23"
+                          }
+                        ],
+                        "id": 7093,
+                        "name": "Assignment",
+                        "src": "1723:17:23"
+                      }
+                    ],
+                    "id": 7094,
+                    "name": "ExpressionStatement",
+                    "src": "1723:17:23"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7011,
+                              "type": "function ()",
+                              "value": "RaidReset"
+                            },
+                            "id": 7095,
+                            "name": "Identifier",
+                            "src": "1756:9:23"
+                          }
+                        ],
+                        "id": 7096,
+                        "name": "FunctionCall",
+                        "src": "1756:11:23"
+                      }
+                    ],
+                    "id": 7097,
+                    "name": "EmitStatement",
+                    "src": "1751:16:23"
+                  }
+                ],
+                "id": 7098,
+                "name": "Block",
+                "src": "1521:254:23"
+              }
+            ],
+            "id": 7099,
+            "name": "FunctionDefinition",
+            "src": "1478:297:23"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "da574c58",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "isRaider",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "character",
+                      "overrides": null,
+                      "scope": 7111,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7100,
+                        "name": "ElementaryTypeName",
+                        "src": "1801:7:23"
+                      }
+                    ],
+                    "id": 7101,
+                    "name": "VariableDeclaration",
+                    "src": "1801:17:23"
+                  }
+                ],
+                "id": 7102,
+                "name": "ParameterList",
+                "src": "1800:19:23"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "overrides": null,
+                      "scope": 7111,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 7103,
+                        "name": "ElementaryTypeName",
+                        "src": "1840:4:23"
+                      }
+                    ],
+                    "id": 7104,
+                    "name": "VariableDeclaration",
+                    "src": "1840:4:23"
+                  }
+                ],
+                "id": 7105,
+                "name": "ParameterList",
+                "src": "1839:6:23"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 7105
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7009,
+                              "type": "mapping(uint256 => bool)",
+                              "value": "participation"
+                            },
+                            "id": 7106,
+                            "name": "Identifier",
+                            "src": "1864:13:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7101,
+                              "type": "uint256",
+                              "value": "character"
+                            },
+                            "id": 7107,
+                            "name": "Identifier",
+                            "src": "1878:9:23"
+                          }
+                        ],
+                        "id": 7108,
+                        "name": "IndexAccess",
+                        "src": "1864:24:23"
+                      }
+                    ],
+                    "id": 7109,
+                    "name": "Return",
+                    "src": "1857:31:23"
+                  }
+                ],
+                "id": 7110,
+                "name": "Block",
+                "src": "1846:50:23"
+              }
+            ],
+            "id": 7111,
+            "name": "FunctionDefinition",
+            "src": "1783:113:23"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "8fcc2c3a",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getRaiderCount",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7112,
+                "name": "ParameterList",
+                "src": "1927:2:23"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "overrides": null,
+                      "scope": 7120,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7113,
+                        "name": "ElementaryTypeName",
+                        "src": "1950:7:23"
+                      }
+                    ],
+                    "id": 7114,
+                    "name": "VariableDeclaration",
+                    "src": "1950:7:23"
+                  }
+                ],
+                "id": 7115,
+                "name": "ParameterList",
+                "src": "1949:9:23"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 7115
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "length",
+                          "referencedDeclaration": null,
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7005,
+                              "type": "struct Raid.Raider storage ref[] storage ref",
+                              "value": "raiders"
+                            },
+                            "id": 7116,
+                            "name": "Identifier",
+                            "src": "1977:7:23"
+                          }
+                        ],
+                        "id": 7117,
+                        "name": "MemberAccess",
+                        "src": "1977:14:23"
+                      }
+                    ],
+                    "id": 7118,
+                    "name": "Return",
+                    "src": "1970:21:23"
+                  }
+                ],
+                "id": 7119,
+                "name": "Block",
+                "src": "1959:40:23"
+              }
+            ],
+            "id": 7120,
+            "name": "FunctionDefinition",
+            "src": "1904:95:23"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "bde13ade",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getExpectedFinishTime",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7121,
+                "name": "ParameterList",
+                "src": "2037:2:23"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "overrides": null,
+                      "scope": 7128,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7122,
+                        "name": "ElementaryTypeName",
+                        "src": "2060:7:23"
+                      }
+                    ],
+                    "id": 7123,
+                    "name": "VariableDeclaration",
+                    "src": "2060:7:23"
+                  }
+                ],
+                "id": 7124,
+                "name": "ParameterList",
+                "src": "2059:9:23"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 7124
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 6987,
+                          "type": "uint256",
+                          "value": "expectedFinishTime"
+                        },
+                        "id": 7125,
+                        "name": "Identifier",
+                        "src": "2087:18:23"
+                      }
+                    ],
+                    "id": 7126,
+                    "name": "Return",
+                    "src": "2080:25:23"
+                  }
+                ],
+                "id": 7127,
+                "name": "Block",
+                "src": "2069:44:23"
+              }
+            ],
+            "id": 7128,
+            "name": "FunctionDefinition",
+            "src": "2007:106:23"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "72362611",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "name": "setExpectedFinishTime",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "time",
+                      "overrides": null,
+                      "scope": 7140,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7129,
+                        "name": "ElementaryTypeName",
+                        "src": "2152:7:23"
+                      }
+                    ],
+                    "id": 7130,
+                    "name": "VariableDeclaration",
+                    "src": "2152:12:23"
+                  }
+                ],
+                "id": 7131,
+                "name": "ParameterList",
+                "src": "2151:14:23"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7134,
+                "name": "ParameterList",
+                "src": "2184:0:23"
+              },
+              {
+                "attributes": {
+                  "arguments": null
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 6970,
+                      "type": "modifier ()",
+                      "value": "restricted"
+                    },
+                    "id": 7132,
+                    "name": "Identifier",
+                    "src": "2173:10:23"
+                  }
+                ],
+                "id": 7133,
+                "name": "ModifierInvocation",
+                "src": "2173:10:23"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6987,
+                              "type": "uint256",
+                              "value": "expectedFinishTime"
+                            },
+                            "id": 7135,
+                            "name": "Identifier",
+                            "src": "2195:18:23"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7130,
+                              "type": "uint256",
+                              "value": "time"
+                            },
+                            "id": 7136,
+                            "name": "Identifier",
+                            "src": "2216:4:23"
+                          }
+                        ],
+                        "id": 7137,
+                        "name": "Assignment",
+                        "src": "2195:25:23"
+                      }
+                    ],
+                    "id": 7138,
+                    "name": "ExpressionStatement",
+                    "src": "2195:25:23"
+                  }
+                ],
+                "id": 7139,
+                "name": "Block",
+                "src": "2184:44:23"
+              }
+            ],
+            "id": 7140,
+            "name": "FunctionDefinition",
+            "src": "2121:107:23"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "functionSelector": "3330c1dc",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "addRaider",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "nonpayable",
+              "virtual": true,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "characterID",
+                      "overrides": null,
+                      "scope": 7147,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7141,
+                        "name": "ElementaryTypeName",
+                        "src": "2255:7:23"
+                      }
+                    ],
+                    "id": 7142,
+                    "name": "VariableDeclaration",
+                    "src": "2255:19:23"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "weaponID",
+                      "overrides": null,
+                      "scope": 7147,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7143,
+                        "name": "ElementaryTypeName",
+                        "src": "2276:7:23"
+                      }
+                    ],
+                    "id": 7144,
+                    "name": "VariableDeclaration",
+                    "src": "2276:16:23"
+                  }
+                ],
+                "id": 7145,
+                "name": "ParameterList",
+                "src": "2254:39:23"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7146,
+                "name": "ParameterList",
+                "src": "2308:0:23"
+              }
+            ],
+            "id": 7147,
+            "name": "FunctionDefinition",
+            "src": "2236:73:23"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "functionSelector": "7fcf0cd7",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "completeRaid",
+              "overrides": null,
+              "scope": 7153,
+              "stateMutability": "nonpayable",
+              "virtual": true,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "seed",
+                      "overrides": null,
+                      "scope": 7152,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 7148,
+                        "name": "ElementaryTypeName",
+                        "src": "2337:7:23"
+                      }
+                    ],
+                    "id": 7149,
+                    "name": "VariableDeclaration",
+                    "src": "2337:12:23"
+                  }
+                ],
+                "id": 7150,
+                "name": "ParameterList",
+                "src": "2336:14:23"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 7151,
+                "name": "ParameterList",
+                "src": "2365:0:23"
+              }
+            ],
+            "id": 7152,
+            "name": "FunctionDefinition",
+            "src": "2315:51:23"
+          }
+        ],
+        "id": 7153,
+        "name": "ContractDefinition",
+        "src": "296:2073:23"
+      }
+    ],
+    "id": 7154,
+    "name": "SourceUnit",
+    "src": "0:2369:23"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.5+commit.f956cc89.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-07-22T21:42:32.107Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

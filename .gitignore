@@ -1,0 +1,53 @@
+# OS X
+.DS_Store*
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+*~
+
+# API keys and secrets
+.env
+
+# npm
+.npm # Optional npm cache directory
+node_modules
+bower_components
+*.log
+*.gz
+
+# others
+lib-cov
+*.csv
+*.dat
+*.out
+*.swp
+
+# Coveralls
+coverage
+
+# Benchmarking
+benchmarks/graphs
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
+# Optional REPL history
+.node_repl_history
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Editors
+.idea
+*.iml
+
+ecosystem.config.js
