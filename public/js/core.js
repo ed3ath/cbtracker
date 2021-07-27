@@ -177,10 +177,10 @@ function simulate(address, data) {
     $('#combat-weapon').html(new Option('Select weapon', ''))
     $('#combat-result').html('')
     characters.forEach(character => {
-        $("#combat-character").append(new Option(`${character.charId} | ${character.element} | Lv. ${character.level}`, character.charId));
+        $("#combat-character").append(new Option(`${character.charId} | ${character.element} | Lv. ${character.level}`, window.btoa(JSON.stringify(character))));
     })
     weapons.forEach(weapon => {
-        $("#combat-weapon").append(new Option(`${weapon.id} | ${weapon.stars + 1}-star ${weapon.element}`, weapon.id));
+        $("#combat-weapon").append(new Option(`${weapon.id} | ${weapon.stars + 1}-star ${weapon.element}`, window.btoa(JSON.stringify(weapon))));
     })
     $('#modal-combat').modal({
         backdrop: 'static',
@@ -191,10 +191,10 @@ function simulate(address, data) {
 function combat_simulate() {
     $('#btn-simulate').prop('disabled', true)
     const address = $('#combat-address').val()
-    const weapId = $('#combat-weapon').val()
-    const charId = $('#combat-character').val()
+    const weapData = $('#combat-weapon').val()
+    const charData = $('#combat-character').val()
     $('#combat-result').html('Generating results...')
-    $.get(`/simulate/${address}/${charId}/${weapId}`, (result, err) => {
+    $.get(`/simulate/${address}/${weapData}/${charData}`, (result, err) => {
         if (result.error) $('#combat-result').html(result.error)
         else {
             let tmpResult = 'Enemy | Element | Power | Chance<br><hr>';

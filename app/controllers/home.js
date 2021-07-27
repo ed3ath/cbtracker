@@ -3,11 +3,30 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  web3, isAddress, getStakedBalance, getStakedRewards, getStakedTimeLeft, getBNBBalance, getAccountCharacters, getAccountWeapons, getAccountSkillReward, getCharacterExp, getCharacterStamina, getCharacterData, getWeaponData, characterTargets,
+  web3,
+  isAddress,
+  getStakedBalance,
+  getStakedRewards,
+  getStakedTimeLeft,
+  getBNBBalance,
+  getAccountCharacters,
+  getAccountWeapons,
+  getAccountSkillReward,
+  getCharacterExp,
+  getCharacterStamina,
+  getCharacterData,
+  getWeaponData,
+  characterTargets,
 } = require('../helpers/web3');
 
 const {
-  characterFromContract, weaponFromContract, secondsToDDHHMMSS, getNextTargetExpLevel, getEnemyDetails, getWinChance, traitNumberToName,
+  characterFromContract,
+  weaponFromContract,
+  secondsToDDHHMMSS,
+  getNextTargetExpLevel,
+  getEnemyDetails,
+  getWinChance,
+  traitNumberToName,
 } = require('../helpers/utils');
 
 
@@ -24,17 +43,19 @@ router.get('/account/add/:address', (req, res, next) => {
   return res.json({ valid: isAddress(req.params.address), address });
 });
 
-router.get('/simulate/:address/:charId/:weapId', async (req, res, next) => {
-  const { address, charId, weapId } = req.params;
+router.get('/simulate/:address/:weapData/:charData', async (req, res, next) => {
+  let { address, charData, weapData } = req.params;
   if (!address || !isAddress(req.params.address)) return res.json({ error: 'No valid address provided.' });
-  if (!charId) return res.json({ error: 'No character id provided.' });
-  if (!weapId) return res.json({ error: 'No weapon id provided.' });
+  address = address.trim();
+  if (!charData) return res.json({ error: 'No character data provided.' });
+  if (!weapData) return res.json({ error: 'No weapon data provided.' });
+
+  charData = JSON.parse(Buffer.from(charData, 'base64').toString('ascii'));
+  weapData = JSON.parse(Buffer.from(weapData, 'base64').toString('ascii'));
 
   try {
-    const targets = await characterTargets(address, charId, weapId);
+    const targets = await characterTargets(address, charData.charId, weapData.id);
     const enemies = await getEnemyDetails(targets);
-    const charData = characterFromContract(charId, await getCharacterData(address, charId));
-    const weapData = weaponFromContract(weapId, await getWeaponData(address, weapId));
     return res.json(enemies.map((data) => {
       const chance = getWinChance(charData, weapData, data.power, data.trait);
       data.element = traitNumberToName(data.trait);
@@ -44,6 +65,7 @@ router.get('/simulate/:address/:charId/:weapId', async (req, res, next) => {
       };
     }));
   } catch (e) {
+    console.log(e);
     return res.json({ error: 'We are currently being rate limited by BSC Network. Please wait a few minutes before trying again.' });
   }
 });
