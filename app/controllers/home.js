@@ -17,6 +17,7 @@ const {
   getCharacterData,
   getWeaponData,
   characterTargets,
+  getOraclePrice,
 } = require('../helpers/web3');
 
 const {
@@ -121,6 +122,15 @@ router.get('/account/retrieve/:data', async (req, res, next) => {
     return res.json(results);
   } catch (e) {
     return res.json({ error: 'We are currently being rate limited by BSC Network. Please wait a few minutes before trying again.' });
+  }
+});
+
+router.get('/oracle/price', async (req, res, next) => {
+  try {
+    const price = await getOraclePrice();
+    return res.json({ price: (1 / parseFloat(web3.utils.fromWei(`${price}`, 'ether'))) });
+  } catch (e) {
+    return res.json({ price: 0 });
   }
 });
 

@@ -16,8 +16,12 @@ if (accounts && names) {
 
 var $table = $('#table-accounts')
 var skillPrice = 0
+var bnbPrice = 0
+var oraclePrice = 0
+var usdPrice = 0
 
-getSkillPrice()
+getPrices()
+getOraclePrice()
 
 $table.bootstrapTable('showLoading')
 retrieve_account()
@@ -93,21 +97,25 @@ function reload_data() {
 
 function refresh() {
     reload_data()
-    getSkillPrice()
+    getPrices()
+    getOraclePrice()
 }
 
 function populate_cards(result) {
-    let uskills = 0, sskills = 0, balance = 0, chars = 0
+    let uskills = 0, sskills = 0, balance = 0, bnb = 0, chars = 0
     result.forEach(data => {
         uskills += parseFloat(data.unclaimed)
         sskills += parseFloat(data.rewards)
         balance += parseFloat(data.balance)
+        bnb += parseFloat(data.bnb)
         chars += data.characters.length
     })    
     $('#card-acc').html(`${result.length}${(chars > 0) ? ` (${chars} Characters)` : ''} `)
     $('#card-uskills').html(convertSkill(uskills))
     $('#card-sskills').html(convertSkill(sskills))
     $('#card-balance').html(convertSkill(balance))
+    $('#card-sassets').html(convertSkill(uskills + sskills + balance))
+    $('#card-bnb').html(convertBNB(bnb))
 }
 
 function charFormatter(val) {
@@ -139,6 +147,13 @@ function currFormatter(val) {
     return parseFloat(val).toFixed(6)
 }
 
+function bnbFormatter(val) {
+    var bnb = parseFloat(val).toFixed(6);
+    if (parseFloat(val) < 0.01) return `<span class='text-danger'>${bnb}</span>`
+    if (parseFloat(val) < 0.03) return `<span class='text-warning'>${bnb}</span>`
+    return `<span class='text-success'>${bnb}</span>`
+}
+
 function stakedFormatter(val, row) {
     return `${parseFloat(val).toFixed(6)}${(row.timeLeft ? ` (${row.timeLeft})` : '')}`
 }
@@ -152,15 +167,28 @@ function privacyFormatter(val) {
     return val
 }
 
-function getSkillPrice() {
-    $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin&vs_currencies=${currencies.join(',')}`, (result) => {
+function getPrices() {
+    $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin,tether&vs_currencies=${currencies.join(',')}`, (result) => {
         skillPrice = result.cryptoblades[currCurrency]
+        bnbPrice = result.binancecoin[currCurrency]
+        usdPrice = result.tether[currCurrency]
         $('#card-price').html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() }))
+    })
+}
+
+function getOraclePrice() {
+    $.get('/oracle/price', (result) => {
+        oraclePrice = result.price
+        $('#card-oprice').html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} (${(oraclePrice * usdPrice).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})`)
     })
 }
 
 function convertSkill(value) {
     return (parseFloat(value) > 0 ? `${parseFloat(value).toFixed(6)} (${(parseFloat(value) * parseFloat(skillPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})` : 0)
+}
+
+function convertBNB(value) {
+    return (parseFloat(value) > 0 ? `${parseFloat(value).toFixed(6)} (${(parseFloat(value) * parseFloat(bnbPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})` : 0)
 }
 
 function remove(address) {
@@ -237,7 +265,7 @@ $('#btn-privacy').on('change' , (e) => {
 $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
     localStorage.setItem('currency', currCurrency)    
-    getSkillPrice()
+    getPrices()
     reload_data()
 })
 
@@ -286,7 +314,7 @@ function import_data() {
         toggleHelper(hideAddress)
         currCurrency = currency
         localStorage.setItem('currency', currCurrency)    
-        getSkillPrice()
+        getPrices()
         reload_data()
         $('#modal-import').modal('hide')
     });  
