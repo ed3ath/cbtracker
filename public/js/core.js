@@ -219,20 +219,29 @@ function simulate(address, data) {
 function combat_simulate() {
     $('#btn-simulate').prop('disabled', true)
     const address = $('#combat-address').val()
-    const weapData = $('#combat-weapon').val()
     const charData = $('#combat-character').val()
-    $('#combat-result').html('Generating results...')
-    $.get(`/simulate/${address}/${weapData}/${charData}`, (result, err) => {
-        if (result.error) $('#combat-result').html(result.error)
-        else {
-            let tmpResult = 'Enemy | Element | Power | Chance<br><hr>';
-            result.forEach((data, i) => {
-                tmpResult += `#${i+1} | ${elemToColor(data.enemy.element)} | ${data.enemy.power} | ${parseFloat(data.chance * 100).toFixed(2)}%<br>`
-            })
-            $('#combat-result').html(tmpResult)
-        }
+    const weapData = $('#combat-weapon').val()
+    try {
+        if (!address) throw Error('No address provided.')
+        if (!charData) throw Error('Please select a character.')
+        if (!weapData) throw Error('Please select a weapon.')
+
+        $('#combat-result').html('Generating results...')
+        $.get(`/simulate/${address}/${weapData}/${charData}`, (result, err) => {
+            if (result.error) $('#combat-result').html(result.error)
+            else {
+                let tmpResult = 'Enemy | Element | Power | Chance<br><hr>';
+                result.forEach((data, i) => {
+                    tmpResult += `#${i+1} | ${elemToColor(data.enemy.element)} | ${data.enemy.power} | ${parseFloat(data.chance * 100).toFixed(2)}%<br>`
+                })
+                $('#combat-result').html(tmpResult)
+            }
+            $('#btn-simulate').removeAttr('disabled')
+        })
+    } catch (e) {
+        $('#combat-result').html(e.message)
         $('#btn-simulate').removeAttr('disabled')
-    })
+    }
 }
 
 function rename(address) {
