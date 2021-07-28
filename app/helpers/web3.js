@@ -37,13 +37,13 @@ const Weapons = new pweb3.eth.Contract(conWeapons.abi, weapAddress);
 const getAccountCharacters = async address => CryptoBlades.methods.getMyCharacters().call({ from: address });
 const getAccountWeapons = async address => CryptoBlades.methods.getMyWeapons().call({ from: address });
 const getAccountSkillReward = async address => CryptoBlades.methods.getTokenRewards().call({ from: address });
-const getCharacterExp = async (address, charId) => CryptoBlades.methods.getXpRewards(`${charId}`).call({ from: address });
-const characterTargets = async (address, charId, weapId) => CryptoBlades.methods.getTargets(charId, weapId).call({ from: address });
+
+const getCharacterExp = async charId => CryptoBlades.methods.getXpRewards(`${charId}`).call({ from: defaultAddress });
+const characterTargets = async (charId, weapId) => CryptoBlades.methods.getTargets(charId, weapId).call({ from: defaultAddress });
 
 const getCharacterStamina = async charId => Characters.methods.getStaminaPoints(`${charId}`).call({ from: defaultAddress });
-const getCharacterData = async (address, charId) => Characters.methods.get(`${charId}`).call({ from: address });
-
-const getWeaponData = async (address, weapId) => Weapons.methods.get(`${weapId}`).call({ from: address });
+const getCharacterData = async charId => Characters.methods.get(`${charId}`).call({ from: defaultAddress });
+const getWeaponData = async weapId => Weapons.methods.get(`${weapId}`).call({ from: defaultAddress });
 
 
 // Oracle Price

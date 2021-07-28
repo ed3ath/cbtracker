@@ -193,10 +193,10 @@ function simulate(address, data) {
     $('#combat-weapon').html(new Option('-- Select weapon --', ''))
     $('#combat-result').html('')
     characters.forEach(character => {
-        $("#combat-character").append(new Option(`${character.charId} | ${character.element} | Lv. ${character.level} | Sta. ${character.sta}/200`, window.btoa(JSON.stringify(character))));
+        $("#combat-character").append(new Option(`${character.charId} | ${character.element} | Lv. ${character.level} | Sta. ${character.sta}/200`, character.charId));
     })
     weapons.forEach(weapon => {
-        $("#combat-weapon").append(new Option(`${weapon.id} | ${weapon.stars + 1}-star ${weapon.element}`, window.btoa(JSON.stringify(weapon))));
+        $("#combat-weapon").append(new Option(`${weapon.id} | ${weapon.stars + 1}-star ${weapon.element}`, weapon.id));
     })
     $('#modal-combat').modal('show', {
         backdrop: 'static',
@@ -207,15 +207,15 @@ function simulate(address, data) {
 function combat_simulate() {
     $('#btn-simulate').prop('disabled', true)
     const address = $('#combat-address').val()
-    const charData = $('#combat-character').val()
-    const weapData = $('#combat-weapon').val()
+    const charId = $('#combat-character').val()
+    const weapId = $('#combat-weapon').val()
     try {
         if (!address) throw Error('No address provided.')
-        if (!charData) throw Error('Please select a character.')
-        if (!weapData) throw Error('Please select a weapon.')
+        if (!charId) throw Error('Please select a character.')
+        if (!weapId) throw Error('Please select a weapon.')
 
         $('#combat-result').html('Generating results...')
-        $.get(`/simulate/${address}/${weapData}/${charData}`, (result, err) => {
+        $.get(`/simulate/${charId}/${weapId}/${new Date().getTime()}`, (result, err) => {
             if (result.error) $('#combat-result').html(result.error)
             else {
                 let tmpResult = 'Enemy | Element | Power | Est. Reward | Chance<br><hr>';

@@ -45,22 +45,20 @@ router.get('/account/add/:address', (req, res, next) => {
   return res.json({ valid: isAddress(req.params.address), address });
 });
 
-router.get('/simulate/:address/:weapData/:charData', async (req, res, next) => {
-  let { address, charData, weapData } = req.params;
-  if (!address || !isAddress(req.params.address)) return res.json({ error: 'No valid address provided.' });
-  address = address.trim();
-  if (!charData) return res.json({ error: 'No character data provided.' });
-  if (!weapData) return res.json({ error: 'No weapon data provided.' });
-
-  charData = JSON.parse(Buffer.from(charData, 'base64').toString('ascii'));
-  weapData = JSON.parse(Buffer.from(weapData, 'base64').toString('ascii'));
-
-  const fightGasOffset = web3.utils.fromWei(`${await fetchFightGasOffset()}`);
-  const fightBaseline = web3.utils.fromWei(`${await fetchFightBaseline()}`);
+router.get('/simulate/:charId/:weapId/:time', async (req, res, next) => {
+  const { charId, weapId } = req.params;
+  if (!charId) return res.json({ error: 'No character id provided.' });
+  if (!weapId) return res.json({ error: 'No weapon id provided.' });
 
   try {
-    const targets = await characterTargets(address, charData.charId, weapData.id);
+    const fightGasOffset = web3.utils.fromWei(`${await fetchFightGasOffset()}`);
+    const fightBaseline = web3.utils.fromWei(`${await fetchFightBaseline()}`);
+
+    const charData = characterFromContract(charId, await getCharacterData(charId));
+    const weapData = weaponFromContract(weapId, await getWeaponData(weapId));
+    const targets = await characterTargets(charId, weapId);
     const enemies = await getEnemyDetails(targets);
+
     return res.json(enemies.map((data) => {
       const chance = getWinChance(charData, weapData, data.power, data.trait);
       data.element = traitNumberToName(data.trait);
@@ -93,9 +91,9 @@ router.get('/account/retrieve/:data', async (req, res, next) => {
       const timeLeft = await getStakedTimeLeft(address);
       const skills = await getAccountSkillReward(address);
       const characters = await Promise.all(accChars.map(async (charId) => {
-        const exp = await getCharacterExp(address, charId);
+        const exp = await getCharacterExp(charId);
         const sta = await getCharacterStamina(charId);
-        const charData = characterFromContract(charId, await getCharacterData(address, charId));
+        const charData = characterFromContract(charId, await getCharacterData(charId));
         const nextTargetExpLevel = getNextTargetExpLevel(charData.level);
         return {
           charId,
@@ -109,7 +107,7 @@ router.get('/account/retrieve/:data', async (req, res, next) => {
           element: charData.traitName,
         };
       }));
-      const weapons = await Promise.all(accWeaps.map(async weapId => weaponFromContract(weapId, await getWeaponData(address, weapId))));
+      const weapons = await Promise.all(accWeaps.map(async weapId => weaponFromContract(weapId, await getWeaponData(weapId))));
       return {
         address,
         bnb: web3.utils.fromWei(`${bnbBalance}`, 'ether'),
@@ -141,12 +139,13 @@ router.get('/oracle/price', async (req, res, next) => {
   }
 });
 
-router.get('/test/:address/:charId/:weapId', async (req, res, next) => {
-  const { address, charId, weapId } = req.params;
+/*
+router.get('/test/:charId/:weapId', async (req, res, next) => {
+  const { charId, weapId } = req.params;
   try {
-    const charData = characterFromContract(charId, await getCharacterData(address, charId));
-    const weapData = weaponFromContract(weapId, await getWeaponData(address, weapId));
-    const targets = await characterTargets(address, charId, weapId);
+    const charData = characterFromContract(charId, await getCharacterData(charId));
+    const weapData = weaponFromContract(weapId, await getWeaponData(weapId));
+    const targets = await characterTargets(charId, weapId);
     const enemies = await getEnemyDetails(targets);
     return res.json(enemies.map((data) => {
       const chance = getWinChance(charData, weapData, data.power, data.trait);
@@ -162,6 +161,6 @@ router.get('/test/:address/:charId/:weapId', async (req, res, next) => {
   } catch (e) {
     return res.json({ error: 'error' });
   }
-});
+}); */
 
 module.exports = router;
