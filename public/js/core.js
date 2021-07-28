@@ -189,7 +189,7 @@ function simulate(address, data) {
     $('#combat-weapon').html(new Option('-- Select weapon --', ''))
     $('#combat-result').html('')
     characters.forEach(character => {
-        $("#combat-character").append(new Option(`${character.charId} | ${character.element} | Lv. ${character.level}`, window.btoa(JSON.stringify(character))));
+        $("#combat-character").append(new Option(`${character.charId} | ${character.element} | Lv. ${character.level} | Sta. ${character.sta}/200`, window.btoa(JSON.stringify(character))));
     })
     weapons.forEach(weapon => {
         $("#combat-weapon").append(new Option(`${weapon.id} | ${weapon.stars + 1}-star ${weapon.element}`, window.btoa(JSON.stringify(weapon))));
