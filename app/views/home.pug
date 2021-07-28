@@ -2,93 +2,98 @@ main.page-wrapper
   .position-relative.zindex-5.pb-4.mb-md-3.mx-5(style='margin-top: 20px;')
     .row.mx-n2.py-2
       .col-md-8.col-sm-6.px-2
-        h1.fs-sm.fw-medium CryptoBlades Tracker        
+        h1.text-white CryptoBlades Tracker        
       .col-md-4.col-sm-6.px-2
-        .float-right          
-          select#select-currency.form-control
-        .checkbox.float-right
-          label
-            input#btn-privacy(type='checkbox' data-toggle='toggle')
+        select#select-currency.form-select2(style='float: right;')
     .row
       .col-md-12
-        .alert.d-flex.alert-primary(role="alert")
-          div CryptoBlades Tracker, with the help of your donations, has been migrated to a cloud server. If you still experience slow or longer loading, it means we are being <b>rate limited</b> by BSC Network. Please wait a few minutes before trying again.
+        .alert.d-flex.alert-primary.alert-dismissible.fade.show(role="alert")
+          span.fw-medium CryptoBlades Tracker, with the help of your donations, has been migrated to a cloud server. If you still experience slow or longer loading, it means we are being <b>rate limited</b> by BSC Network. Please wait a few minutes before trying again.
+          button(type="button", data-bs-dismiss="alert", aria-label="Close").btn-close
+    .row
       .col-md-12
-        .alert.d-flex.alert-danger(role="alert")
-          div CryptoBlades Tracker is currently using 2 nodes, a public BSC node and a private one (Limited to 3m requests only). Please minimize the use of refresh button. Use it only if necessary. If you want to help increase this limit, we are accepting donations thru this address: <b>0x2548696795a3bCd6A8fAe7602fc26DD95A612574</b>
+        .alert.d-flex.alert-danger.alert-dismissible.fade.show(role="alert")
+          span.fw-medium CryptoBlades Tracker is currently using 2 nodes, a public BSC node and a private one (Limited to 3m requests only). Please minimize the use of refresh button. Use it only if necessary. If you want to help increase this limit, we are accepting donations thru this address: <b>0x2548696795a3bCd6A8fAe7602fc26DD95A612574</b>
+          button(type="button", data-bs-dismiss="alert", aria-label="Close").btn-close
     .row.mx-n2.py-2      
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Unclaimed Skills
-          p#card-uskills.h4.mb-2 0
+          p#card-uskills.h4.mb-2.text-white 0
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Staked Skills
-          p#card-sskills.h4.mb-2 0
+          p#card-sskills.h4.mb-2.text-white 0
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Skills in Wallet
-          p#card-balance.h4.mb-2 0
+          p#card-balance.h4.mb-2.text-white 0
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Skill Assets
-          p#card-sassets.h4.mb-2 0
+          p#card-sassets.h4.mb-2.text-white 0
     .row.mx-n2.py-2
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Accounts
-          p#card-acc.h4.mb-2 0      
+          p#card-acc.h4.mb-2.text-white 0      
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total BNB Balance
-          p#card-bnb.h4.mb-2 0
+          p#card-bnb.h4.mb-2.text-white 0
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Current Skill Price
-          p#card-price.h4.mb-2 0
+          p#card-price.h4.mb-2.text-white 0
       .col-md-3.col-sm-6.px-2.mb-3
-        .card.bg-secondary.h-100.rounded-3.p-4.text-center
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Current Oracle Price
-          p#card-oprice.h4.mb-2 0      
+          p#card-oprice.h4.mb-2.text-white 0      
     .row.mx-n2.py-2
       .col-md-12.col-sm-126.px-2.mb-3
-        .card.bg-secondary
+        .card.bg-dark
           .card-header
             .row.align-items-center
               .col
-                h4.card-header-title
+                h4.card-header-title.text-white
                   | Accounts
               .col-auto
-                a.btn.btn-sm.btn-success.mr-1(href='javascript:void(0);' data-toggle='modal' data-target='#modal-import' data-backdrop='static' data-keyboard='false')
+                button.btn.btn-sm.btn-success(style='margin-right: 3px !important;' type='button' data-bs-toggle='modal' data-bs-target='#modal-import')
                   | Import
-                a.btn.btn-sm.btn-warning.mr-1(href='javascript:void(0);' onclick='export_data()')
+                button.btn.btn-sm.btn-warning(style='margin-right: 3px !important;' type='button' onclick='export_data()')
                   | Export
-                a.btn.btn-sm.btn-danger.mr-1(href='javascript:void(0);' data-toggle='modal' data-target='#modal-add-account' data-backdrop='static' data-keyboard='false')
+                button.btn.btn-sm.btn-danger(type='button' data-bs-toggle='modal' data-bs-target='#modal-add-account')
                   | Add Account
           .card-body
-            .table-responsive.mb-0
-              a.btn.btn-sm.btn-light.mb-2(href='javascript:void(0);' onclick='refresh()')
-                | Refresh
-              table#table-accounts.table.table-sm.card-table
-                thead.text-center
-                  tr
-                    th.text-white(data-field='address' data-formatter='nameFormatter')
-                      | Name
-                    th.text-white(data-field='address' data-formatter='privacyFormatter')
-                      | Address
-                    th.text-white(data-field='characters' data-formatter='charFormatter')
-                      | Characters (ID | Level | Element | Unclaimed Exp | Target Level | Stamina)
-                    th.text-white(data-field='unclaimed' data-formatter='currFormatter')
-                      | Unclaimed Skills
-                    th.text-white(data-field='rewards' data-formatter='stakedFormatter')
-                      | Staked Skills
-                    th.text-white(data-field='balance' data-formatter='currFormatter')
-                      | Skills in Wallet
-                    th.text-white(data-field='total' data-formatter='currFormatter')
-                      | Total Assets
-                    th.text-white(data-field='bnb' data-formatter='bnbFormatter')
-                      | BNB Balance
-                    th.text-white(data-field='action')
-                      | Action
-                tbody.text-center
+            .row
+              .col-md-12
+                a.btn.btn-sm.btn-light.mb-2(href='javascript:void(0);' onclick='refresh()')
+                  | Refresh              
+                .form-check.form-switch(style='float: right;')
+                  input#btn-privacy.form-check-input(type="checkbox")
+                  label.form-check-label.text-white(for="btn-privacy") Hide address
+              .col-md-12
+                .table-responsive.mb-0
+                  table#table-accounts.table.table-sm.card-table
+                    thead.text-center
+                      tr
+                        th.text-white(data-field='address' data-formatter='nameFormatter')
+                          | Name
+                        th.text-white(data-field='address' data-formatter='privacyFormatter')
+                          | Address
+                        th.text-white(data-field='characters' data-formatter='charFormatter')
+                          | Characters (ID | Level | Element | Unclaimed Exp | Target Level | Stamina)
+                        th.text-white(data-field='unclaimed' data-formatter='currFormatter')
+                          | Unclaimed Skills
+                        th.text-white(data-field='rewards' data-formatter='stakedFormatter')
+                          | Staked Skills
+                        th.text-white(data-field='balance' data-formatter='currFormatter')
+                          | Skills in Wallet
+                        th.text-white(data-field='total' data-formatter='currFormatter')
+                          | Total Assets
+                        th.text-white(data-field='bnb' data-formatter='bnbFormatter')
+                          | BNB Balance
+                        th.text-white(data-field='action')
+                          | Action
+                    tbody.text-center
 include footer

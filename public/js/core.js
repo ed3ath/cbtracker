@@ -178,15 +178,15 @@ function convertBNB(value) {
 function remove(address) {
     storeAccounts.splice(storeAccounts.indexOf(address), 1)
     delete storeNames[address]
-    reload_data()
+    refresh()
 }
 
 function simulate(address, data) {
     const { characters, weapons } = JSON.parse(window.atob(data))
     $('#combat-name').val(storeNames[address])
     $('#combat-address').val(address)
-    $('#combat-character').html(new Option('Select character', ''))
-    $('#combat-weapon').html(new Option('Select weapon', ''))
+    $('#combat-character').html(new Option('-- Select character --', ''))
+    $('#combat-weapon').html(new Option('-- Select weapon --', ''))
     $('#combat-result').html('')
     characters.forEach(character => {
         $("#combat-character").append(new Option(`${character.charId} | ${character.element} | Lv. ${character.level}`, window.btoa(JSON.stringify(character))));
@@ -194,7 +194,7 @@ function simulate(address, data) {
     weapons.forEach(weapon => {
         $("#combat-weapon").append(new Option(`${weapon.id} | ${weapon.stars + 1}-star ${weapon.element}`, window.btoa(JSON.stringify(weapon))));
     })
-    $('#modal-combat').modal({
+    $('#modal-combat').modal('show', {
         backdrop: 'static',
         keyboard: false
     })
@@ -231,7 +231,8 @@ function combat_simulate() {
 function rename(address) {
     $('#inp-rename').val(storeNames[address])
     $('#inp-readdress').val(address)
-    $('#modal-rename-account').modal({
+    console.log('aw')
+    $('#modal-rename-account').modal('show', {
         backdrop: 'static',
         keyboard: false
     })
@@ -292,14 +293,13 @@ function import_data() {
 }
 
 if (hideAddress) {
-    $('#btn-privacy').removeAttr('checked')
-} else {
     $('#btn-privacy').prop('checked', true)
+} else {
+    $('#btn-privacy').removeAttr('checked')
 }
 
 $('#btn-privacy').on('change' , (e) => {
-    console.log(hideAddress, e.currentTarget.checked)
-    hideAddress = !e.currentTarget.checked
+    hideAddress = e.currentTarget.checked
     localStorage.setItem('hideAddress', hideAddress)
     refresh()
 })

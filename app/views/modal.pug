@@ -1,86 +1,66 @@
 #modal-add-account.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
-  .modal-dialog.modal-dialog-centered(role='document')
-    .modal-content
-      .modal-card.card.bg-secondary
-        .card-header
-          .row.align-items-center
-            .col
-              h4#modalCenterTitle.card-header-title
-                | Add a account
-            .col-auto
-              button.close(type='button' data-dismiss='modal' aria-label='Close')
-                span(aria-hidden='true') &times;
-        .card-body
-            form
-              .form-group  
-                input#inp-name.form-control.form-control(type='text' placeholder='Account Name')
-              .form-group  
-                input#inp-address.form-control.form-control(type='text' placeholder='Address')
-              button.btn.btn-primary.float-right(type='button' onclick='add_account()') Add
+  .modal-dialog.modal-dialog-centered(role="document")
+    .modal-content.bg-dark
+      .modal-header
+        h5.modal-title.text-white
+          | Add a account
+        button(type="button", class="btn-close", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form
+          .form-group.mb-3
+            input#inp-name.form-control.form-control.bg-dark(type='text' placeholder='Account Name')
+          .form-group.mb-3
+            input#inp-address.form-control.form-control.bg-dark(type='text' placeholder='Address')
+          button.btn.btn-secondary.float-right(type='button' onclick='add_account()')
+            | Add
 
 #modal-rename-account.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
-  .modal-dialog.modal-dialog-centered(role='document')
-    .modal-content
-      .modal-card.card.bg-secondary
-        .card-header
-          .row.align-items-center
-            .col
-              h4#modalCenterTitle.card-header-title
-                | Rename account
-            .col-auto
-              button.close(type='button' data-dismiss='modal' aria-label='Close')
-                span(aria-hidden='true') &times;
-        .card-body
-            form
-              .form-group  
-                input#inp-rename.form-control.form-control(type='text' placeholder='Account Name')
-                input#inp-readdress(type='hidden')
-              button.btn.btn-primary.float-right(type='button' onclick='rename_account()') Save
+  .modal-dialog.modal-dialog-centered(role="document")
+    .modal-content.bg-dark
+      .modal-header
+        h5.modal-title.text-white
+          | Rename account
+        button(type="button", class="btn-close", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form
+          .form-group.mb-3
+            input#inp-rename.form-control.form-control.bg-dark(type='text' placeholder='Account Name')
+            input#inp-readdress(type='hidden')
+          button.btn.btn-secondary.float-right(type='button' onclick='rename_account()') Save
 
 #modal-combat.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
-  .modal-dialog.modal-dialog-centered.modal-lg(role='document')
-    .modal-content
-      .modal-card.card.bg-secondary
-        .card-header
-          .row.align-items-center
-            .col
-              h4#modalCenterTitle.card-header-title
-                | Combat Simulator
-            .col-auto
-              button.close(type='button' data-dismiss='modal' aria-label='Close')
-                span(aria-hidden='true') &times;
-        .card-body
-            form
-              .row
-                .col-md-6.col-sm-6.px-2.mb-3
-                  .form-group  
-                    input#combat-name.form-control.form-control(type='text' placeholder='Account address' readonly)
-                    input#combat-address(type='hidden')
-                  .form-group  
-                    select#combat-character.form-control.form-control
-                      option(value='') Select character
-                  .form-group  
-                    select#combat-weapon.form-control.form-control
-                      option(value='') Select weapon
-                .col-md-6.col-sm-6.px-2.mb-3
-                  p#combat-result.text-white(align='center')
-              button#btn-simulate.btn.btn-primary.float-right(type='button' onclick='combat_simulate()') Run
+  .modal-dialog.modal-dialog-centered.modal-lg(role="document")
+    .modal-content.bg-dark
+      .modal-header
+        h5.modal-title.text-white
+          | Combat Simulator
+        button(type="button", class="btn-close", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form
+          .row
+            .col-md-6.col-sm-6.px-2.mb-3
+              .form-group.mb-3
+                input#combat-name.form-control.form-control.bg-dark.text-white(type='text' placeholder='Account address' readonly)
+                input#combat-address(type='hidden')
+              .form-group.mb-3
+                select#combat-character.form-control.form-control.bg-dark.text-white
+                  option(value='') -- Select character --
+              .form-group.mb-3
+                select#combat-weapon.form-control.form-control.bg-dark.text-white
+                  option(value='') -- Select weapon --
+            .col-md-6.col-sm-6.px-2.mb-3
+              p#combat-result.text-white(align='center')
+          button#btn-simulate.btn.btn-secondary.float-right(type='button' onclick='combat_simulate()') Run
 
 #modal-import.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
-  .modal-dialog.modal-dialog-centered(role='document')
-    .modal-content
-      .modal-card.card.bg-secondary
-        .card-header
-          .row.align-items-center
-            .col
-              h4#modalCenterTitle.card-header-title
-                | Import Data
-            .col-auto
-              button.close(type='button' data-dismiss='modal' aria-label='Close')
-                span(aria-hidden='true') &times;
-        .card-body
-            form
-              .form-group  
-                label.form-label(for='file-input') File
-                input#file-import.form-control(type='file' style='padding: .425rem 1.225rem !important')
-              button.btn.btn-primary.float-right(type='button' onclick='import_data()') Import
+  .modal-dialog.modal-dialog-centered(role="document")
+    .modal-content.bg-dark
+      .modal-header
+        h5.modal-title.text-white
+          | Import Data
+        button(type="button", class="btn-close", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form
+          .form-group.mb-3
+            input#file-import.form-control(type='file' style='padding: .425rem 1.225rem !important')
+          button.btn.btn-secondary.float-right(type='button' onclick='import_data()') Import
