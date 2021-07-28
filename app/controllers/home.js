@@ -141,4 +141,24 @@ router.get('/oracle/price', async (req, res, next) => {
   }
 });
 
+router.get('/test/:address/:charId/:weapId', async (req, res, next) => {
+  const { address, charId, weapId } = req.params;
+  try {
+    const charData = characterFromContract(charId, await getCharacterData(address, charId));
+    const weapData = weaponFromContract(weapId, await getWeaponData(address, weapId));
+    const targets = await characterTargets(address, charId, weapId);
+    const enemies = await getEnemyDetails(targets);
+    return res.json(enemies.map((data) => {
+      const chance = getWinChance(charData, weapData, data.power, data.trait);
+      data.element = traitNumberToName(data.trait);
+      return {
+        enemy: data,
+        chance,
+      };
+    }));
+  } catch (e) {
+    return res.json({ price: 0 });
+  }
+});
+
 module.exports = router;

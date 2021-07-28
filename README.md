@@ -13,7 +13,6 @@ CryptoBlades Tracker
 ## Prerequisites
 
 * Node.js `http://nodejs.org`
-* MongoDB `brew install mongodb`
 
 ## Project Structure
 ```sh
@@ -62,7 +61,6 @@ $ cd cbtracker
 
 # Install dependencies
 $ npm install
-$ bower install
 
 $ node app.js
 ```
