@@ -71,6 +71,7 @@ function rename_account() {
 
 function refresh() {
     if (storeAccounts) {
+        $('.btn-refresh').prop('disabled', true)
         $table.bootstrapTable('showLoading')
         $.get(`/account/retrieve/${window.btoa(JSON.stringify({accounts: storeAccounts, time: new Date().getTime()}))}`, (result) => {
             if (result.error) {
@@ -81,6 +82,7 @@ function refresh() {
                 $table.bootstrapTable('load', result)
             }
             $table.bootstrapTable('hideLoading')
+            $('.btn-refresh').removeAttr('disabled')
         })        
     }    
     getPrices()
@@ -231,12 +233,11 @@ function combat_simulate() {
 }
 
 function chanceColor (chance) {
-    chance = parseFloat(chance) * 100
     let color = 'red'
-    if (chance >= 90) color = 'green'
-    if (chance >= 80 && chance < 90) color = 'yellow'
-    if (chance >= 70 && chance < 80) color = 'orange'
-    return `<span style="color: ${color}">${parseFloat(chance).toFixed(2)}%</span>`
+    if (chance >= 0.90) color = 'green'
+    if (chance >= 0.80 && chance < 0.90) color = 'yellow'
+    if (chance >= 0.70 && chance < 0.80) color = 'orange'
+    return `<span style="color: ${color}">${parseFloat(chance * 100).toFixed(2)}%</span>`
 }
 
 function rename(address) {

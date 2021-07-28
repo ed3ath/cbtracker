@@ -9,7 +9,7 @@ main.page-wrapper
       .col-md-12.mb-4
         .card.h-100.rounded-3.p-3.text-white.bg-danger
           p CryptoBlades Tracker is open-source so anyone can create a clone and modify it to ask for your sensitive information. CryptoBlades Tracker <b>will never ask</b> for your seed phrase or private key! <b>Never share these information</b> to any site nor your friends. <b>CryptoBlades Tracker will only require you to enter your BSC address and nothing else</b>. Stay safe!   
-    .row.mx-n2.py-2      
+    .row.mx-n2.py-2
       .col-md-3.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Unclaimed Skills
@@ -61,8 +61,8 @@ main.page-wrapper
           .card-body
             .row
               .col-md-12
-                a.btn.btn-sm.btn-light.mb-2(href='javascript:void(0);' onclick='refresh()')
-                  | Refresh              
+                button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()')
+                  | Refresh
                 .form-check.form-switch(style='float: right;')
                   input#btn-privacy.form-check-input(type="checkbox")
                   label.form-check-label.text-white(for="btn-privacy") Hide address
@@ -90,4 +90,7 @@ main.page-wrapper
                         th.text-white(data-field='action')
                           | Action
                     tbody.text-center
+              .col-md-12.mt-2
+                button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()')
+                  | Refresh
 include footer

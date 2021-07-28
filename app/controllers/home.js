@@ -150,6 +150,7 @@ router.get('/test/:address/:charId/:weapId', async (req, res, next) => {
     const enemies = await getEnemyDetails(targets);
     return res.json(enemies.map((data) => {
       const chance = getWinChance(charData, weapData, data.power, data.trait);
+      console.log(chance);
       data.element = traitNumberToName(data.trait);
       return {
         enemy: data,
@@ -157,7 +158,7 @@ router.get('/test/:address/:charId/:weapId', async (req, res, next) => {
       };
     }));
   } catch (e) {
-    return res.json({ price: 0 });
+    return res.json({ error: 'error' });
   }
 });
 
