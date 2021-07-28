@@ -48,7 +48,9 @@ function add_account() {
         if(result.valid) {
             $('#modal-add-account').modal('hide');
             storeAccounts.push(address)
-            storeNames[address] = name            
+            storeNames[address] = name
+            if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
+            if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
             refresh()
         }
     })
