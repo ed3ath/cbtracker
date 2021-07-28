@@ -182,6 +182,8 @@ function convertBNB(value) {
 function remove(address) {
     storeAccounts.splice(storeAccounts.indexOf(address), 1)
     delete storeNames[address]
+    if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
+    if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
     refresh()
 }
 
