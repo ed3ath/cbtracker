@@ -38,7 +38,7 @@ function populate_currency() {
 
 function retrieve_account() {
     if (storeAccounts) {
-        $.get(`/account/retrieve/${window.btoa(JSON.stringify(storeAccounts))}`, (result) => {
+        $.get(`/account/retrieve/${window.btoa(JSON.stringify({accounts: storeAccounts, time: new Date().getTime()}))}`, (result) => {
             if (result.error) {
                 alert(result.error)
                 result = []
@@ -83,7 +83,7 @@ function reload_data() {
     localStorage.setItem('names', JSON.stringify(storeNames))
 
     $table.bootstrapTable('showLoading')
-    $.get(`/account/retrieve/${window.btoa(JSON.stringify(storeAccounts))}`, (result) => {
+    $.get(`/account/retrieve/${window.btoa(JSON.stringify({accounts: storeAccounts, time: new Date().getTime()}))}`, (result) => {
         if (result.error) {
             alert(result.error)
             result = []

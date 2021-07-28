@@ -74,7 +74,7 @@ router.get('/simulate/:address/:weapData/:charData', async (req, res, next) => {
 router.get('/account/retrieve/:data', async (req, res, next) => {
   const { data } = req.params;
   if (!data) return res.json({ error: 'No data provided.' });
-  const accounts = JSON.parse(Buffer.from(data, 'base64').toString('ascii'));
+  const { accounts } = JSON.parse(Buffer.from(data, 'base64').toString('ascii'));
   if (!accounts) return res.json([]);
   try {
     const results = await Promise.all(accounts.map(async (address) => {
