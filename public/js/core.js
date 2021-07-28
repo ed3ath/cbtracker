@@ -214,9 +214,9 @@ function combat_simulate() {
         $.get(`/simulate/${address}/${weapData}/${charData}`, (result, err) => {
             if (result.error) $('#combat-result').html(result.error)
             else {
-                let tmpResult = 'Enemy | Element | Power | Chance<br><hr>';
+                let tmpResult = 'Enemy | Element | Power | Est. Reward | Chance<br><hr>';
                 result.forEach((data, i) => {
-                    tmpResult += `#${i+1} | ${elemToColor(data.enemy.element)} | ${data.enemy.power} | ${parseFloat(data.chance * 100).toFixed(2)}%<br>`
+                    tmpResult += `#${i+1} | ${elemToColor(data.enemy.element)} | ${data.enemy.power} | ${parseFloat(data.reward).toFixed(8)} | ${chanceColor(data.chance)}<br>`
                 })
                 $('#combat-result').html(tmpResult)
             }
@@ -226,6 +226,15 @@ function combat_simulate() {
         $('#combat-result').html(e.message)
         $('#btn-simulate').removeAttr('disabled')
     }
+}
+
+function chanceColor (chance) {
+    chance = parseFloat(chance) * 100
+    let color = 'red'
+    if (chance >= 90) color = 'green'
+    if (chance >= 80 && chance < 90) color = 'yellow'
+    if (chance >= 70 && chance < 80) color = 'orange'
+    return `<span style="color: ${color}">${parseFloat(chance).toFixed(2)}%</span>`
 }
 
 function rename(address) {

@@ -50,6 +50,8 @@ const getWeaponData = async (address, weapId) => Weapons.methods.get(`${weapId}`
 const Oracle = new web3.eth.Contract(conOracle.abi, oracleAddress);
 const getOraclePrice = async () => Oracle.methods.currentPrice().call({ from: defaultAddress });
 
+const fetchFightGasOffset = async () => CryptoBlades.methods.usdToSkill(await CryptoBlades.methods.fightRewardGasOffset().call({ from: defaultAddress })).call({ from: defaultAddress });
+const fetchFightBaseline = async () => CryptoBlades.methods.usdToSkill(await CryptoBlades.methods.fightRewardBaseline().call({ from: defaultAddress })).call({ from: defaultAddress });
 
 module.exports = {
   web3,
@@ -72,4 +74,6 @@ module.exports = {
   getWeaponData,
   characterTargets,
   getOraclePrice,
+  fetchFightGasOffset,
+  fetchFightBaseline,
 };

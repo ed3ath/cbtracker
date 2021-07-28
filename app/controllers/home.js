@@ -18,6 +18,8 @@ const {
   getWeaponData,
   characterTargets,
   getOraclePrice,
+  fetchFightGasOffset,
+  fetchFightBaseline,
 } = require('../helpers/web3');
 
 const {
@@ -29,7 +31,6 @@ const {
   getWinChance,
   traitNumberToName,
 } = require('../helpers/utils');
-
 
 router.get('/', (req, res, next) => {
   if (req.get('host') !== 'cbtracker.cwsdev.net' && process.env.NODE_ENV === 'production') {
@@ -54,15 +55,21 @@ router.get('/simulate/:address/:weapData/:charData', async (req, res, next) => {
   charData = JSON.parse(Buffer.from(charData, 'base64').toString('ascii'));
   weapData = JSON.parse(Buffer.from(weapData, 'base64').toString('ascii'));
 
+  const fightGasOffset = web3.utils.fromWei(`${await fetchFightGasOffset()}`);
+  const fightBaseline = web3.utils.fromWei(`${await fetchFightBaseline()}`);
+
   try {
     const targets = await characterTargets(address, charData.charId, weapData.id);
     const enemies = await getEnemyDetails(targets);
     return res.json(enemies.map((data) => {
       const chance = getWinChance(charData, weapData, data.power, data.trait);
       data.element = traitNumberToName(data.trait);
+
+      const reward = (parseFloat(fightGasOffset) + (parseFloat(fightBaseline) * Math.sqrt(parseInt(data.power) / 1000)));
       return {
         enemy: data,
         chance,
+        reward,
       };
     }));
   } catch (e) {
