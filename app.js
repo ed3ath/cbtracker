@@ -20,6 +20,14 @@ const config = require('./config/config');
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'pug');
 
+// disable caching
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
+});
+
 app.use(logger(config.isProd ? 'combined' : 'dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

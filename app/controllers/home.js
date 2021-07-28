@@ -154,6 +154,8 @@ router.get('/test/:address/:charId/:weapId', async (req, res, next) => {
       data.element = traitNumberToName(data.trait);
       return {
         enemy: data,
+        charData,
+        weapData,
         chance,
       };
     }));
