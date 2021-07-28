@@ -108,7 +108,7 @@ function populate_cards(result) {
 
 function charFormatter(val) {
     return val.map(char => {
-        return `${char.charId} | Lv. ${char.level} | ${elemToColor(char.element)} | ${char.exp} xp | Lv. ${char.nextLevel} (${(!char.mustClaim ? `${char.nextExp} xp left` : '<span style="color: gold">Claim Exp</span>')}) | (${staminaToColor(char.sta)}/200)`
+        return `${char.charId} | Lv. ${char.level} | ${elemToColor(char.element)} | ${char.exp} xp | Lv. ${char.nextLevel} (${(!char.mustClaim ? `${char.nextExp} xp left` : '<span style="color: gold">Claim Exp</span>')}) | (${staminaToColor(char.sta)})`
     }).join('<br>')
 }
 
@@ -124,11 +124,11 @@ function elemToColor(elem){
 
 function staminaToColor(stamina){
     stamina = parseInt(stamina)
-    if (stamina < 40) return stamina
-    if (stamina < 80) return `<span style='color: green'>${stamina}</span>`
-    if (stamina < 120) return `<span style='color: yellow'>${stamina}</span>`
-    if (stamina < 160) return `<span style='color: orange'>${stamina}</span>`
-    return `<span style='color: red'>${stamina}</span>`
+    if (stamina < 40) return `${stamina}/200`
+    if (stamina < 80) return `<span style='color: green'>${stamina}/200</span>`
+    if (stamina < 120) return `<span style='color: yellow'>${stamina}/200</span>`
+    if (stamina < 160) return `<span style='color: orange'>${stamina}/200</span>`
+    return `<span style='color: red'>${stamina}/200</span>`
 }
 
 function currFormatter(val) {
