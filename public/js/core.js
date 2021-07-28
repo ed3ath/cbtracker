@@ -23,8 +23,7 @@ var usdPrice = 0
 getPrices()
 getOraclePrice()
 
-$table.bootstrapTable('showLoading')
-retrieve_account()
+init_accounts()
 
 function populate_currency() {
     $('#select-currency').html();
@@ -36,19 +35,9 @@ function populate_currency() {
     })
 }
 
-function retrieve_account() {
-    if (storeAccounts) {
-        $.get(`/account/retrieve/${window.btoa(JSON.stringify({accounts: storeAccounts, time: new Date().getTime()}))}`, (result) => {
-            if (result.error) {
-                alert(result.error)
-                result = []
-            } else {
-                populate_cards(result)
-            }
-            $table.bootstrapTable({data: result, classes: 'table table-bordered'})
-            $table.bootstrapTable('hideLoading')
-        })        
-    }
+function init_accounts() {
+    $table.bootstrapTable({data: [], classes: 'table table-bordered'})
+    refresh()
 }
 
 function add_account() {
@@ -78,25 +67,20 @@ function rename_account() {
     reload_data()
 }
 
-function reload_data() {
-    localStorage.setItem('accounts', JSON.stringify(storeAccounts))
-    localStorage.setItem('names', JSON.stringify(storeNames))
-
-    $table.bootstrapTable('showLoading')
-    $.get(`/account/retrieve/${window.btoa(JSON.stringify({accounts: storeAccounts, time: new Date().getTime()}))}`, (result) => {
-        if (result.error) {
-            alert(result.error)
-            result = []
-        } else {
-            populate_cards(result)
-        }
-        $table.bootstrapTable({data: result, classes: 'table table-bordered'})
-        $table.bootstrapTable('hideLoading')
-    })
-}
-
 function refresh() {
-    reload_data()
+    if (storeAccounts) {
+        $table.bootstrapTable('showLoading')
+        $.get(`/account/retrieve/${window.btoa(JSON.stringify({accounts: storeAccounts, time: new Date().getTime()}))}`, (result) => {
+            if (result.error) {
+                alert(result.error)
+                result = []
+            } else {
+                populate_cards(result)
+                $table.bootstrapTable('load', result)
+            }
+            $table.bootstrapTable('hideLoading')
+        })        
+    }    
     getPrices()
     getOraclePrice()
 }
@@ -257,36 +241,11 @@ function addressPrivacy(address) {
     return `${address.substr(0, 6)}...${address.substr(-4, 4)}`
 }
 
-if (hideAddress) {
-    $('#btn-privacy').removeAttr('checked')
-} else {
-    $('#btn-privacy').prop('checked', true)
-}
-
-$('#btn-privacy').on('change' , (e) => {
-    if (e.currentTarget.checked) {
-        togglePrivacy(false)
-    } else {
-        togglePrivacy(true)
-    }
-})
-
 $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
     localStorage.setItem('currency', currCurrency)
     refresh()
 })
-
-function togglePrivacy (hide) {
-    if (hide) {
-        hideAddress = true
-        localStorage.setItem('hideAddress', true)
-    } else {
-        hideAddress = false
-        localStorage.setItem('hideAddress', false)
-    }
-    refresh()
-}
 
 function export_data() {
     getLocalstorageToFile(`CBTracker-${new Date().getTime()}.json`)
@@ -316,16 +275,34 @@ function import_data() {
     fr.addEventListener('load', function() {
         var {accounts, currency, hideAddress, names} = JSON.parse(fr.result)
         storeAccounts = JSON.parse(accounts)
-        storeNames = JSON.parse(names)
+        storeNames = JSON.parse(names)        
         hideAddress = (hideAddress === 'true')
-        togglePrivacy(hideAddress)
-        toggleHelper(hideAddress)
         currCurrency = currency
-        localStorage.setItem('currency', currCurrency)    
+        
+        if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
+        if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
+        if (hideAddress) localStorage.setItem('hideAddress', hideAddress)
+        if (currCurrency) localStorage.setItem('currency', currCurrency)
+
+        toggleHelper(hideAddress)
         refresh()
+
         $('#modal-import').modal('hide')
     });  
 }
+
+if (hideAddress) {
+    $('#btn-privacy').removeAttr('checked')
+} else {
+    $('#btn-privacy').prop('checked', true)
+}
+
+$('#btn-privacy').on('change' , (e) => {
+    console.log(hideAddress, e.currentTarget.checked)
+    hideAddress = !e.currentTarget.checked
+    localStorage.setItem('hideAddress', hideAddress)
+    refresh()
+})
 
 function toggleHelper(hide) {
     if (hide) {
