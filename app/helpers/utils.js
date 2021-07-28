@@ -208,10 +208,6 @@ function getWinChance(charData, weapData, enemyPower, enemyElement) {
     rollingTotal = 1 - rollingTotal;
   }
   return rollingTotal
-  if (rollingTotal <= 0.3) return 0;
-  if (rollingTotal <= 0.5) return 1;
-  if (rollingTotal <= 0.7) return 2;
-  return 3;
 }
 
 const SECONDS_IN_MINUTE = 60;
