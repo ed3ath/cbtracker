@@ -1,4 +1,4 @@
-var version = "2.0.5"
+var version = "2.0.6"
 versionCheck()
 setInterval(() => { versionCheck() }, 1000)
 
@@ -355,7 +355,7 @@ async function simulate(address) {
     charIds.forEach(async charId => {
         const charData = characterFromContract(charId, await getCharacterData(charId))
         const sta = await getCharacterStamina(charId)
-        $("#combat-character").append(`<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${charData.level} | Sta. ${sta}/200</option>`);
+        $("#combat-character").append(`<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${charData.level + 1} | Sta. ${sta}/200</option>`);
     })
     weapIds.forEach(async weapId => {
         const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
