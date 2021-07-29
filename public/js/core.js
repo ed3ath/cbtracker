@@ -1,4 +1,4 @@
-var version = "2.0.9"
+var version = "2.0.10"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -74,7 +74,7 @@ function fiatConversion () {
     if (isElementNotZero($cardStake)) $convStake.html(`(${toLocaleCurrency(convertToFiat($cardStake.html()))})`)
     if (isElementNotZero($cardWallet)) $convWallet.html(`(${toLocaleCurrency(convertToFiat($cardWallet.html()))})`)
     if (isElementNotZero($cardTotal)) $convTotal.html(`(${toLocaleCurrency(convertToFiat($cardTotal.html()))})`)
-    if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertToFiat($cardBnb.html()))})`)
+    if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
 }
 function clearFiat () {
     $convIngame.html('')
@@ -92,6 +92,10 @@ function isElementNotZero ($elem) {
 
 function convertToFiat (val) {
     return parseFloat(val) * skillPrice
+}
+
+function convertBnbToFiat (val) {
+    return parseFloat(val) * bnbPrice
 }
 
 function toLocaleCurrency(val) {
