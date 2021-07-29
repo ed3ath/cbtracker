@@ -1,3 +1,13 @@
 .float-right {
     float: right !important;
 }
+.card-label {
+    margin-top: -12px;
+    font-size: 12px;
+}
+.text-gold {
+    color: gold
+}
+.bg-character {
+    background-color: #f9d2f2 !important;
+}

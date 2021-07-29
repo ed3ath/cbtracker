@@ -11,7 +11,7 @@
             input#inp-name.form-control.form-control.bg-dark(type='text' placeholder='Account Name')
           .form-group.mb-3
             input#inp-address.form-control.form-control.bg-dark(type='text' placeholder='Address')
-          button.btn.btn-secondary.float-right(type='button' onclick='add_account()')
+          button.btn.btn-secondary.float-right(type='button' onclick='addAccount()')
             | Add
 
 #modal-rename-account.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
@@ -26,7 +26,7 @@
           .form-group.mb-3
             input#inp-rename.form-control.form-control.bg-dark(type='text' placeholder='Account Name')
             input#inp-readdress(type='hidden')
-          button.btn.btn-secondary.float-right(type='button' onclick='rename_account()') Save
+          button.btn.btn-secondary.float-right(type='button' onclick='renameAccount()') Save
 
 #modal-combat.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
   .modal-dialog.modal-dialog-centered.modal-lg(role="document")
@@ -50,7 +50,7 @@
                   option(value='') -- Select weapon --
             .col-md-7.col-sm-6.px-2.mb-3
               p#combat-result.text-white(align='center')
-          button#btn-simulate.btn.btn-secondary.float-right(type='button' onclick='combat_simulate()') Run
+          button#btn-simulate.btn.btn-secondary.float-right(type='button' onclick='combatSimulate()') Run
 
 #modal-import.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
   .modal-dialog.modal-dialog-centered(role="document")

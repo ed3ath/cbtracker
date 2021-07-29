@@ -13,40 +13,51 @@ main.page-wrapper
       .col-md-2.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total In-game Skills
-          p#card-ingame.h4.mb-2.text-white 0
+          span#card-ingame.h4.text-white 0
+          span#conv-ingame.mb-2.text-white.card-label
       .col-md-2.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Unclaimed Skills
-          p#card-uskills.h4.mb-2.text-white 0
+          span#card-unclaim.h4.text-white 0
+          span#conv-unclaim.mb-2.text-white.card-label
       .col-md-2.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Staked Skills
-          p#card-sskills.h4.mb-2.text-white 0      
+          span#card-stake.h4.text-white 0
+          span#conv-stake.mb-2.text-white.card-label
       .col-md-2.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Skills in Wallet
-          p#card-balance.h4.mb-2.text-white 0
+          span#card-wallet.h4.text-white 0
+          span#conv-wallet.mb-2.text-white.card-label
       .col-md-2.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Skill Assets
-          p#card-sassets.h4.mb-2.text-white 0
+          span#card-total.h4.text-white 0
+          span#conv-total.mb-2.text-white.card-label
       .col-md-2.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total BNB Balance
-          p#card-bnb.h4.mb-2.text-white 0
+          span#card-bnb.h4.text-white 0
+          span#conv-bnb.mb-2.text-white.card-label
     .row.mx-n2.py-2
-      .col-md-4.col-sm-6.px-2.mb-3
+      .col-md-3.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Total Accounts
-          p#card-acc.h4.mb-2.text-white 0
-      .col-md-4.col-sm-6.px-2.mb-3
+          span#card-account.h4.text-white 0
+      .col-md-3.col-sm-6.px-2.mb-3
+        .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
+          h6.fs-sm.fw-medium.text-muted Total Characters
+          span#card-char.h4.text-white 0
+      .col-md-3.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Current Skill Price
-          p#card-price.h4.mb-2.text-white 0
-      .col-md-4.col-sm-6.px-2.mb-3
+          span#card-price.h4.text-white 0
+      .col-md-3.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
           h6.fs-sm.fw-medium.text-muted Current Oracle Price
-          p#card-oprice.h4.mb-2.text-white 0      
+          span#card-oracle.h4.text-white 0
+          span#conv-oracle.mb-2.text-white.card-label
     .row.mx-n2.py-2
       .col-md-12.col-sm-126.px-2.mb-3
         .card.bg-dark
@@ -65,34 +76,55 @@ main.page-wrapper
           .card-body
             .row
               .col-md-12
-                button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()')
+                button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()' disabled)
                   | Refresh
                 .form-check.form-switch(style='float: right;')
                   input#btn-privacy.form-check-input(type="checkbox")
                   label.form-check-label.text-white(for="btn-privacy") Hide address
               .col-md-12
                 .table-responsive.mb-0
-                  table#table-accounts.table.table-sm.card-table
+                  table#table-accounts.table.table-sm.card-table.table-bordered
                     thead.text-center
                       tr
-                        th.text-white(data-field='address' data-formatter='nameFormatter')
+                        th.text-white.align-middle(rowspan='2')
                           | Name
-                        th.text-white(data-field='address' data-formatter='privacyFormatter')
+                        th.text-white.align-middle(rowspan='2')
                           | Address
-                        th.text-white(data-field='characters' data-formatter='charFormatter')
-                          | Characters (ID | Level | Element | Unclaimed Exp | Target Level | Stamina)
-                        th.text-white(data-field='balance' data-formatter='balanceFormatter')
-                          | Skills Balance (In-Game | Unclaimed | Staked | Wallet)
-                        th.text-white(data-field='total' data-formatter='currFormatter')
-                          | Total Assets
-                        th.text-white(data-field='timeLeft')
+                        th.text-white(colspan='6')
+                          | Characters
+                        th.text-white(colspan='5')
+                          | Skill Assets
+                        th.text-white.align-middle(rowspan='2')
                           | Unstake Time
-                        th.text-white(data-field='bnb' data-formatter='bnbFormatter')
+                        th.text-white.align-middle(rowspan='2')
                           | BNB Balance
-                        th.text-white(data-field='action')
+                        th.text-white.align-middle(rowspan='2')
                           | Action
+                      tr 
+                        th.text-white 
+                          | ID
+                        th.text-white 
+                          | Level
+                        th.text-white 
+                          | Element
+                        th.text-white 
+                          | Unclaimed XP
+                        th.text-white 
+                          | Target Level
+                        th.text-white 
+                          | Stamina
+                        th.text-white 
+                          | In-Game
+                        th.text-white 
+                          | Unclaimed 
+                        th.text-white 
+                          | Staked
+                        th.text-white 
+                          | Wallet
+                        th.text-white
+                          | Total
                     tbody.text-center
               .col-md-12.mt-2
-                button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()')
+                button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()' disabled)
                   | Refresh
 include footer
