@@ -77,14 +77,12 @@ main.page-wrapper
                           | Address
                         th.text-white(data-field='characters' data-formatter='charFormatter')
                           | Characters (ID | Level | Element | Unclaimed Exp | Target Level | Stamina)
-                        th.text-white(data-field='unclaimed' data-formatter='currFormatter')
-                          | Unclaimed Skills
-                        th.text-white(data-field='rewards' data-formatter='stakedFormatter')
-                          | Staked Skills
-                        th.text-white(data-field='balance' data-formatter='currFormatter')
-                          | Skills in Wallet
+                        th.text-white(data-field='balance' data-formatter='balanceFormatter')
+                          | Skills Balance (In-Game | Unclaimed | Staked | Wallet)
                         th.text-white(data-field='total' data-formatter='currFormatter')
                           | Total Assets
+                        th.text-white(data-field='timeLeft')
+                          | Unstake Time
                         th.text-white(data-field='bnb' data-formatter='bnbFormatter')
                           | BNB Balance
                         th.text-white(data-field='action')

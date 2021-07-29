@@ -132,7 +132,11 @@ function staminaToColor(stamina){
 }
 
 function currFormatter(val) {
-    return parseFloat(val).toFixed(6)
+    return parseFloat(val).toFixed(4)
+}
+
+function balanceFormatter(val) {    
+    return `<span style="color: green">${currFormatter(val.ingame)}</span> | <span style="color: cyan">${currFormatter(val.unclaimed)}</span> | <span style="color: orange">${currFormatter(val.staked)}</span> | <span style="color: red">${currFormatter(val.wallet)}</span>`
 }
 
 function bnbFormatter(val) {

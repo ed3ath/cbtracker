@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment');
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ const {
   getAccountCharacters,
   getAccountWeapons,
   getAccountSkillReward,
+  getIngameSkill,
   getCharacterExp,
   getCharacterStamina,
   getCharacterData,
@@ -20,12 +22,12 @@ const {
   getOraclePrice,
   fetchFightGasOffset,
   fetchFightBaseline,
+
 } = require('../helpers/web3');
 
 const {
   characterFromContract,
   weaponFromContract,
-  secondsToDDHHMMSS,
   getNextTargetExpLevel,
   getEnemyDetails,
   getWinChance,
@@ -86,10 +88,11 @@ router.get('/account/retrieve/:data', async (req, res, next) => {
       const bnbBalance = await getBNBBalance(address);
       const accChars = await getAccountCharacters(address);
       const accWeaps = await getAccountWeapons(address);
-      const balance = await getStakedBalance(address);
-      const rewards = await getStakedRewards(address);
+      const wallet = await getStakedBalance(address);
+      const staked = await getStakedRewards(address);
       const timeLeft = await getStakedTimeLeft(address);
       const skills = await getAccountSkillReward(address);
+      const ingame = await getIngameSkill(address);
       const characters = await Promise.all(accChars.map(async (charId) => {
         const exp = await getCharacterExp(charId);
         const sta = await getCharacterStamina(charId);
@@ -111,11 +114,14 @@ router.get('/account/retrieve/:data', async (req, res, next) => {
       return {
         address,
         bnb: web3.utils.fromWei(`${bnbBalance}`, 'ether'),
-        unclaimed: web3.utils.fromWei(`${skills}`, 'ether'),
-        balance: web3.utils.fromWei(`${balance}`, 'ether'),
-        rewards: web3.utils.fromWei(`${rewards}`, 'ether'),
-        timeLeft: secondsToDDHHMMSS(timeLeft),
-        total: web3.utils.fromWei(`${(parseFloat(rewards) + parseFloat(balance) + parseFloat(skills))}`, 'ether'),
+        balance: {
+          ingame: web3.utils.fromWei(`${ingame}`, 'ether'),
+          unclaimed: web3.utils.fromWei(`${skills}`, 'ether'),
+          wallet: web3.utils.fromWei(`${wallet}`, 'ether'),
+          staked: web3.utils.fromWei(`${staked}`, 'ether'),
+        },
+        total: web3.utils.fromWei(`${(parseFloat(staked) + parseFloat(wallet) + parseFloat(skills) + parseFloat(ingame))}`, 'ether'),
+        timeLeft: (timeLeft > 0 ? moment(new Date(new Date().getTime() + (timeLeft * 1000))).fromNow() : (parseFloat(staked) > 0 ? '<span style="color: gold">Claim now</span>' : '')),
         characters,
         weapons,
         action: `<button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
@@ -126,6 +132,7 @@ router.get('/account/retrieve/:data', async (req, res, next) => {
 
     return res.json(results);
   } catch (e) {
+    console.log(e);
     return res.json({ error: 'We are currently being rate limited by BSC Network. Please wait a few minutes before trying again.' });
   }
 });
@@ -139,28 +146,5 @@ router.get('/oracle/price', async (req, res, next) => {
   }
 });
 
-/*
-router.get('/test/:charId/:weapId', async (req, res, next) => {
-  const { charId, weapId } = req.params;
-  try {
-    const charData = characterFromContract(charId, await getCharacterData(charId));
-    const weapData = weaponFromContract(weapId, await getWeaponData(weapId));
-    const targets = await characterTargets(charId, weapId);
-    const enemies = await getEnemyDetails(targets);
-    return res.json(enemies.map((data) => {
-      const chance = getWinChance(charData, weapData, data.power, data.trait);
-      console.log(chance);
-      data.element = traitNumberToName(data.trait);
-      return {
-        enemy: data,
-        charData,
-        weapData,
-        chance,
-      };
-    }));
-  } catch (e) {
-    return res.json({ error: 'error' });
-  }
-}); */
 
 module.exports = router;

@@ -21,10 +21,12 @@
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
     "express": "^4.16.2",
+    "moment": "^2.29.1",
     "mongoose": "^5.13.3",
     "morgan": "^1.9.0",
     "pug": "^3.0.2",
     "serve-favicon": "^2.4.5",
+    "socket.io": "^2.4.0",
     "web3": "^1.4.0"
   },
   "devDependencies": {

@@ -36,7 +36,9 @@ const Weapons = new pweb3.eth.Contract(conWeapons.abi, weapAddress);
 
 const getAccountCharacters = async address => CryptoBlades.methods.getMyCharacters().call({ from: address });
 const getAccountWeapons = async address => CryptoBlades.methods.getMyWeapons().call({ from: address });
+
 const getAccountSkillReward = async address => CryptoBlades.methods.getTokenRewards().call({ from: address });
+const getIngameSkill = async address => CryptoBlades.methods.inGameOnlyFunds(address).call({ from: address });
 
 const getCharacterExp = async charId => CryptoBlades.methods.getXpRewards(`${charId}`).call({ from: defaultAddress });
 const characterTargets = async (charId, weapId) => CryptoBlades.methods.getTargets(charId, weapId).call({ from: defaultAddress });
@@ -53,6 +55,9 @@ const getOraclePrice = async () => Oracle.methods.currentPrice().call({ from: de
 const fetchFightGasOffset = async () => CryptoBlades.methods.usdToSkill(await CryptoBlades.methods.fightRewardGasOffset().call({ from: defaultAddress })).call({ from: defaultAddress });
 const fetchFightBaseline = async () => CryptoBlades.methods.usdToSkill(await CryptoBlades.methods.fightRewardBaseline().call({ from: defaultAddress })).call({ from: defaultAddress });
 
+const decodeAbi = async (types, data) => web3.eth.abi.decodeParameters(types, data);
+const getPasLogs = async options => web3.eth.abi.getPasLogs(options);
+
 module.exports = {
   web3,
   isAddress,
@@ -67,6 +72,7 @@ module.exports = {
   getAccountCharacters,
   getAccountWeapons,
   getAccountSkillReward,
+  getIngameSkill,
   getCharacterExp,
   getCharacterStamina,
   getBNBBalance,
@@ -76,4 +82,6 @@ module.exports = {
   getOraclePrice,
   fetchFightGasOffset,
   fetchFightBaseline,
+  decodeAbi,
+  getPasLogs,
 };
