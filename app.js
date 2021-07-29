@@ -55,7 +55,7 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-if (process.env.NODE_ENV === 'production') {
+/*if (process.env.NODE_ENV === 'production') {
   const credentials = {
     cert: fs.readFileSync('/etc/cert/cert.pem', 'utf8'),
     key: fs.readFileSync('/etc/cert/key.pem', 'utf8'),
@@ -68,6 +68,9 @@ if (process.env.NODE_ENV === 'production') {
 const httpServer = http.createServer(app);
 httpServer.listen(80, () => {
   console.log('HTTPS Server running on port 443');
-});
+});*/
+
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running..."));
 
 module.exports = app;
