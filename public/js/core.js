@@ -1,4 +1,4 @@
-var version = "1.0.2"
+var version = "2.0.3"
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
@@ -40,24 +40,59 @@ var $cardIngame = $('#card-ingame'),
     $convStake = $('#conv-stake'),
     $convWallet = $('#conv-wallet'),
     $convTotal = $('#conv-total'),
+    $convBnb = $('#conv-bnb'),
     $convOracle = $('#conv-oracle')
 
 $('document').ready(async () => {
     versionCheck()
     setInterval(() => versionCheck, 5000)
-    getPrices()
+    priceTicker()
     oracleTicker()
-    setInterval(() => oracleTicker, 3000)
+    setInterval(async() => {
+        await oracleTicker()
+        priceTicker()
+        fiatConversion()
+    }, 1000)
     async function oracleTicker() {
         var oraclePrice = 1 / web3.utils.fromWei(`${await getOraclePrice()}`, 'ether')
         $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} (${(oraclePrice * usdPrice).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})`)
     }
-    getPrices()    
-    await loadData()
+    loadData()
 })
 
 async function refresh () {
-    await loadData()
+    loadData()
+    fiatConversion()
+}
+
+function fiatConversion () {
+    if (isElementNotZero($cardIngame)) $convIngame.html(`(${toLocaleCurrency(convertToFiat($cardIngame.html()))})`)
+    if (isElementNotZero($cardUnclaim)) $convUnclaim.html(`(${toLocaleCurrency(convertToFiat($cardUnclaim.html()))})`)
+    if (isElementNotZero($cardStake)) $convStake.html(`(${toLocaleCurrency(convertToFiat($cardStake.html()))})`)
+    if (isElementNotZero($cardWallet)) $convWallet.html(`(${toLocaleCurrency(convertToFiat($cardWallet.html()))})`)
+    if (isElementNotZero($cardTotal)) $convTotal.html(`(${toLocaleCurrency(convertToFiat($cardTotal.html()))})`)
+    if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertToFiat($cardBnb.html()))})`)
+}
+function clearFiat () {
+    $convIngame.html('')
+    $convUnclaim.html('')
+    $convStake.html('')
+    $convWallet.html('')
+    $convTotal.html('')
+    $convBnb.html('')
+    $convOracle.html('')
+}
+
+function isElementNotZero ($elem) {
+    return (parseFloat($elem.html()) > 0)
+}
+
+function convertToFiat (val) {
+    return parseFloat(val) * skillPrice
+}
+
+function toLocaleCurrency(val) {
+    return val.toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })
 }
 
 async function loadData () {
@@ -126,7 +161,7 @@ async function loadData () {
         if (charLen < 1) {
             charLen = 1
         }
-        $table.append(` <tr class="text-white align-middle">
+        $table.append(` <tr class="text-white align-middle" data-row="${address}">
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle'>${addressPrivacy(address)}</td>
                             ${charHtml}
@@ -203,7 +238,7 @@ function renameAccount() {
     $(`td[data-id=${address}]`).html(name)
 }
 
-function getPrices() {
+function priceTicker() {
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin,tether&vs_currencies=${currencies.join(',')}`, (result) => {
         skillPrice = result.cryptoblades[currCurrency]
         bnbPrice = result.binancecoin[currCurrency]
@@ -477,6 +512,7 @@ $('#btn-privacy').on('change', (e) => {
 $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
     localStorage.setItem('currency', currCurrency)
+    clearFiat()
     refresh()
 })
 
