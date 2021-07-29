@@ -92,14 +92,14 @@
     "absolutePath": "/F/vscode/cblades/contracts/staking/FailsafeUpgradeable.sol",
     "exportedSymbols": {
       "FailsafeUpgradeable": [
-        7761
+        4749
       ]
     },
-    "id": 7762,
+    "id": 4750,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 7696,
+        "id": 4684,
         "literals": [
           "solidity",
           "^",
@@ -107,27 +107,27 @@
           ".2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:27"
+        "src": "0:23:11"
       },
       {
         "absolutePath": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
         "file": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
-        "id": 7697,
+        "id": 4685,
         "nodeType": "ImportDirective",
-        "scope": 7762,
-        "sourceUnit": 19087,
-        "src": "27:69:27",
+        "scope": 4750,
+        "sourceUnit": 10935,
+        "src": "27:69:11",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "absolutePath": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
         "file": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
-        "id": 7698,
+        "id": 4686,
         "nodeType": "ImportDirective",
-        "scope": 7762,
-        "sourceUnit": 18582,
-        "src": "98:75:27",
+        "scope": 4750,
+        "sourceUnit": 10430,
+        "src": "98:75:11",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -138,53 +138,53 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 7699,
+              "id": 4687,
               "name": "Initializable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 19086,
-              "src": "218:13:27",
+              "referencedDeclaration": 10934,
+              "src": "218:13:11",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Initializable_$19086",
+                "typeIdentifier": "t_contract$_Initializable_$10934",
                 "typeString": "contract Initializable"
               }
             },
-            "id": 7700,
+            "id": 4688,
             "nodeType": "InheritanceSpecifier",
-            "src": "218:13:27"
+            "src": "218:13:11"
           },
           {
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 7701,
+              "id": 4689,
               "name": "OwnableUpgradeable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 18581,
-              "src": "233:18:27",
+              "referencedDeclaration": 10429,
+              "src": "233:18:11",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_OwnableUpgradeable_$18581",
+                "typeIdentifier": "t_contract$_OwnableUpgradeable_$10429",
                 "typeString": "contract OwnableUpgradeable"
               }
             },
-            "id": 7702,
+            "id": 4690,
             "nodeType": "InheritanceSpecifier",
-            "src": "233:18:27"
+            "src": "233:18:11"
           }
         ],
         "contractDependencies": [
-          18581,
-          19086,
-          20541
+          10429,
+          10934,
+          12389
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 7761,
+        "id": 4749,
         "linearizedBaseContracts": [
-          7761,
-          18581,
-          20541,
-          19086
+          4749,
+          10429,
+          12389,
+          10934
         ],
         "name": "FailsafeUpgradeable",
         "nodeType": "ContractDefinition",
@@ -192,12 +192,12 @@
           {
             "constant": false,
             "functionSelector": "1265cc97",
-            "id": 7704,
+            "id": 4692,
             "name": "failsafeModeActive",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 7761,
-            "src": "259:30:27",
+            "scope": 4749,
+            "src": "259:30:11",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -205,10 +205,10 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 7703,
+              "id": 4691,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
-              "src": "259:4:27",
+              "src": "259:4:11",
               "typeDescriptions": {
                 "typeIdentifier": "t_bool",
                 "typeString": "bool"
@@ -219,9 +219,9 @@
           },
           {
             "body": {
-              "id": 7715,
+              "id": 4703,
               "nodeType": "Block",
-              "src": "346:73:27",
+              "src": "346:73:11",
               "statements": [
                 {
                   "expression": {
@@ -229,18 +229,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 7709,
+                      "id": 4697,
                       "name": "__Ownable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 18480,
-                      "src": "357:14:27",
+                      "referencedDeclaration": 10328,
+                      "src": "357:14:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 7710,
+                    "id": 4698,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -248,16 +248,16 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "357:16:27",
+                    "src": "357:16:11",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 7711,
+                  "id": 4699,
                   "nodeType": "ExpressionStatement",
-                  "src": "357:16:27"
+                  "src": "357:16:11"
                 },
                 {
                   "expression": {
@@ -265,18 +265,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 7712,
+                      "id": 4700,
                       "name": "__Failsafe_init_unchained",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7726,
-                      "src": "384:25:27",
+                      "referencedDeclaration": 4714,
+                      "src": "384:25:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 7713,
+                    "id": 4701,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -284,87 +284,87 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "384:27:27",
+                    "src": "384:27:11",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 7714,
+                  "id": 4702,
                   "nodeType": "ExpressionStatement",
-                  "src": "384:27:27"
+                  "src": "384:27:11"
                 }
               ]
             },
             "documentation": null,
-            "id": 7716,
+            "id": 4704,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 7707,
+                "id": 4695,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 7706,
+                  "id": 4694,
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 19069,
-                  "src": "334:11:27",
+                  "referencedDeclaration": 10917,
+                  "src": "334:11:11",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "334:11:27"
+                "src": "334:11:11"
               }
             ],
             "name": "__Failsafe_init",
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 7705,
+              "id": 4693,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "322:2:27"
+              "src": "322:2:11"
             },
             "returnParameters": {
-              "id": 7708,
+              "id": 4696,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "346:0:27"
+              "src": "346:0:11"
             },
-            "scope": 7761,
-            "src": "298:121:27",
+            "scope": 4749,
+            "src": "298:121:11",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 7725,
+              "id": 4713,
               "nodeType": "Block",
-              "src": "485:45:27",
+              "src": "485:45:11",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 7723,
+                    "id": 4711,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 7721,
+                      "id": 4709,
                       "name": "failsafeModeActive",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7704,
-                      "src": "496:18:27",
+                      "referencedDeclaration": 4692,
+                      "src": "496:18:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -375,14 +375,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 7722,
+                      "id": 4710,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "517:5:27",
+                      "src": "517:5:11",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -390,86 +390,86 @@
                       },
                       "value": "false"
                     },
-                    "src": "496:26:27",
+                    "src": "496:26:11",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "id": 7724,
+                  "id": 4712,
                   "nodeType": "ExpressionStatement",
-                  "src": "496:26:27"
+                  "src": "496:26:11"
                 }
               ]
             },
             "documentation": null,
-            "id": 7726,
+            "id": 4714,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 7719,
+                "id": 4707,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 7718,
+                  "id": 4706,
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 19069,
-                  "src": "473:11:27",
+                  "referencedDeclaration": 10917,
+                  "src": "473:11:11",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "473:11:27"
+                "src": "473:11:11"
               }
             ],
             "name": "__Failsafe_init_unchained",
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 7717,
+              "id": 4705,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "461:2:27"
+              "src": "461:2:11"
             },
             "returnParameters": {
-              "id": 7720,
+              "id": 4708,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "485:0:27"
+              "src": "485:0:11"
             },
-            "scope": 7761,
-            "src": "427:103:27",
+            "scope": 4749,
+            "src": "427:103:11",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 7738,
+              "id": 4726,
               "nodeType": "Block",
-              "src": "593:81:27",
+              "src": "593:81:11",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 7733,
+                    "id": 4721,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 7731,
+                      "id": 4719,
                       "name": "failsafeModeActive",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7704,
-                      "src": "604:18:27",
+                      "referencedDeclaration": 4692,
+                      "src": "604:18:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -480,14 +480,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 7732,
+                      "id": 4720,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "625:4:27",
+                      "src": "625:4:11",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -495,15 +495,15 @@
                       },
                       "value": "true"
                     },
-                    "src": "604:25:27",
+                    "src": "604:25:11",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "id": 7734,
+                  "id": 4722,
                   "nodeType": "ExpressionStatement",
-                  "src": "604:25:27"
+                  "src": "604:25:11"
                 },
                 {
                   "eventCall": {
@@ -511,18 +511,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 7735,
+                      "id": 4723,
                       "name": "FailsafeModeEnabled",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7741,
-                      "src": "645:19:27",
+                      "referencedDeclaration": 4729,
+                      "src": "645:19:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 7736,
+                    "id": 4724,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -530,62 +530,62 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "645:21:27",
+                    "src": "645:21:11",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 7737,
+                  "id": 4725,
                   "nodeType": "EmitStatement",
-                  "src": "640:26:27"
+                  "src": "640:26:11"
                 }
               ]
             },
             "documentation": null,
             "functionSelector": "e2adc237",
-            "id": 7739,
+            "id": 4727,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 7729,
+                "id": 4717,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 7728,
+                  "id": 4716,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 18526,
-                  "src": "583:9:27",
+                  "referencedDeclaration": 10374,
+                  "src": "583:9:11",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "583:9:27"
+                "src": "583:9:11"
               }
             ],
             "name": "enableFailsafeMode",
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 7727,
+              "id": 4715,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "565:2:27"
+              "src": "565:2:11"
             },
             "returnParameters": {
-              "id": 7730,
+              "id": 4718,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "593:0:27"
+              "src": "593:0:11"
             },
-            "scope": 7761,
-            "src": "538:136:27",
+            "scope": 4749,
+            "src": "538:136:11",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
@@ -593,22 +593,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 7741,
+            "id": 4729,
             "name": "FailsafeModeEnabled",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 7740,
+              "id": 4728,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "707:2:27"
+              "src": "707:2:11"
             },
-            "src": "682:28:27"
+            "src": "682:28:11"
           },
           {
             "body": {
-              "id": 7750,
+              "id": 4738,
               "nodeType": "Block",
-              "src": "738:170:27",
+              "src": "738:170:11",
               "statements": [
                 {
                   "expression": {
@@ -616,7 +616,7 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 7745,
+                        "id": 4733,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -624,15 +624,15 @@
                         "nodeType": "UnaryOperation",
                         "operator": "!",
                         "prefix": true,
-                        "src": "771:19:27",
+                        "src": "771:19:11",
                         "subExpression": {
                           "argumentTypes": null,
-                          "id": 7744,
+                          "id": 4732,
                           "name": "failsafeModeActive",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7704,
-                          "src": "772:18:27",
+                          "referencedDeclaration": 4692,
+                          "src": "772:18:11",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
                             "typeString": "bool"
@@ -646,14 +646,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "5468697320616374696f6e2063616e6e6f7420626520706572666f726d6564207768696c652074686520636f6e747261637420697320696e204661696c73616665204d6f6465",
-                        "id": 7746,
+                        "id": 4734,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "805:72:27",
+                        "src": "805:72:11",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_2033a41bcffa5b8f92dc907d4af8bed97aa83db30ad47a9df6bd54b87ba115ba",
@@ -673,7 +673,7 @@
                           "typeString": "literal_string \"This action cannot be performed while the contract is in Failsafe Mode\""
                         }
                       ],
-                      "id": 7743,
+                      "id": 4731,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -681,13 +681,13 @@
                         -18
                       ],
                       "referencedDeclaration": -18,
-                      "src": "749:7:27",
+                      "src": "749:7:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 7747,
+                    "id": 4735,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -695,44 +695,44 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "749:139:27",
+                    "src": "749:139:11",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 7748,
+                  "id": 4736,
                   "nodeType": "ExpressionStatement",
-                  "src": "749:139:27"
+                  "src": "749:139:11"
                 },
                 {
-                  "id": 7749,
+                  "id": 4737,
                   "nodeType": "PlaceholderStatement",
-                  "src": "899:1:27"
+                  "src": "899:1:11"
                 }
               ]
             },
             "documentation": null,
-            "id": 7751,
+            "id": 4739,
             "name": "normalMode",
             "nodeType": "ModifierDefinition",
             "overrides": null,
             "parameters": {
-              "id": 7742,
+              "id": 4730,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "738:0:27"
+              "src": "738:0:11"
             },
-            "src": "718:190:27",
+            "src": "718:190:11",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 7759,
+              "id": 4747,
               "nodeType": "Block",
-              "src": "938:171:27",
+              "src": "938:171:11",
               "statements": [
                 {
                   "expression": {
@@ -740,12 +740,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 7754,
+                        "id": 4742,
                         "name": "failsafeModeActive",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 7704,
-                        "src": "971:18:27",
+                        "referencedDeclaration": 4692,
+                        "src": "971:18:11",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -754,14 +754,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "5468697320616374696f6e2063616e206f6e6c7920626520706572666f726d6564207768696c652074686520636f6e747261637420697320696e204661696c73616665204d6f6465",
-                        "id": 7755,
+                        "id": 4743,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1004:74:27",
+                        "src": "1004:74:11",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_234b4e3fb74b9596146eb86fb0ad9d7ebcb0382e8d6bce71f4dd166b01c5b9eb",
@@ -781,7 +781,7 @@
                           "typeString": "literal_string \"This action can only be performed while the contract is in Failsafe Mode\""
                         }
                       ],
-                      "id": 7753,
+                      "id": 4741,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -789,13 +789,13 @@
                         -18
                       ],
                       "referencedDeclaration": -18,
-                      "src": "949:7:27",
+                      "src": "949:7:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 7756,
+                    "id": 4744,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -803,52 +803,52 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "949:140:27",
+                    "src": "949:140:11",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 7757,
+                  "id": 4745,
                   "nodeType": "ExpressionStatement",
-                  "src": "949:140:27"
+                  "src": "949:140:11"
                 },
                 {
-                  "id": 7758,
+                  "id": 4746,
                   "nodeType": "PlaceholderStatement",
-                  "src": "1100:1:27"
+                  "src": "1100:1:11"
                 }
               ]
             },
             "documentation": null,
-            "id": 7760,
+            "id": 4748,
             "name": "failsafeMode",
             "nodeType": "ModifierDefinition",
             "overrides": null,
             "parameters": {
-              "id": 7752,
+              "id": 4740,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "938:0:27"
+              "src": "938:0:11"
             },
-            "src": "916:193:27",
+            "src": "916:193:11",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 7762,
-        "src": "177:935:27"
+        "scope": 4750,
+        "src": "177:935:11"
       }
     ],
-    "src": "0:1114:27"
+    "src": "0:1114:11"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/F/vscode/cblades/contracts/staking/FailsafeUpgradeable.sol",
       "exportedSymbols": {
         "FailsafeUpgradeable": [
-          7761
+          4749
         ]
       }
     },
@@ -862,59 +862,59 @@
             ".2"
           ]
         },
-        "id": 7696,
+        "id": 4684,
         "name": "PragmaDirective",
-        "src": "0:23:27"
+        "src": "0:23:11"
       },
       {
         "attributes": {
-          "SourceUnit": 19087,
+          "SourceUnit": 10935,
           "absolutePath": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
           "file": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol",
-          "scope": 7762,
+          "scope": 4750,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 7697,
+        "id": 4685,
         "name": "ImportDirective",
-        "src": "27:69:27"
+        "src": "27:69:11"
       },
       {
         "attributes": {
-          "SourceUnit": 18582,
+          "SourceUnit": 10430,
           "absolutePath": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
           "file": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
-          "scope": 7762,
+          "scope": 4750,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 7698,
+        "id": 4686,
         "name": "ImportDirective",
-        "src": "98:75:27"
+        "src": "98:75:11"
       },
       {
         "attributes": {
           "abstract": true,
           "contractDependencies": [
-            18581,
-            19086,
-            20541
+            10429,
+            10934,
+            12389
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            7761,
-            18581,
-            20541,
-            19086
+            4749,
+            10429,
+            12389,
+            10934
           ],
           "name": "FailsafeUpgradeable",
-          "scope": 7762
+          "scope": 4750
         },
         "children": [
           {
@@ -926,17 +926,17 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Initializable",
-                  "referencedDeclaration": 19086,
+                  "referencedDeclaration": 10934,
                   "type": "contract Initializable"
                 },
-                "id": 7699,
+                "id": 4687,
                 "name": "UserDefinedTypeName",
-                "src": "218:13:27"
+                "src": "218:13:11"
               }
             ],
-            "id": 7700,
+            "id": 4688,
             "name": "InheritanceSpecifier",
-            "src": "218:13:27"
+            "src": "218:13:11"
           },
           {
             "attributes": {
@@ -947,17 +947,17 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "OwnableUpgradeable",
-                  "referencedDeclaration": 18581,
+                  "referencedDeclaration": 10429,
                   "type": "contract OwnableUpgradeable"
                 },
-                "id": 7701,
+                "id": 4689,
                 "name": "UserDefinedTypeName",
-                "src": "233:18:27"
+                "src": "233:18:11"
               }
             ],
-            "id": 7702,
+            "id": 4690,
             "name": "InheritanceSpecifier",
-            "src": "233:18:27"
+            "src": "233:18:11"
           },
           {
             "attributes": {
@@ -965,7 +965,7 @@
               "functionSelector": "1265cc97",
               "name": "failsafeModeActive",
               "overrides": null,
-              "scope": 7761,
+              "scope": 4749,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "bool",
@@ -978,14 +978,14 @@
                   "name": "bool",
                   "type": "bool"
                 },
-                "id": 7703,
+                "id": 4691,
                 "name": "ElementaryTypeName",
-                "src": "259:4:27"
+                "src": "259:4:11"
               }
             ],
-            "id": 7704,
+            "id": 4692,
             "name": "VariableDeclaration",
-            "src": "259:30:27"
+            "src": "259:30:11"
           },
           {
             "attributes": {
@@ -995,7 +995,7 @@
               "kind": "function",
               "name": "__Failsafe_init",
               "overrides": null,
-              "scope": 7761,
+              "scope": 4749,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "internal"
@@ -1008,9 +1008,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7705,
+                "id": 4693,
                 "name": "ParameterList",
-                "src": "322:2:27"
+                "src": "322:2:11"
               },
               {
                 "attributes": {
@@ -1019,9 +1019,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7708,
+                "id": 4696,
                 "name": "ParameterList",
-                "src": "346:0:27"
+                "src": "346:0:11"
               },
               {
                 "attributes": {
@@ -1034,18 +1034,18 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 19069,
+                      "referencedDeclaration": 10917,
                       "type": "modifier ()",
                       "value": "initializer"
                     },
-                    "id": 7706,
+                    "id": 4694,
                     "name": "Identifier",
-                    "src": "334:11:27"
+                    "src": "334:11:11"
                   }
                 ],
-                "id": 7707,
+                "id": 4695,
                 "name": "ModifierInvocation",
-                "src": "334:11:27"
+                "src": "334:11:11"
               },
               {
                 "children": [
@@ -1078,23 +1078,23 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 18480,
+                              "referencedDeclaration": 10328,
                               "type": "function ()",
                               "value": "__Ownable_init"
                             },
-                            "id": 7709,
+                            "id": 4697,
                             "name": "Identifier",
-                            "src": "357:14:27"
+                            "src": "357:14:11"
                           }
                         ],
-                        "id": 7710,
+                        "id": 4698,
                         "name": "FunctionCall",
-                        "src": "357:16:27"
+                        "src": "357:16:11"
                       }
                     ],
-                    "id": 7711,
+                    "id": 4699,
                     "name": "ExpressionStatement",
-                    "src": "357:16:27"
+                    "src": "357:16:11"
                   },
                   {
                     "children": [
@@ -1125,33 +1125,33 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 7726,
+                              "referencedDeclaration": 4714,
                               "type": "function ()",
                               "value": "__Failsafe_init_unchained"
                             },
-                            "id": 7712,
+                            "id": 4700,
                             "name": "Identifier",
-                            "src": "384:25:27"
+                            "src": "384:25:11"
                           }
                         ],
-                        "id": 7713,
+                        "id": 4701,
                         "name": "FunctionCall",
-                        "src": "384:27:27"
+                        "src": "384:27:11"
                       }
                     ],
-                    "id": 7714,
+                    "id": 4702,
                     "name": "ExpressionStatement",
-                    "src": "384:27:27"
+                    "src": "384:27:11"
                   }
                 ],
-                "id": 7715,
+                "id": 4703,
                 "name": "Block",
-                "src": "346:73:27"
+                "src": "346:73:11"
               }
             ],
-            "id": 7716,
+            "id": 4704,
             "name": "FunctionDefinition",
-            "src": "298:121:27"
+            "src": "298:121:11"
           },
           {
             "attributes": {
@@ -1161,7 +1161,7 @@
               "kind": "function",
               "name": "__Failsafe_init_unchained",
               "overrides": null,
-              "scope": 7761,
+              "scope": 4749,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "internal"
@@ -1174,9 +1174,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7717,
+                "id": 4705,
                 "name": "ParameterList",
-                "src": "461:2:27"
+                "src": "461:2:11"
               },
               {
                 "attributes": {
@@ -1185,9 +1185,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7720,
+                "id": 4708,
                 "name": "ParameterList",
-                "src": "485:0:27"
+                "src": "485:0:11"
               },
               {
                 "attributes": {
@@ -1200,18 +1200,18 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 19069,
+                      "referencedDeclaration": 10917,
                       "type": "modifier ()",
                       "value": "initializer"
                     },
-                    "id": 7718,
+                    "id": 4706,
                     "name": "Identifier",
-                    "src": "473:11:27"
+                    "src": "473:11:11"
                   }
                 ],
-                "id": 7719,
+                "id": 4707,
                 "name": "ModifierInvocation",
-                "src": "473:11:27"
+                "src": "473:11:11"
               },
               {
                 "children": [
@@ -1234,13 +1234,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 7704,
+                              "referencedDeclaration": 4692,
                               "type": "bool",
                               "value": "failsafeModeActive"
                             },
-                            "id": 7721,
+                            "id": 4709,
                             "name": "Identifier",
-                            "src": "496:18:27"
+                            "src": "496:18:11"
                           },
                           {
                             "attributes": {
@@ -1255,29 +1255,29 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 7722,
+                            "id": 4710,
                             "name": "Literal",
-                            "src": "517:5:27"
+                            "src": "517:5:11"
                           }
                         ],
-                        "id": 7723,
+                        "id": 4711,
                         "name": "Assignment",
-                        "src": "496:26:27"
+                        "src": "496:26:11"
                       }
                     ],
-                    "id": 7724,
+                    "id": 4712,
                     "name": "ExpressionStatement",
-                    "src": "496:26:27"
+                    "src": "496:26:11"
                   }
                 ],
-                "id": 7725,
+                "id": 4713,
                 "name": "Block",
-                "src": "485:45:27"
+                "src": "485:45:11"
               }
             ],
-            "id": 7726,
+            "id": 4714,
             "name": "FunctionDefinition",
-            "src": "427:103:27"
+            "src": "427:103:11"
           },
           {
             "attributes": {
@@ -1288,7 +1288,7 @@
               "kind": "function",
               "name": "enableFailsafeMode",
               "overrides": null,
-              "scope": 7761,
+              "scope": 4749,
               "stateMutability": "nonpayable",
               "virtual": true,
               "visibility": "public"
@@ -1301,9 +1301,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7727,
+                "id": 4715,
                 "name": "ParameterList",
-                "src": "565:2:27"
+                "src": "565:2:11"
               },
               {
                 "attributes": {
@@ -1312,9 +1312,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7730,
+                "id": 4718,
                 "name": "ParameterList",
-                "src": "593:0:27"
+                "src": "593:0:11"
               },
               {
                 "attributes": {
@@ -1327,18 +1327,18 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 18526,
+                      "referencedDeclaration": 10374,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
-                    "id": 7728,
+                    "id": 4716,
                     "name": "Identifier",
-                    "src": "583:9:27"
+                    "src": "583:9:11"
                   }
                 ],
-                "id": 7729,
+                "id": 4717,
                 "name": "ModifierInvocation",
-                "src": "583:9:27"
+                "src": "583:9:11"
               },
               {
                 "children": [
@@ -1361,13 +1361,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 7704,
+                              "referencedDeclaration": 4692,
                               "type": "bool",
                               "value": "failsafeModeActive"
                             },
-                            "id": 7731,
+                            "id": 4719,
                             "name": "Identifier",
-                            "src": "604:18:27"
+                            "src": "604:18:11"
                           },
                           {
                             "attributes": {
@@ -1382,19 +1382,19 @@
                               "type": "bool",
                               "value": "true"
                             },
-                            "id": 7732,
+                            "id": 4720,
                             "name": "Literal",
-                            "src": "625:4:27"
+                            "src": "625:4:11"
                           }
                         ],
-                        "id": 7733,
+                        "id": 4721,
                         "name": "Assignment",
-                        "src": "604:25:27"
+                        "src": "604:25:11"
                       }
                     ],
-                    "id": 7734,
+                    "id": 4722,
                     "name": "ExpressionStatement",
-                    "src": "604:25:27"
+                    "src": "604:25:11"
                   },
                   {
                     "children": [
@@ -1425,33 +1425,33 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 7741,
+                              "referencedDeclaration": 4729,
                               "type": "function ()",
                               "value": "FailsafeModeEnabled"
                             },
-                            "id": 7735,
+                            "id": 4723,
                             "name": "Identifier",
-                            "src": "645:19:27"
+                            "src": "645:19:11"
                           }
                         ],
-                        "id": 7736,
+                        "id": 4724,
                         "name": "FunctionCall",
-                        "src": "645:21:27"
+                        "src": "645:21:11"
                       }
                     ],
-                    "id": 7737,
+                    "id": 4725,
                     "name": "EmitStatement",
-                    "src": "640:26:27"
+                    "src": "640:26:11"
                   }
                 ],
-                "id": 7738,
+                "id": 4726,
                 "name": "Block",
-                "src": "593:81:27"
+                "src": "593:81:11"
               }
             ],
-            "id": 7739,
+            "id": 4727,
             "name": "FunctionDefinition",
-            "src": "538:136:27"
+            "src": "538:136:11"
           },
           {
             "attributes": {
@@ -1467,14 +1467,14 @@
                   ]
                 },
                 "children": [],
-                "id": 7740,
+                "id": 4728,
                 "name": "ParameterList",
-                "src": "707:2:27"
+                "src": "707:2:11"
               }
             ],
-            "id": 7741,
+            "id": 4729,
             "name": "EventDefinition",
-            "src": "682:28:27"
+            "src": "682:28:11"
           },
           {
             "attributes": {
@@ -1492,9 +1492,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7742,
+                "id": 4730,
                 "name": "ParameterList",
-                "src": "738:0:27"
+                "src": "738:0:11"
               },
               {
                 "children": [
@@ -1536,9 +1536,9 @@
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
-                            "id": 7743,
+                            "id": 4731,
                             "name": "Identifier",
-                            "src": "749:7:27"
+                            "src": "749:7:11"
                           },
                           {
                             "attributes": {
@@ -1558,18 +1558,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 7704,
+                                  "referencedDeclaration": 4692,
                                   "type": "bool",
                                   "value": "failsafeModeActive"
                                 },
-                                "id": 7744,
+                                "id": 4732,
                                 "name": "Identifier",
-                                "src": "772:18:27"
+                                "src": "772:18:11"
                               }
                             ],
-                            "id": 7745,
+                            "id": 4733,
                             "name": "UnaryOperation",
-                            "src": "771:19:27"
+                            "src": "771:19:11"
                           },
                           {
                             "attributes": {
@@ -1584,34 +1584,34 @@
                               "type": "literal_string \"This action cannot be performed while the contract is in Failsafe Mode\"",
                               "value": "This action cannot be performed while the contract is in Failsafe Mode"
                             },
-                            "id": 7746,
+                            "id": 4734,
                             "name": "Literal",
-                            "src": "805:72:27"
+                            "src": "805:72:11"
                           }
                         ],
-                        "id": 7747,
+                        "id": 4735,
                         "name": "FunctionCall",
-                        "src": "749:139:27"
+                        "src": "749:139:11"
                       }
                     ],
-                    "id": 7748,
+                    "id": 4736,
                     "name": "ExpressionStatement",
-                    "src": "749:139:27"
+                    "src": "749:139:11"
                   },
                   {
-                    "id": 7749,
+                    "id": 4737,
                     "name": "PlaceholderStatement",
-                    "src": "899:1:27"
+                    "src": "899:1:11"
                   }
                 ],
-                "id": 7750,
+                "id": 4738,
                 "name": "Block",
-                "src": "738:170:27"
+                "src": "738:170:11"
               }
             ],
-            "id": 7751,
+            "id": 4739,
             "name": "ModifierDefinition",
-            "src": "718:190:27"
+            "src": "718:190:11"
           },
           {
             "attributes": {
@@ -1629,9 +1629,9 @@
                   ]
                 },
                 "children": [],
-                "id": 7752,
+                "id": 4740,
                 "name": "ParameterList",
-                "src": "938:0:27"
+                "src": "938:0:11"
               },
               {
                 "children": [
@@ -1673,9 +1673,9 @@
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
-                            "id": 7753,
+                            "id": 4741,
                             "name": "Identifier",
-                            "src": "949:7:27"
+                            "src": "949:7:11"
                           },
                           {
                             "attributes": {
@@ -1683,13 +1683,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 7704,
+                              "referencedDeclaration": 4692,
                               "type": "bool",
                               "value": "failsafeModeActive"
                             },
-                            "id": 7754,
+                            "id": 4742,
                             "name": "Identifier",
-                            "src": "971:18:27"
+                            "src": "971:18:11"
                           },
                           {
                             "attributes": {
@@ -1704,44 +1704,44 @@
                               "type": "literal_string \"This action can only be performed while the contract is in Failsafe Mode\"",
                               "value": "This action can only be performed while the contract is in Failsafe Mode"
                             },
-                            "id": 7755,
+                            "id": 4743,
                             "name": "Literal",
-                            "src": "1004:74:27"
+                            "src": "1004:74:11"
                           }
                         ],
-                        "id": 7756,
+                        "id": 4744,
                         "name": "FunctionCall",
-                        "src": "949:140:27"
+                        "src": "949:140:11"
                       }
                     ],
-                    "id": 7757,
+                    "id": 4745,
                     "name": "ExpressionStatement",
-                    "src": "949:140:27"
+                    "src": "949:140:11"
                   },
                   {
-                    "id": 7758,
+                    "id": 4746,
                     "name": "PlaceholderStatement",
-                    "src": "1100:1:27"
+                    "src": "1100:1:11"
                   }
                 ],
-                "id": 7759,
+                "id": 4747,
                 "name": "Block",
-                "src": "938:171:27"
+                "src": "938:171:11"
               }
             ],
-            "id": 7760,
+            "id": 4748,
             "name": "ModifierDefinition",
-            "src": "916:193:27"
+            "src": "916:193:11"
           }
         ],
-        "id": 7761,
+        "id": 4749,
         "name": "ContractDefinition",
-        "src": "177:935:27"
+        "src": "177:935:11"
       }
     ],
-    "id": 7762,
+    "id": 4750,
     "name": "SourceUnit",
-    "src": "0:1114:27"
+    "src": "0:1114:11"
   },
   "compiler": {
     "name": "solc",
@@ -1749,7 +1749,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-07-22T21:42:32.141Z",
+  "updatedAt": "2021-07-29T00:52:19.385Z",
   "devdoc": {
     "methods": {
       "owner()": {

@@ -71,17 +71,17 @@
     "absolutePath": "/F/vscode/cblades/contracts/interfaces/ITransferCooldownable.sol",
     "exportedSymbols": {
       "ITransferCooldownable": [
-        6888
+        4360
       ],
       "TransferCooldownableInterfaceId": [
-        6907
+        4379
       ]
     },
-    "id": 6908,
+    "id": 4380,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6866,
+        "id": 4338,
         "literals": [
           "solidity",
           "^",
@@ -89,7 +89,7 @@
           ".5"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:21"
+        "src": "0:23:7"
       },
       {
         "abstract": false,
@@ -98,9 +98,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 6888,
+        "id": 4360,
         "linearizedBaseContracts": [
-          6888
+          4360
         ],
         "name": "ITransferCooldownable",
         "nodeType": "ContractDefinition",
@@ -109,7 +109,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "9d7c828b",
-            "id": 6873,
+            "id": 4345,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -117,17 +117,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 6869,
+              "id": 4341,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6868,
+                  "id": 4340,
                   "name": "tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6873,
-                  "src": "147:15:21",
+                  "scope": 4345,
+                  "src": "147:15:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -135,10 +135,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6867,
+                    "id": 4339,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "147:7:21",
+                    "src": "147:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -148,20 +148,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "146:17:21"
+              "src": "146:17:7"
             },
             "returnParameters": {
-              "id": 6872,
+              "id": 4344,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6871,
+                  "id": 4343,
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6873,
-                  "src": "187:7:21",
+                  "scope": 4345,
+                  "src": "187:7:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -169,10 +169,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6870,
+                    "id": 4342,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "187:7:21",
+                    "src": "187:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -182,10 +182,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "186:9:21"
+              "src": "186:9:7"
             },
-            "scope": 6888,
-            "src": "116:80:21",
+            "scope": 4360,
+            "src": "116:80:7",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -194,7 +194,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "ff2e65ab",
-            "id": 6880,
+            "id": 4352,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -202,17 +202,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 6876,
+              "id": 4348,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6875,
+                  "id": 4347,
                   "name": "tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6880,
-                  "src": "233:15:21",
+                  "scope": 4352,
+                  "src": "233:15:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -220,10 +220,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6874,
+                    "id": 4346,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "233:7:21",
+                    "src": "233:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -233,20 +233,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "232:17:21"
+              "src": "232:17:7"
             },
             "returnParameters": {
-              "id": 6879,
+              "id": 4351,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6878,
+                  "id": 4350,
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6880,
-                  "src": "300:7:21",
+                  "scope": 4352,
+                  "src": "300:7:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -254,10 +254,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6877,
+                    "id": 4349,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "300:7:21",
+                    "src": "300:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -267,10 +267,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "299:9:21"
+              "src": "299:9:7"
             },
-            "scope": 6888,
-            "src": "204:105:21",
+            "scope": 4360,
+            "src": "204:105:7",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -279,7 +279,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "847c8e54",
-            "id": 6887,
+            "id": 4359,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -287,17 +287,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 6883,
+              "id": 4355,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6882,
+                  "id": 4354,
                   "name": "tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6887,
-                  "src": "347:15:21",
+                  "scope": 4359,
+                  "src": "347:15:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -305,10 +305,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6881,
+                    "id": 4353,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "347:7:21",
+                    "src": "347:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -318,20 +318,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "346:17:21"
+              "src": "346:17:7"
             },
             "returnParameters": {
-              "id": 6886,
+              "id": 4358,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6885,
+                  "id": 4357,
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6887,
-                  "src": "414:7:21",
+                  "scope": 4359,
+                  "src": "414:7:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -339,10 +339,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6884,
+                    "id": 4356,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "414:7:21",
+                    "src": "414:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -352,17 +352,17 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "413:9:21"
+              "src": "413:9:7"
             },
-            "scope": 6888,
-            "src": "317:106:21",
+            "scope": 4360,
+            "src": "317:106:7",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 6908,
-        "src": "63:363:21"
+        "scope": 4380,
+        "src": "63:363:7"
       },
       {
         "abstract": false,
@@ -371,18 +371,18 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 6907,
+        "id": 4379,
         "linearizedBaseContracts": [
-          6907
+          4379
         ],
         "name": "TransferCooldownableInterfaceId",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 6905,
+              "id": 4377,
               "nodeType": "Block",
-              "src": "531:224:21",
+              "src": "531:224:7",
               "statements": [
                 {
                   "expression": {
@@ -391,7 +391,7 @@
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
                     },
-                    "id": 6903,
+                    "id": 4375,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -402,7 +402,7 @@
                         "typeIdentifier": "t_bytes4",
                         "typeString": "bytes4"
                       },
-                      "id": 6899,
+                      "id": 4371,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -413,32 +413,32 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 6893,
+                            "id": 4365,
                             "name": "ITransferCooldownable",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6888,
-                            "src": "562:21:21",
+                            "referencedDeclaration": 4360,
+                            "src": "562:21:7",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_contract$_ITransferCooldownable_$6888_$",
+                              "typeIdentifier": "t_type$_t_contract$_ITransferCooldownable_$4360_$",
                               "typeString": "type(contract ITransferCooldownable)"
                             }
                           },
-                          "id": 6894,
+                          "id": 4366,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "lValueRequested": false,
                           "memberName": "lastTransferTimestamp",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 6873,
-                          "src": "562:43:21",
+                          "referencedDeclaration": 4345,
+                          "src": "562:43:7",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_declaration_view$_t_uint256_$returns$_t_uint256_$",
                             "typeString": "function ITransferCooldownable.lastTransferTimestamp(uint256) view returns (uint256)"
                           }
                         },
-                        "id": 6895,
+                        "id": 4367,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -446,7 +446,7 @@
                         "memberName": "selector",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "562:52:21",
+                        "src": "562:52:7",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes4",
                           "typeString": "bytes4"
@@ -460,32 +460,32 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 6896,
+                            "id": 4368,
                             "name": "ITransferCooldownable",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6888,
-                            "src": "630:21:21",
+                            "referencedDeclaration": 4360,
+                            "src": "630:21:7",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_contract$_ITransferCooldownable_$6888_$",
+                              "typeIdentifier": "t_type$_t_contract$_ITransferCooldownable_$4360_$",
                               "typeString": "type(contract ITransferCooldownable)"
                             }
                           },
-                          "id": 6897,
+                          "id": 4369,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "lValueRequested": false,
                           "memberName": "transferCooldownEnd",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 6880,
-                          "src": "630:41:21",
+                          "referencedDeclaration": 4352,
+                          "src": "630:41:7",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_declaration_view$_t_uint256_$returns$_t_uint256_$",
                             "typeString": "function ITransferCooldownable.transferCooldownEnd(uint256) view returns (uint256)"
                           }
                         },
-                        "id": 6898,
+                        "id": 4370,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -493,13 +493,13 @@
                         "memberName": "selector",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "630:50:21",
+                        "src": "630:50:7",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes4",
                           "typeString": "bytes4"
                         }
                       },
-                      "src": "562:118:21",
+                      "src": "562:118:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes4",
                         "typeString": "bytes4"
@@ -513,32 +513,32 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 6900,
+                          "id": 4372,
                           "name": "ITransferCooldownable",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 6888,
-                          "src": "696:21:21",
+                          "referencedDeclaration": 4360,
+                          "src": "696:21:7",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_ITransferCooldownable_$6888_$",
+                            "typeIdentifier": "t_type$_t_contract$_ITransferCooldownable_$4360_$",
                             "typeString": "type(contract ITransferCooldownable)"
                           }
                         },
-                        "id": 6901,
+                        "id": 4373,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
                         "memberName": "transferCooldownLeft",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 6887,
-                        "src": "696:42:21",
+                        "referencedDeclaration": 4359,
+                        "src": "696:42:7",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_declaration_view$_t_uint256_$returns$_t_uint256_$",
                           "typeString": "function ITransferCooldownable.transferCooldownLeft(uint256) view returns (uint256)"
                         }
                       },
-                      "id": 6902,
+                      "id": 4374,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -546,27 +546,27 @@
                       "memberName": "selector",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "696:51:21",
+                      "src": "696:51:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes4",
                         "typeString": "bytes4"
                       }
                     },
-                    "src": "562:185:21",
+                    "src": "562:185:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
                     }
                   },
-                  "functionReturnParameters": 6892,
-                  "id": 6904,
+                  "functionReturnParameters": 4364,
+                  "id": 4376,
                   "nodeType": "Return",
-                  "src": "542:205:21"
+                  "src": "542:205:7"
                 }
               ]
             },
             "documentation": null,
-            "id": 6906,
+            "id": 4378,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -574,23 +574,23 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 6889,
+              "id": 4361,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "497:2:21"
+              "src": "497:2:7"
             },
             "returnParameters": {
-              "id": 6892,
+              "id": 4364,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6891,
+                  "id": 4363,
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6906,
-                  "src": "523:6:21",
+                  "scope": 4378,
+                  "src": "523:6:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -598,10 +598,10 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 6890,
+                    "id": 4362,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
-                    "src": "523:6:21",
+                    "src": "523:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
@@ -611,30 +611,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "522:8:21"
+              "src": "522:8:7"
             },
-            "scope": 6907,
-            "src": "477:278:21",
+            "scope": 4379,
+            "src": "477:278:7",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 6908,
-        "src": "430:328:21"
+        "scope": 4380,
+        "src": "430:328:7"
       }
     ],
-    "src": "0:760:21"
+    "src": "0:760:7"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/F/vscode/cblades/contracts/interfaces/ITransferCooldownable.sol",
       "exportedSymbols": {
         "ITransferCooldownable": [
-          6888
+          4360
         ],
         "TransferCooldownableInterfaceId": [
-          6907
+          4379
         ]
       }
     },
@@ -648,9 +648,9 @@
             ".5"
           ]
         },
-        "id": 6866,
+        "id": 4338,
         "name": "PragmaDirective",
-        "src": "0:23:21"
+        "src": "0:23:7"
       },
       {
         "attributes": {
@@ -665,10 +665,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            6888
+            4360
           ],
           "name": "ITransferCooldownable",
-          "scope": 6908
+          "scope": 4380
         },
         "children": [
           {
@@ -684,7 +684,7 @@
               ],
               "name": "lastTransferTimestamp",
               "overrides": null,
-              "scope": 6888,
+              "scope": 4360,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -697,7 +697,7 @@
                       "constant": false,
                       "name": "tokenId",
                       "overrides": null,
-                      "scope": 6873,
+                      "scope": 4345,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -710,19 +710,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6867,
+                        "id": 4339,
                         "name": "ElementaryTypeName",
-                        "src": "147:7:21"
+                        "src": "147:7:7"
                       }
                     ],
-                    "id": 6868,
+                    "id": 4340,
                     "name": "VariableDeclaration",
-                    "src": "147:15:21"
+                    "src": "147:15:7"
                   }
                 ],
-                "id": 6869,
+                "id": 4341,
                 "name": "ParameterList",
-                "src": "146:17:21"
+                "src": "146:17:7"
               },
               {
                 "children": [
@@ -731,7 +731,7 @@
                       "constant": false,
                       "name": "",
                       "overrides": null,
-                      "scope": 6873,
+                      "scope": 4345,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -744,24 +744,24 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6870,
+                        "id": 4342,
                         "name": "ElementaryTypeName",
-                        "src": "187:7:21"
+                        "src": "187:7:7"
                       }
                     ],
-                    "id": 6871,
+                    "id": 4343,
                     "name": "VariableDeclaration",
-                    "src": "187:7:21"
+                    "src": "187:7:7"
                   }
                 ],
-                "id": 6872,
+                "id": 4344,
                 "name": "ParameterList",
-                "src": "186:9:21"
+                "src": "186:9:7"
               }
             ],
-            "id": 6873,
+            "id": 4345,
             "name": "FunctionDefinition",
-            "src": "116:80:21"
+            "src": "116:80:7"
           },
           {
             "attributes": {
@@ -776,7 +776,7 @@
               ],
               "name": "transferCooldownEnd",
               "overrides": null,
-              "scope": 6888,
+              "scope": 4360,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -789,7 +789,7 @@
                       "constant": false,
                       "name": "tokenId",
                       "overrides": null,
-                      "scope": 6880,
+                      "scope": 4352,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -802,19 +802,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6874,
+                        "id": 4346,
                         "name": "ElementaryTypeName",
-                        "src": "233:7:21"
+                        "src": "233:7:7"
                       }
                     ],
-                    "id": 6875,
+                    "id": 4347,
                     "name": "VariableDeclaration",
-                    "src": "233:15:21"
+                    "src": "233:15:7"
                   }
                 ],
-                "id": 6876,
+                "id": 4348,
                 "name": "ParameterList",
-                "src": "232:17:21"
+                "src": "232:17:7"
               },
               {
                 "children": [
@@ -823,7 +823,7 @@
                       "constant": false,
                       "name": "",
                       "overrides": null,
-                      "scope": 6880,
+                      "scope": 4352,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -836,24 +836,24 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6877,
+                        "id": 4349,
                         "name": "ElementaryTypeName",
-                        "src": "300:7:21"
+                        "src": "300:7:7"
                       }
                     ],
-                    "id": 6878,
+                    "id": 4350,
                     "name": "VariableDeclaration",
-                    "src": "300:7:21"
+                    "src": "300:7:7"
                   }
                 ],
-                "id": 6879,
+                "id": 4351,
                 "name": "ParameterList",
-                "src": "299:9:21"
+                "src": "299:9:7"
               }
             ],
-            "id": 6880,
+            "id": 4352,
             "name": "FunctionDefinition",
-            "src": "204:105:21"
+            "src": "204:105:7"
           },
           {
             "attributes": {
@@ -868,7 +868,7 @@
               ],
               "name": "transferCooldownLeft",
               "overrides": null,
-              "scope": 6888,
+              "scope": 4360,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -881,7 +881,7 @@
                       "constant": false,
                       "name": "tokenId",
                       "overrides": null,
-                      "scope": 6887,
+                      "scope": 4359,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -894,19 +894,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6881,
+                        "id": 4353,
                         "name": "ElementaryTypeName",
-                        "src": "347:7:21"
+                        "src": "347:7:7"
                       }
                     ],
-                    "id": 6882,
+                    "id": 4354,
                     "name": "VariableDeclaration",
-                    "src": "347:15:21"
+                    "src": "347:15:7"
                   }
                 ],
-                "id": 6883,
+                "id": 4355,
                 "name": "ParameterList",
-                "src": "346:17:21"
+                "src": "346:17:7"
               },
               {
                 "children": [
@@ -915,7 +915,7 @@
                       "constant": false,
                       "name": "",
                       "overrides": null,
-                      "scope": 6887,
+                      "scope": 4359,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -928,29 +928,29 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6884,
+                        "id": 4356,
                         "name": "ElementaryTypeName",
-                        "src": "414:7:21"
+                        "src": "414:7:7"
                       }
                     ],
-                    "id": 6885,
+                    "id": 4357,
                     "name": "VariableDeclaration",
-                    "src": "414:7:21"
+                    "src": "414:7:7"
                   }
                 ],
-                "id": 6886,
+                "id": 4358,
                 "name": "ParameterList",
-                "src": "413:9:21"
+                "src": "413:9:7"
               }
             ],
-            "id": 6887,
+            "id": 4359,
             "name": "FunctionDefinition",
-            "src": "317:106:21"
+            "src": "317:106:7"
           }
         ],
-        "id": 6888,
+        "id": 4360,
         "name": "ContractDefinition",
-        "src": "63:363:21"
+        "src": "63:363:7"
       },
       {
         "attributes": {
@@ -965,10 +965,10 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            6907
+            4379
           ],
           "name": "TransferCooldownableInterfaceId",
-          "scope": 6908
+          "scope": 4380
         },
         "children": [
           {
@@ -982,7 +982,7 @@
               ],
               "name": "interfaceId",
               "overrides": null,
-              "scope": 6907,
+              "scope": 4379,
               "stateMutability": "pure",
               "virtual": false,
               "visibility": "internal"
@@ -995,9 +995,9 @@
                   ]
                 },
                 "children": [],
-                "id": 6889,
+                "id": 4361,
                 "name": "ParameterList",
-                "src": "497:2:21"
+                "src": "497:2:7"
               },
               {
                 "children": [
@@ -1006,7 +1006,7 @@
                       "constant": false,
                       "name": "",
                       "overrides": null,
-                      "scope": 6906,
+                      "scope": 4378,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes4",
@@ -1019,25 +1019,25 @@
                           "name": "bytes4",
                           "type": "bytes4"
                         },
-                        "id": 6890,
+                        "id": 4362,
                         "name": "ElementaryTypeName",
-                        "src": "523:6:21"
+                        "src": "523:6:7"
                       }
                     ],
-                    "id": 6891,
+                    "id": 4363,
                     "name": "VariableDeclaration",
-                    "src": "523:6:21"
+                    "src": "523:6:7"
                   }
                 ],
-                "id": 6892,
+                "id": 4364,
                 "name": "ParameterList",
-                "src": "522:8:21"
+                "src": "522:8:7"
               },
               {
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 6892
+                      "functionReturnParameters": 4364
                     },
                     "children": [
                       {
@@ -1090,7 +1090,7 @@
                                       "isPure": true,
                                       "lValueRequested": false,
                                       "member_name": "lastTransferTimestamp",
-                                      "referencedDeclaration": 6873,
+                                      "referencedDeclaration": 4345,
                                       "type": "function ITransferCooldownable.lastTransferTimestamp(uint256) view returns (uint256)"
                                     },
                                     "children": [
@@ -1100,23 +1100,23 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6888,
+                                          "referencedDeclaration": 4360,
                                           "type": "type(contract ITransferCooldownable)",
                                           "value": "ITransferCooldownable"
                                         },
-                                        "id": 6893,
+                                        "id": 4365,
                                         "name": "Identifier",
-                                        "src": "562:21:21"
+                                        "src": "562:21:7"
                                       }
                                     ],
-                                    "id": 6894,
+                                    "id": 4366,
                                     "name": "MemberAccess",
-                                    "src": "562:43:21"
+                                    "src": "562:43:7"
                                   }
                                 ],
-                                "id": 6895,
+                                "id": 4367,
                                 "name": "MemberAccess",
-                                "src": "562:52:21"
+                                "src": "562:52:7"
                               },
                               {
                                 "attributes": {
@@ -1138,7 +1138,7 @@
                                       "isPure": true,
                                       "lValueRequested": false,
                                       "member_name": "transferCooldownEnd",
-                                      "referencedDeclaration": 6880,
+                                      "referencedDeclaration": 4352,
                                       "type": "function ITransferCooldownable.transferCooldownEnd(uint256) view returns (uint256)"
                                     },
                                     "children": [
@@ -1148,28 +1148,28 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6888,
+                                          "referencedDeclaration": 4360,
                                           "type": "type(contract ITransferCooldownable)",
                                           "value": "ITransferCooldownable"
                                         },
-                                        "id": 6896,
+                                        "id": 4368,
                                         "name": "Identifier",
-                                        "src": "630:21:21"
+                                        "src": "630:21:7"
                                       }
                                     ],
-                                    "id": 6897,
+                                    "id": 4369,
                                     "name": "MemberAccess",
-                                    "src": "630:41:21"
+                                    "src": "630:41:7"
                                   }
                                 ],
-                                "id": 6898,
+                                "id": 4370,
                                 "name": "MemberAccess",
-                                "src": "630:50:21"
+                                "src": "630:50:7"
                               }
                             ],
-                            "id": 6899,
+                            "id": 4371,
                             "name": "BinaryOperation",
-                            "src": "562:118:21"
+                            "src": "562:118:7"
                           },
                           {
                             "attributes": {
@@ -1191,7 +1191,7 @@
                                   "isPure": true,
                                   "lValueRequested": false,
                                   "member_name": "transferCooldownLeft",
-                                  "referencedDeclaration": 6887,
+                                  "referencedDeclaration": 4359,
                                   "type": "function ITransferCooldownable.transferCooldownLeft(uint256) view returns (uint256)"
                                 },
                                 "children": [
@@ -1201,53 +1201,53 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6888,
+                                      "referencedDeclaration": 4360,
                                       "type": "type(contract ITransferCooldownable)",
                                       "value": "ITransferCooldownable"
                                     },
-                                    "id": 6900,
+                                    "id": 4372,
                                     "name": "Identifier",
-                                    "src": "696:21:21"
+                                    "src": "696:21:7"
                                   }
                                 ],
-                                "id": 6901,
+                                "id": 4373,
                                 "name": "MemberAccess",
-                                "src": "696:42:21"
+                                "src": "696:42:7"
                               }
                             ],
-                            "id": 6902,
+                            "id": 4374,
                             "name": "MemberAccess",
-                            "src": "696:51:21"
+                            "src": "696:51:7"
                           }
                         ],
-                        "id": 6903,
+                        "id": 4375,
                         "name": "BinaryOperation",
-                        "src": "562:185:21"
+                        "src": "562:185:7"
                       }
                     ],
-                    "id": 6904,
+                    "id": 4376,
                     "name": "Return",
-                    "src": "542:205:21"
+                    "src": "542:205:7"
                   }
                 ],
-                "id": 6905,
+                "id": 4377,
                 "name": "Block",
-                "src": "531:224:21"
+                "src": "531:224:7"
               }
             ],
-            "id": 6906,
+            "id": 4378,
             "name": "FunctionDefinition",
-            "src": "477:278:21"
+            "src": "477:278:7"
           }
         ],
-        "id": 6907,
+        "id": 4379,
         "name": "ContractDefinition",
-        "src": "430:328:21"
+        "src": "430:328:7"
       }
     ],
-    "id": 6908,
+    "id": 4380,
     "name": "SourceUnit",
-    "src": "0:760:21"
+    "src": "0:760:7"
   },
   "compiler": {
     "name": "solc",
@@ -1255,7 +1255,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-07-22T21:42:32.096Z",
+  "updatedAt": "2021-07-29T00:52:19.355Z",
   "devdoc": {
     "methods": {}
   },

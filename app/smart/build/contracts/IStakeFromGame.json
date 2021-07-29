@@ -32,14 +32,14 @@
     "absolutePath": "/F/vscode/cblades/contracts/interfaces/IStakeFromGame.sol",
     "exportedSymbols": {
       "IStakeFromGame": [
-        6864
+        4336
       ]
     },
-    "id": 6865,
+    "id": 4337,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6856,
+        "id": 4328,
         "literals": [
           "solidity",
           "^",
@@ -47,7 +47,7 @@
           ".5"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:20"
+        "src": "0:23:6"
       },
       {
         "abstract": false,
@@ -56,9 +56,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 6864,
+        "id": 4336,
         "linearizedBaseContracts": [
-          6864
+          4336
         ],
         "name": "IStakeFromGame",
         "nodeType": "ContractDefinition",
@@ -67,7 +67,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "668e0122",
-            "id": 6863,
+            "id": 4335,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -75,17 +75,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 6861,
+              "id": 4333,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6858,
+                  "id": 4330,
                   "name": "player",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6863,
-                  "src": "82:14:20",
+                  "scope": 4335,
+                  "src": "82:14:6",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -93,10 +93,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6857,
+                    "id": 4329,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "82:7:20",
+                    "src": "82:7:6",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -108,12 +108,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 6860,
+                  "id": 4332,
                   "name": "amount",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6863,
-                  "src": "98:14:20",
+                  "scope": 4335,
+                  "src": "98:14:6",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -121,10 +121,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6859,
+                    "id": 4331,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "98:7:20",
+                    "src": "98:7:6",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -134,33 +134,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "81:32:20"
+              "src": "81:32:6"
             },
             "returnParameters": {
-              "id": 6862,
+              "id": 4334,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "122:0:20"
+              "src": "122:0:6"
             },
-            "scope": 6864,
-            "src": "59:64:20",
+            "scope": 4336,
+            "src": "59:64:6",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 6865,
-        "src": "27:99:20"
+        "scope": 4337,
+        "src": "27:99:6"
       }
     ],
-    "src": "0:128:20"
+    "src": "0:128:6"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/F/vscode/cblades/contracts/interfaces/IStakeFromGame.sol",
       "exportedSymbols": {
         "IStakeFromGame": [
-          6864
+          4336
         ]
       }
     },
@@ -174,9 +174,9 @@
             ".5"
           ]
         },
-        "id": 6856,
+        "id": 4328,
         "name": "PragmaDirective",
-        "src": "0:23:20"
+        "src": "0:23:6"
       },
       {
         "attributes": {
@@ -191,10 +191,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            6864
+            4336
           ],
           "name": "IStakeFromGame",
-          "scope": 6865
+          "scope": 4337
         },
         "children": [
           {
@@ -210,7 +210,7 @@
               ],
               "name": "stakeFromGame",
               "overrides": null,
-              "scope": 6864,
+              "scope": 4336,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -223,7 +223,7 @@
                       "constant": false,
                       "name": "player",
                       "overrides": null,
-                      "scope": 6863,
+                      "scope": 4335,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -237,21 +237,21 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 6857,
+                        "id": 4329,
                         "name": "ElementaryTypeName",
-                        "src": "82:7:20"
+                        "src": "82:7:6"
                       }
                     ],
-                    "id": 6858,
+                    "id": 4330,
                     "name": "VariableDeclaration",
-                    "src": "82:14:20"
+                    "src": "82:14:6"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "amount",
                       "overrides": null,
-                      "scope": 6863,
+                      "scope": 4335,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -264,19 +264,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6859,
+                        "id": 4331,
                         "name": "ElementaryTypeName",
-                        "src": "98:7:20"
+                        "src": "98:7:6"
                       }
                     ],
-                    "id": 6860,
+                    "id": 4332,
                     "name": "VariableDeclaration",
-                    "src": "98:14:20"
+                    "src": "98:14:6"
                   }
                 ],
-                "id": 6861,
+                "id": 4333,
                 "name": "ParameterList",
-                "src": "81:32:20"
+                "src": "81:32:6"
               },
               {
                 "attributes": {
@@ -285,24 +285,24 @@
                   ]
                 },
                 "children": [],
-                "id": 6862,
+                "id": 4334,
                 "name": "ParameterList",
-                "src": "122:0:20"
+                "src": "122:0:6"
               }
             ],
-            "id": 6863,
+            "id": 4335,
             "name": "FunctionDefinition",
-            "src": "59:64:20"
+            "src": "59:64:6"
           }
         ],
-        "id": 6864,
+        "id": 4336,
         "name": "ContractDefinition",
-        "src": "27:99:20"
+        "src": "27:99:6"
       }
     ],
-    "id": 6865,
+    "id": 4337,
     "name": "SourceUnit",
-    "src": "0:128:20"
+    "src": "0:128:6"
   },
   "compiler": {
     "name": "solc",
@@ -310,7 +310,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-07-22T21:42:32.094Z",
+  "updatedAt": "2021-07-29T00:52:19.351Z",
   "devdoc": {
     "methods": {}
   },

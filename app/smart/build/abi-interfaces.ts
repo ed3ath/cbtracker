@@ -81,6 +81,7 @@ export interface Characters {
   approve(to: string, tokenId: string | number): Web3JsAbiCall<void>;
   balanceOf(owner: string): Web3JsAbiCall<string>;
   baseURI(): Web3JsAbiCall<string>;
+  characterLimit(): Web3JsAbiCall<string>;
   getApproved(tokenId: string | number): Web3JsAbiCall<string>;
   getRoleAdmin(role: string): Web3JsAbiCall<string>;
   getRoleMember(role: string, index: string | number): Web3JsAbiCall<string>;
@@ -110,6 +111,7 @@ export interface Characters {
   migrateTo_1ee400a(): Web3JsAbiCall<void>;
   migrateTo_951a020(): Web3JsAbiCall<void>;
   migrateTo_ef994e2(_promos: string): Web3JsAbiCall<void>;
+  migrateTo_b627f23(): Web3JsAbiCall<void>;
   transferCooldownEnd(tokenId: string | number): Web3JsAbiCall<string>;
   transferCooldownLeft(tokenId: string | number): Web3JsAbiCall<string>;
   get(id: string | number): Web3JsAbiCall<[string, string, string, string, string, string, string, string, string, string]>;
@@ -128,6 +130,7 @@ export interface Characters {
   isStaminaFull(id: string | number): Web3JsAbiCall<boolean>;
   getStaminaMaxWait(): Web3JsAbiCall<string>;
   getFightDataAndDrainStamina(id: string | number, amount: string | number): Web3JsAbiCall<string>;
+  setCharacterLimit(max: string | number): Web3JsAbiCall<void>;
 }
 
 export interface Context {
@@ -143,6 +146,7 @@ export interface CryptoBlades {
   GAME_ADMIN(): Web3JsAbiCall<string>;
   REWARDS_CLAIM_TAX_DURATION(): Web3JsAbiCall<string>;
   REWARDS_CLAIM_TAX_MAX(): Web3JsAbiCall<string>;
+  burnWeaponFee(): Web3JsAbiCall<string>;
   characters(): Web3JsAbiCall<string>;
   fightRewardBaseline(): Web3JsAbiCall<string>;
   fightRewardGasOffset(): Web3JsAbiCall<string>;
@@ -162,6 +166,7 @@ export interface CryptoBlades {
   randoms(): Web3JsAbiCall<string>;
   refillStaminaFee(): Web3JsAbiCall<string>;
   reforgeWeaponFee(): Web3JsAbiCall<string>;
+  reforgeWeaponWithDustFee(): Web3JsAbiCall<string>;
   renounceRole(role: string, account: string): Web3JsAbiCall<void>;
   revokeRole(role: string, account: string): Web3JsAbiCall<void>;
   skillToken(): Web3JsAbiCall<string>;
@@ -169,18 +174,16 @@ export interface CryptoBlades {
   totalInGameOnlyFunds(): Web3JsAbiCall<string>;
   weapons(): Web3JsAbiCall<string>;
   initialize(_skillToken: string, _characters: string, _weapons: string, _priceOracleSkillPerUsd: string, _randoms: string): Web3JsAbiCall<void>;
-  migrateTo_1ee400a(): Web3JsAbiCall<void>;
-  migrateTo_aa9da90(): Web3JsAbiCall<void>;
   migrateTo_ef994e2(_promos: string): Web3JsAbiCall<void>;
   migrateTo_23b3a8b(_stakeFromGame: string): Web3JsAbiCall<void>;
-  migrateTo_7dd2a56(): Web3JsAbiCall<void>;
+  migrateTo_801f279(): Web3JsAbiCall<void>;
   recoverSkill(amount: string | number): Web3JsAbiCall<void>;
   getSkillToSubtract(_inGameOnlyFunds: string | number, _tokenRewards: string | number, _skillNeeded: string | number): Web3JsAbiCall<[string, string, string]>;
   getSkillNeededFromUserWallet(playerAddress: string, skillNeeded: string | number): Web3JsAbiCall<string>;
   getMyCharacters(): Web3JsAbiCall<string[]>;
   getMyWeapons(): Web3JsAbiCall<string[]>;
   unpackFightData(playerData: string | number): Web3JsAbiCall<[string, string, string]>;
-  fight(char: string | number, wep: string | number, target: string | number): Web3JsAbiCall<void>;
+  fight(char: string | number, wep: string | number, target: string | number, fightMultiplier: string | number): Web3JsAbiCall<void>;
   verifyFight(playerBasePower: string | number, wepMultiplier: string | number, wepBonusPower: string | number, staminaTimestamp: string | number, hour: string | number, target: string | number): Web3JsAbiCall<void>;
   getMonsterPower(target: string | number): Web3JsAbiCall<string>;
   getPlayerPower(basePower: string | number, weaponMultiplier: string | number, bonusPower: string | number): Web3JsAbiCall<string>;
@@ -189,7 +192,10 @@ export interface CryptoBlades {
   isTraitEffectiveAgainst(attacker: string | number, defender: string | number): Web3JsAbiCall<boolean>;
   mintCharacter(): Web3JsAbiCall<void>;
   mintWeapon(): Web3JsAbiCall<void>;
+  burnWeapon(burnID: string | number): Web3JsAbiCall<void>;
+  burnWeapons(burnIDs: string[]): Web3JsAbiCall<void>;
   reforgeWeapon(reforgeID: string | number, burnID: string | number): Web3JsAbiCall<void>;
+  reforgeWeaponWithDust(reforgeID: string | number, amountLB: string | number, amount4B: string | number, amount5B: string | number): Web3JsAbiCall<void>;
   migrateRandoms(_newRandoms: string): Web3JsAbiCall<void>;
   payContract(playerAddress: string, usdAmount: string | number): Web3JsAbiCall<void>;
   payContractConverted(playerAddress: string, convertedAmount: string | number): Web3JsAbiCall<void>;
@@ -201,8 +207,11 @@ export interface CryptoBlades {
   setFightRewardBaselineValue(tenthcents: string | number): Web3JsAbiCall<void>;
   setFightRewardGasOffsetValue(cents: string | number): Web3JsAbiCall<void>;
   setWeaponMintValue(cents: string | number): Web3JsAbiCall<void>;
+  setBurnWeaponValue(cents: string | number): Web3JsAbiCall<void>;
   setReforgeWeaponValue(cents: string | number): Web3JsAbiCall<void>;
+  setReforgeWeaponWithDustValue(cents: string | number): Web3JsAbiCall<void>;
   setStaminaCostFight(points: string | number): Web3JsAbiCall<void>;
+  setDurabilityCostFight(points: string | number): Web3JsAbiCall<void>;
   setFightXpGain(average: string | number): Web3JsAbiCall<void>;
   setCharacterLimit(max: string | number): Web3JsAbiCall<void>;
   giveInGameOnlyFunds(to: string, skillAmount: string | number): Web3JsAbiCall<void>;
@@ -440,6 +449,7 @@ export interface IStakingRewards {
   getRewardForDuration(): Web3JsAbiCall<string>;
   totalSupply(): Web3JsAbiCall<string>;
   balanceOf(account: string): Web3JsAbiCall<string>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   getStakeRewardDistributionTimeLeft(): Web3JsAbiCall<string>;
   getStakeUnlockTimeLeft(): Web3JsAbiCall<string>;
@@ -485,6 +495,8 @@ export interface LP2StakingRewardsUpgradeable {
   initialize(_owner: string, _rewardsDistribution: string, _rewardsToken: string, _stakingToken: string, _minimumStakeTime: string | number): Web3JsAbiCall<void>;
   lastTimeRewardApplicable(): Web3JsAbiCall<string>;
   lastUpdateTime(): Web3JsAbiCall<string>;
+  migrateTo_8cb6e70(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   notifyRewardAmount(reward: string | number): Web3JsAbiCall<void>;
   owner(): Web3JsAbiCall<string>;
@@ -502,6 +514,7 @@ export interface LP2StakingRewardsUpgradeable {
   rewardsDistribution(): Web3JsAbiCall<string>;
   rewardsDuration(): Web3JsAbiCall<string>;
   rewardsToken(): Web3JsAbiCall<string>;
+  setMinimumStakeAmount(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   setMinimumStakeTime(_minimumStakeTime: string | number): Web3JsAbiCall<void>;
   setRewardsDistribution(_rewardsDistribution: string): Web3JsAbiCall<void>;
   setRewardsDuration(_rewardsDuration: string | number): Web3JsAbiCall<void>;
@@ -529,6 +542,7 @@ export interface LPStakingRewards {
   lastPauseTime(): Web3JsAbiCall<string>;
   lastTimeRewardApplicable(): Web3JsAbiCall<string>;
   lastUpdateTime(): Web3JsAbiCall<string>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   nominateNewOwner(_owner: string): Web3JsAbiCall<void>;
   nominatedOwner(): Web3JsAbiCall<string>;
@@ -546,6 +560,7 @@ export interface LPStakingRewards {
   rewardsDistribution(): Web3JsAbiCall<string>;
   rewardsDuration(): Web3JsAbiCall<string>;
   rewardsToken(): Web3JsAbiCall<string>;
+  setMinimumStakeAmount(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   setMinimumStakeTime(_minimumStakeTime: string | number): Web3JsAbiCall<void>;
   setPaused(_paused: boolean): Web3JsAbiCall<void>;
   setRewardsDistribution(_rewardsDistribution: string): Web3JsAbiCall<void>;
@@ -571,6 +586,8 @@ export interface LPStakingRewardsUpgradeable {
   initialize(_owner: string, _rewardsDistribution: string, _rewardsToken: string, _stakingToken: string, _minimumStakeTime: string | number): Web3JsAbiCall<void>;
   lastTimeRewardApplicable(): Web3JsAbiCall<string>;
   lastUpdateTime(): Web3JsAbiCall<string>;
+  migrateTo_8cb6e70(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   notifyRewardAmount(reward: string | number): Web3JsAbiCall<void>;
   owner(): Web3JsAbiCall<string>;
@@ -588,6 +605,7 @@ export interface LPStakingRewardsUpgradeable {
   rewardsDistribution(): Web3JsAbiCall<string>;
   rewardsDuration(): Web3JsAbiCall<string>;
   rewardsToken(): Web3JsAbiCall<string>;
+  setMinimumStakeAmount(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   setMinimumStakeTime(_minimumStakeTime: string | number): Web3JsAbiCall<void>;
   setRewardsDistribution(_rewardsDistribution: string): Web3JsAbiCall<void>;
   setRewardsDuration(_rewardsDuration: string | number): Web3JsAbiCall<void>;
@@ -810,6 +828,7 @@ export interface SkillStakingRewards {
   lastPauseTime(): Web3JsAbiCall<string>;
   lastTimeRewardApplicable(): Web3JsAbiCall<string>;
   lastUpdateTime(): Web3JsAbiCall<string>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   nominateNewOwner(_owner: string): Web3JsAbiCall<void>;
   nominatedOwner(): Web3JsAbiCall<string>;
@@ -827,6 +846,7 @@ export interface SkillStakingRewards {
   rewardsDistribution(): Web3JsAbiCall<string>;
   rewardsDuration(): Web3JsAbiCall<string>;
   rewardsToken(): Web3JsAbiCall<string>;
+  setMinimumStakeAmount(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   setMinimumStakeTime(_minimumStakeTime: string | number): Web3JsAbiCall<void>;
   setPaused(_paused: boolean): Web3JsAbiCall<void>;
   setRewardsDistribution(_rewardsDistribution: string): Web3JsAbiCall<void>;
@@ -845,7 +865,6 @@ export interface SkillStakingRewardsUpgradeable {
   enableFailsafeMode(): Web3JsAbiCall<void>;
   exit(): Web3JsAbiCall<void>;
   failsafeModeActive(): Web3JsAbiCall<boolean>;
-  game(): Web3JsAbiCall<string>;
   getReward(): Web3JsAbiCall<void>;
   getRewardForDuration(): Web3JsAbiCall<string>;
   getStakeRewardDistributionTimeLeft(): Web3JsAbiCall<string>;
@@ -853,6 +872,8 @@ export interface SkillStakingRewardsUpgradeable {
   initialize(_owner: string, _rewardsDistribution: string, _rewardsToken: string, _stakingToken: string, _minimumStakeTime: string | number): Web3JsAbiCall<void>;
   lastTimeRewardApplicable(): Web3JsAbiCall<string>;
   lastUpdateTime(): Web3JsAbiCall<string>;
+  migrateTo_8cb6e70(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   notifyRewardAmount(reward: string | number): Web3JsAbiCall<void>;
   owner(): Web3JsAbiCall<string>;
@@ -870,6 +891,7 @@ export interface SkillStakingRewardsUpgradeable {
   rewardsDistribution(): Web3JsAbiCall<string>;
   rewardsDuration(): Web3JsAbiCall<string>;
   rewardsToken(): Web3JsAbiCall<string>;
+  setMinimumStakeAmount(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   setMinimumStakeTime(_minimumStakeTime: string | number): Web3JsAbiCall<void>;
   setRewardsDistribution(_rewardsDistribution: string): Web3JsAbiCall<void>;
   setRewardsDuration(_rewardsDuration: string | number): Web3JsAbiCall<void>;
@@ -881,6 +903,7 @@ export interface SkillStakingRewardsUpgradeable {
   updatePeriodFinish(timestamp: string | number): Web3JsAbiCall<void>;
   userRewardPerTokenPaid(arg0: string): Web3JsAbiCall<string>;
   withdraw(amount: string | number): Web3JsAbiCall<void>;
+  game(): Web3JsAbiCall<string>;
   migrateTo_23b3a8b(_game: string): Web3JsAbiCall<void>;
   stakeFromGame(player: string, amount: string | number): Web3JsAbiCall<void>;
 }
@@ -904,6 +927,7 @@ export interface StakingRewards {
   failsafeModeActive(): Web3JsAbiCall<boolean>;
   lastPauseTime(): Web3JsAbiCall<string>;
   lastUpdateTime(): Web3JsAbiCall<string>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   nominateNewOwner(_owner: string): Web3JsAbiCall<void>;
   nominatedOwner(): Web3JsAbiCall<string>;
@@ -937,6 +961,7 @@ export interface StakingRewards {
   updatePeriodFinish(timestamp: string | number): Web3JsAbiCall<void>;
   recoverERC20(tokenAddress: string, tokenAmount: string | number): Web3JsAbiCall<void>;
   setRewardsDuration(_rewardsDuration: string | number): Web3JsAbiCall<void>;
+  setMinimumStakeAmount(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   setMinimumStakeTime(_minimumStakeTime: string | number): Web3JsAbiCall<void>;
   enableFailsafeMode(): Web3JsAbiCall<void>;
   recoverExtraStakingTokensToOwner(): Web3JsAbiCall<void>;
@@ -945,6 +970,7 @@ export interface StakingRewards {
 export interface StakingRewardsUpgradeable {
   failsafeModeActive(): Web3JsAbiCall<boolean>;
   lastUpdateTime(): Web3JsAbiCall<string>;
+  minimumStakeAmount(): Web3JsAbiCall<string>;
   minimumStakeTime(): Web3JsAbiCall<string>;
   owner(): Web3JsAbiCall<string>;
   paused(): Web3JsAbiCall<boolean>;
@@ -961,6 +987,7 @@ export interface StakingRewardsUpgradeable {
   transferOwnership(newOwner: string): Web3JsAbiCall<void>;
   userRewardPerTokenPaid(arg0: string): Web3JsAbiCall<string>;
   initialize(_owner: string, _rewardsDistribution: string, _rewardsToken: string, _stakingToken: string, _minimumStakeTime: string | number): Web3JsAbiCall<void>;
+  migrateTo_8cb6e70(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   totalSupply(): Web3JsAbiCall<string>;
   balanceOf(account: string): Web3JsAbiCall<string>;
   lastTimeRewardApplicable(): Web3JsAbiCall<string>;
@@ -979,6 +1006,7 @@ export interface StakingRewardsUpgradeable {
   recoverERC20(tokenAddress: string, tokenAmount: string | number): Web3JsAbiCall<void>;
   setRewardsDuration(_rewardsDuration: string | number): Web3JsAbiCall<void>;
   setMinimumStakeTime(_minimumStakeTime: string | number): Web3JsAbiCall<void>;
+  setMinimumStakeAmount(_minimumStakeAmount: string | number): Web3JsAbiCall<void>;
   enableFailsafeMode(): Web3JsAbiCall<void>;
   recoverExtraStakingTokensToOwner(): Web3JsAbiCall<void>;
   pause(): Web3JsAbiCall<void>;
@@ -1040,7 +1068,6 @@ export interface Weapons {
   DEFAULT_ADMIN_ROLE(): Web3JsAbiCall<string>;
   GAME_ADMIN(): Web3JsAbiCall<string>;
   RECEIVE_DOES_NOT_SET_TRANSFER_TIMESTAMP(): Web3JsAbiCall<string>;
-  TRANSFER_COOLDOWN(): Web3JsAbiCall<string>;
   approve(to: string, tokenId: string | number): Web3JsAbiCall<void>;
   balanceOf(owner: string): Web3JsAbiCall<string>;
   baseURI(): Web3JsAbiCall<string>;
@@ -1056,6 +1083,7 @@ export interface Weapons {
   isApprovedForAll(owner: string, operator: string): Web3JsAbiCall<boolean>;
   lastTransferTimestamp(arg0: string | number): Web3JsAbiCall<string>;
   lowStarBurnPowerPerPoint(): Web3JsAbiCall<string>;
+  maxDurability(): Web3JsAbiCall<string>;
   name(): Web3JsAbiCall<string>;
   oneFrac(): Web3JsAbiCall<string>;
   ownerOf(tokenId: string | number): Web3JsAbiCall<string>;
@@ -1066,6 +1094,7 @@ export interface Weapons {
   revokeRole(role: string, account: string): Web3JsAbiCall<void>;
   safeTransferFrom(from: string, to: string, tokenId: string | number): Web3JsAbiCall<void>;
   safeTransferFrom(from: string, to: string, tokenId: string | number, _data: string): Web3JsAbiCall<void>;
+  secondsPerDurability(): Web3JsAbiCall<string>;
   setApprovalForAll(operator: string, approved: boolean): Web3JsAbiCall<void>;
   supportsInterface(interfaceId: string): Web3JsAbiCall<boolean>;
   symbol(): Web3JsAbiCall<string>;
@@ -1078,9 +1107,6 @@ export interface Weapons {
   migrateTo_e55d8c5(): Web3JsAbiCall<void>;
   migrateTo_aa9da90(): Web3JsAbiCall<void>;
   migrateTo_951a020(): Web3JsAbiCall<void>;
-  __ITransferCooldownable_interfaceId(): Web3JsAbiCall<string>;
-  transferCooldownEnd(tokenId: string | number): Web3JsAbiCall<string>;
-  transferCooldownLeft(tokenId: string | number): Web3JsAbiCall<string>;
   get(id: string | number): Web3JsAbiCall<[string, string, string, string, string, string, string, string, string, string, string]>;
   mint(minter: string, seed: string | number): Web3JsAbiCall<string>;
   mintWeaponWithStars(minter: string, stars: string | number, seed: string | number): Web3JsAbiCall<string>;
@@ -1107,12 +1133,23 @@ export interface Weapons {
   getStat3(id: string | number): Web3JsAbiCall<string>;
   getPowerMultiplier(id: string | number): Web3JsAbiCall<string>;
   getPowerMultiplierForTrait(properties: string | number, stat1: string | number, stat2: string | number, stat3: string | number, trait: string | number): Web3JsAbiCall<string>;
+  getDustSupplies(playerAddress: string): Web3JsAbiCall<string[]>;
+  _calculateBurnValues(burnID: string | number): Web3JsAbiCall<string[]>;
+  burn(burnID: string | number): Web3JsAbiCall<void>;
   reforge(reforgeID: string | number, burnID: string | number): Web3JsAbiCall<void>;
+  reforgeWithDust(reforgeID: string | number, amountLB: string | number, amount4B: string | number, amount5B: string | number): Web3JsAbiCall<void>;
   getBonusPower(id: string | number): Web3JsAbiCall<string>;
   getBonusPowerForFight(id: string | number, level: string | number): Web3JsAbiCall<string>;
   getFightData(id: string | number, charTrait: string | number): Web3JsAbiCall<[string, string, string, string]>;
+  drainDurability(id: string | number, amount: string | number): Web3JsAbiCall<void>;
   setBurnPointMultiplier(multiplier: string | number): Web3JsAbiCall<void>;
   setLowStarBurnPowerPerPoint(powerPerBurnPoint: string | number): Web3JsAbiCall<void>;
   setFourStarBurnPowerPerPoint(powerPerBurnPoint: string | number): Web3JsAbiCall<void>;
   setFiveStarBurnPowerPerPoint(powerPerBurnPoint: string | number): Web3JsAbiCall<void>;
+  getDurabilityTimestamp(id: string | number): Web3JsAbiCall<string>;
+  setDurabilityTimestamp(id: string | number, timestamp: string | number): Web3JsAbiCall<void>;
+  getDurabilityPoints(id: string | number): Web3JsAbiCall<string>;
+  getDurabilityPointsFromTimestamp(timestamp: string | number): Web3JsAbiCall<string>;
+  isDurabilityFull(id: string | number): Web3JsAbiCall<boolean>;
+  getDurabilityMaxWait(): Web3JsAbiCall<string>;
 }

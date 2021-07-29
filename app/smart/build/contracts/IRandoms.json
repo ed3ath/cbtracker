@@ -33,14 +33,14 @@
     "absolutePath": "/F/vscode/cblades/contracts/interfaces/IRandoms.sol",
     "exportedSymbols": {
       "IRandoms": [
-        6854
+        4326
       ]
     },
-    "id": 6855,
+    "id": 4327,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6846,
+        "id": 4318,
         "literals": [
           "solidity",
           "^",
@@ -48,7 +48,7 @@
           ".5"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:19"
+        "src": "0:23:5"
       },
       {
         "abstract": false,
@@ -57,9 +57,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 6854,
+        "id": 4326,
         "linearizedBaseContracts": [
-          6854
+          4326
         ],
         "name": "IRandoms",
         "nodeType": "ContractDefinition",
@@ -68,7 +68,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "3883d854",
-            "id": 6853,
+            "id": 4325,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -76,17 +76,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 6849,
+              "id": 4321,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6848,
+                  "id": 4320,
                   "name": "user",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6853,
-                  "src": "90:12:19",
+                  "scope": 4325,
+                  "src": "90:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -94,10 +94,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6847,
+                    "id": 4319,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "90:7:19",
+                    "src": "90:7:5",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -108,20 +108,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "89:14:19"
+              "src": "89:14:5"
             },
             "returnParameters": {
-              "id": 6852,
+              "id": 4324,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6851,
+                  "id": 4323,
                   "name": "seed",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 6853,
-                  "src": "127:12:19",
+                  "scope": 4325,
+                  "src": "127:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -129,10 +129,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6850,
+                    "id": 4322,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "127:7:19",
+                    "src": "127:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -142,27 +142,27 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "126:14:19"
+              "src": "126:14:5"
             },
-            "scope": 6854,
-            "src": "67:74:19",
+            "scope": 4326,
+            "src": "67:74:5",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 6855,
-        "src": "27:117:19"
+        "scope": 4327,
+        "src": "27:117:5"
       }
     ],
-    "src": "0:146:19"
+    "src": "0:146:5"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/F/vscode/cblades/contracts/interfaces/IRandoms.sol",
       "exportedSymbols": {
         "IRandoms": [
-          6854
+          4326
         ]
       }
     },
@@ -176,9 +176,9 @@
             ".5"
           ]
         },
-        "id": 6846,
+        "id": 4318,
         "name": "PragmaDirective",
-        "src": "0:23:19"
+        "src": "0:23:5"
       },
       {
         "attributes": {
@@ -193,10 +193,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            6854
+            4326
           ],
           "name": "IRandoms",
-          "scope": 6855
+          "scope": 4327
         },
         "children": [
           {
@@ -212,7 +212,7 @@
               ],
               "name": "getRandomSeed",
               "overrides": null,
-              "scope": 6854,
+              "scope": 4326,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -225,7 +225,7 @@
                       "constant": false,
                       "name": "user",
                       "overrides": null,
-                      "scope": 6853,
+                      "scope": 4325,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -239,19 +239,19 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 6847,
+                        "id": 4319,
                         "name": "ElementaryTypeName",
-                        "src": "90:7:19"
+                        "src": "90:7:5"
                       }
                     ],
-                    "id": 6848,
+                    "id": 4320,
                     "name": "VariableDeclaration",
-                    "src": "90:12:19"
+                    "src": "90:12:5"
                   }
                 ],
-                "id": 6849,
+                "id": 4321,
                 "name": "ParameterList",
-                "src": "89:14:19"
+                "src": "89:14:5"
               },
               {
                 "children": [
@@ -260,7 +260,7 @@
                       "constant": false,
                       "name": "seed",
                       "overrides": null,
-                      "scope": 6853,
+                      "scope": 4325,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -273,34 +273,34 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 6850,
+                        "id": 4322,
                         "name": "ElementaryTypeName",
-                        "src": "127:7:19"
+                        "src": "127:7:5"
                       }
                     ],
-                    "id": 6851,
+                    "id": 4323,
                     "name": "VariableDeclaration",
-                    "src": "127:12:19"
+                    "src": "127:12:5"
                   }
                 ],
-                "id": 6852,
+                "id": 4324,
                 "name": "ParameterList",
-                "src": "126:14:19"
+                "src": "126:14:5"
               }
             ],
-            "id": 6853,
+            "id": 4325,
             "name": "FunctionDefinition",
-            "src": "67:74:19"
+            "src": "67:74:5"
           }
         ],
-        "id": 6854,
+        "id": 4326,
         "name": "ContractDefinition",
-        "src": "27:117:19"
+        "src": "27:117:5"
       }
     ],
-    "id": 6855,
+    "id": 4327,
     "name": "SourceUnit",
-    "src": "0:146:19"
+    "src": "0:146:5"
   },
   "compiler": {
     "name": "solc",
@@ -308,7 +308,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-07-22T21:42:32.091Z",
+  "updatedAt": "2021-07-29T00:52:19.348Z",
   "devdoc": {
     "methods": {}
   },
