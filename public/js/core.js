@@ -1,6 +1,6 @@
-var version = "2.0.7"
+var version = "2.0.8"
 versionCheck()
-setInterval(() => { versionCheck() }, 1000)
+setInterval(() => { versionCheck() }, 5000)
 
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
@@ -355,7 +355,7 @@ async function simulate(address) {
     charIds.forEach(async charId => {
         const charData = characterFromContract(charId, await getCharacterData(charId))
         const sta = await getCharacterStamina(charId)
-        $("#combat-character").append(`<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${charData.level + 1} | Sta. ${sta}/200</option>`);
+        $("#combat-character").append(`<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${(charData.level + 1)} | Sta. ${sta}/200</option>`);
     })
     weapIds.forEach(async weapId => {
         const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
