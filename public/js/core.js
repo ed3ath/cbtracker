@@ -1,4 +1,4 @@
-var version = "1.0.1"
+var version = "1.0.2"
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
@@ -136,7 +136,7 @@ async function loadData () {
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(wallet, 'ether')).toFixed(4)}</td>
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(sumOfArray([ingame, unclaimed, staked, wallet]).toString(), 'ether')).toFixed(4)}</td>
                             <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? moment(new Date(new Date().getTime() + (timeLeft * 1000))).fromNow() : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(binance, 'ether')).toFixed(4)}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(web3.utils.fromWei(binance, 'ether')).toFixed(4))}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
                             <button type="button" class="btn btn-danger btn-sm" onclick="remove('${address}')">Remove</button></td>
@@ -264,7 +264,7 @@ function balanceFormatter(val) {
 }
 
 function bnbFormatter(val) {
-    var bnb = parseFloat(val).toFixed(6);
+    var bnb = parseFloat(val);
     if (parseFloat(val) < 0.01) return `<span class='text-danger'>${bnb}</span>`
     if (parseFloat(val) < 0.03) return `<span class='text-warning'>${bnb}</span>`
     return `<span class='text-success'>${bnb}</span>`

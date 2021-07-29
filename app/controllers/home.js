@@ -10,6 +10,6 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.get('/version', (req, res, next) => res.json({ version: '1.0.1' }));
+router.get('/version', (req, res, next) => res.json({ version: '1.0.2' }));
 
 module.exports = router;
