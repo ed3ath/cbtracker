@@ -129,7 +129,7 @@ async function loadData () {
         $cardUnclaim.html((parseFloat($cardUnclaim.html()) + parseFloat(fromEther(unclaimed))).toFixed(6))
         $cardStake.html((parseFloat($cardStake.html()) + parseFloat(fromEther(staked))).toFixed(6))
         $cardWallet.html((parseFloat($cardWallet.html()) + parseFloat(fromEther(wallet))).toFixed(6))
-        $cardTotal.html((parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([ingame, unclaimed, staked, wallet])))).toFixed(6))
+        $cardTotal.html((parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([unclaimed, staked, wallet])))).toFixed(6))
         $cardBnb.html((parseFloat($cardBnb.html()) + parseFloat(fromEther(binance))).toFixed(6))
         
         let charHtml = '', chars = {}
@@ -172,7 +172,7 @@ async function loadData () {
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(unclaimed, 'ether')).toFixed(4)}</td>
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(staked, 'ether')).toFixed(4)}</td>
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(wallet, 'ether')).toFixed(4)}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(sumOfArray([ingame, unclaimed, staked, wallet]).toString(), 'ether')).toFixed(4)}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(sumOfArray([unclaimed, staked, wallet]).toString(), 'ether')).toFixed(4)}</td>
                             <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? moment(new Date(new Date().getTime() + (timeLeft * 1000))).fromNow() : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(web3.utils.fromWei(binance, 'ether')).toFixed(4))}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
