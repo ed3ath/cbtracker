@@ -146,5 +146,7 @@ router.get('/oracle/price', async (req, res, next) => {
   }
 });
 
+router.get('/version', (req, res, next) => res.json({ version: '1.0.0' }));
+
 
 module.exports = router;

@@ -1,3 +1,17 @@
+var version = "1.0.0"
+versionCheck()
+
+setInterval(() => versionCheck, 5000)
+
+function versionCheck () {
+    $.get('/version', (res) => {
+        if (version !== res.version) {
+            alert('App has new update, please refresh your page!')
+        }
+    })
+}
+
+
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
