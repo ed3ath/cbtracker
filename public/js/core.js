@@ -153,7 +153,7 @@ async function loadData () {
                 };
             }))
             charHtml = `<td>${chars[0].charId}</td>
-                        <td>${levelToColor(chars[0].level + 1)}</td>
+                        <td>${levelToColor(chars[0].level)}</td>
                         <td>${elemToColor(chars[0].element)}</td>
                         <td>${chars[0].exp}</td>
                         <td>${chars[0].nextLevel} (${(chars[0].mustClaim ? '<span class="text-gold">Claim now</span>' : `${chars[0].nextExp} xp left`)})</td>
@@ -184,7 +184,7 @@ async function loadData () {
                 if (i > 0) {
                     $table.append(`<tr class="text-white align-middle">
                                         <td>${char.charId}</td>
-                                        <td>${levelToColor(char.level + 1)}</td>
+                                        <td>${levelToColor(char.level)}</td>
                                         <td>${elemToColor(char.element)}</td>
                                         <td>${char.exp}</td>
                                         <td>${char.nextLevel} (${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `${char.nextExp} xp left`)})</td>
