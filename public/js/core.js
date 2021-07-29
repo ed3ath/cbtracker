@@ -51,9 +51,11 @@ $('document').ready(async () => {
     oracleTicker()
     setInterval(async() => {
         await oracleTicker()
-        priceTicker()
         fiatConversion()
     }, 1000)
+    setInterval(() => {        
+        priceTicker()
+    }, 30000)
     async function oracleTicker() {
         var oraclePrice = 1 / web3.utils.fromWei(`${await getOraclePrice()}`, 'ether')
         $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} (${(oraclePrice * usdPrice).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})`)
