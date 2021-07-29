@@ -1,4 +1,7 @@
-var version = "2.0.3"
+var version = "2.0.4"
+versionCheck()
+setInterval(() => { versionCheck() }, 1000)
+
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
@@ -44,8 +47,6 @@ var $cardIngame = $('#card-ingame'),
     $convOracle = $('#conv-oracle')
 
 $('document').ready(async () => {
-    versionCheck()
-    setInterval(() => versionCheck, 5000)
     priceTicker()
     oracleTicker()
     setInterval(async() => {
