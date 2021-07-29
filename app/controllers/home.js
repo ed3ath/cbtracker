@@ -35,9 +35,9 @@ const {
 } = require('../helpers/utils');
 
 router.get('/', (req, res, next) => {
-  if (req.get('host') !== 'cbtracker.cwsdev.net' && process.env.NODE_ENV === 'production') {
+  /*if (req.get('host') !== 'cbtracker.cwsdev.net' && process.env.NODE_ENV === 'production') {
     return res.redirect('https://cbtracker.cwsdev.net');
-  }
+  }*/
   return res.render('index', { title: 'CryptoBlades Tracker' });
 });
 
