@@ -6,7 +6,7 @@ setInterval(() => versionCheck, 5000)
 function versionCheck () {
     $.get('/version', (res) => {
         if (version !== res.version) {
-            alert('App has new update, please refresh your page!')
+            alert('CryptoBlades Tracker has a new update, please refresh your page!')
         }
     })
 }
