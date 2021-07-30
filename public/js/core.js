@@ -178,7 +178,7 @@ async function loadData () {
                         <td>${elemToColor(chars[0].element)}</td>
                         <td>${chars[0].exp}</td>
                         <td>${chars[0].nextLevel} (${(chars[0].mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${chars[0].charId}">${chars[0].nextExp}</span> xp left`)})</td>
-                        <td data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}</td>`
+                        <td data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         }else{
             charHtml = '<td colspan="6"></td>'
         }
@@ -210,7 +210,7 @@ async function loadData () {
                                         <td>${elemToColor(char.element)}</td>
                                         <td>${char.exp}</td>
                                         <td>${char.nextLevel} (${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `${char.nextExp} xp left`)})</td>
-                                        <td>${staminaToColor(char.sta)}</td>
+                                        <td>${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
                                     </tr>`
                 }
                 
@@ -297,6 +297,13 @@ function staminaToColor(stamina) {
     if (stamina < 120) return `<span style='color: yellow'>${stamina}/200</span>`
     if (stamina < 160) return `<span style='color: orange'>${stamina}/200</span>`
     return `<span style='color: red'>${stamina}/200</span>`
+}
+
+function staminaFullAt(stamina) {
+  stamina = parseInt(stamina);
+  let minutesToFull = (200 - stamina) * 5;
+  let dateFull = new Date(new Date().getTime() + minutesToFull * 60000);
+  return `<span style='font-size: 10px'>${dateFull.toLocaleString()}</span>`;
 }
 
 function levelToColor(level) {
