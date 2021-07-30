@@ -10,6 +10,7 @@ var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd',
 var storeAccounts = []
 var storeNames = {}
 var skillPrice = 0
+var localPrice = 0
 var bnbPrice = 0
 var usdPrice = 0
 var $table = $('#table-accounts tbody')
@@ -44,6 +45,7 @@ var $cardIngame = $('#card-ingame'),
     $convWallet = $('#conv-wallet'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
+    $convPrice = $('#conv-price'),
     $convOracle = $('#conv-oracle')
 
 $('document').ready(async () => {
@@ -68,7 +70,7 @@ async function refresh () {
 
 async function oracleTicker() {
     var oraclePrice = 1 / web3.utils.fromWei(`${await getOraclePrice()}`, 'ether')
-    $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} (${(oraclePrice * usdPrice).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})`)
+    $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`)
 }
 
 function fiatConversion () {
@@ -78,6 +80,8 @@ function fiatConversion () {
     if (isElementNotZero($cardWallet)) $convWallet.html(`(${toLocaleCurrency(convertToFiat($cardWallet.html()))})`)
     if (isElementNotZero($cardTotal)) $convTotal.html(`(${toLocaleCurrency(convertToFiat($cardTotal.html()))})`)
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
+    if (isElementNotZero($cardOracle)) $convOracle.html(`(${toLocaleCurrency(localeCurrencyToNumber($cardOracle.html()) * usdPrice)})`)
+    if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
 }
 function clearFiat () {
     $convIngame.html('')
@@ -86,11 +90,16 @@ function clearFiat () {
     $convWallet.html('')
     $convTotal.html('')
     $convBnb.html('')
+    $convPrice.html('')
     $convOracle.html('')
 }
 
 function isElementNotZero ($elem) {
-    return (parseFloat($elem.html()) > 0)
+    return (parseFloat(localeCurrencyToNumber($elem.html())) > 0)
+}
+
+function localeCurrencyToNumber (val) {
+    return Number(val.replace(/[^0-9\.]+/g,""))
 }
 
 function convertToFiat (val) {
@@ -254,10 +263,11 @@ function renameAccount() {
 
 async function priceTicker() {
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin,tether&vs_currencies=${currencies.join(',')}`, (result) => {
-        skillPrice = result.cryptoblades[currCurrency]
+        skillPrice = result.cryptoblades['usd']
+        localPrice = result.cryptoblades[currCurrency]
         bnbPrice = result.binancecoin[currCurrency]
         usdPrice = result.tether[currCurrency]
-        $('#card-price').html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() }))
+        $cardPrice.html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
     })
 }
 
@@ -391,6 +401,8 @@ async function combatSimulate() {
 
         combatResult.html('Generating results...')
 
+        const sta = await getCharacterStamina(charId)
+        if (sta < 40) throw Error('Not enough stamina')
         const fightGasOffset = fromEther(`${await fetchFightGasOffset()}`)
         const fightBaseline = fromEther(`${await fetchFightBaseline()}`)
 
