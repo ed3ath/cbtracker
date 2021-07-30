@@ -103,7 +103,7 @@ function localeCurrencyToNumber (val) {
 }
 
 function convertToFiat (val) {
-    return parseFloat(val) * skillPrice
+    return parseFloat(val) * localPrice
 }
 
 function convertBnbToFiat (val) {
