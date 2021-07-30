@@ -1,4 +1,4 @@
-var version = "2.0.14"
+var version = "2.0.15"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
