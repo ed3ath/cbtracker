@@ -15,12 +15,12 @@ const web3 = new Web3(NODE);
 
 // CONTRACTS
 
-const conStakingReward = new web3.eth.Contract(IStakingRewards.abi, stakingRewardAddress);
-const conStakingToken = new web3.eth.Contract(IERC20.abi, conStakingTokenAddress);
-const conCryptoBlades = new web3.eth.Contract(CryptoBlades.abi, mainAddress);
-const conCharacters = new web3.eth.Contract(Characters.abi, charAddress);
-const conWeapons = new web3.eth.Contract(Weapons.abi, weapAddress);
-const conOracle = new web3.eth.Contract(BasicPriceOracle.abi, oracleAddress);
+const conStakingReward = new web3.eth.Contract(IStakingRewards, stakingRewardAddress);
+const conStakingToken = new web3.eth.Contract(IERC20, conStakingTokenAddress);
+const conCryptoBlades = new web3.eth.Contract(CryptoBlades, mainAddress);
+const conCharacters = new web3.eth.Contract(Characters, charAddress);
+const conWeapons = new web3.eth.Contract(Weapons, weapAddress);
+const conOracle = new web3.eth.Contract(BasicPriceOracle, oracleAddress);
 
 const isAddress = address => web3.utils.isAddress(address);
 const getBNBBalance = address => web3.eth.getBalance(address);
