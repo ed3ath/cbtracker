@@ -1,4 +1,4 @@
-var version = "2.0.21"
+var version = "2.0.22"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -489,7 +489,8 @@ function import_data() {
                 hideAddress = (hideAddress === 'true')
                 currCurrency = currency
             } else {
-                var rows = fr.result.split("\n")
+                var rows = fr.result.split("\r\n")
+                console.log(rows)
                 if (rows.length) {
                     rows.forEach(row => {
                         var [name,address] = row.split(',')

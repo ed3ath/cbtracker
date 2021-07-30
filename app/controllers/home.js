@@ -9,6 +9,6 @@ router.get('/', (req, res, next) =>
   res.render('index', { title: 'CryptoBlades Tracker' }));
 
 
-router.get('/version', (req, res, next) => res.json({ version: '2.0.21' }));
+router.get('/version', (req, res, next) => res.json({ version: '2.0.22' }));
 
 module.exports = router;
