@@ -1,4 +1,4 @@
-var version = "2.0.18"
+var version = "2.0.19"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -370,9 +370,13 @@ async function simulate(address) {
     $('#combat-address').val(address)
     $('#combat-character').html(new Option('-- Select character --', ''))
     $('#combat-weapon').html(new Option('-- Select weapon --', ''))
+    $('#combat-stamina').html(new Option('-- Select multiplier --', ''))
     $('#combat-result').html('')
 
-    
+    for(var i = 1; i <= 5; i++) {
+        $('#combat-stamina').append(`<option value="${i}">${i * 40} stamina (x${i})</option>`)
+    }
+
     const charIds = await getAccountCharacters(address)
     const weapIds = await getAccountWeapons(address)
 
