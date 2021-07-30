@@ -1,4 +1,4 @@
-var version = "2.0.23"
+var version = "2.0.24"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -6,7 +6,7 @@ var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
 var currCurrency = localStorage.getItem('currency')
-var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
+var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
 var storeAccounts = []
 var storeNames = {}
 var skillPrice = 0
