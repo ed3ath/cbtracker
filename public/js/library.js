@@ -6,7 +6,7 @@ const weapAddress = '0x7e091b0a220356b157131c831258a9c98ac8031a';
 const oracleAddress = '0x1cbfa0ec28da66896946474b2a93856eb725fbba';
 const defaultAddress = '0x0000000000000000000000000000000000000000';
 
-let NODE = 'https://bsc-dataseed1.ninicoin.io/'
+let NODE = 'https://bsc-dataseed1.defibit.io/'
 if (localStorage.getItem('node')){
     NODE = localStorage.getItem('node')
 }
@@ -38,8 +38,11 @@ const getCharacterStamina = charId => conCharacters.methods.getStaminaPoints(`${
 const getCharacterData = charId => conCharacters.methods.get(`${charId}`).call({ from: defaultAddress });
 const getWeaponData = weapId => conWeapons.methods.get(`${weapId}`).call({ from: defaultAddress });
 const getOraclePrice = () => conOracle.methods.currentPrice().call({ from: defaultAddress });
-const fetchFightGasOffset = async () => conCryptoBlades.methods.usdToSkill(await conCryptoBlades.methods.fightRewardGasOffset().call({ from: defaultAddress })).call({ from: defaultAddress });
-const fetchFightBaseline = async () => conCryptoBlades.methods.usdToSkill(await conCryptoBlades.methods.fightRewardBaseline().call({ from: defaultAddress })).call({ from: defaultAddress });
+const fetchFightGasOffset = async () => conCryptoBlades.methods.fightRewardGasOffset().call({ from: defaultAddress });
+const fetchFightBaseline = async () => conCryptoBlades.methods.fightRewardBaseline().call({ from: defaultAddress });
+const usdToSkill = async value => conCryptoBlades.methods.usdToSkill(value).call({ from: defaultAddress });
 const decodeAbi = (types, data) => web3.eth.abi.decodeParameters(types, data);
 const getPasLogs = options => web3.eth.abi.getPasLogs(options);
-
+const getLatestBlock = async () =>  web3.eth.getBlock('latest')
+const getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCryptoBlades.getPastEvents(event, {fromBlock, toBlock, address, topics})
+const getTokenGainForFight = async (power, multi) => conCryptoBlades.methods.getTokenGainForFight(power, multi)

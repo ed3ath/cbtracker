@@ -48,6 +48,14 @@
               .form-group.mb-3
                 select#combat-weapon.form-control.form-control.bg-dark.text-white
                   option(value='') -- Select weapon --
+              .form-group.mb-3
+                select#combat-stamina.form-control.form-control.bg-dark.text-white
+                  option(value='') -- Select multiplier --
+                  option(value='1') 40 stamina (x1)
+                  option(value='2') 80 stamina (x2)
+                  option(value='3') 120 stamina (x3)
+                  option(value='4') 160 stamina (x4)
+                  option(value='5') 200 stamina (x5)
             .col-md-7.col-sm-6.px-2.mb-3
               p#combat-result.text-white(align='center')
           button#btn-simulate.btn.btn-secondary.float-right(type='button' onclick='combatSimulate()') Run
