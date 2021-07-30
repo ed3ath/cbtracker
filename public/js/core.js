@@ -1,4 +1,4 @@
-var version = "2.0.17"
+var version = "2.0.18"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -417,12 +417,12 @@ async function combatSimulate() {
         const enemies = await getEnemyDetails(targets)
 
         combatResult.html('Enemy | Element | Power | Est. Reward | Chance<br><hr>')
-        enemies.map(async (enemy, i) => {
+        combatResult.append(await Promise.all(enemies.map(async (enemy, i) => {
             const chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
             enemy.element = traitNumberToName(enemy.trait)
             const reward = fromEther(await usdToSkill(web3.utils.toBN(Number(fightGasOffset) + ((Number(fightBaseline) * Math.sqrt(parseInt(enemy.power) / 1000)) * parseInt(stamina)))));
-            combatResult.html(combatResult.html() + `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${chanceColor(chance)}<br>`)
-        })
+            return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${chanceColor(chance)}<br>`
+        })))
         $('#btn-simulate').removeAttr('disabled')
     } catch (e) {
         combatResult.html(e.message)
