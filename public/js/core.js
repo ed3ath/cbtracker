@@ -1,4 +1,4 @@
-var version = "2.0.26"
+var version = "2.0.27"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -210,7 +210,7 @@ async function loadData () {
                                         <td>${levelToColor(char.level)}</td>
                                         <td>${elemToColor(char.element)}</td>
                                         <td><span data-cid="${char.charId}">${char.exp}</span> xp</td>
-                                        <td>${chars.nextLevel}<br/><span style='font-size: 10px'>(${(chars.mustClaim ? '<span class="text-gold;">Claim now</span>' : `<span data-xp="${chars.charId}">${chars.nextExp}</span> xp left`)})</span></td>
+                                        <td>${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold;">Claim now</span>' : `<span data-xp="${char.charId}">${char.nextExp}</span> xp left`)})</span></td>
                                         <td>${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
                                     </tr>`
                 }
