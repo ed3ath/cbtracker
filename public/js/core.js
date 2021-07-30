@@ -49,23 +49,26 @@ var $cardIngame = $('#card-ingame'),
 $('document').ready(async () => {
     priceTicker()
     oracleTicker()
-    setInterval(async() => {
-        await oracleTicker()
+    setInterval(() => {
         fiatConversion()
     }, 1000)
-    setInterval(() => {        
+    setInterval(async() => {
+        await oracleTicker()
+    }, 10000)
+    setInterval(() => {
         priceTicker()
     }, 30000)
-    async function oracleTicker() {
-        var oraclePrice = 1 / web3.utils.fromWei(`${await getOraclePrice()}`, 'ether')
-        $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} (${(oraclePrice * usdPrice).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})`)
-    }
     loadData()
 })
 
 async function refresh () {
     loadData()
     fiatConversion()
+}
+
+async function oracleTicker() {
+    var oraclePrice = 1 / web3.utils.fromWei(`${await getOraclePrice()}`, 'ether')
+    $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} (${(oraclePrice * usdPrice).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})`)
 }
 
 function fiatConversion () {
@@ -249,7 +252,7 @@ function renameAccount() {
     $(`td[data-id=${address}]`).html(name)
 }
 
-function priceTicker() {
+async function priceTicker() {
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin,tether&vs_currencies=${currencies.join(',')}`, (result) => {
         skillPrice = result.cryptoblades[currCurrency]
         bnbPrice = result.binancecoin[currCurrency]
