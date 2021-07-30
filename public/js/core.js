@@ -1,4 +1,4 @@
-var version = "2.0.22"
+var version = "2.0.23"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -176,8 +176,8 @@ async function loadData () {
             charHtml = `<td data-cid="${chars[0].charId}">${chars[0].charId}</td>
                         <td>${levelToColor(chars[0].level)}</td>
                         <td>${elemToColor(chars[0].element)}</td>
-                        <td>${chars[0].exp}</td>
-                        <td>${chars[0].nextLevel} (${(chars[0].mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${chars[0].charId}">${chars[0].nextExp}</span> xp left`)})</td>
+                        <td><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
+                        <td>${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold;">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
                         <td data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         }else{
             charHtml = '<td colspan="6"></td>'
@@ -185,17 +185,18 @@ async function loadData () {
         if (charLen < 1) {
             charLen = 1
         }
+        const skillTotal = sumOfArray([unclaimed, staked, wallet])
         rowHtml += ` <tr class="text-white align-middle" data-row="${address}">
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle'>${addressPrivacy(address)}</td>
                             ${charHtml}
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(ingame, 'ether')).toFixed(4)}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(unclaimed, 'ether')).toFixed(4)}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(staked, 'ether')).toFixed(4)}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(wallet, 'ether')).toFixed(4)}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(sumOfArray([unclaimed, staked, wallet]).toString(), 'ether')).toFixed(4)}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? moment(new Date(new Date().getTime() + (timeLeft * 1000))).fromNow() : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(web3.utils.fromWei(binance, 'ether')).toFixed(4))}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(ingame)).toFixed(6)}<br />${(Number(ingame) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(unclaimed)).toFixed(6)}<br />${(Number(unclaimed) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(staked)).toFixed(6)}<br />${(Number(staked) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(wallet)).toFixed(6)}<br />${(Number(wallet) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(skillTotal)).toFixed(6)}<br />${(Number(skillTotal) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? moment(new Date(new Date().getTime() + (timeLeft * 1000))).fromNow() : (Number(staked) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(fromEther(binance)).toFixed(6))}<br />${(Number(binance) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
                             <button type="button" class="btn btn-danger btn-sm" onclick="remove('${address}')">Remove</button></td>
@@ -208,8 +209,8 @@ async function loadData () {
                                         <td>${char.charId}</td>
                                         <td>${levelToColor(char.level)}</td>
                                         <td>${elemToColor(char.element)}</td>
-                                        <td>${char.exp}</td>
-                                        <td>${char.nextLevel} (${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `${char.nextExp} xp left`)})</td>
+                                        <td><span data-cid="${char.charId}">${char.exp}</span> xp</td>
+                                        <td>${chars[0].nextLevel}<br/><span style='font-size: 10px'>(${(chars[0].mustClaim ? '<span class="text-gold;">Claim now</span>' : `<span data-xp="${chars[0].charId}">${chars[0].nextExp}</span> xp left`)})</span></td>
                                         <td>${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
                                     </tr>`
                 }
@@ -300,10 +301,11 @@ function staminaToColor(stamina) {
 }
 
 function staminaFullAt(stamina) {
-  stamina = parseInt(stamina);
-  let minutesToFull = (200 - stamina) * 5;
-  let dateFull = new Date(new Date().getTime() + minutesToFull * 60000);
-  return `<span style='font-size: 10px'>${dateFull.toLocaleString()}</span>`;
+    if (stamina == 200) return ''
+    stamina = parseInt(stamina);
+    let minutesToFull = (200 - stamina) * 5;
+    let dateFull = moment(new Date(new Date().getTime() + (minutesToFull * 1000 * 60))).fromNow();
+    return `<span style='font-size: 10px'>(Full ${dateFull})</span>`;
 }
 
 function levelToColor(level) {
