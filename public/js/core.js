@@ -1,4 +1,4 @@
-var version = "2.0.11"
+var version = "2.0.12"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -6,7 +6,7 @@ var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
 var currCurrency = localStorage.getItem('currency')
-var currencies = ['php', 'aud', 'cny', 'eur', 'gbp', 'hkd', 'jpy', 'myr', 'sgd', 'usd']
+var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
 var storeAccounts = []
 var storeNames = {}
 var skillPrice = 0
@@ -114,7 +114,9 @@ async function loadData () {
     $cardChar.html(0)
     $cardAccount.html(storeAccounts.length)
 
-    storeAccounts.map(async (address, i) => {
+    
+    const fRowHtml = await Promise.all(storeAccounts.map(async (address, i) => {
+        let rowHtml = ''
         const charIds = await getAccountCharacters(address)
         const binance = await getBNBBalance(address)
         const wallet = await getStakedBalance(address)
@@ -168,7 +170,7 @@ async function loadData () {
         if (charLen < 1) {
             charLen = 1
         }
-        $table.append(` <tr class="text-white align-middle" data-row="${address}">
+        rowHtml += ` <tr class="text-white align-middle" data-row="${address}" data-index="${i}">
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle'>${addressPrivacy(address)}</td>
                             ${charHtml}
@@ -182,25 +184,27 @@ async function loadData () {
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
                             <button type="button" class="btn btn-danger btn-sm" onclick="remove('${address}')">Remove</button></td>
-                        </tr>`);
+                        </tr>`;
+        
         if (chars.length > 1) {
-            chars.forEach((char,i) => {
-                if (i > 0) {
-                    $table.append(`<tr class="text-white align-middle">
+            chars.forEach((char,j) => {
+                if (j > 0) {
+                    rowHtml += `<tr class="text-white align-middle" data-row="${address}" data-index="${i}">
                                         <td>${char.charId}</td>
                                         <td>${levelToColor(char.level)}</td>
                                         <td>${elemToColor(char.element)}</td>
                                         <td>${char.exp}</td>
                                         <td>${char.nextLevel} (${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `${char.nextExp} xp left`)})</td>
                                         <td>${staminaToColor(char.sta)}</td>
-                                    </tr>`)
+                                    </tr>`
                 }
+                
             })
         }
-        if (i >= storeAccounts.length-1){
-            $('.btn-refresh').removeAttr('disabled')
-        }
-    })
+        return rowHtml
+    }))
+    $table.html(fRowHtml)    
+    $('.btn-refresh').removeAttr('disabled')
 }
 
 function versionCheck() {
@@ -213,7 +217,7 @@ function versionCheck() {
 
 
 function populateCurrency() {
-    $('#select-currency').html();
+    $('#select-currency').html('');
     $("#select-currency").append(new Option(currCurrency.toUpperCase(), currCurrency));
     currencies.forEach(curr => {
         if (currCurrency !== curr) {
@@ -356,15 +360,17 @@ async function simulate(address) {
     const charIds = await getAccountCharacters(address)
     const weapIds = await getAccountWeapons(address)
 
-    charIds.forEach(async charId => {
+    const charHtml = await Promise.all(charIds.map(async charId => {
         const charData = characterFromContract(charId, await getCharacterData(charId))
         const sta = await getCharacterStamina(charId)
-        $("#combat-character").append(`<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${(charData.level + 1)} | Sta. ${sta}/200</option>`);
-    })
-    weapIds.forEach(async weapId => {
+        return `<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${(charData.level + 1)} | Sta. ${sta}/200</option>`
+    }))
+    const weapHtml = await Promise.all(weapIds.map(async weapId => {
         const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
-        $("#combat-weapon").append(`<option style="${getClassFromTrait(weapData.trait)}" value="${weapId}">${weapId} | ${weapData.stars + 1}-star ${weapData.element}</option>`);
-    })
+        return `<option style="${getClassFromTrait(weapData.trait)}" value="${weapId}">${weapId} | ${weapData.stars + 1}-star ${weapData.element}</option>`;
+    }))
+    $("#combat-character").append(charHtml)
+    $("#combat-weapon").append(weapHtml)
     $('#modal-combat').modal('show', {
         backdrop: 'static',
         keyboard: false
@@ -509,6 +515,23 @@ function saveToLocalStorage(id, value) {
     localStorage.setItem(id, value)
 }
 
+function sortTable() {
+    
+    // Disconnect the rows and get them as an array
+    var rows = $table.children().detach().get();
+    
+    // Sort it
+    rows.sort(function(left, right) {
+        // Get the text of the relevant td from left and right
+        if (parseInt($(left).data('index')) > parseInt($(right).data('index'))) return 1
+        if (parseInt($(left).data('index')) < parseInt($(right).data('index'))) return -1
+        return 0
+    });
+    
+    // Put them back in the tbody
+    $table.append(rows);
+  }
+
 
 $('#btn-privacy').on('change', (e) => {
     hideAddress = e.currentTarget.checked
@@ -519,6 +542,7 @@ $('#btn-privacy').on('change', (e) => {
 $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
     localStorage.setItem('currency', currCurrency)
+    populateCurrency()
     clearFiat()
     refresh()
 })
