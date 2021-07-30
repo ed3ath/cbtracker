@@ -1,4 +1,4 @@
-var version = "2.0.20"
+var version = "2.0.21"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -470,34 +470,50 @@ function import_data() {
         return alert("Um, couldn't find the fileinput element.");
     }
     if (!input.files) {
-        alert("This browser doesn't seem to support the `files` property of file inputs.");
+        return alert("This browser doesn't seem to support the `files` property of file inputs.");
     }
     if (!input.files[0]) {
-        alert("Please select a file before clicking 'Import'");
+        return alert("Please select a file before clicking 'Import'");
     }
-    if (input.files[0].type != 'application/json') {
-        alert("Please import a valid .json file");
-    }
-    var file = input.files[0];
-    var fr = new FileReader();
-    fr.readAsText(file);
-    fr.addEventListener('load', function () {
-        var { accounts, currency, hideAddress, names } = JSON.parse(fr.result)
-        storeAccounts = JSON.parse(accounts)
-        storeNames = JSON.parse(names)
-        hideAddress = (hideAddress === 'true')
-        currCurrency = currency
+    var fileType = input.files[0].type
+    console.log(fileType)
+    if (fileType === 'application/json' || fileType === 'text/plain') {
+        var file = input.files[0];
+        var fr = new FileReader();
+        fr.readAsText(file);
+        fr.addEventListener('load', function () {
+            if (fileType === 'application/json') {
+                var { accounts, currency, hideAddress, names } = JSON.parse(fr.result)
+                storeAccounts = JSON.parse(accounts)
+                storeNames = JSON.parse(names)
+                hideAddress = (hideAddress === 'true')
+                currCurrency = currency
+            } else {
+                var rows = fr.result.split("\n")
+                if (rows.length) {
+                    rows.forEach(row => {
+                        var [name,address] = row.split(',')
+                        if (name && address) {
+                            if (isAddress(address) && !storeAccounts.includes(address)) {
+                                storeAccounts.push(address)
+                                storeNames[address] = name
+                            }
+                        }
+                    })
+                }
+            }
 
-        if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
-        if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
-        if (hideAddress) localStorage.setItem('hideAddress', hideAddress)
-        if (currCurrency) localStorage.setItem('currency', currCurrency)
+            if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
+            if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
+            if (hideAddress) localStorage.setItem('hideAddress', hideAddress)
+            if (currCurrency) localStorage.setItem('currency', currCurrency)
 
-        toggleHelper(hideAddress)
-        refresh()
+            toggleHelper(hideAddress)
+            refresh()
 
-        $('#modal-import').modal('hide')
-    });
+            $('#modal-import').modal('hide')
+        });
+    } else alert("Please import a valid json/text file");
 }
 
 function toggleHelper(hide) {
