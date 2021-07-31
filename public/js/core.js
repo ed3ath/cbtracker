@@ -582,6 +582,10 @@ function sortTable() {
     $table.append(rows);
   }
 
+function copy_address_to_clipboard() {
+    navigator.clipboard.writeText('0x2548696795a3bCd6A8fAe7602fc26DD95A612574').then(n => alert("Copied Address"),e => alert("Fail\n" + e));
+}
+
 
 $('#btn-privacy').on('change', (e) => {
     hideAddress = e.currentTarget.checked

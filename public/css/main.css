@@ -1,4 +1,4 @@
-.bg-main {
+/* .bg-main {
     background-image: url('/assets/images/bg.png');
     background-size:100% 100%;
 }
@@ -10,4 +10,14 @@
 }
 .text-legendary {
     color: #ffac0a !important;
+} */
+
+.wrap-display {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
+
+.icon-button-display {
+    padding: 0;
+    cursor: pointer;
+} 
