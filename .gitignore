@@ -51,3 +51,5 @@ pids
 *.iml
 
 ecosystem.config.js
+
+public/js/core2.js
