@@ -1,4 +1,4 @@
-var version = "2.0.28"
+var version = "2.0.15"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -6,7 +6,7 @@ var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
 var currCurrency = localStorage.getItem('currency')
-var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
+var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
 var storeAccounts = []
 var storeNames = {}
 var skillPrice = 0
@@ -61,9 +61,6 @@ $('document').ready(async () => {
         priceTicker()
     }, 30000)
     loadData()
-    /*storeAccounts.forEach(async(address) => {
-        await subscribe(address)
-    })*/
 })
 
 async function refresh () {
@@ -173,30 +170,38 @@ async function loadData () {
                     element: charData.traitName,
                 };
             }))
-            charHtml = `<td data-cid="${chars[0].charId}">${chars[0].charId}</td>
+            charHtml = `<td>${chars[0].charId}</td>
                         <td>${levelToColor(chars[0].level)}</td>
                         <td>${elemToColor(chars[0].element)}</td>
-                        <td><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
-                        <td>${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold;">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
-                        <td data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
+                        <td>${chars[0].exp}</td>
+                        <td>${chars[0].nextLevel} (${(chars[0].mustClaim ? '<span class="text-gold">Claim now</span>' : `${chars[0].nextExp} xp left`)})</td>
+                        <td>${staminaToColor(chars[0].sta)}</td>`
         }else{
             charHtml = '<td colspan="6"></td>'
         }
         if (charLen < 1) {
             charLen = 1
         }
-        const skillTotal = sumOfArray([unclaimed, staked, wallet])
-        rowHtml += ` <tr class="text-white align-middle" data-row="${address}">
+        const now = moment();
+        const expiration = moment(moment().seconds(timeLeft).format('YYYY-MM-DD HH:mm:ss'));
+
+        // get the difference between the moments
+        const diff = expiration.diff(now);
+
+        //express as a duration
+        const diffDuration = moment.duration(diff);
+
+        rowHtml += ` <tr class="text-white align-middle" data-row="${address}" data-index="${i}">
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle'>${addressPrivacy(address)}</td>
                             ${charHtml}
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(ingame)).toFixed(6)}<br />${(Number(ingame) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(unclaimed)).toFixed(6)}<br />${(Number(unclaimed) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(staked)).toFixed(6)}<br />${(Number(staked) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(wallet)).toFixed(6)}<br />${(Number(wallet) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(skillTotal)).toFixed(6)}<br />${(Number(skillTotal) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? moment(new Date(new Date().getTime() + (timeLeft * 1000))).fromNow() : (Number(staked) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(fromEther(binance)).toFixed(6))}<br />${(Number(binance) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(ingame, 'ether')).toFixed(4)}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(unclaimed, 'ether')).toFixed(4)}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(staked, 'ether')).toFixed(4)}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(wallet, 'ether')).toFixed(4)}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(web3.utils.fromWei(sumOfArray([unclaimed, staked, wallet]).toString(), 'ether')).toFixed(4)}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? diffDuration.days() +'day(s) '+diffDuration.hours()+'hour(s) '+diffDuration.minutes()+'minute(s)': '0')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(web3.utils.fromWei(binance, 'ether')).toFixed(4))}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
                             <button type="button" class="btn btn-danger btn-sm" onclick="remove('${address}')">Remove</button></td>
@@ -205,13 +210,13 @@ async function loadData () {
         if (chars.length > 1) {
             chars.forEach((char,j) => {
                 if (j > 0) {
-                    rowHtml += `<tr class="text-white align-middle" data-row="${address}">
+                    rowHtml += `<tr class="text-white align-middle" data-row="${address}" data-index="${i}">
                                         <td>${char.charId}</td>
                                         <td>${levelToColor(char.level)}</td>
                                         <td>${elemToColor(char.element)}</td>
-                                        <td><span data-cid="${char.charId}">${char.exp}</span> xp</td>
-                                        <td>${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold;">Claim now</span>' : `<span data-xp="${char.charId}">${char.nextExp}</span> xp left`)})</span></td>
-                                        <td>${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
+                                        <td>${char.exp}</td>
+                                        <td>${char.nextLevel} (${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `${char.nextExp} xp left`)})</td>
+                                        <td>${staminaToColor(char.sta)}</td>
                                     </tr>`
                 }
                 
@@ -300,14 +305,6 @@ function staminaToColor(stamina) {
     return `<span style='color: red'>${stamina}/200</span>`
 }
 
-function staminaFullAt(stamina) {
-    if (stamina == 200) return ''
-    stamina = parseInt(stamina);
-    let minutesToFull = (200 - stamina) * 5;
-    let dateFull = moment(new Date(new Date().getTime() + (minutesToFull * 1000 * 60))).fromNow();
-    return `<span style='font-size: 10px'>(Full ${dateFull})</span>`;
-}
-
 function levelToColor(level) {
     if (level < 11) return level
     if (level < 21) return `<span style='color: cyan'>${level}</span>`
@@ -379,13 +376,9 @@ async function simulate(address) {
     $('#combat-address').val(address)
     $('#combat-character').html(new Option('-- Select character --', ''))
     $('#combat-weapon').html(new Option('-- Select weapon --', ''))
-    $('#combat-stamina').html(new Option('-- Select multiplier --', ''))
     $('#combat-result').html('')
 
-    for(var i = 1; i <= 5; i++) {
-        $('#combat-stamina').append(`<option value="${i}">${i * 40} stamina (x${i})</option>`)
-    }
-
+    
     const charIds = await getAccountCharacters(address)
     const weapIds = await getAccountWeapons(address)
 
@@ -410,19 +403,17 @@ async function combatSimulate() {
     $('#btn-simulate').prop('disabled', true)
     const charId = $('#combat-character').val()
     const weapId = $('#combat-weapon').val()
-    const stamina = $('#combat-stamina').val()
     const combatResult = $('#combat-result')
     try {
         if (!charId) throw Error('Please select a character.')
         if (!weapId) throw Error('Please select a weapon.')
-        if (!stamina) throw Error('Please select a stamina multiplier.')
 
         combatResult.html('Generating results...')
 
         const sta = await getCharacterStamina(charId)
-        if (sta < 40 * parseInt(stamina)) throw Error('Not enough stamina')
-        const fightGasOffset = await fetchFightGasOffset()
-        const fightBaseline = await fetchFightBaseline()
+        if (sta < 40) throw Error('Not enough stamina')
+        const fightGasOffset = fromEther(`${await fetchFightGasOffset()}`)
+        const fightBaseline = fromEther(`${await fetchFightBaseline()}`)
 
         const charData = characterFromContract(charId, await getCharacterData(charId))
         const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
@@ -430,12 +421,13 @@ async function combatSimulate() {
         const enemies = await getEnemyDetails(targets)
 
         combatResult.html('Enemy | Element | Power | Est. Reward | Chance<br><hr>')
-        combatResult.append(await Promise.all(enemies.map(async (enemy, i) => {
+        enemies.map((enemy, i) => {
             const chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
             enemy.element = traitNumberToName(enemy.trait)
-            const reward = fromEther(await usdToSkill(web3.utils.toBN(Number(fightGasOffset) + ((Number(fightBaseline) * Math.sqrt(parseInt(enemy.power) / 1000)) * parseInt(stamina)))));
-            return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${chanceColor(chance)}<br>`
-        })))
+
+            const reward = (parseFloat(fightGasOffset) + (parseFloat(fightBaseline) * Math.sqrt(parseInt(enemy.power) / 1000)));
+            combatResult.html(combatResult.html() + `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${parseFloat(reward).toFixed(6)} | ${chanceColor(chance)}<br>`)
+        })
         $('#btn-simulate').removeAttr('disabled')
     } catch (e) {
         combatResult.html(e.message)
@@ -479,51 +471,34 @@ function import_data() {
         return alert("Um, couldn't find the fileinput element.");
     }
     if (!input.files) {
-        return alert("This browser doesn't seem to support the `files` property of file inputs.");
+        alert("This browser doesn't seem to support the `files` property of file inputs.");
     }
     if (!input.files[0]) {
-        return alert("Please select a file before clicking 'Import'");
+        alert("Please select a file before clicking 'Import'");
     }
-    var fileType = input.files[0].type
-    console.log(fileType)
-    if (fileType === 'application/json' || fileType === 'text/plain') {
-        var file = input.files[0];
-        var fr = new FileReader();
-        fr.readAsText(file);
-        fr.addEventListener('load', function () {
-            if (fileType === 'application/json') {
-                var { accounts, currency, hideAddress, names } = JSON.parse(fr.result)
-                storeAccounts = JSON.parse(accounts)
-                storeNames = JSON.parse(names)
-                hideAddress = (hideAddress === 'true')
-                currCurrency = currency
-            } else {
-                var rows = fr.result.split("\r\n")
-                console.log(rows)
-                if (rows.length) {
-                    rows.forEach(row => {
-                        var [name,address] = row.split(',')
-                        if (name && address) {
-                            if (isAddress(address) && !storeAccounts.includes(address)) {
-                                storeAccounts.push(address)
-                                storeNames[address] = name
-                            }
-                        }
-                    })
-                }
-            }
+    if (input.files[0].type != 'application/json') {
+        alert("Please import a valid .json file");
+    }
+    var file = input.files[0];
+    var fr = new FileReader();
+    fr.readAsText(file);
+    fr.addEventListener('load', function () {
+        var { accounts, currency, hideAddress, names } = JSON.parse(fr.result)
+        storeAccounts = JSON.parse(accounts)
+        storeNames = JSON.parse(names)
+        hideAddress = (hideAddress === 'true')
+        currCurrency = currency
 
-            if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
-            if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
-            if (hideAddress) localStorage.setItem('hideAddress', hideAddress)
-            if (currCurrency) localStorage.setItem('currency', currCurrency)
+        if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
+        if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
+        if (hideAddress) localStorage.setItem('hideAddress', hideAddress)
+        if (currCurrency) localStorage.setItem('currency', currCurrency)
 
-            toggleHelper(hideAddress)
-            refresh()
+        toggleHelper(hideAddress)
+        refresh()
 
-            $('#modal-import').modal('hide')
-        });
-    } else alert("Please import a valid json/text file");
+        $('#modal-import').modal('hide')
+    });
 }
 
 function toggleHelper(hide) {
