@@ -19,12 +19,21 @@ html#main(lang='en')
     link(rel='stylesheet' media='screen' href='/css/core.css')
     link(rel='stylesheet' media='screen' href='/css/main.css')
     
+    // Google Analytics
     script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-2C7J6DL9GR')
     script.
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-2C7J6DL9GR');
+
+    // Google Adsense
+    script(async='' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4276954411890126' crossorigin='anonymous')
+    // CryptoBlade
+    ins.adsbygoogle(style='display:block' data-ad-client='ca-pub-4276954411890126' data-ad-slot='2267717609' data-ad-format='auto' data-full-width-responsive='true')
+    script.
+      (adsbygoogle = window.adsbygoogle || []).push({});
+
 
     
   body(style='background-color: #12263f')
