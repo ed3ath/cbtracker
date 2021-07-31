@@ -8,8 +8,8 @@ main.page-wrapper
         .card.h-100.rounded-3.p-3.text-white.bg-danger
           p CryptoBlades Tracker is open-source so anyone can create a clone and modify it to ask for your sensitive information. CryptoBlades Tracker <b>will never ask</b> for your seed phrase or private key! <b>Never share these information</b> to any site nor your friends. <b>CryptoBlades Tracker will only require you to enter your BSC address and nothing else</b>. Stay safe!   
       .col-md-12.mb-2
-        .alert.alert-primary.alert-dismissible.fade.show(role="alert").wrap-display
-          | <span class="text-center">I'm in dire need of gas. I accept donations thru this address: <b>0x2548696795a3bCd6A8fAe7602fc26DD95A612574</b>.<button onclick='copy_address_to_clipboard()' class="btn icon-button-display"><i class="fa fa-clone"  aria-hidden="true" alt="Copy"></i> </button> Any amount will do. <span class="opacity-50 me-1" style="color: red;">♥♥♥</span>
+        .alert.alert-primary.alert-dismissible.fade.show(role="alert")
+          | <span class="text-center">I'm in dire need of gas. I accept donations thru this address: <b>0x2548696795a3bCd6A8fAe7602fc26DD95A612574</b> <button onclick='copy_address_to_clipboard()' class="btn icon-button-display"><i class="fa fa-clone"  aria-hidden="true" alt="Copy"></i> </button>. Any amount will do. <span class="opacity-50 me-1" style="color: red;">♥♥♥</span>
           button(type="button", data-bs-dismiss="alert", aria-label="Close").btn-close
         .alert.alert-danger.alert-dismissible.fade.show(role="alert")
           | <span class="text-center">Do not refresh/close this page without saving your fight logs.</span>
@@ -21,19 +21,28 @@ main.page-wrapper
             .row.align-items-center
               .col
                 h4.card-header-title.text-white
-                  | Fight Logger
+                  | Fight Result Logger
               .col-auto
-                button.btn.btn-sm.btn-danger(type='button' data-bs-toggle='modal' data-bs-target='#modal-set-account')
-                  | Set Account
+                button.btn.btn-sm.btn-success(style='margin-right: 3px !important;' type='button' data-bs-toggle='modal' data-bs-target='#modal-import')
+                  | Import List
+                button.btn.btn-sm.btn-warning(style='margin-right: 3px !important;' type='button' onclick='exportList()')
+                  | Export List
+                button.btn.btn-sm.btn-danger(type='button' data-bs-toggle='modal' data-bs-target='#modal-add-account')
+                  | Add Account
           .card-body
             .row
               .col-md-12.mb-3
-                .p.text-white Result format <code>Address,Fight Outcome,Character ID,Weapon ID,Player Roll,Enemy Roll,Skill Reward,XP Reward,Gas Cost</code>
+                .p.text-white Result is in csv format <code>Address,Fight Outcome,Character ID,Weapon ID,Player Roll,Enemy Roll,Skill Reward,XP Reward,Gas Cost</code>
             .row
               .col-md-3.mb-3
                 label.text-white.mb-1 Address subscribed
                 textarea#fight-address.form-control(rows="15" readonly style='font-size: 13px; color: black;' wrap="off")
               .col-md-9
-                label.text-white.mb-1 Fight logs
+                .row
+                  .col
+                    label.text-white.mb-1 Fight logs
+                  .col-auto
+                    button.btn.btn-sm.btn-warning.mb-1(style='margin-top: -15px !important;' type='button' onclick='exportLogs()')
+                      | Export Logs
                 textarea#fight-result.form-control(rows="15" readonly style='font-size: 13px; color: black;' wrap="off")
 include ../footer

@@ -6,7 +6,7 @@
     font-size: 12px;
 }
 .text-gold {
-    color: gold
+    color: gold !important;
 }
 .bg-character {
     background-color: #f9d2f2 !important;
