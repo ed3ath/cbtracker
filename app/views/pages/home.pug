@@ -3,9 +3,7 @@ main.page-wrapper
     .row.mx-n2.py-2
       .col-md-8.col-sm-6.px-2
         h1.text-white CryptoBlades Tracker        
-      .col-md-2.col-sm-6.px-2.float-right
-        select#select-tax.form-select2(style='float: right !important;')
-      .col-md-2.col-sm-6.px-2.float-right
+      .col-md-4.col-sm-6.px-2.float-right
         select#select-currency.form-select2(style='float: right !important;')
     .row
       .col-md-12.mb-4
@@ -41,6 +39,9 @@ main.page-wrapper
           span#conv-wallet.mb-2.text-white.card-label
       .col-md-2.col-sm-6.px-2.mb-3
         .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
+          .form-check.form-switch(style='float: right;')
+            input#btn-tax.form-check-input(type="checkbox")
+            label.form-check-label.h6.fs-sm.fw-medium.text-muted(for="btn-tax") Include Claim Taxes
           span#card-total-title.h6.fs-sm.fw-medium.text-muted Total Skill Assets
           span#card-total.h4.text-white 0
           span#conv-total.mb-2.text-white.card-label
