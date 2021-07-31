@@ -177,7 +177,7 @@ async function loadData () {
                         <td>${levelToColor(chars[0].level)}</td>
                         <td>${elemToColor(chars[0].element)}</td>
                         <td><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
-                        <td>${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold;">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
+                        <td>${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
                         <td data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         }else{
             charHtml = '<td colspan="6"></td>'
@@ -210,7 +210,7 @@ async function loadData () {
                                         <td>${levelToColor(char.level)}</td>
                                         <td>${elemToColor(char.element)}</td>
                                         <td><span data-cid="${char.charId}">${char.exp}</span> xp</td>
-                                        <td>${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold;">Claim now</span>' : `<span data-xp="${char.charId}">${char.nextExp}</span> xp left`)})</span></td>
+                                        <td>${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${char.charId}">${char.nextExp}</span> xp left`)})</span></td>
                                         <td>${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
                                     </tr>`
                 }
