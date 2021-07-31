@@ -24,7 +24,7 @@ async function subscribe (address) {
                         const tx = await getTransaction(result.transactionHash)
                         const receipt = await getTransactionReceipt(result.transactionHash)
                         const gasCost = tx.gasPrice * receipt.gasUsed
-                        fightResult.append(`${owner},${(playerRoll > enemyRoll ? 'Win' : 'Lost')},${character},${weapon},${playerRoll},${enemyRoll},${web3.utils.fromWei(BigInt(skillGain).toString(), 'ether')},${xpGain},${web3.utils.fromWei(BigInt(gasCost).toString(), 'ether')}\n`)
+                        fightResult.append(`${owner},${(parseInt(playerRoll) > parseInt(enemyRoll) ? 'Win' : 'Lost')},${character},${weapon},${playerRoll},${enemyRoll},${web3.utils.fromWei(BigInt(skillGain).toString(), 'ether')},${xpGain},${web3.utils.fromWei(BigInt(gasCost).toString(), 'ether')}\n`)
                         txs.push(result.transactionHash)
                     }
                 })
