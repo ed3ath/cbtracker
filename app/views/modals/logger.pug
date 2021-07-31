@@ -1,0 +1,14 @@
+#modal-set-account.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
+  .modal-dialog.modal-dialog-centered(role="document")
+    .modal-content.bg-dark
+      .modal-header
+        h5.modal-title.text-white
+          | Set Account
+        button(type="button", class="btn-close", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form
+            .p.text-white.mb-3 Set the account you want to capture fight results
+            .form-group.mb-3
+                input#logger-address.form-control.form-control.bg-dark(type='text' placeholder='Address')
+            button.btn.btn-secondary.float-right(type='button' onclick='setAccount()')
+                | Set

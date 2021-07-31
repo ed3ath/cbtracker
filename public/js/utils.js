@@ -308,7 +308,7 @@ function sumOfArray(arr) {
     arr.forEach(val => {
         sum += parseFloat(val)
     })
-    return sum
+    return BigInt(sum).toString()
 }
 
 function truncateToDecimals(num, dec = 2) {

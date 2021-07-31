@@ -363,7 +363,7 @@ function convertBNB(value) {
 }
 
 function fromEther (value) {
-    return web3.utils.fromWei(value.toString(), 'ether')
+    return web3.utils.fromWei(BigInt(value).toString(), 'ether')
 }
 
 function remove(address) {

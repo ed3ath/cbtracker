@@ -1,0 +1,39 @@
+main.page-wrapper
+  .position-relative.zindex-5.pb-4.mb-md-3.mx-5(style='margin-top: 20px;')
+    .row.mx-n2.py-2
+      .col-md-8.col-sm-6.px-2
+        h1.text-white CryptoBlades Tracker
+    .row
+      .col-md-12.mb-4
+        .card.h-100.rounded-3.p-3.text-white.bg-danger
+          p CryptoBlades Tracker is open-source so anyone can create a clone and modify it to ask for your sensitive information. CryptoBlades Tracker <b>will never ask</b> for your seed phrase or private key! <b>Never share these information</b> to any site nor your friends. <b>CryptoBlades Tracker will only require you to enter your BSC address and nothing else</b>. Stay safe!   
+      .col-md-12.mb-2
+        .alert.alert-primary.alert-dismissible.fade.show(role="alert")
+          | <span class="text-center">I'm in dire need of gas. I accept donations thru this address: <b>0x2548696795a3bCd6A8fAe7602fc26DD95A612574</b>. Any amount will do. <span class="opacity-50 me-1" style="color: red;">♥♥♥</span>
+          button(type="button", data-bs-dismiss="alert", aria-label="Close").btn-close
+        .alert.alert-danger.alert-dismissible.fade.show(role="alert")
+          | <span class="text-center">Do not refresh/close this page without saving your fight logs.</span>
+          button(type="button", data-bs-dismiss="alert", aria-label="Close").btn-close
+    .row.mx-n2.py-2
+      .col-md-12.col-sm-126.px-2.mb-3
+        .card.bg-dark
+          .card-header
+            .row.align-items-center
+              .col
+                h4.card-header-title.text-white
+                  | Fight Logger
+              .col-auto
+                button.btn.btn-sm.btn-danger(type='button' data-bs-toggle='modal' data-bs-target='#modal-set-account')
+                  | Set Account
+          .card-body
+            .row
+              .col-md-12.mb-3
+                .p.text-white Result format <code>Address,Fight Outcome,Character ID,Weapon ID,Player Roll,Enemy Roll,Skill Reward,XP Reward,Gas Cost</code>
+            .row
+              .col-md-3.mb-3
+                label.text-white.mb-1 Address subscribed
+                textarea#fight-address.form-control(rows="15" readonly style='font-size: 13px; color: black;' wrap="off")
+              .col-md-9
+                label.text-white.mb-1 Fight logs
+                textarea#fight-result.form-control(rows="15" readonly style='font-size: 13px; color: black;' wrap="off")
+include ../footer
