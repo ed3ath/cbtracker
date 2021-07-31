@@ -31,6 +31,7 @@ const getStakedTimeLeft = address => conStakingReward.methods.getStakeUnlockTime
 const getAccountCharacters = address => conCryptoBlades.methods.getMyCharacters().call({ from: address });
 const getAccountWeapons = address => conCryptoBlades.methods.getMyWeapons().call({ from: address });
 const getAccountSkillReward = address => conCryptoBlades.methods.getTokenRewards().call({ from: address });
+const getOwnRewardsClaimTax = address => conCryptoBlades.methods.getOwnRewardsClaimTax().call({ from: address });
 const getIngameSkill = address => conCryptoBlades.methods.inGameOnlyFunds(address).call({ from: address });
 const getCharacterExp = charId => conCryptoBlades.methods.getXpRewards(`${charId}`).call({ from: defaultAddress });
 const characterTargets = (charId, weapId) => conCryptoBlades.methods.getTargets(charId, weapId).call({ from: defaultAddress });

@@ -7,6 +7,7 @@ var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
 var currCurrency = localStorage.getItem('currency')
 var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
+var includeClaimTax = localStorage.getItem('includeClaimTax')
 var storeAccounts = []
 var storeNames = {}
 var skillPrice = 0
@@ -16,12 +17,14 @@ var usdPrice = 0
 var $table = $('#table-accounts tbody')
 
 if (!currCurrency) currCurrency = 'usd'
+if (!includeClaimTax) includeClaimTax = 'Do Not Include Claim Taxes'
 if (accounts && names) {
     storeAccounts = JSON.parse(accounts)
     storeNames = JSON.parse(names)
 }
 
 populateCurrency()
+populateIncludeClaimTax()
 
 if (hideAddress) {
     $('#btn-privacy').prop('checked', true)
@@ -34,6 +37,7 @@ var $cardIngame = $('#card-ingame'),
     $cardStake = $('#card-stake'),
     $cardWallet = $('#card-wallet'),
     $cardTotal = $('#card-total'),
+    $cardTotalTitle = $('#card-total-title'),
     $cardBnb = $('#card-bnb'),
     $cardAccount = $('#card-account'),
     $cardChar = $('#card-char'),
@@ -125,6 +129,7 @@ async function loadData () {
     $cardStake.html(0)
     $cardWallet.html(0)
     $cardTotal.html(0)
+    $cardTotalTitle.html(includeClaimTax === "Include Claim Taxes" ? "Taxed Skill Assets" : "Total Skill Assets")
     $cardBnb.html(0)
     $cardChar.html(0)
     $cardAccount.html(storeAccounts.length)
@@ -137,8 +142,11 @@ async function loadData () {
         const wallet = await getStakedBalance(address)
         const staked = await getStakedRewards(address)
         const unclaimed = await getAccountSkillReward(address)
+        const claimTax = await getOwnRewardsClaimTax(address);
+        const unclaimedTaxed = unclaimed*(1-convertClaimTax(claimTax))
         const ingame = await getIngameSkill(address)
         const timeLeft = await getStakedTimeLeft(address)
+
 
         var charCount = parseInt($cardChar.html())
         charCount += charIds.length
@@ -150,7 +158,8 @@ async function loadData () {
         $cardUnclaim.html((parseFloat($cardUnclaim.html()) + parseFloat(fromEther(unclaimed))).toFixed(6))
         $cardStake.html((parseFloat($cardStake.html()) + parseFloat(fromEther(staked))).toFixed(6))
         $cardWallet.html((parseFloat($cardWallet.html()) + parseFloat(fromEther(wallet))).toFixed(6))
-        $cardTotal.html((parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([unclaimed, staked, wallet])))).toFixed(6))
+        $cardTotal.html((parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([includeClaimTax === "Include Claim Taxes" ? unclaimedTaxed : unclaimed, staked, wallet])))).toFixed(6))
+        $cardTotalTitle.html(includeClaimTax === "Include Claim Taxes" ? "Taxed Skill Assets" : "Total Skill Assets")
         $cardBnb.html((parseFloat($cardBnb.html()) + parseFloat(fromEther(binance))).toFixed(6))
         
         let charHtml = '', chars = {}
@@ -238,6 +247,16 @@ function populateCurrency() {
     currencies.forEach(curr => {
         if (currCurrency !== curr) {
             $("#select-currency").append(new Option(curr.toUpperCase(), curr));
+        }
+    })
+}
+
+function populateIncludeClaimTax() {
+    $('#select-tax').html('');
+    $("#select-tax").append(new Option(includeClaimTax, includeClaimTax));
+    ["Include Claim Taxes", "Do Not Include Claim Taxes"].forEach(text => {
+        if (includeClaimTax !== text) {
+            $("#select-tax").append(new Option(text, text));
         }
     })
 }
@@ -364,6 +383,10 @@ function convertBNB(value) {
 
 function fromEther (value) {
     return web3.utils.fromWei(BigInt(value).toString(), 'ether')
+}
+
+function convertClaimTax(value) {
+    return value*0.15/2767011611056432742
 }
 
 function remove(address) {
@@ -597,6 +620,14 @@ $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
     localStorage.setItem('currency', currCurrency)
     populateCurrency()
+    clearFiat()
+    refresh()
+})
+
+$("#select-tax").on('change', (e) => {
+    includeClaimTax = e.currentTarget.value
+    localStorage.setItem('includeClaimTax', includeClaimTax)
+    populateIncludeClaimTax()
     clearFiat()
     refresh()
 })
