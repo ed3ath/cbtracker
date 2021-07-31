@@ -430,12 +430,14 @@ async function combatSimulate() {
         const targets = await characterTargets(charId, weapId)
         const enemies = await getEnemyDetails(targets)
 
-        combatResult.html('Enemy | Element | Power | Est. Reward | Chance<br><hr>')
+        combatResult.html('Enemy | Element | Power | Est. Reward | XP | Chance<br><hr>')
         combatResult.append(await Promise.all(enemies.map(async (enemy, i) => {
             const chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
             enemy.element = traitNumberToName(enemy.trait)
             const reward = fromEther(await usdToSkill(web3.utils.toBN(Number(fightGasOffset) + ((Number(fightBaseline) * Math.sqrt(parseInt(enemy.power) / 1000)) * parseInt(stamina)))));
-            return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${chanceColor(chance)}<br>`
+            const alignedPower = getAlignedCharacterPower(charData, weapData)
+            const expReward = Math.floor((enemy.power / alignedPower) * 32) * parseInt(stamina)
+            return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${expReward} | ${chanceColor(chance)}<br>`
         })))
         $('#btn-simulate').removeAttr('disabled')
     } catch (e) {
