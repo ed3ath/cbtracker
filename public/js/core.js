@@ -394,10 +394,11 @@ async function simulate(address) {
         const sta = await getCharacterStamina(charId)
         return `<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${(charData.level + 1)} | Sta. ${sta}/200</option>`
     }))
-    const weapHtml = await Promise.all(weapIds.map(async weapId => {
-        const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
-        return `<option style="${getClassFromTrait(weapData.trait)}" value="${weapId}">${weapId} | ${weapData.stars + 1}-star ${weapData.element}</option>`;
-    }))
+    const weaponsData = await Promise.all(weapIds.map(async weapId => weaponFromContract(weapId, await getWeaponData(weapId))));
+    weaponsData.sort((a, b) => b.stars - a.stars);
+    const weapHtml = weaponsData.map(weapData => (
+        `<option style="${getClassFromTrait(weapData.trait)}" value="${weapData.id}">${weapData.id} | ${weapData.stars + 1}-star ${weapData.element}</option>`
+    ));
     $("#combat-character").append(charHtml)
     $("#combat-weapon").append(weapHtml)
     $('#modal-combat').modal('show', {
@@ -580,6 +581,10 @@ function sortTable() {
     // Put them back in the tbody
     $table.append(rows);
   }
+
+function copy_address_to_clipboard() {
+    navigator.clipboard.writeText('0x2548696795a3bCd6A8fAe7602fc26DD95A612574').then(n => alert("Copied Address"),e => alert("Fail\n" + e));
+}
 
 
 $('#btn-privacy').on('change', (e) => {
