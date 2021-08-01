@@ -1,4 +1,4 @@
-CryptoBlades Tracker
+[CryptoBlades Tracker](https://cbtracker.cwsdev.net/) ![](https://img.shields.io/github/license/ed3ath/cbtracker) ![](https://img.shields.io/github/stars/ed3ath/cbtracker) ![](https://img.shields.io/github/forks/ed3ath/cbtracker) ![](https://img.shields.io/github/issues/ed3ath/cbtracker)
 ==================================
 
 ## Related modules
