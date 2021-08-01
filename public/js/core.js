@@ -210,7 +210,7 @@ async function loadData () {
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(staked)).toFixed(6)}<br />${(Number(staked) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(wallet)).toFixed(6)}<br />${(Number(wallet) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(skillTotal)).toFixed(6)}<br />${(Number(skillTotal) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? moment(new Date(new Date().getTime() + (timeLeft * 1000))).fromNow() : (Number(staked) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? unstakeSkillAt(timeLeft) : (Number(staked) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
                             <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(fromEther(binance)).toFixed(6))}<br />${(Number(binance) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
@@ -622,6 +622,19 @@ function sortTable() {
 
 function copy_address_to_clipboard() {
     navigator.clipboard.writeText('0x2548696795a3bCd6A8fAe7602fc26DD95A612574').then(n => alert("Copied Address"),e => alert("Fail\n" + e));
+}
+
+function unstakeSkillAt(timeLeft){
+    const now = moment();
+    const expiration = moment(moment().seconds(timeLeft).format('YYYY-MM-DD HH:mm:ss'));
+
+    // get the difference between the moments
+    const diff = expiration.diff(now);
+
+    //express as a duration
+    const diffDuration = moment.duration(diff);
+
+    return diffDuration.days() +'day(s) '+diffDuration.hours()+'hour(s) '+diffDuration.minutes()+'minute(s)';
 }
 
 
