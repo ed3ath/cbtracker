@@ -7,6 +7,8 @@ var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
 var currCurrency = localStorage.getItem('currency')
 var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
+var includeClaimTax = (localStorage.getItem('includeClaimTax') === 'true')
+var rewardsClaimTaxMax = 0;
 var storeAccounts = []
 var storeNames = {}
 var skillPrice = 0
@@ -29,11 +31,18 @@ if (hideAddress) {
     $('#btn-privacy').removeAttr('checked')
 }
 
+if (includeClaimTax) {
+    $('#btn-tax').prop('checked', true)
+} else {
+    $('#btn-tax').removeAttr('checked')
+}
+
 var $cardIngame = $('#card-ingame'),
     $cardUnclaim = $('#card-unclaim'),
     $cardStake = $('#card-stake'),
     $cardWallet = $('#card-wallet'),
     $cardTotal = $('#card-total'),
+    $cardTotalTitle = $('#card-total-title'),
     $cardBnb = $('#card-bnb'),
     $cardAccount = $('#card-account'),
     $cardChar = $('#card-char'),
@@ -51,6 +60,7 @@ var $cardIngame = $('#card-ingame'),
 $('document').ready(async () => {
     priceTicker()
     oracleTicker()
+    setRewardsClaimTaxMax()
     setInterval(() => {
         fiatConversion()
     }, 1000)
@@ -125,6 +135,7 @@ async function loadData () {
     $cardStake.html(0)
     $cardWallet.html(0)
     $cardTotal.html(0)
+    $cardTotalTitle.html(includeClaimTax === true ? "Taxed Skill Assets" : "Total Skill Assets")
     $cardBnb.html(0)
     $cardChar.html(0)
     $cardAccount.html(storeAccounts.length)
@@ -137,8 +148,11 @@ async function loadData () {
         const wallet = await getStakedBalance(address)
         const staked = await getStakedRewards(address)
         const unclaimed = await getAccountSkillReward(address)
+        const claimTax = await getOwnRewardsClaimTax(address);
+        const unclaimedTaxed = unclaimed*(1-convertClaimTax(claimTax))
         const ingame = await getIngameSkill(address)
         const timeLeft = await getStakedTimeLeft(address)
+
 
         var charCount = parseInt($cardChar.html())
         charCount += charIds.length
@@ -150,7 +164,8 @@ async function loadData () {
         $cardUnclaim.html((parseFloat($cardUnclaim.html()) + parseFloat(fromEther(unclaimed))).toFixed(6))
         $cardStake.html((parseFloat($cardStake.html()) + parseFloat(fromEther(staked))).toFixed(6))
         $cardWallet.html((parseFloat($cardWallet.html()) + parseFloat(fromEther(wallet))).toFixed(6))
-        $cardTotal.html((parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([unclaimed, staked, wallet])))).toFixed(6))
+        $cardTotal.html((parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([includeClaimTax === true ? unclaimedTaxed : unclaimed, staked, wallet])))).toFixed(6))
+        $cardTotalTitle.html(includeClaimTax === true ? "Taxed Skill Assets" : "Total Skill Assets")
         $cardBnb.html((parseFloat($cardBnb.html()) + parseFloat(fromEther(binance))).toFixed(6))
         
         let charHtml = '', chars = {}
@@ -275,6 +290,10 @@ async function priceTicker() {
     })
 }
 
+async function setRewardsClaimTaxMax() {
+    rewardsClaimTaxMax = await getRewardsClaimTaxMax();
+}
+
 function charFormatter(val) {
     return val.map(char => {
         return `${char.charId} | Lv. ${char.level} | ${elemToColor(char.element)} | ${char.exp} xp | Lv. ${char.nextLevel} (${(!char.mustClaim ? `${char.nextExp} xp left` : '<span style="color: gold">Claim Exp</span>')}) | (${staminaToColor(char.sta)})`
@@ -364,6 +383,10 @@ function convertBNB(value) {
 
 function fromEther (value) {
     return web3.utils.fromWei(BigInt(value).toString(), 'ether')
+}
+
+function convertClaimTax(value) {
+    return value*0.15/rewardsClaimTaxMax
 }
 
 function remove(address) {
@@ -595,6 +618,13 @@ $('#btn-privacy').on('change', (e) => {
     refresh()
 })
 
+$("#btn-tax").on('change', (e) => {
+    includeClaimTax = e.currentTarget.checked
+    localStorage.setItem('includeClaimTax', includeClaimTax)
+    clearFiat()
+    refresh()
+})
+
 $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
     localStorage.setItem('currency', currCurrency)
@@ -603,6 +633,7 @@ $("#select-currency").on('change', (e) => {
     populateCurrency()
     refresh()
 })
+
 
 $('#modal-add-account').on('shown.bs.modal', function (e) {
     $('#inp-name').val('')
