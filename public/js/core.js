@@ -8,6 +8,7 @@ var hideAddress = (localStorage.getItem('hideAddress') === 'true')
 var currCurrency = localStorage.getItem('currency')
 var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
 var includeClaimTax = (localStorage.getItem('includeClaimTax') === 'true')
+var rewardsClaimTaxMax = 0;
 var storeAccounts = []
 var storeNames = {}
 var skillPrice = 0
@@ -59,6 +60,7 @@ var $cardIngame = $('#card-ingame'),
 $('document').ready(async () => {
     priceTicker()
     oracleTicker()
+    setRewardsClaimTaxMax()
     setInterval(() => {
         fiatConversion()
     }, 1000)
@@ -126,7 +128,6 @@ function toLocaleCurrency(val) {
 }
 
 async function loadData () {
-    console.log("loadData")
     $('.btn-refresh').prop('disabled', true)
     $table.html('');
     $cardIngame.html(0)
@@ -289,6 +290,10 @@ async function priceTicker() {
     })
 }
 
+async function setRewardsClaimTaxMax() {
+    rewardsClaimTaxMax = await getRewardsClaimTaxMax();
+}
+
 function charFormatter(val) {
     return val.map(char => {
         return `${char.charId} | Lv. ${char.level} | ${elemToColor(char.element)} | ${char.exp} xp | Lv. ${char.nextLevel} (${(!char.mustClaim ? `${char.nextExp} xp left` : '<span style="color: gold">Claim Exp</span>')}) | (${staminaToColor(char.sta)})`
@@ -381,7 +386,7 @@ function fromEther (value) {
 }
 
 function convertClaimTax(value) {
-    return value*0.15/2767011611056432742
+    return value*0.15/rewardsClaimTaxMax
 }
 
 function remove(address) {
