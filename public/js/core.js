@@ -596,9 +596,9 @@ $('#btn-privacy').on('change', (e) => {
 $("#select-currency").on('change', (e) => {
     currCurrency = e.currentTarget.value
     localStorage.setItem('currency', currCurrency)
+    clearFiat()
     priceTicker()
     populateCurrency()
-    clearFiat()
     refresh()
 })
 
