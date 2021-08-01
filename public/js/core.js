@@ -6,7 +6,7 @@ var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
 var currCurrency = localStorage.getItem('currency')
-var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
+var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'ves', 'vnd']
 var includeClaimTax = (localStorage.getItem('includeClaimTax') === 'true')
 var rewardsClaimTaxMax = 0;
 var storeAccounts = []
@@ -281,12 +281,25 @@ function renameAccount() {
 }
 
 async function priceTicker() {
-    $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin,tether&vs_currencies=${currencies.join(',')}`, (result) => {
+    $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin,tether&vs_currencies=${currencies.join(',')}`, async (result) => {
         skillPrice = result.cryptoblades['usd']
-        localPrice = result.cryptoblades[currCurrency]
-        bnbPrice = result.binancecoin[currCurrency]
-        usdPrice = result.tether[currCurrency]
+        if (currCurrency === 'ves'){
+            bnbPrice = result.cryptoblades['usd']
+            await getVESUSDPrice()
+        }else {
+            localPrice = result.cryptoblades[currCurrency]
+            bnbPrice = result.binancecoin[currCurrency]
+            usdPrice = result.tether[currCurrency]
+        }
         $cardPrice.html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
+    })
+}
+
+async function getVESUSDPrice() {
+    $.get('https://s3.amazonaws.com/dolartoday/data.json', (result) => {
+        localPrice = result.USD.transferencia * skillPrice
+        usdPrice = result.USD.transferencia
+        bnbPrice = bnbPrice * usdPrice
     })
 }
 
