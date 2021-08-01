@@ -45,6 +45,5 @@ const decodeAbi = (types, data) => web3.eth.abi.decodeParameters(types, data);
 const getPasLogs = options => web3.eth.abi.getPasLogs(options);
 const getLatestBlock = async () =>  web3.eth.getBlock('latest')
 const getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCryptoBlades.getPastEvents(event, {fromBlock, toBlock, address, topics})
-const getTokenGainForFight = async (power, multi) => conCryptoBlades.methods.getTokenGainForFight(power, multi)
 const getTransaction = async hash => web3.eth.getTransaction(hash)
 const getTransactionReceipt = async hash => web3.eth.getTransactionReceipt(hash)
