@@ -625,16 +625,8 @@ function copy_address_to_clipboard() {
 }
 
 function unstakeSkillAt(timeLeft){
-    const now = moment();
-    const expiration = moment(moment().seconds(timeLeft).format('YYYY-MM-DD HH:mm:ss'));
-
-    // get the difference between the moments
-    const diff = expiration.diff(now);
-
-    //express as a duration
-    const diffDuration = moment.duration(diff);
-
-    return diffDuration.days() +'day(s) '+diffDuration.hours()+'hour(s) '+diffDuration.minutes()+'minute(s)';
+    const timeLeftTimestamp = new Date(new Date().getTime() + (timeLeft * 1000))
+    return `<span title="${moment().countdown(timeLeftTimestamp)}">${moment(timeLeftTimestamp).fromNow()}`;
 }
 
 
