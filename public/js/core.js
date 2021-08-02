@@ -1,7 +1,3 @@
-var version = "2.0.34"
-versionCheck()
-setInterval(() => { versionCheck() }, 5000)
-
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
