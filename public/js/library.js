@@ -37,7 +37,7 @@ const fetchFightGasOffset = async () => conCryptoBlades.methods.fightRewardGasOf
 const fetchFightBaseline = async () => conCryptoBlades.methods.fightRewardBaseline().call({ from: defaultAddress });
 const usdToSkill = async value => conCryptoBlades.methods.usdToSkill(value).call({ from: defaultAddress });
 const decodeAbi = (types, data) => web3.eth.abi.decodeParameters(types, data);
-const getPasLogs = options => web3.eth.abi.getPasLogs(options);
+const getPastLogs = options => web3.eth.getPastLogs(options);
 const getLatestBlock = async () =>  web3.eth.getBlock('latest')
 const getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCryptoBlades.getPastEvents(event, {fromBlock, toBlock, address, topics})
 const getTransaction = async hash => web3.eth.getTransaction(hash)

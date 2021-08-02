@@ -71,9 +71,6 @@ $('document').ready(async () => {
         priceTicker()
     }, 30000)
     loadData()
-    /*storeAccounts.forEach(async(address) => {
-        await subscribe(address)
-    })*/
 })
 
 async function refresh () {

@@ -1,4 +1,4 @@
-var version = "2.0.33"
+var version = "2.0.34"
 versionCheck()
 setInterval(() => { versionCheck() }, 5000)
 
@@ -71,9 +71,6 @@ $('document').ready(async () => {
         priceTicker()
     }, 30000)
     loadData()
-    /*storeAccounts.forEach(async(address) => {
-        await subscribe(address)
-    })*/
 })
 
 async function refresh () {
