@@ -6,14 +6,7 @@ const weapAddress = '0x7e091b0a220356b157131c831258a9c98ac8031a';
 const oracleAddress = '0x1cbfa0ec28da66896946474b2a93856eb725fbba';
 const defaultAddress = '0x0000000000000000000000000000000000000000';
 
-let NODE = 'https://bsc-dataseed1.defibit.io/'
-if (localStorage.getItem('node')){
-    NODE = localStorage.getItem('node')
-}
-
-const web3 = new Web3(NODE);
-
-// CONTRACTS
+const web3 = new Web3('https://bsc-dataseed1.defibit.io/');
 
 const conStakingReward = new web3.eth.Contract(IStakingRewards, stakingRewardAddress);
 const conStakingToken = new web3.eth.Contract(IERC20, conStakingTokenAddress);

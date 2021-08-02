@@ -1,47 +1,30 @@
 const gulp = require('gulp');
-const stylus = require('gulp-stylus');
-const nodemon = require('gulp-nodemon');
-const browserSync = require('browser-sync');
+const concat = require('gulp-concat');
+const minify = require('gulp-minify');
 
-const { reload } = browserSync;
-const config = require('./config/config');
+gulp.task('vendor', () => gulp.src(['./public/js/vendor/*.js'])
+  .pipe(concat('vendor.js'))
+  .pipe(minify())
+  .pipe(gulp.dest('public/build/js')));
 
-gulp.task('stylus', () => {
-  gulp.src('./public/styl/*.styl')
-    .pipe(stylus())
-    .pipe(gulp.dest('./public/css'))
-    .pipe(reload({ stream: true }));
-});
+gulp.task('contracts', () => gulp.src(['./public/contracts/*.js'])
+  .pipe(concat('contracts.js'))
+  .pipe(minify())
+  .pipe(gulp.dest('public/build/js')));
 
-gulp.task('watch', () => {
-  gulp.watch('./public/styl/*.styl', ['stylus']);
-});
+gulp.task('library', () => gulp.src(['./public/js/library.js', './public/js/utils.js'])
+  .pipe(concat('library.js'))
+  .pipe(minify())
+  .pipe(gulp.dest('public/build/js')));
 
-gulp.task('browser-sync', ['nodemon'], () => {
-  browserSync.init(null, {
-    proxy: `http://localhost:${config.server.port}`,
-    files: ['public/**/*.*', '**.js'],
-    browser: 'google chrome',
-    port: 7000,
-  });
-});
+gulp.task('core', () => gulp.src(['./public/js/core.js'])
+  .pipe(concat('core.js'))
+  .pipe(minify())
+  .pipe(gulp.dest('public/build/js')));
 
-gulp.task('nodemon', cb => nodemon({
-  exec: 'node --inspect',
-  script: 'app.js',
-  ext: 'js pug',
-  env: { NODE_ENV: 'development', DEBUG: 'myapp:*' },
-})
-  .once('start', cb)
-  .on('restart', () => {
-    setTimeout(() => {
-      browserSync.reload({ stream: false });
-    }, 1000);
-  }));
+gulp.task('fight', () => gulp.src(['./public/js/fight-logger.js'])
+  .pipe(concat('fight.js'))
+  .pipe(minify())
+  .pipe(gulp.dest('public/build/js')));
 
-gulp.task('default', [
-  'stylus',
-  'nodemon',
-  'watch',
-  'browser-sync',
-]);
+gulp.task('default', gulp.series(['vendor', 'contracts', 'library', 'core', 'fight']));
