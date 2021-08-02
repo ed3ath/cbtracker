@@ -56,6 +56,12 @@ app.use((err, req, res, next) => {
 });
 
 
+const httpServer = http.createServer(app);
+const httpPort = process.env.HTTP_PORT || 3000;
+httpServer.listen(httpPort, () => {
+  console.log(`HTTP Server running on port ${httpPort}`);
+});
+
 if (process.env.NODE_ENV === 'production') {
   const credentials = {
     cert: fs.readFileSync('/etc/cert/cert.pem', 'utf8'),
@@ -67,10 +73,5 @@ if (process.env.NODE_ENV === 'production') {
     console.log(`HTTPS Server running on port ${httpsPort}`);
   });
 }
-const httpServer = http.createServer(app);
-const httpPort = process.env.HTTP_PORT || 3000;
-httpServer.listen(httpPort, () => {
-  console.log(`HTTP Server running on port ${httpPort}`);
-});
 
 module.exports = app;
