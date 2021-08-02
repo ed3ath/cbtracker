@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-* Node.js `http://nodejs.org`
+* Node.js v16 `http://nodejs.org` 
 
 ## Project Structure
 ```sh
