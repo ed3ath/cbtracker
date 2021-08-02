@@ -8,6 +8,7 @@ const randomString = (length) => {
 };
 
 function CharacterPower(level) {
+    return (1000 + ((level - 1) * 10)) * (Math.floor((level - 1) / 10) + 1);
     return ((1000 + (level * 10)) * (Math.floor(level / 10) + 1));
 }
 
