@@ -120,11 +120,11 @@ function isElementNotZero ($elem) {
 }
 
 function localeCurrencyToNumber (val) {
-    return Number(val.replace(/[^0-9\.]+/g,""))
+    return Number(String(val).replace(/[^0-9\.]+/g,""))
 }
 
 function convertToFiat (val) {
-    return parseFloat(val) * localPrice
+    return localeCurrencyToNumber(val) * localPrice
 }
 
 function convertBnbToFiat (val) {
