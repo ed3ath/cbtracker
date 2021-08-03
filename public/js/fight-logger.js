@@ -139,10 +139,3 @@ window.addEventListener('beforeunload', function (e) {
 $('#modal-add-account').on('shown.bs.modal', function (e) {
     $('#logger-address').val('')
 });
-
-window.addEventListener('beforeunload', function (e) {
-    if (fightResult.val()) {
-        e.preventDefault();
-        e.returnValue = 'Your fight logs will be lost. Please save them before closing/refreshing this page';
-    }
-});

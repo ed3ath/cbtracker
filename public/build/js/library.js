@@ -235,7 +235,6 @@ function getWinChance(charData, weapData, enemyPower, enemyElement) {
     const totalMultiplier = 1 + (0.075 * (weaponElement === playerElement ? 1 : 0)) + (0.075 * getElementAdvantage(playerElement, enemyElement));
     const playerMin = totalPower * totalMultiplier * 0.9;
     const playerMax = totalPower * totalMultiplier * 1.1;
-    const playerRange = playerMax - playerMin;
     const enemyMin = enemyPower * 0.9;
     const enemyMax = enemyPower * 1.1;
     let win = 0;
