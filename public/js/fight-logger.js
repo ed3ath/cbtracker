@@ -1,6 +1,6 @@
 let subs = []
 let txs = []
-let fightInterval = 20 //seconds
+let fightInterval = 10 //seconds
 
 const fightAddress = $('#fight-address')
 const fightResult = $('#fight-result')
