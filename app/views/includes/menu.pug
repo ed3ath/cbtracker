@@ -1,0 +1,22 @@
+header.header.navbar.navbar-expand-lg.navbar-dark.navbar-floating.navbar-sticky(data-fixed-element='')
+    .container.px-0.px-xl-3
+        button.navbar-toggler.ms-n2.me-2(type='button' data-bs-toggle='offcanvas' data-bs-target='#primaryMenu')
+            span.navbar-toggler-icon
+        a.navbar-brand.flex-shrink-0.order-lg-1.mx-auto.ms-lg-0.pe-lg-2.me-lg-4(href='/')
+            | CryptoBlades Tracker
+        if page === 'home'
+            .d-flex.align-items-center.order-lg-3.ms-lg-auto
+                select#select-currency.form-select2(style='float: right !important;')
+        #primaryMenu.offcanvas.offcanvas-collapse.order-lg-2
+            .offcanvas-header.navbar-shadow
+                h5.mt-1.mb-0 Menu
+                button.btn-close.lead(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+            .offcanvas-body
+                // Menu
+                ul.navbar-nav
+                    li.nav-item
+                        a.nav-link(href='/') Home
+                    li.nav-item
+                        a.nav-link(href='/logger') Fight Results Logger
+                    li.nav-item
+                        a.nav-link(href='/calculator') Rewards Calculator

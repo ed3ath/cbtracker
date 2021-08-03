@@ -387,10 +387,6 @@ function convertBNB(value) {
     return (parseFloat(value) > 0 ? `${parseFloat(value).toFixed(6)}<br><span class="fs-md">(${(parseFloat(value) * parseFloat(bnbPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})</span>` : 0)
 }
 
-function fromEther (value) {
-    return web3.utils.fromWei(BigInt(value).toString(), 'ether')
-}
-
 function convertClaimTax(value) {
     return value*0.15/rewardsClaimTaxMax
 }

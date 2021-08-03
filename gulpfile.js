@@ -27,4 +27,9 @@ gulp.task('fight', () => gulp.src(['./public/js/fight-logger.js'])
   .pipe(minify())
   .pipe(gulp.dest('public/build/js')));
 
-gulp.task('default', gulp.series(['vendor', 'contracts', 'library', 'core', 'fight']));
+gulp.task('calculator', () => gulp.src(['./public/js/calculator.js'])
+  .pipe(concat('calculator.js'))
+  .pipe(minify())
+  .pipe(gulp.dest('public/build/js')));
+
+gulp.task('default', gulp.series(['vendor', 'contracts', 'library', 'core', 'fight', 'calculator']));

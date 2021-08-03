@@ -17,6 +17,7 @@ const conOracle = new web3.eth.Contract(BasicPriceOracle, oracleAddress);
 
 const isAddress = address => web3.utils.isAddress(address);
 const getBNBBalance = address => web3.eth.getBalance(address);
+const fromEther = (value) => web3.utils.fromWei(BigInt(value).toString(), 'ether');
 
 const getStakedBalance = address => conStakingToken.methods.balanceOf(address).call({ from: defaultAddress });
 const getStakedRewards = address => conStakingReward.methods.balanceOf(address).call({ from: defaultAddress });
