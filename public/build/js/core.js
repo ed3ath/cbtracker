@@ -548,11 +548,13 @@ function import_data() {
                 hideAddress = (hideAddress === 'true')
                 currCurrency = currency
             } else {
-                var rows = fr.result.split("\r\n")
+                var rows = fr.result.split("\n")
                 console.log(rows)
                 if (rows.length) {
                     rows.forEach(row => {
                         var [name,address] = row.split(',')
+                        name = name.trim()
+                        address = address.trim()
                         if (name && address) {
                             if (isAddress(address) && !storeAccounts.includes(address)) {
                                 storeAccounts.push(address)
