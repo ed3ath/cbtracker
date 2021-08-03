@@ -1,6 +1,6 @@
 let subs = []
 let txs = []
-let fightInterval = 10 //seconds
+let fightInterval = 20 //seconds
 
 const fightAddress = $('#fight-address')
 const fightResult = $('#fight-result')
@@ -32,7 +32,7 @@ async function subscribe (address) {
         }catch(e) {
             console.log(e)
         }
-    }, 1000)
+    }, fightInterval * 1000)
 }
 
 async function addAccount() {
@@ -109,8 +109,8 @@ function importList() {
         var fr = new FileReader();
         fr.readAsText(file);
         fr.addEventListener('load', function () {
-            var rows = fr.result.split("\r\n")
-            console.log(rows)
+            var rows = fr.result.split('\n')
+            rows = rows.map(row => row.replace(/\r?\n|\r/g, ''))
             if (rows.length) {
                 rows.forEach(async address => {
                     if (!Object.keys(subs).includes(address) && isAddress(address)) {
