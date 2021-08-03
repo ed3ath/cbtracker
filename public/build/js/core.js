@@ -44,6 +44,8 @@ var $cardIngame = $('#card-ingame'),
     $cardChar = $('#card-char'),
     $cardPrice = $('#card-price'),
     $cardOracle = $('#card-oracle'),
+    $cardReward = $('#card-reward'),
+    $cardStaking = $('#card-staking'),
     $convIngame = $('#conv-ingame'),
     $convUnclaim = $('#conv-unclaim'),
     $convStake = $('#conv-stake'),
@@ -51,17 +53,21 @@ var $cardIngame = $('#card-ingame'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
     $convPrice = $('#conv-price'),
-    $convOracle = $('#conv-oracle')
+    $convOracle = $('#conv-oracle'),
+    $convReward = $('#conv-reward'),
+    $convStaking = $('#conv-staking')
 
 $('document').ready(async () => {
     priceTicker()
     oracleTicker()
     setRewardsClaimTaxMax()
+    poolTicker()
     setInterval(() => {
         fiatConversion()
     }, 1000)
     setInterval(async() => {
-        await oracleTicker()
+        oracleTicker()
+        poolTicker()
     }, 10000)
     setInterval(() => {
         priceTicker()
@@ -75,8 +81,13 @@ async function refresh () {
 }
 
 async function oracleTicker() {
-    var oraclePrice = 1 / web3.utils.fromWei(`${await getOraclePrice()}`, 'ether')
+    var oraclePrice = 1 / fromEther(`${await getOraclePrice()}`)
     $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`)
+}
+
+async function poolTicker() {
+    $cardReward.html(formatNumber(fromEther(`${await getRewardsPoolBalance()}`)))
+    $cardStaking.html(formatNumber(fromEther(`${await getStakingPoolBalance()}`)))
 }
 
 function fiatConversion () {
@@ -88,6 +99,8 @@ function fiatConversion () {
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
     if (isElementNotZero($cardOracle) && currCurrency !== 'usd') $convOracle.html(`(${toLocaleCurrency(localeCurrencyToNumber($cardOracle.html()) * usdPrice)})`)
     if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
+    if (isElementNotZero($cardReward)) $convReward.html(`(${toLocaleCurrency(convertToFiat($cardReward.html()))})`)
+    if (isElementNotZero($cardStaking)) $convStaking.html(`(${toLocaleCurrency(convertToFiat($cardStaking.html()))})`)
 }
 function clearFiat () {
     $convIngame.html('')
@@ -98,6 +111,8 @@ function clearFiat () {
     $convBnb.html('')
     $convPrice.html('')
     $convOracle.html('')
+    $convReward.html('')
+    $convStaking.html('')
 }
 
 function isElementNotZero ($elem) {
@@ -118,6 +133,13 @@ function convertBnbToFiat (val) {
 
 function toLocaleCurrency(val) {
     return val.toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })
+}
+
+function formatNumber(val, dec = 6) {
+    return Number(val).toLocaleString('en', { 
+        minimumFractionDigits: dec,
+        maximumFractionDigits: dec 
+    });
 }
 
 async function loadData () {
@@ -153,13 +175,13 @@ async function loadData () {
 
         var charLen = charIds.length
 
-        $cardIngame.html((parseFloat($cardIngame.html()) + parseFloat(fromEther(ingame))).toFixed(6))
-        $cardUnclaim.html((parseFloat($cardUnclaim.html()) + parseFloat(fromEther(unclaimed))).toFixed(6))
-        $cardStake.html((parseFloat($cardStake.html()) + parseFloat(fromEther(staked))).toFixed(6))
-        $cardWallet.html((parseFloat($cardWallet.html()) + parseFloat(fromEther(wallet))).toFixed(6))
-        $cardTotal.html((parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([includeClaimTax === true ? unclaimedTaxed : unclaimed, staked, wallet])))).toFixed(6))
+        $cardIngame.html((formatNumber(parseFloat($cardIngame.html()) + parseFloat(fromEther(ingame)))))
+        $cardUnclaim.html((formatNumber(parseFloat($cardUnclaim.html()) + parseFloat(fromEther(unclaimed)))))
+        $cardStake.html((formatNumber(parseFloat($cardStake.html()) + parseFloat(fromEther(staked)))))
+        $cardWallet.html((formatNumber(parseFloat($cardWallet.html()) + parseFloat(fromEther(wallet)))))
+        $cardTotal.html((formatNumber(parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([includeClaimTax === true ? unclaimedTaxed : unclaimed, staked, wallet]))))))
         $cardTotalTitle.html(includeClaimTax === true ? "Taxed Skill Assets" : "Total Skill Assets")
-        $cardBnb.html((parseFloat($cardBnb.html()) + parseFloat(fromEther(binance))).toFixed(6))
+        $cardBnb.html((formatNumber(parseFloat($cardBnb.html()) + parseFloat(fromEther(binance)))))
         
         let charHtml = '', chars = {}
         
@@ -198,13 +220,13 @@ async function loadData () {
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle'>${addressPrivacy(address)}</td>
                             ${charHtml}
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(ingame)).toFixed(6)}<br />${(Number(ingame) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(unclaimed)).toFixed(6)}<br />${(Number(unclaimed) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(staked)).toFixed(6)}<br />${(Number(staked) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(wallet)).toFixed(6)}<br />${(Number(wallet) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${parseFloat(fromEther(skillTotal)).toFixed(6)}<br />${(Number(skillTotal) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(ingame))}<br />${(Number(ingame) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(unclaimed))}<br />${(Number(unclaimed) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(staked))}<br />${(Number(staked) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(wallet))}<br />${(Number(wallet) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(skillTotal))}<br />${(Number(skillTotal) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? unstakeSkillAt(timeLeft) : (Number(staked) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(parseFloat(fromEther(binance)).toFixed(6))}<br />${(Number(binance) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
+                            <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(formatNumber(fromEther(binance)))}<br />${(Number(binance) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
                             <button type="button" class="btn btn-danger btn-sm" onclick="remove('${address}')">Remove</button></td>
@@ -352,7 +374,7 @@ function getClassFromTrait(trait) {
 }
 
 function currFormatter(val) {
-    return parseFloat(val).toFixed(4)
+    return formatNumber(val, 4)
 }
 
 function balanceFormatter(val) {
@@ -367,7 +389,7 @@ function bnbFormatter(val) {
 }
 
 function stakedFormatter(val, row) {
-    return `${parseFloat(val).toFixed(6)}${(row.timeLeft ? ` (${row.timeLeft})` : '')}`
+    return `${formatNumber(val)}${(row.timeLeft ? ` (${row.timeLeft})` : '')}`
 }
 
 function nameFormatter(val) {
@@ -380,11 +402,11 @@ function privacyFormatter(val) {
 }
 
 function convertSkill(value) {
-    return (parseFloat(value) > 0 ? `${parseFloat(value).toFixed(6)}<br><span class="fs-md">(${(parseFloat(value) * parseFloat(skillPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})</span>` : 0)
+    return (parseFloat(value) > 0 ? `${formatNumber(value)}<br><span class="fs-md">(${(parseFloat(value) * parseFloat(skillPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})</span>` : 0)
 }
 
 function convertBNB(value) {
-    return (parseFloat(value) > 0 ? `${parseFloat(value).toFixed(6)}<br><span class="fs-md">(${(parseFloat(value) * parseFloat(bnbPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})</span>` : 0)
+    return (parseFloat(value) > 0 ? `${formatNumber(value)}<br><span class="fs-md">(${(parseFloat(value) * parseFloat(bnbPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})</span>` : 0)
 }
 
 function convertClaimTax(value) {
@@ -476,7 +498,7 @@ function chanceColor(chance) {
     if (chance >= 0.90) color = 'green'
     if (chance >= 0.80 && chance < 0.90) color = 'yellow'
     if (chance >= 0.70 && chance < 0.80) color = 'orange'
-    return `<span style="color: ${color}">${parseFloat(chance * 100).toFixed(2)}%</span>`
+    return `<span style="color: ${color}">${formatNumber(chance * 100, 2)}%</span>`
 }
 
 function rename(address) {
