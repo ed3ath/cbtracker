@@ -548,8 +548,8 @@ function import_data() {
                 hideAddress = (hideAddress === 'true')
                 currCurrency = currency
             } else {
-                var rows = fr.result.split("\r\n")
-                console.log(rows)
+                var rows = fr.result.split('\n')
+                rows = rows.map(row => row.replace(/\r?\n|\r/g, ''))
                 if (rows.length) {
                     rows.forEach(row => {
                         var [name,address] = row.split(',')
