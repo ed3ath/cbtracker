@@ -44,8 +44,6 @@ var $cardIngame = $('#card-ingame'),
     $cardChar = $('#card-char'),
     $cardPrice = $('#card-price'),
     $cardOracle = $('#card-oracle'),
-    $cardReward = $('#card-reward'),
-    $cardStaking = $('#card-staking'),
     $convIngame = $('#conv-ingame'),
     $convUnclaim = $('#conv-unclaim'),
     $convStake = $('#conv-stake'),
@@ -53,21 +51,17 @@ var $cardIngame = $('#card-ingame'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
     $convPrice = $('#conv-price'),
-    $convOracle = $('#conv-oracle'),
-    $convReward = $('#conv-reward'),
-    $convStaking = $('#conv-staking')
+    $convOracle = $('#conv-oracle')
 
 $('document').ready(async () => {
     priceTicker()
     oracleTicker()
     setRewardsClaimTaxMax()
-    poolTicker()
     setInterval(() => {
         fiatConversion()
     }, 1000)
     setInterval(async() => {
         oracleTicker()
-        poolTicker()
     }, 10000)
     setInterval(() => {
         priceTicker()
@@ -85,11 +79,6 @@ async function oracleTicker() {
     $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`)
 }
 
-async function poolTicker() {
-    $cardReward.html(formatNumber(fromEther(`${await getRewardsPoolBalance()}`)))
-    $cardStaking.html(formatNumber(fromEther(`${await getStakingPoolBalance()}`)))
-}
-
 function fiatConversion () {
     if (isElementNotZero($cardIngame)) $convIngame.html(`(${toLocaleCurrency(convertToFiat($cardIngame.html()))})`)
     if (isElementNotZero($cardUnclaim)) $convUnclaim.html(`(${toLocaleCurrency(convertToFiat($cardUnclaim.html()))})`)
@@ -99,8 +88,6 @@ function fiatConversion () {
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
     if (isElementNotZero($cardOracle) && currCurrency !== 'usd') $convOracle.html(`(${toLocaleCurrency(localeCurrencyToNumber($cardOracle.html()) * usdPrice)})`)
     if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
-    if (isElementNotZero($cardReward)) $convReward.html(`(${toLocaleCurrency(convertToFiat($cardReward.html()))})`)
-    if (isElementNotZero($cardStaking)) $convStaking.html(`(${toLocaleCurrency(convertToFiat($cardStaking.html()))})`)
 }
 function clearFiat () {
     $convIngame.html('')
@@ -111,8 +98,6 @@ function clearFiat () {
     $convBnb.html('')
     $convPrice.html('')
     $convOracle.html('')
-    $convReward.html('')
-    $convStaking.html('')
 }
 
 function isElementNotZero ($elem) {
