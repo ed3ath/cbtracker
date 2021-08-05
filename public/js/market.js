@@ -2,7 +2,7 @@ var $table = $('#table-weapons tbody')
 
 async function loadWeaponListing() {
     $('.btn-refresh').prop('disabled', true)
-    $.get('/listing/weapons', async result => {
+    $.get('https://cbtracker-api.herokuapp.com/listing/weapons', async result => {
         $table.html('')
         if (result.length > 0) {
             $table.append(await Promise.all(result.map(async weapId => {
