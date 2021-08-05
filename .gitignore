@@ -53,3 +53,4 @@ pids
 ecosystem.config.js
 
 public/js/core2.js
+app/models/weapons.txt
