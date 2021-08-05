@@ -4,6 +4,7 @@ const mainAddress = '0x39Bea96e13453Ed52A734B6ACEeD4c41F57B2271';
 const charAddress = '0xc6f252c2cdd4087e30608a35c022ce490b58179b';
 const weapAddress = '0x7e091b0a220356b157131c831258a9c98ac8031a';
 const oracleAddress = '0x1cbfa0ec28da66896946474b2a93856eb725fbba';
+const marketAddress = '0x90099dA42806b21128A094C713347C7885aF79e2';
 const defaultAddress = '0x0000000000000000000000000000000000000000';
 
 const web3 = new Web3('https://bsc-dataseed1.defibit.io/');
@@ -13,6 +14,7 @@ const conStakingToken = new web3.eth.Contract(IERC20, conStakingTokenAddress);
 const conCryptoBlades = new web3.eth.Contract(CryptoBlades, mainAddress);
 const conCharacters = new web3.eth.Contract(Characters, charAddress);
 const conWeapons = new web3.eth.Contract(Weapons, weapAddress);
+const conMarket = new web3.eth.Contract(NFTMarket, marketAddress);
 const conOracle = new web3.eth.Contract(BasicPriceOracle, oracleAddress);
 
 const isAddress = address => web3.utils.isAddress(address);
@@ -46,3 +48,4 @@ const getLatestBlock = async () =>  web3.eth.getBlock('latest')
 const getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCryptoBlades.getPastEvents(event, {fromBlock, toBlock, address, topics})
 const getTransaction = async hash => web3.eth.getTransaction(hash)
 const getTransactionReceipt = async hash => web3.eth.getTransactionReceipt(hash)
+const getFinalPrice = async (contract, tokenId) => conMarket.methods.getFinalPrice(contract, tokenId).call({ from: defaultAddress })

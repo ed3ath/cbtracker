@@ -1,3 +1,7 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const env = process.env.NODE_ENV || 'development';
 
 const config = {
@@ -35,5 +39,6 @@ const config = {
 config[env].isDev = env === 'development';
 config[env].isTest = env === 'test';
 config[env].isProd = env === 'production';
+config[env].secret = process.env.SECRET;
 
 module.exports = config[env];
