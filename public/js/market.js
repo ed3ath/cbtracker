@@ -26,7 +26,7 @@ async function loadWeaponListing() {
                         attr += `<br>BONUS +${weapData.bonusPower}`;
                     }
                     return `
-                        <tr data-stars="${weapData.stars}">
+                        <tr data-price="${parseFloat(fromEther(price)).toFixed(2)}">
                             <td class="align-middle text-white">${weapId}</td>
                             <td class="align-middle text-white">
                                 <div class="d-flex align-items-center">
@@ -85,8 +85,8 @@ function sortTable() {
         rows = table.rows;
         for (i = 1; i < (rows.length - 1); i++) {
             shouldSwitch = false;
-            x = $(rows[i]).data('stars');
-            y = $(rows[i + 1]).data('stars');
+            x = $(rows[i]).data('price');
+            y = $(rows[i + 1]).data('price');
             if (parseInt(x) > parseInt(y)) {
                 shouldSwitch = true;
                 break;
