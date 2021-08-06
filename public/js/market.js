@@ -87,7 +87,7 @@ function sortTable() {
             shouldSwitch = false;
             x = $(rows[i]).data('price');
             y = $(rows[i + 1]).data('price');
-            if (parseInt(x) > parseInt(y)) {
+            if (Number(x) > Number(y)) {
                 shouldSwitch = true;
                 break;
             }
