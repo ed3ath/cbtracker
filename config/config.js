@@ -39,6 +39,9 @@ const config = {
 config[env].isDev = env === 'development';
 config[env].isTest = env === 'test';
 config[env].isProd = env === 'production';
-config[env].secret = process.env.SECRET;
+
+process.argv.forEach((val) => {
+  if (val.startsWith('--port')) config[env].port = val.split('=')[1];
+});
 
 module.exports = config[env];

@@ -4,9 +4,9 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+// const fs = require('fs');
 const http = require('http');
-const https = require('https');
+// const https = require('https');
 
 const app = express();
 
@@ -57,12 +57,12 @@ app.use((err, req, res, next) => {
 
 
 const httpServer = http.createServer(app);
-const httpPort = process.env.HTTP_PORT || 3000;
+const httpPort = config.port || 3000;
 httpServer.listen(httpPort, () => {
   console.log(`HTTP Server running on port ${httpPort}`);
 });
 
-if (process.env.NODE_ENV === 'production') {
+/* if (process.env.NODE_ENV === 'production') {
   const credentials = {
     cert: fs.readFileSync('/etc/cert/cert.pem', 'utf8'),
     key: fs.readFileSync('/etc/cert/key.pem', 'utf8'),
@@ -72,6 +72,6 @@ if (process.env.NODE_ENV === 'production') {
   httpsServer.listen(httpsPort, () => {
     console.log(`HTTPS Server running on port ${httpsPort}`);
   });
-}
+} */
 
 module.exports = app;

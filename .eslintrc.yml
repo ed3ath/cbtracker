@@ -34,3 +34,4 @@ rules:
   no-mixed-operators: 0
   no-plusplus: 0
   no-nested-ternary: 0
+  prefer-destructuring: 0
