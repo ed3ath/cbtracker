@@ -58,7 +58,7 @@ app.use((err, req, res, next) => {
 
 const httpServer = http.createServer(app);
 const httpPort = config.port || 3000;
-httpServer.listen(httpPort, () => {
+httpServer.listen(httpPort, 'localhost', () => {
   console.log(`HTTP Server running on port ${httpPort}`);
 });
 
