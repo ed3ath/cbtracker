@@ -1600,6 +1600,44 @@ const CryptoBlades = [
     "inputs": [
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "count",
+        "type": "uint32"
+      }
+    ],
+    "name": "MintWeaponsFailure",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "count",
+        "type": "uint32"
+      }
+    ],
+    "name": "MintWeaponsSuccess",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -1698,6 +1736,32 @@ const CryptoBlades = [
   },
   {
     "inputs": [],
+    "name": "MINT_PAYMENT_RECLAIM_MINIMUM_WAIT_TIME",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MINT_PAYMENT_TIMEOUT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "REWARDS_CLAIM_TAX_DURATION",
     "outputs": [
       {
@@ -1717,6 +1781,19 @@ const CryptoBlades = [
         "internalType": "int128",
         "name": "",
         "type": "int128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "blacksmith",
+    "outputs": [
+      {
+        "internalType": "contract Blacksmith",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -2117,6 +2194,19 @@ const CryptoBlades = [
   },
   {
     "inputs": [],
+    "name": "totalMintPaymentSkillRefundable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "weapons",
     "outputs": [
       {
@@ -2190,6 +2280,19 @@ const CryptoBlades = [
   {
     "inputs": [],
     "name": "migrateTo_801f279",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract Blacksmith",
+        "name": "_blacksmith",
+        "type": "address"
+      }
+    ],
+    "name": "migrateTo_60872c8",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -2507,8 +2610,138 @@ const CryptoBlades = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_minter",
+        "type": "address"
+      }
+    ],
+    "name": "mintPaymentSkillRefundable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_refundInGameOnlyFunds",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_refundTokenRewards",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_refundUserWallet",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_minter",
+        "type": "address"
+      }
+    ],
+    "name": "mintPaymentSecondsUntilSkillRefundClaimable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "checkIfMintPaymentExpiredAndRefunded",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "mintPaymentClaimRefund",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "_num",
+        "type": "uint32"
+      }
+    ],
+    "name": "hasPaidForMint",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      }
+    ],
+    "name": "payForMint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "mintCharacter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "num",
+        "type": "uint32"
+      }
+    ],
+    "name": "mintWeaponN",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_minter",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "num",
+        "type": "uint32"
+      }
+    ],
+    "name": "_mintWeaponNUsableByThisOnlyButExternalForReasons",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -2613,84 +2846,12 @@ const CryptoBlades = [
         "type": "address"
       },
       {
-        "internalType": "int128",
-        "name": "usdAmount",
-        "type": "int128"
-      }
-    ],
-    "name": "payContract",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "convertedAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "payContractConverted",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "int128",
-        "name": "baseAmount",
-        "type": "int128"
-      }
-    ],
-    "name": "payPlayer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "convertedAmount",
         "type": "uint256"
       }
     ],
     "name": "payPlayerConverted",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "characterID",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
-      }
-    ],
-    "name": "approveContractCharacterFor",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -2709,6 +2870,24 @@ const CryptoBlades = [
       }
     ],
     "name": "approveContractWeaponFor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "playerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "convertedAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "payContractTokenOnly",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -2913,19 +3092,6 @@ const CryptoBlades = [
   },
   {
     "inputs": [],
-    "name": "getCurrentHour",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "claimTokenRewards",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -3031,6 +3197,22 @@ const CryptoBlades = [
 ]
 const IERC20 = [
   {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name_",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "symbol_",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -3079,6 +3261,45 @@ const IERC20 = [
     ],
     "name": "Transfer",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -3203,6 +3424,54 @@ const IERC20 = [
       }
     ],
     "name": "transferFrom",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "addedValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseAllowance",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "subtractedValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseAllowance",
     "outputs": [
       {
         "internalType": "bool",
@@ -4413,6 +4682,50 @@ const NFTMarket = [
       },
       {
         "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      }
+    ],
+    "name": "getListingSlice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "returnedCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "sellers",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "prices",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC721",
+        "name": "_tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
         "name": "_id",
         "type": "uint256"
       },
@@ -4621,6 +4934,24 @@ const NFTMarket = [
       }
     ],
     "name": "setUserBan",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "users",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "to",
+        "type": "bool"
+      }
+    ],
+    "name": "setUserBans",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -5391,6 +5722,19 @@ const Weapons = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "promos",
+    "outputs": [
+      {
+        "internalType": "contract Promos",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "bytes32",
@@ -5662,6 +6006,19 @@ const Weapons = [
   {
     "inputs": [],
     "name": "migrateTo_951a020",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract Promos",
+        "name": "_promos",
+        "type": "address"
+      }
+    ],
+    "name": "migrateTo_surprise",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -6477,6 +6834,50 @@ const Weapons = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "charTrait",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "drainAmount",
+        "type": "uint8"
+      }
+    ],
+    "name": "getFightDataAndDrainDurability",
+    "outputs": [
+      {
+        "internalType": "int128",
+        "name": "",
+        "type": "int128"
+      },
+      {
+        "internalType": "int128",
+        "name": "",
+        "type": "int128"
+      },
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

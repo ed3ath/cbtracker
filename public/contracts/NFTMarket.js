@@ -891,6 +891,50 @@ const NFTMarket = [
       },
       {
         "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      }
+    ],
+    "name": "getListingSlice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "returnedCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "sellers",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "prices",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC721",
+        "name": "_tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
         "name": "_id",
         "type": "uint256"
       },
@@ -1099,6 +1143,24 @@ const NFTMarket = [
       }
     ],
     "name": "setUserBan",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "users",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "to",
+        "type": "bool"
+      }
+    ],
+    "name": "setUserBans",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

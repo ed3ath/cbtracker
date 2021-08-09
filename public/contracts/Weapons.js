@@ -690,6 +690,19 @@ const Weapons = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "promos",
+    "outputs": [
+      {
+        "internalType": "contract Promos",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "bytes32",
@@ -961,6 +974,19 @@ const Weapons = [
   {
     "inputs": [],
     "name": "migrateTo_951a020",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract Promos",
+        "name": "_promos",
+        "type": "address"
+      }
+    ],
+    "name": "migrateTo_surprise",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1776,6 +1802,50 @@ const Weapons = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "charTrait",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "drainAmount",
+        "type": "uint8"
+      }
+    ],
+    "name": "getFightDataAndDrainDurability",
+    "outputs": [
+      {
+        "internalType": "int128",
+        "name": "",
+        "type": "int128"
+      },
+      {
+        "internalType": "int128",
+        "name": "",
+        "type": "int128"
+      },
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
