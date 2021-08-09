@@ -33,9 +33,21 @@ main.page-wrapper
               .col-md-9
                 .row
                   .col
-                    label.text-white.mb-1 Fight logs
                   .col-auto
                     button.btn.btn-sm.btn-warning.mb-1(style='margin-top: -15px !important;' type='button' onclick='exportLogs()')
                       | Export Logs
-                textarea#fight-result.form-control(rows="15" readonly style='font-size: 13px; color: black;' wrap="off")
+                .table-responsive.mb-0
+                  table#table-logs.table.table-sm.card-table
+                    thead
+                      tr
+                        th.text-white.text-center Address
+                        th.text-white.text-center Outcome
+                        th.text-white.text-center Character ID
+                        th.text-white.text-center Weapon ID
+                        th.text-white.text-center Player Roll
+                        th.text-white.text-center Enemy Roll
+                        th.text-white.text-center Skill Reward
+                        th.text-white.text-center XP Reward
+                        th.text-white.text-center Gas Cost
+                    tbody
 include ../footer
