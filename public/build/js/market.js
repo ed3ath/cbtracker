@@ -4,6 +4,8 @@ var currType = 'all'
 
 async function loadWeaponListing() {
     $('.btn-refresh').prop('disabled', true)
+    $('#filter-element').prop('disabled', true)
+    $('#filter-type').prop('disabled', true)
     $.get('https://cbtracker-api.herokuapp.com/listing/weapons', async result => {
         $table.html('')
         if (result.length > 0) {
@@ -70,6 +72,8 @@ async function loadWeaponListing() {
         }
         sortTable()
         $('.btn-refresh').removeAttr('disabled')
+        $('#filter-element').removeAttr('disabled')
+        $('#filter-type').removeAttr('disabled')
     })
 }
 
