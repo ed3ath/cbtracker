@@ -39,6 +39,7 @@ async function loadWeaponListing() {
                             <td class="align-middle text-white">
                                 ${attr}
                             </td>
+                            <td class="align-middle text-white">${getAvgStats(weapData)}</td>
                             <td class="align-middle text-white">${parseFloat(fromEther(price)).toFixed(2)} SKILL</td>
                         </tr>`
                 }
@@ -74,6 +75,23 @@ function traitToIcon(traitNum) {
         case WeaponTrait.PWR: return 'pwr.svg';
         default: return '???';
     }
+}
+
+function getAvgStats(weapData) {
+    let total = 0, count = 0
+    if (weapData.stat1Value) {
+        count ++;
+        total += parseInt(weapData.stat1Value);
+    }
+    if (weapData.stat2Value) {
+        count ++;
+        total += parseInt(weapData.stat2Value);
+    }
+    if (weapData.stat3Value) {
+        count ++;
+        total += parseInt(weapData.stat3Value);
+    }
+    return parseInt(total/count)
 }
 
 function sortTable() {
