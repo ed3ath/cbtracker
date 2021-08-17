@@ -203,7 +203,7 @@ async function loadData () {
         const skillTotal = sumOfArray([unclaimed, staked, wallet])
         rowHtml += ` <tr class="text-white align-middle" data-row="${address}">
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${addressPrivacy(address)}</td>
+                            <td rowspan="${charLen}" class='align-middle address-column'>${address}</td>
                             ${charHtml}
                             <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(ingame))}<br />${(Number(parseFloat(fromEther(ingame)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(unclaimed))}<br />${(Number(parseFloat(fromEther(unclaimed)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
@@ -235,6 +235,7 @@ async function loadData () {
         return rowHtml
     }))
     $table.html(fRowHtml)    
+    toggleHelper(hideAddress)
     $('.btn-refresh').removeAttr('disabled')
 }
 
@@ -315,11 +316,11 @@ function charFormatter(val) {
 
 function elemToColor(elem) {
     switch (elem) {
-        case 'Fire': return `<span style='color: red'>${elem}</span>`
-        case 'Earth': return `<span style='color: green'>${elem}</span>`
-        case 'Lightning': return `<span style='color: yellow'>${elem}</span>`
-        case 'Water': return `<span style='color: cyan'>${elem}</span>`
-        default: return `<span style='color: red'>${elem}</span>`
+        case 'Fire': return '<img class="me-2" src="/img/fire.png" alt="Fire" width="20">'
+        case 'Earth': return '<img class="me-2" src="/img/earth.png" alt="Earth" width="20">'
+        case 'Lightning': return '<img class="me-2" src="/img/lightning.png" alt="Lightning" width="20">'
+        case 'Water': return '<img class="me-2" src="/img/water.png" alt="Water" width="20">'
+        default: return `<span style='color: red'>N/A</span>`
     }
 }
 
@@ -381,10 +382,10 @@ function nameFormatter(val) {
     return storeNames[val]
 }
 
-function privacyFormatter(val) {
+/* function privacyFormatter(val) {
     if (hideAddress) return addressPrivacy(val)
     return val
-}
+} */
 
 function convertSkill(value) {
     return (parseFloat(value) > 0 ? `${formatNumber(value)}<br><span class="fs-md">(${(parseFloat(value) * parseFloat(skillPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})</span>` : 0)
@@ -497,10 +498,10 @@ function rename(address) {
     })
 }
 
-function addressPrivacy(address) {
+/* function addressPrivacy(address) {
     if (hideAddress) return `${address.substr(0, 6)}...${address.substr(-4, 4)}`
     return address
-}
+} */
 
 function export_data() {
     getLocalstorageToFile(`CBTracker-${new Date().getTime()}.json`)
@@ -567,9 +568,11 @@ function toggleHelper(hide) {
     if (hide) {
         $('.toggle.btn.btn-sm').removeClass('btn-primary')
         $('.toggle.btn.btn-sm').addClass('btn-danger off')
+        $('.address-column').hide()
     } else {
         $('.toggle.btn.btn-sm').addClass('btn-primary')
         $('.toggle.btn.btn-sm').removeClass('btn-danger off')
+        $('.address-column').show()
     }
 }
 
@@ -631,7 +634,9 @@ function unstakeSkillAt(timeLeft){
 $('#btn-privacy').on('change', (e) => {
     hideAddress = e.currentTarget.checked
     localStorage.setItem('hideAddress', hideAddress)
-    refresh()
+    if (hideAddress) $('.address-column').hide()
+    else $('.address-column').show()
+    //refresh()
 })
 
 $("#btn-tax").on('change', (e) => {
