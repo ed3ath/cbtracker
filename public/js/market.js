@@ -1,4 +1,6 @@
 var $table = $('#table-weapons tbody')
+var currElement = 'all'
+var currType = 'all'
 
 async function loadWeaponListing() {
     $('.btn-refresh').prop('disabled', true)
@@ -9,7 +11,7 @@ async function loadWeaponListing() {
                 const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
                 const price = await getFinalPrice(weapAddress, weapId)
                 if (parseFloat(price) > 0) {
-                    let stars = ''; let attr = '';
+                    let stars = '', attr = '', type = 'hybrid';
                     for (let i = 0; i <= weapData.stars; i++) {
                         stars += '<img class="me-1" src="/img/star.svg" alt="Star" width="20">';
                     }
@@ -25,8 +27,27 @@ async function loadWeaponListing() {
                     if (weapData.bonusPower > 0) {
                         attr += `<br>BONUS +${weapData.bonusPower}`;
                     }
+                    if (parseInt(weapData.stars) === 2) {
+                        if (parseInt(weapData.traitNum) === parseInt(weapData.stat1Type)) type = 'pure'
+                        else type = 'semi'
+                    }
+                    if (parseInt(weapData.stars) === 3) {
+                        if (parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) && parseInt(weapData.traitNum) === parseInt(weapData.stat2Type)) type = 'pure'
+                        else if ((parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) || parseInt(weapData.stat1Type) === parseInt(WeaponTrait.PWR)) && 
+                        (parseInt(weapData.traitNum) === parseInt(weapData.stat2Type) || parseInt(weapData.stat2Type) === parseInt(WeaponTrait.PWR))) type = 'semi'
+                        else type = 'hybrid'
+                    }
+                    if (parseInt(weapData.starts) === 4) {
+                        if (parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) &&
+                            parseInt(weapData.traitNum) === parseInt(weapData.stat2Type) &&
+                                parseInt(weapData.traitNum) === parseInt(weapData.stat3Type)) type = 'pure'
+                        else if ((parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) || parseInt(weapData.stat1Type) === parseInt(WeaponTrait.PWR)) && 
+                        (parseInt(weapData.traitNum) === parseInt(weapData.stat2Type) || parseInt(weapData.stat2Type) === parseInt(WeaponTrait.PWR)) &&
+                        (parseInt(weapData.traitNum) === parseInt(weapData.stat3Type) || parseInt(weapData.stat3Type) === parseInt(WeaponTrait.PWR))) type = 'semi'
+                        else type = 'hybrid'
+                    }
                     return `
-                        <tr data-price="${parseFloat(fromEther(price)).toFixed(2)}">
+                        <tr class="weapon-row" data-price="${parseFloat(fromEther(price)).toFixed(2)}" data-element="${weapData.element.toString().toLowerCase()}" data-type="${type}">
                             <td class="align-middle text-white">${weapId}</td>
                             <td class="align-middle text-white">
                                 <div class="d-flex align-items-center">
@@ -56,8 +77,8 @@ async function refresh() {
     await loadWeaponListing()
 }
 
-function elementToIcon(traitNum) {
-    switch (traitNum) {
+function elementToIcon(trait) {
+    switch (trait) {
         case WeaponElement.Fire: return 'fire.png';
         case WeaponElement.Earth: return 'earth.png';
         case WeaponElement.Water: return 'water.png';
@@ -66,8 +87,8 @@ function elementToIcon(traitNum) {
     }
 }
 
-function traitToIcon(traitNum) {
-    switch (traitNum) {
+function traitToIcon(trait) {
+    switch (trait) {
         case WeaponTrait.STR: return 'fire.png';
         case WeaponTrait.DEX: return 'earth.png';
         case WeaponTrait.INT: return 'water.png';
@@ -76,7 +97,6 @@ function traitToIcon(traitNum) {
         default: return '???';
     }
 }
-
 function getAvgStats(weapData) {
     let total = 0, count = 0
     if (weapData.stat1Value) {
@@ -116,5 +136,59 @@ function sortTable() {
         }
     }
 }
+
+$("#filter-element").on('change', (e) => {
+    currElement = e.currentTarget.value
+    console.log(currType, currElement)
+    $('.weapon-row').show();
+    if (currElement !== 'all') {
+        if (currType === 'all') {
+            $('.weapon-row').each((f, i) => {
+                if($(i).data('element') !== currElement) {
+                    $(i).hide();
+                }
+            })
+        } else {
+            $('.weapon-row').each((f, i) => {
+                if($(i).data('element') !== currElement || $(i).data('type') !== currType) {
+                    $(i).hide();
+                }
+            })
+        }
+    } else {
+        $('.weapon-row').each((f, i) => {
+            if($(i).data('element') !== currElement && $(i).data('type') !== currType) {
+                $(i).hide();
+            }
+        })
+    }
+})
+
+$("#filter-type").on('change', (e) => {
+    currType = e.currentTarget.value
+    $('.weapon-row').show();
+    if (currType !== 'all') {
+        if (currElement === 'all') {
+            $('.weapon-row').each((f, i) => {
+                if($(i).data('type') !== currType) {
+                    $(i).hide();
+                }
+            })
+        } else {
+            $('.weapon-row').each((f, i) => {
+                if($(i).data('type') !== currType || $(i).data('element') !== currElement) {
+                    $(i).hide();
+                }
+            })
+        }
+    } else {
+        $('.weapon-row').each((f, i) => {
+            if($(i).data('type') !== currType && $(i).data('element') !== currElement) {
+                $(i).hide();
+            }
+        })
+    }
+})
+
 
 loadWeaponListing()

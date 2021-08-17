@@ -137,6 +137,7 @@ function weaponFromContract(id, data) {
         fourStarBurnPoints,
         fiveStarBurnPoints,
         bonusPower,
+        traitNum
     };
 }
 
