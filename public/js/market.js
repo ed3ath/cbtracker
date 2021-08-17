@@ -71,6 +71,7 @@ async function loadWeaponListing() {
             $table.append('<tr><td class="text-center text-white" colspan="5">No weapon listed</td></tr>')
         }
         sortTable()
+        filterChanges()
         $('.btn-refresh').removeAttr('disabled')
         $('#filter-element').removeAttr('disabled')
         $('#filter-type').removeAttr('disabled')
@@ -141,37 +142,34 @@ function sortTable() {
     }
 }
 
-$("#filter-element").on('change', (e) => {
-    currElement = e.currentTarget.value
-    console.log(currType, currElement)
+function filterChanges() {
     $('.weapon-row').show();
-    if (currElement !== 'all') {
-        if (currType === 'all') {
+    if (currElement !== 'all' || currType !== 'all') {        
+        if (currElement !== 'all' && currType !== 'all') {
             $('.weapon-row').each((f, i) => {
-                if($(i).data('element') !== currElement) {
+                if($(i).data('type') !== currType || $(i).data('element') !== currElement) {
                     $(i).hide();
                 }
             })
         } else {
-            $('.weapon-row').each((f, i) => {
-                if($(i).data('element') !== currElement || $(i).data('type') !== currType) {
-                    $(i).hide();
-                }
-            })
-        }
-    } else {
-        if (currType !== 'all') {
-            $('.weapon-row').each((f, i) => {
-                if($(i).data('element') !== currElement && $(i).data('type') !== currType) {
-                    $(i).hide();
-                }
-            })
+            if (currElement !== 'all' && currType === 'all') {
+                $('.weapon-row').each((f, i) => {
+                    if( $(i).data('element') !== currElement) {
+                        $(i).hide();
+                    }
+                })
+            } else {
+                $('.weapon-row').each((f, i) => {
+                    if( $(i).data('type') !== currType) {
+                        $(i).hide();
+                    }
+                })
+            }
         }
     }
-})
+}
 
-$("#filter-type").on('change', (e) => {
-    currType = e.currentTarget.value
+/*function filterType() {
     $('.weapon-row').show();
     if (currType !== 'all') {
         if (currElement === 'all') {
@@ -196,7 +194,17 @@ $("#filter-type").on('change', (e) => {
             })
         }
     }
+}*/
+
+$("#filter-element").on('change', (e) => {
+    currElement = e.currentTarget.value
+    filterChanges()
+    
 })
 
+$("#filter-type").on('change', (e) => {
+    currType = e.currentTarget.value
+    filterChanges()
+})
 
 loadWeaponListing()
