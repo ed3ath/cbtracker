@@ -156,11 +156,13 @@ $("#filter-element").on('change', (e) => {
             })
         }
     } else {
-        $('.weapon-row').each((f, i) => {
-            if($(i).data('element') !== currElement && $(i).data('type') !== currType) {
-                $(i).hide();
-            }
-        })
+        if (currType !== 'all') {
+            $('.weapon-row').each((f, i) => {
+                if($(i).data('element') !== currElement && $(i).data('type') !== currType) {
+                    $(i).hide();
+                }
+            })
+        }
     }
 })
 
@@ -182,11 +184,13 @@ $("#filter-type").on('change', (e) => {
             })
         }
     } else {
-        $('.weapon-row').each((f, i) => {
-            if($(i).data('type') !== currType && $(i).data('element') !== currElement) {
-                $(i).hide();
-            }
-        })
+        if (currElement !== 'all') {
+            $('.weapon-row').each((f, i) => {
+                if($(i).data('type') !== currType && $(i).data('element') !== currElement) {
+                    $(i).hide();
+                }
+            })
+        }
     }
 })
 
