@@ -35,11 +35,11 @@ async function loadWeaponListing() {
                     }
                     if (parseInt(weapData.stars) === 3) {
                         if (parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) && parseInt(weapData.traitNum) === parseInt(weapData.stat2Type)) type = 'pure'
-                        else if ((parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) || parseInt(weapData.stat1Type) === parseInt(WeaponTrait.PWR)) && 
-                        (parseInt(weapData.traitNum) === parseInt(weapData.stat2Type) || parseInt(weapData.stat2Type) === parseInt(WeaponTrait.PWR))) type = 'semi'
-                        else type = 'hybrid'
+                        /*else if ((parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) || parseInt(weapData.stat1Type) === parseInt(WeaponTrait.PWR)) && 
+                        (parseInt(weapData.traitNum) === parseInt(weapData.stat2Type) || parseInt(weapData.stat2Type) === parseInt(WeaponTrait.PWR))) type = 'semi'*/
+                        else type = 'semi'
                     }
-                    if (parseInt(weapData.starts) === 4) {
+                    if (parseInt(weapData.stars) === 4) {
                         if (parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) &&
                             parseInt(weapData.traitNum) === parseInt(weapData.stat2Type) &&
                                 parseInt(weapData.traitNum) === parseInt(weapData.stat3Type)) type = 'pure'
