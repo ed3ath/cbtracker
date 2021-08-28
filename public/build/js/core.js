@@ -1,9 +1,12 @@
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
+var includeClaimTax = (localStorage.getItem('includeClaimTax') === 'true')
+var hideChars = (localStorage.getItem('hideChars') === 'true')
+var hideSkills = (localStorage.getItem('hideSkills') === 'true')
+var hideUnstake = (localStorage.getItem('hideUnstake') === 'true')
 var currCurrency = localStorage.getItem('currency')
 var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'inr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'ves', 'vnd']
-var includeClaimTax = (localStorage.getItem('includeClaimTax') === 'true')
 var rewardsClaimTaxMax = 0;
 var storeAccounts = []
 var storeNames = {}
@@ -31,6 +34,24 @@ if (includeClaimTax) {
     $('#btn-tax').prop('checked', true)
 } else {
     $('#btn-tax').removeAttr('checked')
+}
+
+if (hideChars) {
+    $('#btn-hchars').prop('checked', true)
+} else {
+    $('#btn-hchars').removeAttr('checked')
+}
+
+if (hideSkills) {
+    $('#btn-hskills').prop('checked', true)
+} else {
+    $('#btn-hskills').removeAttr('checked')
+}
+
+if (hideUnstake) {
+    $('#btn-hunstake').prop('checked', true)
+} else {
+    $('#btn-hunstake').removeAttr('checked')
 }
 
 var $cardIngame = $('#card-ingame'),
@@ -188,14 +209,14 @@ async function loadData () {
                     element: charData.traitName,
                 };
             }))
-            charHtml = `<td data-cid="${chars[0].charId}">${chars[0].charId}</td>
-                        <td>${levelToColor(chars[0].level)}</td>
-                        <td>${elemToColor(chars[0].element)}</td>
-                        <td><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
-                        <td>${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
-                        <td data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
+            charHtml = `<td class="char-column" data-cid="${chars[0].charId}">${chars[0].charId}</td>
+                        <td class="char-column">${levelToColor(chars[0].level)}</td>
+                        <td class="char-column">${elemToColor(chars[0].element)}</td>
+                        <td class="char-column"><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
+                        <td class="char-column">${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
+                        <td class="char-column" data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         }else{
-            charHtml = '<td colspan="6"></td>'
+            charHtml = '<td class="char-column" colspan="6"></td>'
         }
         if (charLen < 1) {
             charLen = 1
@@ -205,12 +226,12 @@ async function loadData () {
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle address-column'>${address}</td>
                             ${charHtml}
-                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(ingame))}<br />${(Number(parseFloat(fromEther(ingame)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(unclaimed))}<br />${(Number(parseFloat(fromEther(unclaimed)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(staked))}<br />${(Number(parseFloat(fromEther(staked)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(wallet))}<br />${(Number(parseFloat(fromEther(wallet)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(skillTotal))}<br />${(Number(parseFloat(fromEther(skillTotal)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
-                            <td rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? unstakeSkillAt(timeLeft) : (Number(parseFloat(fromEther(staked)).toFixed(6)) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
+                            <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(ingame))}<br />${(Number(parseFloat(fromEther(ingame)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
+                            <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(unclaimed))}<br />${(Number(parseFloat(fromEther(unclaimed)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
+                            <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(staked))}<br />${(Number(parseFloat(fromEther(staked)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
+                            <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(wallet))}<br />${(Number(parseFloat(fromEther(wallet)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
+                            <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(skillTotal))}<br />${(Number(parseFloat(fromEther(skillTotal)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
+                            <td class="unstake-column" rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? unstakeSkillAt(timeLeft) : (Number(parseFloat(fromEther(staked)).toFixed(6)) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
                             <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(formatNumber(fromEther(binance)))}<br />${(Number(parseFloat(fromEther(binance)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
@@ -221,12 +242,12 @@ async function loadData () {
             chars.forEach((char,j) => {
                 if (j > 0) {
                     rowHtml += `<tr class="text-white align-middle" data-row="${address}">
-                                        <td>${char.charId}</td>
-                                        <td>${levelToColor(char.level)}</td>
-                                        <td>${elemToColor(char.element)}</td>
-                                        <td><span data-cid="${char.charId}">${char.exp}</span> xp</td>
-                                        <td>${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${char.charId}">${char.nextExp}</span> xp left`)})</span></td>
-                                        <td>${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
+                                        <td class="char-column">${char.charId}</td>
+                                        <td class="char-column">${levelToColor(char.level)}</td>
+                                        <td class="char-column">${elemToColor(char.element)}</td>
+                                        <td class="char-column"><span data-cid="${char.charId}">${char.exp}</span> xp</td>
+                                        <td class="char-column">${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${char.charId}">${char.nextExp}</span> xp left`)})</span></td>
+                                        <td class="char-column">${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
                                     </tr>`
                 }
                 
@@ -234,8 +255,11 @@ async function loadData () {
         }
         return rowHtml
     }))
-    $table.html(fRowHtml)    
-    toggleHelper(hideAddress)
+    $table.html(fRowHtml)
+    addressHelper(hideAddress)
+    charHelper(hideChars)
+    skillsHelper(hideSkills)
+    unstakeHelper(hideUnstake)
     $('.btn-refresh').removeAttr('disabled')
 }
 
@@ -382,11 +406,6 @@ function nameFormatter(val) {
     return storeNames[val]
 }
 
-/* function privacyFormatter(val) {
-    if (hideAddress) return addressPrivacy(val)
-    return val
-} */
-
 function convertSkill(value) {
     return (parseFloat(value) > 0 ? `${formatNumber(value)}<br><span class="fs-md">(${(parseFloat(value) * parseFloat(skillPrice)).toLocaleString('en-US', { style: 'currency', currency: currCurrency.toUpperCase() })})</span>` : 0)
 }
@@ -498,11 +517,6 @@ function rename(address) {
     })
 }
 
-/* function addressPrivacy(address) {
-    if (hideAddress) return `${address.substr(0, 6)}...${address.substr(-4, 4)}`
-    return address
-} */
-
 function export_data() {
     getLocalstorageToFile(`CBTracker-${new Date().getTime()}.json`)
 }
@@ -556,7 +570,10 @@ function import_data() {
             if (hideAddress) localStorage.setItem('hideAddress', hideAddress)
             if (currCurrency) localStorage.setItem('currency', currCurrency)
 
-            toggleHelper(hideAddress)
+            addressHelper(hideAddress)            
+            charHelper(hideChars)
+            skillsHelper(hideSkills)
+            unstakeHelper(hideUnstake)
             refresh()
 
             $('#modal-import').modal('hide')
@@ -564,7 +581,7 @@ function import_data() {
     } else alert("Please import a valid json/text file");
 }
 
-function toggleHelper(hide) {
+function addressHelper(hide) {
     if (hide) {
         $('.toggle.btn.btn-sm').removeClass('btn-primary')
         $('.toggle.btn.btn-sm').addClass('btn-danger off')
@@ -573,6 +590,42 @@ function toggleHelper(hide) {
         $('.toggle.btn.btn-sm').addClass('btn-primary')
         $('.toggle.btn.btn-sm').removeClass('btn-danger off')
         $('.address-column').show()
+    }
+}
+
+function charHelper(hide) {
+    if (hide) {
+        $('.toggle.btn.btn-sm').removeClass('btn-primary')
+        $('.toggle.btn.btn-sm').addClass('btn-danger off')
+        $('.char-column').hide()
+    } else {
+        $('.toggle.btn.btn-sm').addClass('btn-primary')
+        $('.toggle.btn.btn-sm').removeClass('btn-danger off')
+        $('.char-column').show()
+    }
+}
+
+function skillsHelper(hide) {
+    if (hide) {
+        $('.toggle.btn.btn-sm').removeClass('btn-primary')
+        $('.toggle.btn.btn-sm').addClass('btn-danger off')
+        $('.skill-column').hide()
+    } else {
+        $('.toggle.btn.btn-sm').addClass('btn-primary')
+        $('.toggle.btn.btn-sm').removeClass('btn-danger off')
+        $('.skill-column').show()
+    }
+}
+
+function unstakeHelper(hide) {
+    if (hide) {
+        $('.toggle.btn.btn-sm').removeClass('btn-primary')
+        $('.toggle.btn.btn-sm').addClass('btn-danger off')
+        $('.unstake-column').hide()
+    } else {
+        $('.toggle.btn.btn-sm').addClass('btn-primary')
+        $('.toggle.btn.btn-sm').removeClass('btn-danger off')
+        $('.unstake-column').show()
     }
 }
 
@@ -644,6 +697,27 @@ $("#btn-tax").on('change', (e) => {
     localStorage.setItem('includeClaimTax', includeClaimTax)
     clearFiat()
     refresh()
+})
+
+$("#btn-hchars").on('change', (e) => {
+    hideChars = e.currentTarget.checked
+    localStorage.setItem('hideChars', hideChars)
+    if (hideChars) $('.char-column').hide()
+    else $('.char-column').show()
+})
+
+$("#btn-hskills").on('change', (e) => {
+    hideSkills = e.currentTarget.checked
+    localStorage.setItem('hideSkills', hideSkills)
+    if (hideSkills) $('.skill-column').hide()
+    else $('.skill-column').show()
+})
+
+$("#btn-hunstake").on('change', (e) => {
+    hideUnstake = e.currentTarget.checked
+    localStorage.setItem('hideUnstake', hideUnstake)
+    if (hideUnstake) $('.unstake-column').hide()
+    else $('.unstake-column').show()
 })
 
 $("#select-currency").on('change', (e) => {
