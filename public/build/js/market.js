@@ -152,7 +152,7 @@ function getTotalMultiplier(weapData) {
 }
 
 function getMult(value) {
-    return (1 / (value * 100)) * 100
+    return 1 + value
 }
 
 function sortTable() {
