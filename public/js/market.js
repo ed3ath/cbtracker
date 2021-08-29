@@ -63,7 +63,7 @@ async function loadWeaponListing() {
                                 ${attr}
                             </td>
                             <td class="align-middle text-white">${getAvgStats(weapData)}</td>
-                            <td class="align-middle text-white">${parseFloat(fromEther(price)).toFixed(2)} SKILL</td>
+                            <td class="align-middle text-white">${parseFloat(fromEther(price)).toFixed(4)} SKILL</td>
                         </tr>`
                 }
             })))
