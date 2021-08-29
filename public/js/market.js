@@ -35,8 +35,6 @@ async function loadWeaponListing() {
                     }
                     if (parseInt(weapData.stars) === 3) {
                         if (parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) && parseInt(weapData.traitNum) === parseInt(weapData.stat2Type)) type = 'pure'
-                        /*else if ((parseInt(weapData.traitNum) === parseInt(weapData.stat1Type) || parseInt(weapData.stat1Type) === parseInt(WeaponTrait.PWR)) && 
-                        (parseInt(weapData.traitNum) === parseInt(weapData.stat2Type) || parseInt(weapData.stat2Type) === parseInt(WeaponTrait.PWR))) type = 'semi'*/
                         else type = 'semi'
                     }
                     if (parseInt(weapData.stars) === 4) {
@@ -63,12 +61,13 @@ async function loadWeaponListing() {
                                 ${attr}
                             </td>
                             <td class="align-middle text-white">${getAvgStats(weapData)}</td>
+                            <td class="align-middle text-white">${getTotalMultiplier(weapData)}x</td>
                             <td class="align-middle text-white">${parseFloat(fromEther(price)).toFixed(4)} SKILL</td>
                         </tr>`
                 }
             })))
         } else {
-            $table.append('<tr><td class="text-center text-white" colspan="5">No weapon listed</td></tr>')
+            $table.append('<tr><td class="text-center text-white" colspan="7">No weapon listed</td></tr>')
         }
         sortTable()
         filterChanges()
@@ -102,6 +101,7 @@ function traitToIcon(trait) {
         default: return '???';
     }
 }
+
 function getAvgStats(weapData) {
     let total = 0, count = 0
     if (weapData.stat1Value) {
@@ -117,6 +117,42 @@ function getAvgStats(weapData) {
         total += parseInt(weapData.stat3Value);
     }
     return parseInt(total/count)
+}
+
+function getTotalMultiplier(weapData) {
+    let total = 0
+    if (weapData.stat1Value > 0){
+        if (weapData.traitNum === weapData.stat1Value) {
+            total += getMult(parseInt(weapData.stat1Value) * 0.002675);
+        } else if (weapData.traitNum === WeaponTrait.PWR) {
+            total += getMult(parseInt(weapData.stat1Value) * 0.002575);
+        } else {
+            total += getMult(parseInt(weapData.stat1Value) * 0.0025);
+        }
+    }
+    if (weapData.stat2Value > 0){
+        if (weapData.traitNum === weapData.stat2Value) {
+            total += getMult(parseInt(weapData.stat2Value) * 0.002675);
+        } else if (weapData.traitNum === WeaponTrait.PWR) {
+            total += getMult(parseInt(weapData.stat2Value) * 0.002575);
+        } else {
+            total += getMult(parseInt(weapData.stat2Value) * 0.0025);
+        }
+    }
+    if (weapData.stat3Value > 0){
+        if (weapData.traitNum === weapData.stat3Value) {
+            total += getMult(parseInt(weapData.stat3Value) * 0.002675);
+        } else if (weapData.traitNum === WeaponTrait.PWR) {
+            total += getMult(parseInt(weapData.stat3Value) * 0.002575);
+        } else {
+            total += getMult(parseInt(weapData.stat3Value) * 0.0025);
+        }
+    }
+    return parseFloat(total).toFixed(2)
+}
+
+function getMult(value) {
+    return (1 / (value * 100)) * 100
 }
 
 function sortTable() {
@@ -168,33 +204,6 @@ function filterChanges() {
         }
     }
 }
-
-/*function filterType() {
-    $('.weapon-row').show();
-    if (currType !== 'all') {
-        if (currElement === 'all') {
-            $('.weapon-row').each((f, i) => {
-                if($(i).data('type') !== currType) {
-                    $(i).hide();
-                }
-            })
-        } else {
-            $('.weapon-row').each((f, i) => {
-                if($(i).data('type') !== currType || $(i).data('element') !== currElement) {
-                    $(i).hide();
-                }
-            })
-        }
-    } else {
-        if (currElement !== 'all') {
-            $('.weapon-row').each((f, i) => {
-                if($(i).data('type') !== currType && $(i).data('element') !== currElement) {
-                    $(i).hide();
-                }
-            })
-        }
-    }
-}*/
 
 $("#filter-element").on('change', (e) => {
     currElement = e.currentTarget.value
