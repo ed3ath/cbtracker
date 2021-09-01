@@ -6,7 +6,7 @@ async function loadWeaponListing() {
     $('.btn-refresh').prop('disabled', true)
     $('#filter-element').prop('disabled', true)
     $('#filter-type').prop('disabled', true)
-    $.get('https://cbtracker-api.herokuapp.com/listing/weapons', async result => {
+    $.get('https://cbtracker-api.herokuapp.com/market/weapons', async result => {
         $table.html('')
         if (result.length > 0) {
             $table.append(await Promise.all(result.map(async weapId => {
