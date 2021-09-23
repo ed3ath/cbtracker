@@ -26,6 +26,7 @@ if (accounts && names) {
 
 populateCurrency()
 populateNetwork()
+updateBalanceLabel()
 
 if (hideAddress) {
     $('#btn-privacy').prop('checked', true)
@@ -89,6 +90,7 @@ $('document').ready(async () => {
 
 async function refresh () {
     loadData()
+    clearFiat()
     fiatConversion()
 }
 
@@ -681,6 +683,11 @@ function unstakeSkillAt(timeLeft){
     return `<span title="${moment().countdown(timeLeftTimestamp)}">${moment(timeLeftTimestamp).fromNow()}`;
 }
 
+function updateBalanceLabel () {
+    $('#label-tbalance').html((currentNetwork === 'bsc' ? 'Total BNB Balance' : 'Total HT Balance'))
+    $('#label-balance').html((currentNetwork === 'bsc' ? 'BNB Balance' : 'HT Balance'))
+}
+
 
 $('#btn-privacy').on('change', (e) => {
     hideAddress = e.currentTarget.checked
@@ -731,7 +738,8 @@ $("#select-network").on('change', (e) => {
     currentNetwork = e.currentTarget.value
     localStorage.setItem('network', currentNetwork)
     populateNetwork()
-    var web3 = new Web3(nodes[currentNetwork]);
+    updateBalanceLabel()
+    web3 = new Web3(nodes[currentNetwork]);
     varakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
     varakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);
     conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
