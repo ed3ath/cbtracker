@@ -7,6 +7,7 @@ var hideSkills = (localStorage.getItem('hideSkills') === 'true')
 var hideUnstake = (localStorage.getItem('hideUnstake') === 'true')
 var currCurrency = localStorage.getItem('currency')
 var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'inr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'ves', 'vnd']
+var networks = ['bsc', 'heco']
 var rewardsClaimTaxMax = 0;
 var storeAccounts = []
 var storeNames = {}
@@ -17,12 +18,14 @@ var usdPrice = 0
 var $table = $('#table-accounts tbody')
 
 if (!currCurrency) currCurrency = 'usd'
+if (!currentNetwork) currentNetwork = 'bsc'
 if (accounts && names) {
     storeAccounts = JSON.parse(accounts)
     storeNames = JSON.parse(names)
 }
 
 populateCurrency()
+populateNetwork()
 
 if (hideAddress) {
     $('#btn-privacy').prop('checked', true)
@@ -64,26 +67,20 @@ var $cardIngame = $('#card-ingame'),
     $cardAccount = $('#card-account'),
     $cardChar = $('#card-char'),
     $cardPrice = $('#card-price'),
-    $cardOracle = $('#card-oracle'),
     $convIngame = $('#conv-ingame'),
     $convUnclaim = $('#conv-unclaim'),
     $convStake = $('#conv-stake'),
     $convWallet = $('#conv-wallet'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
-    $convPrice = $('#conv-price'),
-    $convOracle = $('#conv-oracle')
+    $convPrice = $('#conv-price')
 
 $('document').ready(async () => {
     priceTicker()
-    oracleTicker()
     setRewardsClaimTaxMax()
     setInterval(() => {
         fiatConversion()
     }, 1000)
-    setInterval(async() => {
-        oracleTicker()
-    }, 10000)
     setInterval(() => {
         priceTicker()
     }, 30000)
@@ -95,11 +92,6 @@ async function refresh () {
     fiatConversion()
 }
 
-async function oracleTicker() {
-    var oraclePrice = 1 / fromEther(`${await getOraclePrice()}`)
-    $cardOracle.html(`${oraclePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`)
-}
-
 function fiatConversion () {
     if (isElementNotZero($cardIngame)) $convIngame.html(`(${toLocaleCurrency(convertToFiat($cardIngame.html()))})`)
     if (isElementNotZero($cardUnclaim)) $convUnclaim.html(`(${toLocaleCurrency(convertToFiat($cardUnclaim.html()))})`)
@@ -107,7 +99,6 @@ function fiatConversion () {
     if (isElementNotZero($cardWallet)) $convWallet.html(`(${toLocaleCurrency(convertToFiat($cardWallet.html()))})`)
     if (isElementNotZero($cardTotal)) $convTotal.html(`(${toLocaleCurrency(convertToFiat($cardTotal.html()))})`)
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
-    if (isElementNotZero($cardOracle) && currCurrency !== 'usd') $convOracle.html(`(${toLocaleCurrency(localeCurrencyToNumber($cardOracle.html()) * usdPrice)})`)
     if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
 }
 function clearFiat () {
@@ -118,7 +109,6 @@ function clearFiat () {
     $convTotal.html('')
     $convBnb.html('')
     $convPrice.html('')
-    $convOracle.html('')
 }
 
 function isElementNotZero ($elem) {
@@ -162,17 +152,17 @@ async function loadData () {
     $cardAccount.html(storeAccounts.length)
 
     
-    const fRowHtml = await Promise.all(storeAccounts.map(async (address, i) => {
+    var fRowHtml = await Promise.all(storeAccounts.map(async (address, i) => {
         let rowHtml = ''
-        const charIds = await getAccountCharacters(address)
-        const binance = await getBNBBalance(address)
-        const wallet = await getStakedBalance(address)
-        const staked = await getStakedRewards(address)
-        const unclaimed = await getAccountSkillReward(address)
-        const claimTax = await getOwnRewardsClaimTax(address);
-        const unclaimedTaxed = unclaimed*(1-convertClaimTax(claimTax))
-        const ingame = await getIngameSkill(address)
-        const timeLeft = await getStakedTimeLeft(address)
+        var charIds = await getAccountCharacters(address)
+        var binance = await getBNBBalance(address)
+        var wallet = await getStakedBalance(address)
+        var staked = await getStakedRewards(address)
+        var unclaimed = await getAccountSkillReward(address)
+        var claimTax = await getOwnRewardsClaimTax(address);
+        var unclaimedTaxed = unclaimed*(1-convertClaimTax(claimTax))
+        var ingame = await getIngameSkill(address)
+        var timeLeft = await getStakedTimeLeft(address)
 
 
         var charCount = parseInt($cardChar.html())
@@ -193,10 +183,10 @@ async function loadData () {
         
         if (charLen > 0){
             chars = await Promise.all(charIds.map(async charId => {
-                const charData = await characterFromContract(charId, await getCharacterData(charId))
-                const exp = await getCharacterExp(charId)
-                const sta = await getCharacterStamina(charId)
-                const nextTargetExpLevel = getNextTargetExpLevel(charData.level)
+                var charData = await characterFromContract(charId, await getCharacterData(charId))
+                var exp = await getCharacterExp(charId)
+                var sta = await getCharacterStamina(charId)
+                var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
                 return {
                     charId,
                     exp,
@@ -221,7 +211,7 @@ async function loadData () {
         if (charLen < 1) {
             charLen = 1
         }
-        const skillTotal = sumOfArray([unclaimed, staked, wallet])
+        var skillTotal = sumOfArray([unclaimed, staked, wallet])
         rowHtml += ` <tr class="text-white align-middle" data-row="${address}">
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle address-column'>${address}</td>
@@ -278,6 +268,16 @@ function populateCurrency() {
     currencies.forEach(curr => {
         if (currCurrency !== curr) {
             $("#select-currency").append(new Option(curr.toUpperCase(), curr));
+        }
+    })
+}
+
+function populateNetwork() {
+    $('#select-network').html('');
+    $("#select-network").append(new Option(currentNetwork.toUpperCase(), currentNetwork));
+    networks.forEach(net => {
+        if (currentNetwork !== net) {
+            $("#select-network").append(new Option(net.toUpperCase(), net));
         }
     })
 }
@@ -440,17 +440,17 @@ async function simulate(address) {
         $('#combat-stamina').append(`<option value="${i}">${i * 40} stamina (x${i})</option>`)
     }
 
-    const charIds = await getAccountCharacters(address)
-    const weapIds = await getAccountWeapons(address)
+    var charIds = await getAccountCharacters(address)
+    var weapIds = await getAccountWeapons(address)
 
-    const charHtml = await Promise.all(charIds.map(async charId => {
-        const charData = characterFromContract(charId, await getCharacterData(charId))
-        const sta = await getCharacterStamina(charId)
+    var charHtml = await Promise.all(charIds.map(async charId => {
+        var charData = characterFromContract(charId, await getCharacterData(charId))
+        var sta = await getCharacterStamina(charId)
         return `<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${(charData.level + 1)} | Sta. ${sta}/200</option>`
     }))
-    const weaponsData = await Promise.all(weapIds.map(async weapId => weaponFromContract(weapId, await getWeaponData(weapId))));
+    var weaponsData = await Promise.all(weapIds.map(async weapId => weaponFromContract(weapId, await getWeaponData(weapId))));
     weaponsData.sort((a, b) => b.stars - a.stars);
-    const weapHtml = weaponsData.map(weapData => (
+    var weapHtml = weaponsData.map(weapData => (
         `<option style="${getClassFromTrait(weapData.trait)}" value="${weapData.id}">${weapData.id} | ${weapData.stars + 1}-star ${weapData.element}</option>`
     ));
     $("#combat-character").append(charHtml)
@@ -463,10 +463,10 @@ async function simulate(address) {
 
 async function combatSimulate() {
     $('#btn-simulate').prop('disabled', true)
-    const charId = $('#combat-character').val()
-    const weapId = $('#combat-weapon').val()
-    const stamina = $('#combat-stamina').val()
-    const combatResult = $('#combat-result')
+    var charId = $('#combat-character').val()
+    var weapId = $('#combat-weapon').val()
+    var stamina = $('#combat-stamina').val()
+    var combatResult = $('#combat-result')
     try {
         if (!charId) throw Error('Please select a character.')
         if (!weapId) throw Error('Please select a weapon.')
@@ -474,21 +474,21 @@ async function combatSimulate() {
 
         combatResult.html('Generating results...')
 
-        const sta = await getCharacterStamina(charId)
+        var sta = await getCharacterStamina(charId)
         if (sta < 40 * parseInt(stamina)) throw Error('Not enough stamina')
 
-        const charData = characterFromContract(charId, await getCharacterData(charId))
-        const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
-        const targets = await characterTargets(charId, weapId)
-        const enemies = await getEnemyDetails(targets)
+        var charData = characterFromContract(charId, await getCharacterData(charId))
+        var weapData = weaponFromContract(weapId, await getWeaponData(weapId))
+        var targets = await characterTargets(charId, weapId)
+        var enemies = await getEnemyDetails(targets)
 
         combatResult.html('Enemy | Element | Power | Est. Reward | XP | Chance<br><hr>')
         combatResult.append(await Promise.all(enemies.map(async (enemy, i) => {
-            const chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
+            var chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
             enemy.element = traitNumberToName(enemy.trait)
-            const reward = fromEther(await getTokenGainForFight(enemy.power) * parseInt(stamina));
-            const alignedPower = getAlignedCharacterPower(charData, weapData)
-            const expReward = Math.floor((enemy.power / alignedPower) * 32) * parseInt(stamina)
+            var reward = fromEther(await getTokenGainForFight(enemy.power) * parseInt(stamina));
+            var alignedPower = getAlignedCharacterPower(charData, weapData)
+            var expReward = Math.floor((enemy.power / alignedPower) * 32) * parseInt(stamina)
             return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${expReward} | ${chanceColor(chance)}<br>`
         })))
         $('#btn-simulate').removeAttr('disabled')
@@ -677,7 +677,7 @@ function copy_address_to_clipboard() {
 }
 
 function unstakeSkillAt(timeLeft){
-    const timeLeftTimestamp = new Date(new Date().getTime() + (timeLeft * 1000))
+    var timeLeftTimestamp = new Date(new Date().getTime() + (timeLeft * 1000))
     return `<span title="${moment().countdown(timeLeftTimestamp)}">${moment(timeLeftTimestamp).fromNow()}`;
 }
 
@@ -727,6 +727,19 @@ $("#select-currency").on('change', (e) => {
     refresh()
 })
 
+$("#select-network").on('change', (e) => {
+    currentNetwork = e.currentTarget.value
+    localStorage.setItem('network', currentNetwork)
+    populateNetwork()
+    var web3 = new Web3(nodes[currentNetwork]);
+    varakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
+    varakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);
+    conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
+    conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
+    conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
+    conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
+    refresh()
+})
 
 $('#modal-add-account').on('shown.bs.modal', function (e) {
     $('#inp-name').val('')
