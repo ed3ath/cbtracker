@@ -837,6 +837,44 @@ const Characters = [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "raidsDone",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "raidsWon",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -1344,6 +1382,24 @@ const Characters = [
         "internalType": "uint256",
         "name": "id",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "trait",
+        "type": "uint8"
+      }
+    ],
+    "name": "setTrait",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       }
     ],
     "name": "getXp",
@@ -1493,6 +1549,11 @@ const Characters = [
         "internalType": "uint8",
         "name": "amount",
         "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowNegativeStamina",
+        "type": "bool"
       }
     ],
     "name": "getFightDataAndDrainStamina",
@@ -1504,6 +1565,53 @@ const Characters = [
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "won",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint16",
+        "name": "xp",
+        "type": "uint16"
+      }
+    ],
+    "name": "processRaidParticipation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "canRaid",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1593,44 +1701,6 @@ const CryptoBlades = [
       }
     ],
     "name": "InGameOnlyFundsGiven",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "minter",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "count",
-        "type": "uint32"
-      }
-    ],
-    "name": "MintWeaponsFailure",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "minter",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "count",
-        "type": "uint32"
-      }
-    ],
-    "name": "MintWeaponsSuccess",
     "type": "event"
   },
   {
@@ -1736,51 +1806,194 @@ const CryptoBlades = [
   },
   {
     "inputs": [],
-    "name": "MINT_PAYMENT_RECLAIM_MINIMUM_WAIT_TIME",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MINT_PAYMENT_TIMEOUT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "REWARDS_CLAIM_TAX_DURATION",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "REWARDS_CLAIM_TAX_MAX",
+    "name": "PAYMENT_USING_STAKED_SKILL_COST_AFTER_DISCOUNT",
     "outputs": [
       {
         "internalType": "int128",
         "name": "",
         "type": "int128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "USERVAR_CLAIM_TIMESTAMP",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "USERVAR_DAILY_CLAIMED_AMOUNT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_CLAIM_DEPOSIT_AMOUNT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_DAILY_MAX_CLAIM",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_HOURLY_FIGHTS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_HOURLY_INCOME",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_HOURLY_PAY_PER_FIGHT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_HOURLY_POWER_AVERAGE",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_HOURLY_POWER_SUM",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_HOURLY_TIMESTAMP",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_PARAM_DAILY_CLAIM_DEPOSIT_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_PARAM_DAILY_CLAIM_FIGHTS_LIMIT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_PARAM_MAX_FIGHT_PAYOUT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_PARAM_PAYOUT_INCOME_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -2206,6 +2419,49 @@ const CryptoBlades = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "userVars",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "vars",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "weapons",
     "outputs": [
@@ -2298,6 +2554,13 @@ const CryptoBlades = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "migrateTo_6a97bd1",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -2308,6 +2571,61 @@ const CryptoBlades = [
     "name": "recoverSkill",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "REWARDS_CLAIM_TAX_MAX",
+    "outputs": [
+      {
+        "internalType": "int128",
+        "name": "",
+        "type": "int128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "REWARDS_CLAIM_TAX_DURATION",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_needed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_available",
+        "type": "uint256"
+      }
+    ],
+    "name": "getSkillToSubtractSingle",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_used",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_remainder",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -2360,6 +2678,11 @@ const CryptoBlades = [
         "internalType": "uint256",
         "name": "skillNeeded",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowInGameOnlyFunds",
+        "type": "bool"
       }
     ],
     "name": "getSkillNeededFromUserWallet",
@@ -2368,32 +2691,6 @@ const CryptoBlades = [
         "internalType": "uint256",
         "name": "skillNeededFromUserWallet",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getMyCharacters",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getMyWeapons",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
@@ -2517,6 +2814,25 @@ const CryptoBlades = [
     "inputs": [
       {
         "internalType": "uint24",
+        "name": "monsterPower",
+        "type": "uint24"
+      }
+    ],
+    "name": "getTokenGainForFight",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint24",
         "name": "basePower",
         "type": "uint24"
       },
@@ -2610,105 +2926,6 @@ const CryptoBlades = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_minter",
-        "type": "address"
-      }
-    ],
-    "name": "mintPaymentSkillRefundable",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "_refundInGameOnlyFunds",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_refundTokenRewards",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_refundUserWallet",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_minter",
-        "type": "address"
-      }
-    ],
-    "name": "mintPaymentSecondsUntilSkillRefundClaimable",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "checkIfMintPaymentExpiredAndRefunded",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "mintPaymentClaimRefund",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint32",
-        "name": "_num",
-        "type": "uint32"
-      }
-    ],
-    "name": "hasPaidForMint",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "nftAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "count",
-        "type": "uint256"
-      }
-    ],
-    "name": "payForMint",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "mintCharacter",
     "outputs": [],
@@ -2721,9 +2938,58 @@ const CryptoBlades = [
         "internalType": "uint32",
         "name": "num",
         "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
       }
     ],
     "name": "mintWeaponN",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
+      }
+    ],
+    "name": "mintWeapon",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "num",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
+      }
+    ],
+    "name": "mintWeaponNUsingStakedSkill",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
+      }
+    ],
+    "name": "mintWeaponUsingStakedSkill",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -2741,14 +3007,7 @@ const CryptoBlades = [
         "type": "uint32"
       }
     ],
-    "name": "_mintWeaponNUsableByThisOnlyButExternalForReasons",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "mintWeapon",
+    "name": "mintWeaponNforAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -2828,6 +3087,78 @@ const CryptoBlades = [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "burnID",
+        "type": "uint256"
+      }
+    ],
+    "name": "burnWeaponUsingStakedSkill",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "burnIDs",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "burnWeaponsUsingStakedSkill",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "reforgeID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "burnID",
+        "type": "uint256"
+      }
+    ],
+    "name": "reforgeWeaponUsingStakedSkill",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "reforgeID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "amountLB",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "amount4B",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "amount5B",
+        "type": "uint8"
+      }
+    ],
+    "name": "reforgeWeaponWithDustUsingStakedSkill",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "contract IRandoms",
         "name": "_newRandoms",
         "type": "address"
@@ -2859,24 +3190,6 @@ const CryptoBlades = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "weaponID",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
-      }
-    ],
-    "name": "approveContractWeaponFor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "playerAddress",
         "type": "address"
@@ -2896,37 +3209,24 @@ const CryptoBlades = [
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "income",
+        "type": "uint256"
+      }
+    ],
+    "name": "trackIncome",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "cents",
         "type": "uint256"
       }
     ],
     "name": "setCharacterMintValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tenthcents",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFightRewardBaselineValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "cents",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFightRewardGasOffsetValue",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -3026,11 +3326,60 @@ const CryptoBlades = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "max",
+        "name": "_percent",
         "type": "uint256"
       }
     ],
-    "name": "setCharacterLimit",
+    "name": "setRewardsClaimTaxMaxAsPercent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_rewardsClaimTaxDuration",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRewardsClaimTaxDuration",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "varField",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "setVar",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "varFields",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "values",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setVars",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -3095,6 +3444,71 @@ const CryptoBlades = [
     "name": "claimTokenRewards",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_claimingAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimTokenRewards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isDailyTokenClaimAmountExpired",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getClaimedTokensToday",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getRemainingTokenClaimAmountPreTax",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMaxTokenClaimAmountPreTax",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3869,9 +4283,46 @@ const NFTMarket = [
       },
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "newTargetBuyer",
+        "type": "address"
+      }
+    ],
+    "name": "ListingTargetBuyerChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC721",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "nftID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "price",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "targetBuyer",
+        "type": "address"
       }
     ],
     "name": "NewListing",
@@ -4010,6 +4461,32 @@ const NFTMarket = [
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "addFee",
+    "outputs": [
+      {
+        "internalType": "int128",
+        "name": "",
+        "type": "int128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "changeFee",
+    "outputs": [
+      {
+        "internalType": "int128",
+        "name": "",
+        "type": "int128"
       }
     ],
     "stateMutability": "view",
@@ -4171,6 +4648,19 @@ const NFTMarket = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "priceOracleSkillPerUsd",
+    "outputs": [
+      {
+        "internalType": "contract IPriceOracle",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "bytes32",
@@ -4283,6 +4773,19 @@ const NFTMarket = [
       }
     ],
     "name": "migrateTo_a98a9ac",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPriceOracle",
+        "name": "_priceOracleSkillPerUsd",
+        "type": "address"
+      }
+    ],
+    "name": "migrateTo_2316231",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -4682,6 +5185,30 @@ const NFTMarket = [
       },
       {
         "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTargetBuyer",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC721",
+        "name": "_tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
         "name": "start",
         "type": "uint256"
       },
@@ -4733,6 +5260,11 @@ const NFTMarket = [
         "internalType": "uint256",
         "name": "_price",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_targetBuyer",
+        "type": "address"
       }
     ],
     "name": "addListing",
@@ -4774,6 +5306,29 @@ const NFTMarket = [
         "internalType": "uint256",
         "name": "_id",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_newTargetBuyer",
+        "type": "address"
+      }
+    ],
+    "name": "changeListingTargetBuyer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC721",
+        "name": "_tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
       }
     ],
     "name": "cancelListing",
@@ -4800,6 +5355,32 @@ const NFTMarket = [
       }
     ],
     "name": "purchaseListing",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "cents",
+        "type": "uint256"
+      }
+    ],
+    "name": "setAddValue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "cents",
+        "type": "uint256"
+      }
+    ],
+    "name": "setChangeValue",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -4962,6 +5543,42 @@ const NFTMarket = [
         "internalType": "contract IERC721",
         "name": "_tokenAddress",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "unlistItem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC721",
+        "name": "_tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_ids",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "unlistItems",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC721",
+        "name": "_tokenAddress",
+        "type": "address"
       }
     ],
     "name": "allowToken",
@@ -4993,6 +5610,25 @@ const NFTMarket = [
     "name": "recoverSkill",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int128",
+        "name": "usdAmount",
+        "type": "int128"
+      }
+    ],
+    "name": "usdToSkill",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5319,6 +5955,19 @@ const Weapons = [
   },
   {
     "inputs": [],
+    "name": "BIT_FEATURE_TRANSFER_BLOCKED",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
     "outputs": [
       {
@@ -5338,6 +5987,19 @@ const Weapons = [
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "NUMBERPARAMETER_FEATURE_BITS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -5645,6 +6307,25 @@ const Weapons = [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "numberParameters",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -6103,6 +6784,11 @@ const Weapons = [
         "internalType": "uint256",
         "name": "seed",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
       }
     ],
     "name": "mint",
@@ -6132,6 +6818,11 @@ const Weapons = [
         "internalType": "uint256",
         "name": "seed",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
       }
     ],
     "name": "mintWeaponWithStars",
@@ -6200,6 +6891,11 @@ const Weapons = [
         "internalType": "uint256",
         "name": "seed",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
       }
     ],
     "name": "getRandomProperties",
@@ -6679,6 +7375,34 @@ const Weapons = [
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "playerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "amountLB",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "amount4B",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "amount5B",
+        "type": "uint32"
+      }
+    ],
+    "name": "incrementDustSupplies",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "burnID",
         "type": "uint256"
@@ -6852,6 +7576,11 @@ const Weapons = [
         "internalType": "uint8",
         "name": "drainAmount",
         "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowNegativeDurability",
+        "type": "bool"
       }
     ],
     "name": "getFightDataAndDrainDurability",
@@ -6891,6 +7620,11 @@ const Weapons = [
         "internalType": "uint8",
         "name": "amount",
         "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowNegativeDurability",
+        "type": "bool"
       }
     ],
     "name": "drainDurability",
@@ -7055,6 +7789,48 @@ const Weapons = [
       }
     ],
     "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "bit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "setFeatureEnabled",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "canRaid",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

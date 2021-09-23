@@ -476,8 +476,6 @@ async function combatSimulate() {
 
         const sta = await getCharacterStamina(charId)
         if (sta < 40 * parseInt(stamina)) throw Error('Not enough stamina')
-        const fightGasOffset = await fetchFightGasOffset()
-        const fightBaseline = await fetchFightBaseline()
 
         const charData = characterFromContract(charId, await getCharacterData(charId))
         const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
@@ -488,7 +486,7 @@ async function combatSimulate() {
         combatResult.append(await Promise.all(enemies.map(async (enemy, i) => {
             const chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
             enemy.element = traitNumberToName(enemy.trait)
-            const reward = fromEther(await usdToSkill(web3.utils.toBN(Number(fightGasOffset) + ((Number(fightBaseline) * Math.sqrt(parseInt(enemy.power) / 1000)) * parseInt(stamina)))));
+            const reward = fromEther(await getTokenGainForFight(enemy.power) * parseInt(stamina));
             const alignedPower = getAlignedCharacterPower(charData, weapData)
             const expReward = Math.floor((enemy.power / alignedPower) * 32) * parseInt(stamina)
             return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${expReward} | ${chanceColor(chance)}<br>`

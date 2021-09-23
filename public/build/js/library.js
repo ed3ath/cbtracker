@@ -21,34 +21,49 @@ const isAddress = address => web3.utils.isAddress(address);
 const getBNBBalance = address => web3.eth.getBalance(address);
 const fromEther = (value) => web3.utils.fromWei(BigInt(value).toString(), 'ether');
 
-const getRewardsPoolBalance = () => conStakingToken.methods.balanceOf(mainAddress).call({ from: defaultAddress });
-const getStakingPoolBalance = () => conStakingToken.methods.balanceOf(stakingRewardAddress).call({ from: defaultAddress });
+const getRewardsPoolBalance = () => conStakingToken.methods.balanceOf(mainAddress).call();
+const getStakingPoolBalance = () => conStakingToken.methods.balanceOf(stakingRewardAddress).call();
 
-const getStakedBalance = address => conStakingToken.methods.balanceOf(address).call({ from: defaultAddress });
-const getStakedRewards = address => conStakingReward.methods.balanceOf(address).call({ from: defaultAddress });
+const getStakedBalance = address => conStakingToken.methods.balanceOf(address).call();
+const getStakedRewards = address => conStakingReward.methods.balanceOf(address).call();
 const getStakedTimeLeft = address => conStakingReward.methods.getStakeUnlockTimeLeft().call({ from: address });
-const getAccountCharacters = address => conCryptoBlades.methods.getMyCharacters().call({ from: address });
-const getAccountWeapons = address => conCryptoBlades.methods.getMyWeapons().call({ from: address });
+const getAccountCharacters = async address => {
+    const numberOfCharacters = parseInt(await conCharacters.methods.balanceOf(address).call(), 10)
+    const characters = await Promise.all(
+        [...Array(numberOfCharacters).keys()].map((_, i) =>
+            conCharacters.methods.tokenOfOwnerByIndex(address, i).call())
+    );
+    return characters;
+};
+const getAccountWeapons = async address => {
+    const numberOfWeapons = parseInt(await conWeapons.methods.balanceOf(address).call(), 10)
+    const weapons = await Promise.all(
+        [...Array(numberOfWeapons).keys()].map((_, i) => 
+            conWeapons.methods.tokenOfOwnerByIndex(address, i).call())
+    );
+    return weapons;
+};
 const getAccountSkillReward = address => conCryptoBlades.methods.getTokenRewards().call({ from: address });
 const getOwnRewardsClaimTax = address => conCryptoBlades.methods.getOwnRewardsClaimTax().call({ from: address });
 const getRewardsClaimTaxMax = address => conCryptoBlades.methods.REWARDS_CLAIM_TAX_MAX().call({ from: address });
 const getIngameSkill = address => conCryptoBlades.methods.inGameOnlyFunds(address).call({ from: address });
-const getCharacterExp = charId => conCryptoBlades.methods.getXpRewards(`${charId}`).call({ from: defaultAddress });
-const characterTargets = (charId, weapId) => conCryptoBlades.methods.getTargets(charId, weapId).call({ from: defaultAddress });
-const getCharacterStamina = charId => conCharacters.methods.getStaminaPoints(`${charId}`).call({ from: defaultAddress });
-const getCharacterData = charId => conCharacters.methods.get(`${charId}`).call({ from: defaultAddress });
-const getWeaponData = weapId => conWeapons.methods.get(`${weapId}`).call({ from: defaultAddress });
-const getOraclePrice = () => conOracle.methods.currentPrice().call({ from: defaultAddress });
-const fetchFightGasOffset = async () => conCryptoBlades.methods.fightRewardGasOffset().call({ from: defaultAddress });
-const fetchFightBaseline = async () => conCryptoBlades.methods.fightRewardBaseline().call({ from: defaultAddress });
-const usdToSkill = async value => conCryptoBlades.methods.usdToSkill(value).call({ from: defaultAddress });
+const getCharacterExp = charId => conCryptoBlades.methods.getXpRewards(`${charId}`).call();
+const characterTargets = (charId, weapId) => conCryptoBlades.methods.getTargets(charId, weapId).call();
+const getCharacterStamina = charId => conCharacters.methods.getStaminaPoints(`${charId}`).call();
+const getCharacterData = charId => conCharacters.methods.get(`${charId}`).call();
+const getWeaponData = weapId => conWeapons.methods.get(`${weapId}`).call();
+const getOraclePrice = () => conOracle.methods.currentPrice().call();
+const fetchFightGasOffset = async () => conCryptoBlades.methods.fightRewardGasOffset().call();
+const fetchFightBaseline = async () => conCryptoBlades.methods.fightRewardBaseline().call();
+const usdToSkill = async value => conCryptoBlades.methods.usdToSkill(value).call();
 const decodeAbi = (types, data) => web3.eth.abi.decodeParameters(types, data);
 const getPastLogs = options => web3.eth.getPastLogs(options);
 const getLatestBlock = async () =>  web3.eth.getBlock('latest')
 const getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCryptoBlades.getPastEvents(event, {fromBlock, toBlock, address, topics})
 const getTransaction = async hash => web3.eth.getTransaction(hash)
 const getTransactionReceipt = async hash => web3.eth.getTransactionReceipt(hash)
-const getFinalPrice = async (contract, tokenId) => conMarket.methods.getFinalPrice(contract, tokenId).call({ from: defaultAddress })
+const getFinalPrice = async (contract, tokenId) => conMarket.methods.getFinalPrice(contract, tokenId).call()
+const getTokenGainForFight = async power => conCryptoBlades.methods.getTokenGainForFight(power).call()
 const randomString = (length) => {
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHUJKLMNOPQRSTUVWXYZ';
     let result = '';
