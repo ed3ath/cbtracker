@@ -6,7 +6,7 @@ var hideChars = (localStorage.getItem('hideChars') === 'true')
 var hideSkills = (localStorage.getItem('hideSkills') === 'true')
 var hideUnstake = (localStorage.getItem('hideUnstake') === 'true')
 var currCurrency = localStorage.getItem('currency')
-var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'inr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'ves', 'vnd']
+var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'inr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
 var networks = ['bsc', 'heco']
 var rewardsClaimTaxMax = 0;
 var storeAccounts = []
@@ -84,7 +84,7 @@ $('document').ready(async () => {
     }, 1000)
     setInterval(() => {
         priceTicker()
-    }, 30000)
+    }, 10000)
     loadData()
 })
 
@@ -308,25 +308,12 @@ function renameAccount() {
 }
 
 async function priceTicker() {
-    $.get(`https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin,tether&vs_currencies=${currencies.join(',')}`, async (result) => {
-        skillPrice = result.cryptoblades['usd']
-        if (currCurrency === 'ves'){
-            bnbPrice = result.cryptoblades['usd']
-            await getVESUSDPrice()
-        }else {
-            localPrice = result.cryptoblades[currCurrency]
-            bnbPrice = result.binancecoin[currCurrency]
-            usdPrice = result.tether[currCurrency]
-        }
+    skillPrice = await getSkillPrice()
+    $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${currencies.join(',')}`, async (result) => {
+        usdPrice = result.tether[currCurrency]
+        localPrice = usdPrice * skillPrice        
+        bnbPrice = await getGasPrice() * usdPrice
         $cardPrice.html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
-    })
-}
-
-async function getVESUSDPrice() {
-    $.get('https://s3.amazonaws.com/dolartoday/data.json', (result) => {
-        localPrice = result.USD.transferencia * skillPrice
-        usdPrice = result.USD.transferencia
-        bnbPrice = bnbPrice * usdPrice
     })
 }
 
@@ -746,7 +733,11 @@ $("#select-network").on('change', (e) => {
     conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
     conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
     conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
+    skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
+    gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
     refresh()
+    clearFiat()
+    priceTicker()
 })
 
 $('#modal-add-account').on('shown.bs.modal', function (e) {
