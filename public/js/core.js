@@ -7,7 +7,6 @@ var hideSkills = (localStorage.getItem('hideSkills') === 'true')
 var hideUnstake = (localStorage.getItem('hideUnstake') === 'true')
 var currCurrency = localStorage.getItem('currency')
 var currencies = ['php', 'aed', 'ars', 'aud', 'brl', 'cny', 'eur', 'gbp', 'hkd', 'idr', 'inr', 'jpy', 'myr', 'sgd', 'thb', 'twd', 'usd', 'vnd']
-var networks = ['bsc', 'heco']
 var rewardsClaimTaxMax = 0;
 var storeAccounts = []
 var storeNames = {}
@@ -18,14 +17,12 @@ var usdPrice = 0
 var $table = $('#table-accounts tbody')
 
 if (!currCurrency) currCurrency = 'usd'
-if (!currentNetwork) currentNetwork = 'bsc'
 if (accounts && names) {
     storeAccounts = JSON.parse(accounts)
     storeNames = JSON.parse(names)
 }
 
 populateCurrency()
-populateNetwork()
 updateBalanceLabel()
 
 if (hideAddress) {
@@ -271,16 +268,6 @@ function populateCurrency() {
     currencies.forEach(curr => {
         if (currCurrency !== curr) {
             $("#select-currency").append(new Option(curr.toUpperCase(), curr));
-        }
-    })
-}
-
-function populateNetwork() {
-    $('#select-network').html('');
-    $("#select-network").append(new Option(currentNetwork.toUpperCase(), currentNetwork));
-    networks.forEach(net => {
-        if (currentNetwork !== net) {
-            $("#select-network").append(new Option(net.toUpperCase(), net));
         }
     })
 }
@@ -751,7 +738,6 @@ $('#btn-privacy').on('change', (e) => {
     localStorage.setItem('hideAddress', hideAddress)
     if (hideAddress) $('.address-column').hide()
     else $('.address-column').show()
-    //refresh()
 })
 
 $("#btn-tax").on('change', (e) => {
@@ -792,19 +778,9 @@ $("#select-currency").on('change', (e) => {
 })
 
 $("#select-network").on('change', (e) => {
-    currentNetwork = e.currentTarget.value
-    localStorage.setItem('network', currentNetwork)
+    updateNetwork(e.currentTarget.value)
     populateNetwork()
     updateBalanceLabel()
-    web3 = new Web3(nodes[currentNetwork]);
-    varakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
-    varakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);
-    conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
-    conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
-    conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
-    conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
-    skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
-    gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
     refresh()
     clearFiat()
     priceTicker()

@@ -2,12 +2,6 @@ var $table = $('#table-weapons tbody')
 var currElement = 'all'
 var currType = 'all'
 
-var networks = ['bsc', 'heco']
-
-if (!currentNetwork) currentNetwork = 'bsc'
-
-populateNetwork()
-
 async function loadWeaponListing() {
     $('.btn-refresh').prop('disabled', true)
     $('#filter-element').prop('disabled', true)
@@ -212,16 +206,6 @@ function filterChanges() {
     }
 }
 
-function populateNetwork() {
-    $('#select-network').html('');
-    $("#select-network").append(new Option(currentNetwork.toUpperCase(), currentNetwork));
-    networks.forEach(net => {
-        if (currentNetwork !== net) {
-            $("#select-network").append(new Option(net.toUpperCase(), net));
-        }
-    })
-}
-
 $("#filter-element").on('change', (e) => {
     currElement = e.currentTarget.value
     filterChanges()
@@ -234,11 +218,7 @@ $("#filter-type").on('change', (e) => {
 })
 
 $("#select-network").on('change', (e) => {
-    currentNetwork = e.currentTarget.value
-    localStorage.setItem('network', currentNetwork)
-    web3 = new Web3(nodes[currentNetwork]);
-    conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
-    conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
+    updateNetwork(e.currentTarget.value)
     populateNetwork()
     refresh()
 })

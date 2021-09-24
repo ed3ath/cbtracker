@@ -1,3 +1,5 @@
+var networks = ['bsc', 'heco']
+
 var conAddress = {
     bsc: {
         staking: '0xd6b2D8f59Bf30cfE7009fB4fC00a7b13Ca836A2c',
@@ -26,12 +28,17 @@ var nodes = {
     heco: 'https://http-mainnet.hecochain.com'
 }
 
-var currentNetwork = localStorage.getItem('network') || 'bsc'
+var currentNetwork = localStorage.getItem('network')
+
+if (!networks.includes(currentNetwork)) {
+    currentNetwork = 'bsc'    
+    localStorage.setItem('network', currentNetwork)  
+}
 
 var web3 = new Web3(nodes[currentNetwork]);
 
-var varakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
-var varakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);
+var conStakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
+var conStakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);
 var conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
 var conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
 var conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
@@ -43,12 +50,12 @@ var isAddress = address => web3.utils.isAddress(address);
 var getBNBBalance = address => web3.eth.getBalance(address);
 var fromEther = (value) => web3.utils.fromWei(BigInt(value).toString(), 'ether');
 
-var getRewardsPoolBalance = () => varakingToken.methods.balanceOf(mainAddress).call();
-var getStakingPoolBalance = () => varakingToken.methods.balanceOf(stakingRewardAddress).call();
+var getRewardsPoolBalance = () => conStakingReward.methods.balanceOf(mainAddress).call();
+var getStakingPoolBalance = () => conStakingToken.methods.balanceOf(stakingRewardAddress).call();
 
-var getStakedBalance = address => varakingToken.methods.balanceOf(address).call();
-var getStakedRewards = address => varakingReward.methods.balanceOf(address).call();
-var getStakedTimeLeft = address => varakingReward.methods.getStakeUnlockTimeLeft().call({ from: address });
+var getStakedBalance = address => conStakingToken.methods.balanceOf(address).call();
+var getStakedRewards = address => conStakingReward.methods.balanceOf(address).call();
+var getStakedTimeLeft = address => conStakingReward.methods.getStakeUnlockTimeLeft().call({ from: address });
 var getAccountCharacters = async address => {
     var numberOfCharacters = parseInt(await conCharacters.methods.balanceOf(address).call(), 10)
     var characters = await Promise.all(
@@ -95,3 +102,30 @@ var getGasPrice = async () => {
     const reserves = await gasPair.methods.getReserves().call()
     return reserves[1] / reserves[0]
 }
+
+function populateNetwork() {
+    $('#select-network').html('');
+    $("#select-network").append(new Option(currentNetwork.toUpperCase(), currentNetwork));
+    networks.forEach(net => {
+        if (currentNetwork !== net) {
+            $("#select-network").append(new Option(net.toUpperCase(), net));
+        }
+    })
+}
+
+function updateNetwork(network) {    
+    currentNetwork = network
+    localStorage.setItem('network', currentNetwork)  
+    console.log(currentNetwork)
+    web3 = new Web3(nodes[currentNetwork]);
+    conStakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
+    conStakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);
+    conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
+    conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
+    conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
+    conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
+    skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
+    gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
+}
+
+populateNetwork()
