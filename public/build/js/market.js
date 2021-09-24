@@ -2,11 +2,17 @@ var $table = $('#table-weapons tbody')
 var currElement = 'all'
 var currType = 'all'
 
+var networks = ['bsc', 'heco']
+
+if (!currentNetwork) currentNetwork = 'bsc'
+
+populateNetwork()
+
 async function loadWeaponListing() {
     $('.btn-refresh').prop('disabled', true)
     $('#filter-element').prop('disabled', true)
     $('#filter-type').prop('disabled', true)
-    $.get('https://cbtracker-api.herokuapp.com/market/weapons', async result => {
+    $.get(`https://cbtracker-api.herokuapp.com/market/weapons?network=${currentNetwork}`, async result => {
         $table.html('')
         if (result.length > 0) {
             $table.append(await Promise.all(result.map(async weapId => {
@@ -63,11 +69,12 @@ async function loadWeaponListing() {
                             <td class="align-middle text-white">${getAvgStats(weapData)}</td>
                             <td class="align-middle text-white">${getTotalMultiplier(weapData)}x</td>
                             <td class="align-middle text-white">${parseFloat(fromEther(price)).toFixed(4)} SKILL</td>
+                            <td class="align-middle text-white"><a href="https://app.cryptoblades.io/#/nft-display/weapon/${weapId}" target="_blank" class="btn btn-sm btn-success">Buy</a></td>
                         </tr>`
                 }
             })))
         } else {
-            $table.append('<tr><td class="text-center text-white" colspan="7">No weapon listed</td></tr>')
+            $table.append('<tr><td class="text-center text-white" colspan="8">No weapon listed</td></tr>')
         }
         sortTable()
         filterChanges()
@@ -205,6 +212,16 @@ function filterChanges() {
     }
 }
 
+function populateNetwork() {
+    $('#select-network').html('');
+    $("#select-network").append(new Option(currentNetwork.toUpperCase(), currentNetwork));
+    networks.forEach(net => {
+        if (currentNetwork !== net) {
+            $("#select-network").append(new Option(net.toUpperCase(), net));
+        }
+    })
+}
+
 $("#filter-element").on('change', (e) => {
     currElement = e.currentTarget.value
     filterChanges()
@@ -214,6 +231,16 @@ $("#filter-element").on('change', (e) => {
 $("#filter-type").on('change', (e) => {
     currType = e.currentTarget.value
     filterChanges()
+})
+
+$("#select-network").on('change', (e) => {
+    currentNetwork = e.currentTarget.value
+    localStorage.setItem('network', currentNetwork)
+    web3 = new Web3(nodes[currentNetwork]);
+    conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
+    conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
+    populateNetwork()
+    refresh()
 })
 
 loadWeaponListing()
