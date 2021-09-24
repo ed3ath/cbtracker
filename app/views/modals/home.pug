@@ -73,3 +73,43 @@
           .form-group.mb-3
             input#file-import.form-control(type='file' style='padding: .425rem 1.225rem !important')
           button.btn.btn-secondary.float-right(type='button' onclick='import_data()') Import
+
+
+#modal-logs.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
+  .modal-dialog.modal-dialog-centered.modal-xl(role="document")
+    .modal-content.bg-dark
+      .modal-header
+        h5.modal-title.text-white
+          | Fight History (Last 12 hours)
+        button(type="button", class="btn-close", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        .row
+          .col-md-3.col-sm-6.px-2.mb-3
+            .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
+              h6.fs-sm.fw-medium.text-muted No. of fights
+              span#card-fights.h4.text-white 0
+          .col-md-3.col-sm-6.px-2.mb-3
+            .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
+              h6.fs-sm.fw-medium.text-muted Win rate
+              span#card-winrate.h4.text-white 0.00%
+          .col-md-3.col-sm-6.px-2.mb-3
+            .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
+              h6.fs-sm.fw-medium.text-muted Total SKILL
+              span#card-skill.h4.text-white 0
+          .col-md-3.col-sm-6.px-2.mb-3
+            .card.h-100.rounded-3.p-4.text-center.text-white.bg-dark
+              h6.fs-sm.fw-medium.text-muted Total EXP
+              span#card-exp.h4.text-white 0
+        .row
+          .table-responsive.mb-0(style="overflow: hidden !important;")
+            table#table-logs.table.table-bordered(data-toggle="table" data-height="300")
+              thead.text-center
+                tr
+                  th.text-white.text-center Outcome
+                  th.text-white.text-center Character
+                  th.text-white.text-center Weapon
+                  th.text-white.text-center Player Roll
+                  th.text-white.text-center Enemy Roll
+                  th.text-white.text-center SKILL
+                  th.text-white.text-center EXP
+              tbody

@@ -227,6 +227,7 @@ async function loadData () {
                             <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(formatNumber(fromEther(binance)))}<br />${(Number(parseFloat(fromEther(binance)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
+                            <button type="button" class="btn btn-primary btn-sm mb-1" onclick="logs('${address}')">Hunt Logs</button><br>
                             <button type="button" class="btn btn-danger btn-sm" onclick="remove('${address}')">Remove</button></td>
                         </tr>`;
         
@@ -673,6 +674,75 @@ function unstakeSkillAt(timeLeft){
 function updateBalanceLabel () {
     $('#label-tbalance').html((currentNetwork === 'bsc' ? 'Total BNB Balance' : 'Total HT Balance'))
     $('#label-balance').html((currentNetwork === 'bsc' ? 'BNB Balance' : 'HT Balance'))
+}
+
+const getLogs = async (start, end, address) => getPastEvents(
+    'FightOutcome',
+    start,        
+    end,
+    conAddress[currentNetwork].cryptoBlades,
+    [
+        '0x7a58aac6530017822bf3210fccef7efa31f56277f19966bc887bfb11f40ca96d',
+        web3.eth.abi.encodeParameter('address', address)
+    ]
+);
+
+const delay = async ms => await new Promise(resolve => setTimeout(resolve, ms))
+
+async function logs(address) {
+    const huntResult = $('#table-logs tbody')
+    const latestBlock = await getLatestBlock()
+    let maxBlocks = 1500
+    let current = latestBlock.number - (maxBlocks * 20)
+    let list = [], fights = 0, wins = 0, skill = 0, exp = 0
+
+    for(let i = 0; i < 10; i++ ){
+        list.push(current)
+        current += maxBlocks
+    }
+    huntResult.html('')
+    $('#card-fights').html(0)
+    $('#card-winrate').html('0.00%')
+    $('#card-skill').html(0)
+    $('#card-exp').html(0)
+    $('#table-logs').bootstrapTable('showLoading')
+     
+    
+    $('#modal-logs').modal('show', {
+        backdrop: 'static',
+        keyboard: false
+    })
+    let count = 0
+    for(let i of list) {
+        try {
+            const hResults = await getLogs(i, i + maxBlocks, address)
+            count += hResults.length
+            await Promise.all(hResults.map(async result => {
+                const {character, weapon, enemyRoll, playerRoll, skillGain, xpGain} = result.returnValues
+                fights += 1
+                skill += Number(fromEther(skillGain))
+                exp += Number(xpGain)
+                if (parseInt(playerRoll) > parseInt(enemyRoll)) wins += 1
+                huntResult.append(`<tr>
+                                <td class='text-white text-center'>${(parseInt(playerRoll) > parseInt(enemyRoll) ? '<span class="text-success">Won</span>' : '<span class="text-danger">Lost</span>')}</td>
+                                <td class='text-white text-center'>${character}</td>
+                                <td class='text-white text-center'>${weapon}</td>
+                                <td class='text-white text-center'>${playerRoll}</td>
+                                <td class='text-white text-center'>${enemyRoll}</td>
+                                <td class='text-white text-center'>${parseFloat(fromEther(skillGain)).toFixed(6)}</td>
+                                <td class='text-white text-center'>${xpGain}</td>
+                            </tr>`)
+            }))
+        }catch(e) {
+            console.log(e)
+        }
+    }
+    if (count === 0) huntResult.html('<tr><td class="text-center text-white" colspan="7">No fights retrieved</td></tr>')
+    $('#card-fights').html(fights)
+    $('#card-winrate').html(`${(wins > 0 ? parseFloat((wins / fights) * 100).toFixed(2) : '0.00')}%`)
+    $('#card-skill').html(parseFloat(skill).toFixed(6))
+    $('#card-exp').html(exp)
+    $('#table-logs').bootstrapTable('hideLoading')
 }
 
 

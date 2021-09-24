@@ -1,12 +1,3 @@
-var stakingRewardAddress = '0xd6b2D8f59Bf30cfE7009fB4fC00a7b13Ca836A2c';
-var stakingTokenAddress = '0x154a9f9cbd3449ad22fdae23044319d6ef2a1fab';
-var mainAddress = '0x39Bea96e13453Ed52A734B6ACEeD4c41F57B2271';
-var charAddress = '0xc6f252c2cdd4087e30608a35c022ce490b58179b';
-var weapAddress = '0x7e091b0a220356b157131c831258a9c98ac8031a';
-var oracleAddress = '0x1cbfa0ec28da66896946474b2a93856eb725fbba';
-var marketAddress = '0x90099dA42806b21128A094C713347C7885aF79e2';
-var defaultAddress = '0x0000000000000000000000000000000000000000';
-
 var conAddress = {
     bsc: {
         staking: '0xd6b2D8f59Bf30cfE7009fB4fC00a7b13Ca836A2c',
@@ -16,7 +7,8 @@ var conAddress = {
         weapon: '0x7e091b0a220356b157131c831258a9c98ac8031a',
         market: '0x90099dA42806b21128A094C713347C7885aF79e2',
         skillPair: '0xe657b519d8952aead726b10836a15724e0519e75',
-        tokenPair: '0x58f876857a02d6762e0101bb5c46a8c1ed44dc16'
+        tokenPair: '0x58f876857a02d6762e0101bb5c46a8c1ed44dc16',
+        fightTopic = '0x20c86652f5f1f090033449238d29eb52fe8c5dd5a29013a693ed500ac2d94099'
     },
     heco: {
         staking: '0x6109A500e5b9CE40FFe075Ea3A6beA6e93c23BcF',
@@ -26,7 +18,8 @@ var conAddress = {
         weapon: '0xa0f254436E43239D2B3947A9D590C495738B6A4C',
         market: '0x0f6dAA5F4b4277BE496c80aeCD0D101b8dEE6440',
         skillPair: '0x7c9739ecD7882157b1C526a832FfD5A50860078d',
-        tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0'
+        tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0',
+        fightTopic = '0x20c86652f5f1f090033449238d29eb52fe8c5dd5a29013a693ed500ac2d94099'
     }
 }
 
