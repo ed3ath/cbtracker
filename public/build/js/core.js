@@ -330,10 +330,10 @@ function charFormatter(val) {
 
 function elemToColor(elem) {
     switch (elem) {
-        case 'Fire': return '<img class="me-2" src="/img/fire.png" alt="Fire" width="20">'
-        case 'Earth': return '<img class="me-2" src="/img/earth.png" alt="Earth" width="20">'
-        case 'Lightning': return '<img class="me-2" src="/img/lightning.png" alt="Lightning" width="20">'
-        case 'Water': return '<img class="me-2" src="/img/water.png" alt="Water" width="20">'
+        case 'Fire': return '<img src="/img/fire.png" alt="Fire" width="20">'
+        case 'Earth': return '<img src="/img/earth.png" alt="Earth" width="20">'
+        case 'Lightning': return '<img src="/img/lightning.png" alt="Lightning" width="20">'
+        case 'Water': return '<img src="/img/water.png" alt="Water" width="20">'
         default: return `<span style='color: red'>N/A</span>`
     }
 }
