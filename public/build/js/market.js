@@ -11,7 +11,7 @@ async function loadWeaponListing() {
         if (result.length > 0) {
             $table.append(await Promise.all(result.map(async weapId => {
                 const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
-                const price = await getFinalPrice(weapAddress, weapId)
+                const price = await getFinalPrice(conAddress[currentNetwork].weapon, weapId)
                 if (parseFloat(price) > 0) {
                     let stars = '', attr = '', type = 'hybrid';
                     for (let i = 0; i <= weapData.stars; i++) {
