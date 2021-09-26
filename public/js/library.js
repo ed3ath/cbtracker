@@ -8,7 +8,7 @@ var conAddress = {
         character: '0xc6f252c2cdd4087e30608a35c022ce490b58179b',
         weapon: '0x7e091b0a220356b157131c831258a9c98ac8031a',
         market: '0x90099dA42806b21128A094C713347C7885aF79e2',
-        skillPair: '0xe657b519d8952aead726b10836a15724e0519e75',
+        skillPair: '0x0deb588c1ec6f1d9f348126d401f05c4c7b7a80c',
         tokenPair: '0x58f876857a02d6762e0101bb5c46a8c1ed44dc16'
     },
     heco: {

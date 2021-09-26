@@ -306,10 +306,14 @@ function renameAccount() {
 
 async function priceTicker() {
     skillPrice = await getSkillPrice()
+    let gasPrice = await getGasPrice()
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${currencies.join(',')}`, async (result) => {
         usdPrice = result.tether[currCurrency]
-        localPrice = usdPrice * skillPrice        
-        bnbPrice = await getGasPrice() * usdPrice
+        bnbPrice = gasPrice * usdPrice
+        if (currentNetwork === 'bsc') {
+            skillPrice *= gasPrice
+        }
+        localPrice = usdPrice * skillPrice
         $cardPrice.html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
     })
 }
