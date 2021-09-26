@@ -65,23 +65,30 @@ var $cardIngame = $('#card-ingame'),
     $cardAccount = $('#card-account'),
     $cardChar = $('#card-char'),
     $cardPrice = $('#card-price'),
+    $cardReward = $('#card-reward'),
     $convIngame = $('#conv-ingame'),
     $convUnclaim = $('#conv-unclaim'),
     $convStake = $('#conv-stake'),
     $convWallet = $('#conv-wallet'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
-    $convPrice = $('#conv-price')
+    $convPrice = $('#conv-price'),
+    $convReward = $('#conv-reward')
 
 $('document').ready(async () => {
     priceTicker()
     setRewardsClaimTaxMax()
+    rewardTicker()
+
     setInterval(() => {
         fiatConversion()
     }, 1000)
     setInterval(() => {
         priceTicker()
     }, 10000)
+    setInterval(() => {
+        rewardTicker()
+    }, 60000)
     loadData()
 })
 
@@ -99,6 +106,7 @@ function fiatConversion () {
     if (isElementNotZero($cardTotal)) $convTotal.html(`(${toLocaleCurrency(convertToFiat($cardTotal.html()))})`)
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
     if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
+    if (isElementNotZero($cardReward)) $convReward.html(`(${toLocaleCurrency(convertToFiat($cardReward.html()))})`)
 }
 function clearFiat () {
     $convIngame.html('')
@@ -108,6 +116,7 @@ function clearFiat () {
     $convTotal.html('')
     $convBnb.html('')
     $convPrice.html('')
+    $convReward.html('')
 }
 
 function isElementNotZero ($elem) {
@@ -303,6 +312,10 @@ async function priceTicker() {
         bnbPrice = await getGasPrice() * usdPrice
         $cardPrice.html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
     })
+}
+
+async function rewardTicker() {
+    $cardReward.html(parseFloat(fromEther(await getPayPerFight())).toFixed(6))
 }
 
 async function setRewardsClaimTaxMax() {
@@ -784,6 +797,7 @@ $("#select-network").on('change', (e) => {
     refresh()
     clearFiat()
     priceTicker()
+    rewardTicker()
 })
 
 $('#modal-add-account').on('shown.bs.modal', function (e) {
