@@ -93,6 +93,8 @@ var getTransactionReceipt = async hash => web3.eth.getTransactionReceipt(hash)
 var getFinalPrice = async (contract, tokenId) => conMarket.methods.getFinalPrice(contract, tokenId).call()
 var getTokenGainForFight = async power => conCryptoBlades.methods.getTokenGainForFight(power).call()
 var getPayPerFight = async () => conCryptoBlades.methods.vars(5).call()
+var getLastReset = async () => conCryptoBlades.methods.vars(6).call()
+var getMaxClaim = async () => conCryptoBlades.methods.vars(7).call()
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()

@@ -14,7 +14,18 @@ var skillPrice = 0
 var localPrice = 0
 var bnbPrice = 0
 var usdPrice = 0
+var lastReset = 0
 var $table = $('#table-accounts tbody')
+
+var maxFightCost = {
+    bsc: 0.0008,
+    heco: 0.0005
+}
+
+var maxClaimCost = {
+    bsc: 0.0007,
+    heco: 0.00065
+}
 
 if (!currCurrency) currCurrency = 'usd'
 if (accounts && names) {
@@ -66,6 +77,9 @@ var $cardIngame = $('#card-ingame'),
     $cardChar = $('#card-char'),
     $cardPrice = $('#card-price'),
     $cardReward = $('#card-reward'),
+    $cardClaim = $('#card-claim'),
+    $cardReward = $('#card-reward'),
+    $cardReset = $('#card-reset'),
     $convIngame = $('#conv-ingame'),
     $convUnclaim = $('#conv-unclaim'),
     $convStake = $('#conv-stake'),
@@ -73,23 +87,27 @@ var $cardIngame = $('#card-ingame'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
     $convPrice = $('#conv-price'),
-    $convReward = $('#conv-reward')
+    $convReward = $('#conv-reward'),
+    $convClaim = $('#conv-claim')
 
 $('document').ready(async () => {
     priceTicker()
     setRewardsClaimTaxMax()
-    rewardTicker()
+    statTicker()
+    lastReset = parseInt(await getLastReset())
 
     setInterval(() => {
         fiatConversion()
+        resetTicker()
     }, 1000)
     setInterval(() => {
         priceTicker()
     }, 10000)
     setInterval(() => {
-        rewardTicker()
-    }, 60000)
+        statTicker()
+    }, 6000)
     loadData()
+
 })
 
 async function refresh () {
@@ -107,6 +125,7 @@ function fiatConversion () {
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
     if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
     if (isElementNotZero($cardReward)) $convReward.html(`(${toLocaleCurrency(convertToFiat($cardReward.html()))})`)
+    if (isElementNotZero($cardClaim)) $convClaim.html(`(${toLocaleCurrency(convertToFiat($cardClaim.html()))})`)
 }
 function clearFiat () {
     $convIngame.html('')
@@ -117,6 +136,7 @@ function clearFiat () {
     $convBnb.html('')
     $convPrice.html('')
     $convReward.html('')
+    $convClaim.html('')
 }
 
 function isElementNotZero ($elem) {
@@ -318,8 +338,33 @@ async function priceTicker() {
     })
 }
 
-async function rewardTicker() {
-    $cardReward.html(parseFloat(fromEther(await getPayPerFight())).toFixed(6))
+async function statTicker() {
+    const payPerFight = await getPayPerFight()
+    const maxClaim = await getMaxClaim()
+    $cardReward.html(parseFloat(fromEther(payPerFight)).toFixed(6))
+    $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
+
+    if ((fromEther(payPerFight) * skillPrice) > (maxFightCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
+        $cardReward.removeClass('text-danger')
+        $cardReward.addClass('text-success')
+    } else {
+        $cardReward.addClass('text-danger')
+        $cardReward.removeClass('text-success')
+    }
+
+    if ((fromEther(maxClaim) * skillPrice) > (maxClaimCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
+        $cardReward.removeClass('text-danger')
+        $cardReward.addClass('text-success')
+    } else {
+        $cardReward.addClass('text-danger')
+        $cardReward.removeClass('text-success')
+    }
+}
+
+async function resetTicker() {
+    if (moment().unix() >= lastReset + 3600) lastReset += 3600
+    var duration = moment.duration(((lastReset + 3600) - moment().unix()) * 1000, 'milliseconds');
+    $cardReset.html(`in ${duration.minutes()}m and ${duration.seconds()}s`)
 }
 
 async function setRewardsClaimTaxMax() {
@@ -801,7 +846,7 @@ $("#select-network").on('change', (e) => {
     refresh()
     clearFiat()
     priceTicker()
-    rewardTicker()
+    statTicker()
 })
 
 $('#modal-add-account').on('shown.bs.modal', function (e) {
