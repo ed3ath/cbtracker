@@ -14,6 +14,7 @@ var skillPrice = 0
 var localPrice = 0
 var bnbPrice = 0
 var usdPrice = 0
+var gasPrice = 0
 var lastReset = 0
 var $table = $('#table-accounts tbody')
 
@@ -326,7 +327,7 @@ function renameAccount() {
 
 async function priceTicker() {
     skillPrice = await getSkillPrice()
-    let gasPrice = await getGasPrice()
+    gasPrice = await getGasPrice()
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${currencies.join(',')}`, async (result) => {
         usdPrice = result.tether[currCurrency]
         bnbPrice = gasPrice * usdPrice
@@ -341,9 +342,11 @@ async function priceTicker() {
 async function statTicker() {
     const payPerFight = await getPayPerFight()
     const maxClaim = await getMaxClaim()
+
     $cardReward.html(parseFloat(fromEther(payPerFight)).toFixed(6))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
 
+    console.log((fromEther(maxClaim) * skillPrice), (maxClaimCost[currentNetwork] * bnbPrice), bnbPrice)
     if ((fromEther(payPerFight) * skillPrice) > (maxFightCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
         $cardReward.removeClass('text-danger')
         $cardReward.addClass('text-success')
@@ -352,12 +355,12 @@ async function statTicker() {
         $cardReward.removeClass('text-success')
     }
 
-    if ((fromEther(maxClaim) * skillPrice) > (maxClaimCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
-        $cardReward.removeClass('text-danger')
-        $cardReward.addClass('text-success')
+    if ((fromEther(maxClaim) * skillPrice) > (maxClaimCost[currentNetwork] * gasPrice) && gasPrice !== 0) {
+        $cardClaim.removeClass('text-danger')
+        $cardClaim.addClass('text-success')
     } else {
-        $cardReward.addClass('text-danger')
-        $cardReward.removeClass('text-success')
+        $cardClaim.addClass('text-danger')
+        $cardClaim.removeClass('text-success')
     }
 }
 
