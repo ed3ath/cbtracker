@@ -20,12 +20,14 @@ var $table = $('#table-accounts tbody')
 
 var maxFightCost = {
     bsc: 0.0008,
-    heco: 0.0005
+    heco: 0.0005,
+    okex: 0.00000000011,
 }
 
 var maxClaimCost = {
     bsc: 0.0007,
-    heco: 0.00065
+    heco: 0.00065,
+    okex: 0.000000011,
 }
 
 if (!currCurrency) currCurrency = 'usd'
