@@ -841,7 +841,7 @@ $("#select-currency").on('change', (e) => {
     refresh()
 })
 
-$("#select-network").on('change', (e) => {
+$("#select-network").on('change', async (e) => {
     updateNetwork(e.currentTarget.value)
     populateNetwork()
     updateBalanceLabel()
@@ -849,6 +849,7 @@ $("#select-network").on('change', (e) => {
     clearFiat()
     priceTicker()
     statTicker()
+    lastReset = parseInt(await getLastReset())
     resetTicker()
 })
 
