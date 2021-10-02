@@ -849,6 +849,7 @@ $("#select-network").on('change', (e) => {
     clearFiat()
     priceTicker()
     statTicker()
+    resetTicker()
 })
 
 $('#modal-add-account').on('shown.bs.modal', function (e) {
