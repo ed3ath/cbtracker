@@ -1,4 +1,4 @@
-var networks = ['bsc', 'heco']
+var networks = ['bsc', 'heco', 'okex']
 
 var conAddress = {
     bsc: {
@@ -20,12 +20,23 @@ var conAddress = {
         market: '0x0f6dAA5F4b4277BE496c80aeCD0D101b8dEE6440',
         skillPair: '0x7c9739ecD7882157b1C526a832FfD5A50860078d',
         tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0'
+    },
+    okex: {
+        staking: '0xC5707a6a16CCe1963Ec3E6cdEE0A91e4876Be395',
+        token: '0xcC137b0713E0DC63b1fA136272014F2A54Dd7aCB',
+        cryptoBlades: '0x98145a2fEBac238280bbdEDc2757dC162318b16e',
+        character: '0x6A1d1803d4EDF5CF27EDb64ae95A22F81707eA38',
+        weapon: '0x364759180A6484e57ECD73C042264A6Da75770e8',
+        market: '0x5ea2373e281E92FE3c53dc36cE855D89BF25F6F8',
+        skillPair: '0x2d9cdad4b89d91e6a44ec1c8b227b0c2b0d4e2cf',
+        tokenPair: '0xa75bd9f086bbc1168b01fd5e750986b5170c2b26'
     }
 }
 
 var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
-    heco: 'https://http-mainnet.hecochain.com'
+    heco: 'https://http-mainnet.hecochain.com',
+    okex: 'https://exchainrpc.okex.org'
 }
 
 var currentNetwork = localStorage.getItem('network')
@@ -98,11 +109,13 @@ var getMaxClaim = async () => conCryptoBlades.methods.vars(7).call()
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()
+    if (currentNetwork === 'okex') return reserves[0] / reserves[1]
     return reserves[1] / reserves[0]
 }
 
 var getGasPrice = async () => {
     const reserves = await gasPair.methods.getReserves().call()
+    if (currentNetwork === 'okex') return reserves[0] / reserves[1]
     return reserves[1] / reserves[0]
 }
 

@@ -346,7 +346,6 @@ async function statTicker() {
     $cardReward.html(parseFloat(fromEther(payPerFight)).toFixed(6))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
 
-    console.log((fromEther(maxClaim) * skillPrice), (maxClaimCost[currentNetwork] * bnbPrice), bnbPrice)
     if ((fromEther(payPerFight) * skillPrice) > (maxFightCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
         $cardReward.removeClass('text-danger')
         $cardReward.addClass('text-success')
