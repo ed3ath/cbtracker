@@ -104,3 +104,7 @@ heroku open
 ## License
 
 MIT
+
+
+## Donation
+Address: 0x2548696795a3bCd6A8fAe7602fc26DD95A612574
