@@ -1,4 +1,4 @@
-var networks = ['bsc', 'heco', 'okex']
+var networks = ['bsc', 'heco', 'okex', 'poly']
 
 var conAddress = {
     bsc: {
@@ -30,13 +30,24 @@ var conAddress = {
         market: '0x5ea2373e281E92FE3c53dc36cE855D89BF25F6F8',
         skillPair: '0x2d9cdad4b89d91e6a44ec1c8b227b0c2b0d4e2cf',
         tokenPair: '0xa75bd9f086bbc1168b01fd5e750986b5170c2b26'
+    },
+    poly: {
+        staking: '0xE34e7cA8e64884E3b5Cd48991ba229d8302E85da',
+        token: '0x863D6074aFaF02D9D41A5f8Ea83278DF7089aA86',
+        cryptoBlades: '0x070b1A95898B927A900A1F9F42b114154648E51A',
+        character: '0x929059Fef67b88CE2F4127e59B50bEA123981998',
+        weapon: '0xD9C5449EfB3f99952F73e824688724aAFB81dE6E',
+        market: '0xeE6e8467268eA752b027676B3EBcD4eB05749874',
+        skillPair: '0x42ba6f3aF9d8A2A30F5e55362c45e7121a932b77',
+        tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797'
     }
 }
 
 var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
-    okex: 'https://exchainrpc.okex.org'
+    okex: 'https://exchainrpc.okex.org',
+    poly: 'https://matic-mainnet.chainstacklabs.com'
 }
 
 var currentNetwork = localStorage.getItem('network')
@@ -109,7 +120,7 @@ var getMaxClaim = async () => conCryptoBlades.methods.vars(7).call()
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()
-    if (currentNetwork === 'okex') return reserves[0] / reserves[1]
+    if (currentNetwork === 'okex' || currentNetwork === 'poly') return reserves[0] / reserves[1]
     return reserves[1] / reserves[0]
 }
 
@@ -132,7 +143,6 @@ function populateNetwork() {
 function updateNetwork(network) {    
     currentNetwork = network
     localStorage.setItem('network', currentNetwork)  
-    console.log(currentNetwork)
     web3 = new Web3(nodes[currentNetwork]);
     conStakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
     conStakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);

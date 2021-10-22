@@ -22,12 +22,14 @@ var maxFightCost = {
     bsc: 0.0008,
     heco: 0.0005,
     okex: 0.00000000011,
+    matic: 0.0005,
 }
 
 var maxClaimCost = {
     bsc: 0.0007,
     heco: 0.00065,
     okex: 0.000000011,
+    matic: 0.00065,
 }
 
 if (!currCurrency) currCurrency = 'usd'
@@ -330,6 +332,11 @@ function renameAccount() {
 async function priceTicker() {
     skillPrice = await getSkillPrice()
     gasPrice = await getGasPrice()
+
+    if (currentNetwork === 'poly') {
+        gasPrice *= 1000000000000
+        skillPrice *= gasPrice
+    }
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${currencies.join(',')}`, async (result) => {
         usdPrice = result.tether[currCurrency]
         bnbPrice = gasPrice * usdPrice
@@ -724,9 +731,19 @@ function unstakeSkillAt(timeLeft){
     return `<span title="${moment().countdown(timeLeftTimestamp)}">${moment(timeLeftTimestamp).fromNow()}`;
 }
 
+function gasName(network) {
+    switch(network) {
+        case 'bsc': return 'BNB'
+        case 'heco': return 'HT'
+        case 'okex': return 'OKT'
+        case 'poly': return 'MATIC'
+        default: return 'BNB'
+    }
+}
+
 function updateBalanceLabel () {
-    $('#label-tbalance').html((currentNetwork === 'bsc' ? 'Total BNB Balance' : 'Total HT Balance'))
-    $('#label-balance').html((currentNetwork === 'bsc' ? 'BNB Balance' : 'HT Balance'))
+    $('#label-tbalance').html(`Total ${gasName(currentNetwork)} Balance`)
+    $('#label-balance').html(`${gasName(currentNetwork)} Balance`)
 }
 
 const getLogs = async (start, end, address) => getPastEvents(
