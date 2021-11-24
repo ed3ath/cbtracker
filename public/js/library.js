@@ -94,7 +94,7 @@ var getAccountWeapons = async address => {
     );
     return weapons;
 };
-var getAccountSkillReward = address => conCryptoBlades.methods.getTokenRewards().call({ from: address });
+var getAccountSkillReward = address => conCryptoBlades.methods.getTokenRewardsFor(address).call();
 var getOwnRewardsClaimTax = address => conCryptoBlades.methods.getOwnRewardsClaimTax().call({ from: address });
 var getRewardsClaimTaxMax = address => conCryptoBlades.methods.REWARDS_CLAIM_TAX_MAX().call({ from: address });
 var getIngameSkill = address => conCryptoBlades.methods.inGameOnlyFunds(address).call({ from: address });

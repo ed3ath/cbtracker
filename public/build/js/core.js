@@ -585,7 +585,6 @@ function import_data() {
         return alert("Please select a file before clicking 'Import'");
     }
     var fileType = input.files[0].type
-    console.log(fileType)
     if (fileType === 'application/json' || fileType === 'text/plain') {
         var file = input.files[0];
         var fr = new FileReader();
