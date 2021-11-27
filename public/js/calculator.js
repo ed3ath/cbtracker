@@ -22,7 +22,7 @@ async function testSimulate() {
 
         const results = await Promise.all(enemies.map(async (enemy) => {
             const alignedPower = getAlignedCharacterPower(charData, weapData)
-            const skill = fromEther(await getTokenReward(enemy.power));            
+            const skill = fromEther((await getTokenReward(enemy.power)).toString().split('.')[0]);            
             const exp = Math.floor((enemy.power / alignedPower) * 32)
             return {
                 enemy,
@@ -67,6 +67,7 @@ async function testSimulate() {
         }
         $('#btn-simulate').removeAttr('disabled')
     } catch (e) {
+        console.log(e)
         alert(e.message)
         $('#btn-simulate').removeAttr('disabled')
     }
