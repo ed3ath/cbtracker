@@ -22,7 +22,7 @@ async function testSimulate() {
 
         const results = await Promise.all(enemies.map(async (enemy) => {
             const alignedPower = getAlignedCharacterPower(charData, weapData)
-            const skill = fromEther(await getTokenGainForFight(enemy.power));            
+            const skill = fromEther(await getTokenReward(enemy.power));            
             const exp = Math.floor((enemy.power / alignedPower) * 32)
             return {
                 enemy,

@@ -116,7 +116,9 @@ var getFinalPrice = async (contract, tokenId) => conMarket.methods.getFinalPrice
 var getTokenGainForFight = async power => conCryptoBlades.methods.getTokenGainForFight(power).call()
 var getCurrentAllowance = async () => conCryptoBlades.methods.vars(13).call()
 var getHourlyAllowance = async () => conCryptoBlades.methods.vars(18).call()
+var getHourlyPowerAvg = async () => conCryptoBlades.methods.vars(4).call()
 var getPayPerFight = async () => conCryptoBlades.methods.vars(5).call()
+var getMaxPayPerFight = async () => conCryptoBlades.methods.vars(12).call()
 var getLastReset = async () => conCryptoBlades.methods.vars(6).call()
 var getMaxClaim = async () => conCryptoBlades.methods.vars(7).call()
 
@@ -154,6 +156,13 @@ function updateNetwork(network) {
     conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
     skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
     gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
+}
+
+async function getTokenReward(power) {
+    const amount = Number(power) / Number(await getHourlyPowerAvg()) * Number(await getPayPerFight())
+    const max = Number(await getMaxPayPerFight())
+    if (amount > max) return max
+    return amount
 }
 
 populateNetwork()
