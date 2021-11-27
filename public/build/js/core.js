@@ -18,20 +18,6 @@ var gasPrice = 0
 var lastReset = 0
 var $table = $('#table-accounts tbody')
 
-var maxFightCost = {
-    bsc: 0.0008,
-    heco: 0.0005,
-    okex: 0.00000000011,
-    matic: 0.0005,
-}
-
-var maxClaimCost = {
-    bsc: 0.0007,
-    heco: 0.00065,
-    okex: 0.000000011,
-    matic: 0.00065,
-}
-
 if (!currCurrency) currCurrency = 'usd'
 if (accounts && names) {
     storeAccounts = JSON.parse(accounts)
@@ -354,22 +340,6 @@ async function statTicker() {
 
     $cardReward.html(parseFloat(fromEther(fightAllowance)).toFixed(6))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
-
-    if ((fromEther(fightAllowance) * skillPrice) > (maxFightCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
-        $cardReward.removeClass('text-danger')
-        $cardReward.addClass('text-success')
-    } else {
-        $cardReward.addClass('text-danger')
-        $cardReward.removeClass('text-success')
-    }
-
-    if ((fromEther(maxClaim) * skillPrice) > (maxClaimCost[currentNetwork] * gasPrice) && gasPrice !== 0) {
-        $cardClaim.removeClass('text-danger')
-        $cardClaim.addClass('text-success')
-    } else {
-        $cardClaim.addClass('text-danger')
-        $cardClaim.removeClass('text-success')
-    }
 }
 
 async function resetTicker() {
