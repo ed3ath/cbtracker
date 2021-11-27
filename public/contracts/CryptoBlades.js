@@ -241,6 +241,19 @@ const CryptoBlades = [
   },
   {
     "inputs": [],
+    "name": "VAR_HOURLY_DISTRIBUTION",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "VAR_HOURLY_FIGHTS",
     "outputs": [
       {
@@ -255,6 +268,19 @@ const CryptoBlades = [
   {
     "inputs": [],
     "name": "VAR_HOURLY_INCOME",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_HOURLY_MAX_POWER_AVERAGE",
     "outputs": [
       {
         "internalType": "uint256",
@@ -345,6 +371,32 @@ const CryptoBlades = [
   },
   {
     "inputs": [],
+    "name": "VAR_PARAM_HOURLY_MAX_POWER_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_PARAM_HOURLY_PAY_ALLOWANCE",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "VAR_PARAM_MAX_FIGHT_PAYOUT",
     "outputs": [
       {
@@ -359,6 +411,32 @@ const CryptoBlades = [
   {
     "inputs": [],
     "name": "VAR_PARAM_PAYOUT_INCOME_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_PARAM_SIGNIFICANT_HOUR_FIGHTS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VAR_UNCLAIMED_SKILL",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1121,44 +1199,6 @@ const CryptoBlades = [
     "name": "fight",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint24",
-        "name": "playerBasePower",
-        "type": "uint24"
-      },
-      {
-        "internalType": "int128",
-        "name": "wepMultiplier",
-        "type": "int128"
-      },
-      {
-        "internalType": "uint24",
-        "name": "wepBonusPower",
-        "type": "uint24"
-      },
-      {
-        "internalType": "uint64",
-        "name": "staminaTimestamp",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint256",
-        "name": "hour",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint32",
-        "name": "target",
-        "type": "uint32"
-      }
-    ],
-    "name": "verifyFight",
-    "outputs": [],
-    "stateMutability": "pure",
     "type": "function"
   },
   {

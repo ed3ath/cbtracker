@@ -110,7 +110,7 @@ $('document').ready(async () => {
     }, 10000)
     setInterval(() => {
         statTicker()
-    }, 6000)
+    }, 1000)
     loadData()
 
 })
@@ -349,13 +349,13 @@ async function priceTicker() {
 }
 
 async function statTicker() {
-    const payPerFight = await getPayPerFight()
+    const fightAllowance = await getCurrentAllowance()
     const maxClaim = await getMaxClaim()
 
-    $cardReward.html(parseFloat(fromEther(payPerFight)).toFixed(6))
+    $cardReward.html(parseFloat(fromEther(fightAllowance)).toFixed(6))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
 
-    if ((fromEther(payPerFight) * skillPrice) > (maxFightCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
+    if ((fromEther(fightAllowance) * skillPrice) > (maxFightCost[currentNetwork] * bnbPrice) && bnbPrice !== 0) {
         $cardReward.removeClass('text-danger')
         $cardReward.addClass('text-success')
     } else {
