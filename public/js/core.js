@@ -16,6 +16,8 @@ var bnbPrice = 0
 var usdPrice = 0
 var gasPrice = 0
 var lastReset = 0
+var notified = (localStorage.getItem('notified') === 'true')
+var resetTime = localStorage.getItem(`${currentNetwork}-reset`) || 0
 var $table = $('#table-accounts tbody')
 
 if (!currCurrency) currCurrency = 'usd'
@@ -86,6 +88,8 @@ $('document').ready(async () => {
     setRewardsClaimTaxMax()
     statTicker()
     lastReset = parseInt(await getLastReset())
+    resetTime = parseInt(lastReset)
+    localStorage.setItem(`${currentNetwork}-reset`, resetTime)
 
     setInterval(() => {
         fiatConversion()
@@ -101,13 +105,13 @@ $('document').ready(async () => {
 
 })
 
-async function refresh () {
+async function refresh() {
     loadData()
     clearFiat()
     fiatConversion()
 }
 
-function fiatConversion () {
+function fiatConversion() {
     if (isElementNotZero($cardIngame)) $convIngame.html(`(${toLocaleCurrency(convertToFiat($cardIngame.html()))})`)
     if (isElementNotZero($cardUnclaim)) $convUnclaim.html(`(${toLocaleCurrency(convertToFiat($cardUnclaim.html()))})`)
     if (isElementNotZero($cardStake)) $convStake.html(`(${toLocaleCurrency(convertToFiat($cardStake.html()))})`)
@@ -118,7 +122,7 @@ function fiatConversion () {
     if (isElementNotZero($cardReward)) $convReward.html(`(${toLocaleCurrency(convertToFiat($cardReward.html()))})`)
     if (isElementNotZero($cardClaim)) $convClaim.html(`(${toLocaleCurrency(convertToFiat($cardClaim.html()))})`)
 }
-function clearFiat () {
+function clearFiat() {
     $convIngame.html('')
     $convUnclaim.html('')
     $convStake.html('')
@@ -130,19 +134,19 @@ function clearFiat () {
     $convClaim.html('')
 }
 
-function isElementNotZero ($elem) {
+function isElementNotZero($elem) {
     return (parseFloat(localeCurrencyToNumber($elem.html())) > 0)
 }
 
-function localeCurrencyToNumber (val) {
-    return Number(String(val).replace(/[^0-9\.]+/g,""))
+function localeCurrencyToNumber(val) {
+    return Number(String(val).replace(/[^0-9\.]+/g, ""))
 }
 
-function convertToFiat (val) {
+function convertToFiat(val) {
     return localeCurrencyToNumber(val) * localPrice
 }
 
-function convertBnbToFiat (val) {
+function convertBnbToFiat(val) {
     return parseFloat(val) * bnbPrice
 }
 
@@ -151,13 +155,13 @@ function toLocaleCurrency(val) {
 }
 
 function formatNumber(val, dec = 6) {
-    return Number(val).toLocaleString('en', { 
+    return Number(val).toLocaleString('en', {
         minimumFractionDigits: dec,
-        maximumFractionDigits: dec 
+        maximumFractionDigits: dec
     });
 }
 
-async function loadData () {
+async function loadData() {
     $('.btn-refresh').prop('disabled', true)
     $table.html('');
     $cardIngame.html(0)
@@ -170,7 +174,7 @@ async function loadData () {
     $cardChar.html(0)
     $cardAccount.html(storeAccounts.length)
 
-    
+
     var fRowHtml = await Promise.all(storeAccounts.map(async (address, i) => {
         let rowHtml = ''
         var charIds = await getAccountCharacters(address)
@@ -179,7 +183,7 @@ async function loadData () {
         var staked = await getStakedRewards(address)
         var unclaimed = await getAccountSkillReward(address)
         var claimTax = await getOwnRewardsClaimTax(address);
-        var unclaimedTaxed = unclaimed*(1-convertClaimTax(claimTax))
+        var unclaimedTaxed = unclaimed * (1 - convertClaimTax(claimTax))
         var ingame = await getIngameSkill(address)
         var timeLeft = await getStakedTimeLeft(address)
 
@@ -197,10 +201,10 @@ async function loadData () {
         $cardTotal.html((formatNumber(parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([includeClaimTax === true ? unclaimedTaxed : unclaimed, staked, wallet]))))))
         $cardTotalTitle.html(includeClaimTax === true ? "Taxed Skill Assets" : "Total Skill Assets")
         $cardBnb.html((formatNumber(parseFloat($cardBnb.html()) + parseFloat(fromEther(binance)))))
-        
+
         let charHtml = '', chars = {}
-        
-        if (charLen > 0){
+
+        if (charLen > 0) {
             chars = await Promise.all(charIds.map(async charId => {
                 var charData = await characterFromContract(charId, await getCharacterData(charId))
                 var exp = await getCharacterExp(charId)
@@ -224,7 +228,7 @@ async function loadData () {
                         <td class="char-column"><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
                         <td class="char-column">${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
                         <td class="char-column" data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
-        }else{
+        } else {
             charHtml = '<td class="char-column" colspan="6"></td>'
         }
         if (charLen < 1) {
@@ -247,9 +251,9 @@ async function loadData () {
                             <button type="button" class="btn btn-primary btn-sm mb-1" onclick="logs('${address}')">Fight Logs</button><br>
                             <button type="button" class="btn btn-danger btn-sm" onclick="remove('${address}')">Remove</button></td>
                         </tr>`;
-        
+
         if (chars.length > 1) {
-            chars.forEach((char,j) => {
+            chars.forEach((char, j) => {
                 if (j > 0) {
                     rowHtml += `<tr class="text-white align-middle" data-row="${address}">
                                         <td class="char-column">${char.charId}</td>
@@ -260,7 +264,7 @@ async function loadData () {
                                         <td class="char-column">${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
                                     </tr>`
                 }
-                
+
             })
         }
         return rowHtml
@@ -346,6 +350,16 @@ async function resetTicker() {
     if (moment().unix() >= lastReset + 3600) lastReset += 3600
     var duration = moment.duration(((lastReset + 3600) - moment().unix()) * 1000, 'milliseconds');
     $cardReset.html(`in ${duration.minutes()}m and ${duration.seconds()}s`)
+    if (duration.minutes() === 0 && duration.seconds() < 59 && !notified) {
+        notify(currentNetwork.toUpperCase(), 'Next reset in less than a minute!')
+        notified = true
+        localStorage.setItem('notified', notified)
+    }
+
+    if (!notified && lastReset !== resetTime) {
+        notified = false        
+        localStorage.setItem(`${currentNetwork}-reset`, parseInt(await getLastReset()))
+    }
 }
 
 async function setRewardsClaimTaxMax() {
@@ -435,11 +449,11 @@ function convertBNB(value) {
 }
 
 function convertClaimTax(value) {
-    return value*0.15/rewardsClaimTaxMax
+    return value * 0.15 / rewardsClaimTaxMax
 }
 
 function remove(address) {
-    if (confirm(`Are you sure you want to remove ${storeNames[address]}?`)){
+    if (confirm(`Are you sure you want to remove ${storeNames[address]}?`)) {
         storeAccounts.splice(storeAccounts.indexOf(address), 1)
         delete storeNames[address]
         if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
@@ -456,7 +470,7 @@ async function simulate(address) {
     $('#combat-stamina').html(new Option('-- Select multiplier --', ''))
     $('#combat-result').html('')
 
-    for(var i = 1; i <= 5; i++) {
+    for (var i = 1; i <= 5; i++) {
         $('#combat-stamina').append(`<option value="${i}">${i * 40} stamina (x${i})</option>`)
     }
 
@@ -571,7 +585,7 @@ function import_data() {
                 rows = rows.map(row => row.replace(/\r?\n|\r/g, ''))
                 if (rows.length) {
                     rows.forEach(row => {
-                        var [name,address] = row.split(',')
+                        var [name, address] = row.split(',')
                         if (name && address) {
                             if (isAddress(address) && !storeAccounts.includes(address)) {
                                 storeAccounts.push(address)
@@ -587,7 +601,7 @@ function import_data() {
             if (hideAddress) localStorage.setItem('hideAddress', hideAddress)
             if (currCurrency) localStorage.setItem('currency', currCurrency)
 
-            addressHelper(hideAddress)            
+            addressHelper(hideAddress)
             charHelper(hideChars)
             skillsHelper(hideSkills)
             unstakeHelper(hideUnstake)
@@ -675,33 +689,33 @@ function saveToLocalStorage(id, value) {
 }
 
 function sortTable() {
-    
+
     // Disconnect the rows and get them as an array
     var rows = $table.children().detach().get();
-    
+
     // Sort it
-    rows.sort(function(left, right) {
+    rows.sort(function (left, right) {
         // Get the text of the relevant td from left and right
         if (parseInt($(left).data('index')) > parseInt($(right).data('index'))) return 1
         if (parseInt($(left).data('index')) < parseInt($(right).data('index'))) return -1
         return 0
     });
-    
+
     // Put them back in the tbody
     $table.append(rows);
-  }
-
-function copy_address_to_clipboard() {
-    navigator.clipboard.writeText('0x2548696795a3bCd6A8fAe7602fc26DD95A612574').then(n => alert("Copied Address"),e => alert("Fail\n" + e));
 }
 
-function unstakeSkillAt(timeLeft){
+function copy_address_to_clipboard() {
+    navigator.clipboard.writeText('0x2548696795a3bCd6A8fAe7602fc26DD95A612574').then(n => alert("Copied Address"), e => alert("Fail\n" + e));
+}
+
+function unstakeSkillAt(timeLeft) {
     var timeLeftTimestamp = new Date(new Date().getTime() + (timeLeft * 1000))
     return `<span title="${moment().countdown(timeLeftTimestamp)}">${moment(timeLeftTimestamp).fromNow()}`;
 }
 
 function gasName(network) {
-    switch(network) {
+    switch (network) {
         case 'bsc': return 'BNB'
         case 'heco': return 'HT'
         case 'okex': return 'OKT'
@@ -710,14 +724,14 @@ function gasName(network) {
     }
 }
 
-function updateBalanceLabel () {
+function updateBalanceLabel() {
     $('#label-tbalance').html(`Total ${gasName(currentNetwork)} Balance`)
     $('#label-balance').html(`${gasName(currentNetwork)} Balance`)
 }
 
 const getLogs = async (start, end, address) => getPastEvents(
     'FightOutcome',
-    start,        
+    start,
     end,
     conAddress[currentNetwork].cryptoBlades,
     [
@@ -735,7 +749,7 @@ async function logs(address) {
     let current = latestBlock.number - (maxBlocks * 20)
     let list = [], fights = 0, wins = 0, skill = 0, exp = 0
 
-    for(let i = 0; i < 10; i++ ){
+    for (let i = 0; i < 10; i++) {
         list.push(current)
         current += maxBlocks
     }
@@ -745,19 +759,19 @@ async function logs(address) {
     $('#card-skill').html(0)
     $('#card-exp').html(0)
     $('#table-logs').bootstrapTable('showLoading')
-     
-    
+
+
     $('#modal-logs').modal('show', {
         backdrop: 'static',
         keyboard: false
     })
     let count = 0
-    for(let i of list) {
+    for (let i of list) {
         try {
             const hResults = await getLogs(i, i + maxBlocks, address)
             count += hResults.length
             await Promise.all(hResults.map(async result => {
-                const {character, weapon, enemyRoll, playerRoll, skillGain, xpGain} = result.returnValues
+                const { character, weapon, enemyRoll, playerRoll, skillGain, xpGain } = result.returnValues
                 fights += 1
                 skill += Number(fromEther(skillGain))
                 exp += Number(xpGain)
@@ -772,7 +786,7 @@ async function logs(address) {
                                 <td class='text-white text-center'>${xpGain}</td>
                             </tr>`)
             }))
-        }catch(e) {
+        } catch (e) {
             console.log(e)
         }
     }
@@ -838,6 +852,10 @@ $("#select-network").on('change', async (e) => {
     priceTicker()
     statTicker()
     lastReset = parseInt(await getLastReset())
+    resetTime = parseInt(lastReset)
+    localStorage.setItem(`${currentNetwork}-reset`, resetTime)
+    notified = false
+    localStorage.setItem('notified', notified)
     resetTicker()
 })
 
@@ -845,3 +863,23 @@ $('#modal-add-account').on('shown.bs.modal', function (e) {
     $('#inp-name').val('')
     $('#inp-address').val('')
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (!Notification) {
+        alert('Desktop notifications not available in your browser. Try another browser.');
+        return;
+    }
+
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+});
+
+function notify(title, message) {
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+    else {
+        new Notification(title, {
+            body: message,
+        });
+    }
+}
