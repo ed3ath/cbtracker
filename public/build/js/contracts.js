@@ -2857,6 +2857,11 @@ const CryptoBlades = [
         "internalType": "uint24",
         "name": "monsterPower",
         "type": "uint24"
+      },
+      {
+        "internalType": "bool",
+        "name": "applyLimit",
+        "type": "bool"
       }
     ],
     "name": "getTokenGainForFight",
@@ -3265,6 +3270,24 @@ const CryptoBlades = [
       }
     ],
     "name": "payContractTokenOnly",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      }
+    ],
+    "name": "deductAfterPartnerClaim",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

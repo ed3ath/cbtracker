@@ -520,7 +520,7 @@ async function combatSimulate() {
         combatResult.append(await Promise.all(enemies.map(async (enemy, i) => {
             var chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
             enemy.element = traitNumberToName(enemy.trait)
-            var reward = fromEther(await getTokenGainForFight(enemy.power) * parseInt(stamina));
+            var reward = fromEther(await getTokenReward(enemy.power) * parseInt(stamina));
             var alignedPower = getAlignedCharacterPower(charData, weapData)
             var expReward = Math.floor((enemy.power / alignedPower) * 32) * parseInt(stamina)
             return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${expReward} | ${chanceColor(chance)}<br>`

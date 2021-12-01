@@ -113,7 +113,7 @@ var getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCr
 var getTransaction = async hash => web3.eth.getTransaction(hash)
 var getTransactionReceipt = async hash => web3.eth.getTransactionReceipt(hash)
 var getFinalPrice = async (contract, tokenId) => conMarket.methods.getFinalPrice(contract, tokenId).call()
-var getTokenGainForFight = async power => conCryptoBlades.methods.getTokenGainForFight(power).call()
+var getTokenGainForFight = async (power, calculator) => conCryptoBlades.methods.getTokenGainForFight(power, calculator).call()
 var getCurrentAllowance = async () => conCryptoBlades.methods.vars(13).call()
 var getHourlyAllowance = async () => conCryptoBlades.methods.vars(18).call()
 var getHourlyPowerAvg = async () => conCryptoBlades.methods.vars(4).call()
@@ -159,10 +159,7 @@ function updateNetwork(network) {
 }
 
 async function getTokenReward(power) {
-    const amount = Number(power) / Number(await getHourlyPowerAvg()) * Number(await getPayPerFight())
-    const max = Number(await getMaxPayPerFight())
-    if (amount > max) return max
-    return amount
+    return getTokenGainForFight(power, true)
 }
 
 populateNetwork()
