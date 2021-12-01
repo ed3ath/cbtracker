@@ -159,7 +159,7 @@ function updateNetwork(network) {
 }
 
 async function getTokenReward(power) {
-    return getTokenGainForFight(power, true)
+    return getTokenGainForFight(power, false)
 }
 
 populateNetwork()
