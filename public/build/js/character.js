@@ -13,7 +13,6 @@ async function loadCharacterListing() {
                 const charData = characterFromContract(charId, await getCharacterData(charId))
                 const stamina = await getCharacterStamina(charId)
                 const price = await getFinalPrice(conAddress[currentNetwork].character, charId)
-                console.log(charData)
                 if (parseFloat(price) > 0) {
                     return `
                         <tr class="character-row" data-price="${parseFloat(fromEther(price)).toFixed(2)}" data-element="${charData.traitName.toString().toLowerCase()}">
