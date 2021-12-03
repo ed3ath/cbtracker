@@ -1,0 +1,39 @@
+main.page-wrapper
+  include ../includes/menu
+  section.position-relative.zindex-5.pb-4.mb-md-3.mx-5.pt-6
+    .row
+      include ../includes/alerts
+    .row.mx-n2.py-2
+      .col-md-12.col-sm-6.px-2.mb-3
+        .card.bg-dark
+          .card-header
+            .row.align-items-center
+              .col
+                h4.card-header-title.text-white
+                  | Character Listing
+          .card-body            
+            .row.align-items-center
+              .col
+                button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()' disabled)
+                  | Refresh
+              .col-auto
+                select#filter-element.form-select2(style='margin-right: -10px; margin-bottom: 10px;')
+                  option(value='all') -- All Elements --
+                  option(value='fire') Fire
+                  option(value='earth') Earth
+                  option(value='lightning') Lightning
+                  option(value='water') Water
+              .col-md-12
+                .table-responsive.mb-0
+                  table#table-characters.table.table-sm.card-table
+                    thead
+                      tr
+                        th.text-white ID
+                        th.text-white Element
+                        th.text-white Level
+                        th.text-white XP
+                        th.text-white Stamina
+                        th.text-white Price
+                        th.text-white Action
+                    tbody
+include ../footer

@@ -27,9 +27,14 @@ gulp.task('calculator', () => gulp.src(['./public/js/calculator.js'])
   .pipe(minify())
   .pipe(gulp.dest('public/build/js')));
 
-gulp.task('market', () => gulp.src(['./public/js/market.js'])
-  .pipe(concat('market.js'))
+gulp.task('weapon', () => gulp.src(['./public/js/weapon.js'])
+  .pipe(concat('weapon.js'))
   .pipe(minify())
   .pipe(gulp.dest('public/build/js')));
 
-gulp.task('default', gulp.series(['vendor', 'contracts', 'library', 'core', 'calculator', 'market']));
+gulp.task('character', () => gulp.src(['./public/js/character.js'])
+  .pipe(concat('character.js'))
+  .pipe(minify())
+  .pipe(gulp.dest('public/build/js')));
+
+gulp.task('default', gulp.series(['vendor', 'contracts', 'library', 'core', 'calculator', 'weapon', 'character']));

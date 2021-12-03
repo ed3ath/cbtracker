@@ -23,5 +23,9 @@ header.header.navbar.navbar-expand-lg.navbar-dark.navbar-floating.navbar-sticky(
                         a.nav-link(href='/') Home
                     li.nav-item
                         a.nav-link(href='/calculator') Rewards Calculator
-                    li.nav-item
-                        a.nav-link(href='/market') eD3ath's Market Listing
+                    li.nav-item.dropdown
+                        a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') eD3ath's Market Listing
+                        .dropdown-menu
+                            a.dropdown-item(href='/market?type=weapon') Weapons
+                            a.dropdown-item(href='/market?type=character') Characters
+
