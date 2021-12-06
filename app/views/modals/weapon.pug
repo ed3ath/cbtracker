@@ -1,0 +1,26 @@
+#modal-rewards-cal.modal.fade(tabindex='-1' role='dialog' style='display: none;' aria-hidden='true')
+  .modal-dialog.modal-dialog-centered.modal-lg(role="document")
+    .modal-content.bg-dark
+      .modal-header
+        h5.modal-title.text-white
+          | Rewards Calculator
+        button(type="button", class="btn-close", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form
+          .row
+            .col-md-5.col-sm-6.px-2.mb-3
+              .form-group.mb-3
+                input#cal-weap.form-control.form-control.bg-dark.text-white(type='text' placeholder='Weapon ID' readonly)
+              .form-group.mb-3
+                input#cal-char.form-control.form-control.bg-dark.text-white(type='text' placeholder='Character ID')
+              .form-group.mb-3
+                select#cal-stamina.form-control.form-control.bg-dark.text-white
+                  option(value='') -- Select multiplier --
+                  option(value='1') 40 stamina (x1)
+                  option(value='2') 80 stamina (x2)
+                  option(value='3') 120 stamina (x3)
+                  option(value='4') 160 stamina (x4)
+                  option(value='5') 200 stamina (x5)
+            .col-md-7.col-sm-6.px-2.mb-3
+              p#cal-result.text-white(align='center')
+          button#btn-cal.btn.btn-secondary.float-right(type='button' onclick='calRewards()') Run

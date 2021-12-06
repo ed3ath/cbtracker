@@ -63,7 +63,10 @@ async function loadWeaponListing() {
                             <td class="align-middle text-white">${getAvgStats(weapData)}</td>
                             <td class="align-middle text-white">${getTotalMultiplier(weapData)}x</td>
                             <td class="align-middle text-white">${parseFloat(fromEther(price)).toFixed(4)} SKILL</td>
-                            <td class="align-middle text-white"><a href="https://app.cryptoblades.io/#/nft-display/weapon/${weapId}" target="_blank" class="btn btn-sm btn-success">Buy</a></td>
+                            <td class="align-middle text-white">
+                                <button type="button" class="btn btn-warning btn-sm mb-1" onclick="displayCalculator('${weapId}')">Calculator</button><br>
+                                <a href="https://app.cryptoblades.io/#/nft-display/weapon/${weapId}" target="_blank" class="btn btn-sm btn-success">Buy</a>
+                            </td>
                         </tr>`
                 }
             })))
@@ -203,6 +206,81 @@ function filterChanges() {
                 })
             }
         }
+    }
+}
+
+function displayCalculator(weapId) {
+    $('#cal-weap').val(weapId)
+    $('#cal-char').val('')    
+    $('#cal-result').html('')
+    $('#cal-stamina').html(new Option('-- Select multiplier --', ''))
+
+    for (var i = 1; i <= 5; i++) {
+        $('#cal-stamina').append(`<option value="${i}">${i * 40} stamina (x${i})</option>`)
+    }
+
+    $('#modal-rewards-cal').modal('show', {
+        backdrop: 'static',
+        keyboard: false
+    })
+}
+
+async function calRewards() {
+    $('#btn-cal').prop('disabled', true)
+    var weapId = $('#cal-weap').val()
+    var charId = $('#cal-char').val()    
+    var stamina = $('#cal-stamina').val()
+    var calResult = $('#cal-result')
+    try {
+        if (!weapId) throw Error('Please select a weapon.')
+        if (!charId) throw Error('Please enter a character.')
+        if (!stamina) throw Error('Please select a stamina multiplier.')
+
+        calResult.html('Calculating estimated rewards...')
+
+        var charData = characterFromContract(charId, await getCharacterData(charId))
+        var weapData = weaponFromContract(weapId, await getWeaponData(weapId))
+        var targets = await characterTargets(charId, weapId)
+        var enemies = await getEnemyDetails(targets)
+
+        const results = await Promise.all(enemies.map(async (enemy) => {
+            const alignedPower = getAlignedCharacterPower(charData, weapData)
+            const skill = fromEther((await getTokenReward(enemy.power)).toString().split('.')[0]);            
+            const exp = Math.floor((enemy.power / alignedPower) * 32)
+            return {
+                enemy,
+                skill,
+                exp,
+                power: alignedPower
+            }
+        }))
+
+        let minSkill = 0, maxSkill = 0, minExp = 0, maxExp = 0, minPower = 0, maxPower = 0;
+
+        results.forEach(data => {
+            const skill = Number(data.skill)
+            const exp = Number(data.exp)
+            const power = Number(data.power)
+
+            if (minSkill === 0) minSkill = skill
+            if (skill > maxSkill) maxSkill = skill
+            if (skill < minSkill) minSkill = skill
+            
+            if (minExp === 0) minExp = exp
+            if (exp > maxExp) maxExp = exp
+            if (exp < minExp) minExp = exp
+
+            if (minPower === 0) minPower = power
+            if (power > maxPower) maxPower = power
+            if (power < minPower) minPower = power
+        })
+
+        calResult.html('<span class="text-danger">Power</span> | <span class="text-success">Reward</span> | <span class="text-warning">XP</span> <br><hr>')
+        calResult.append(`<span class="text-danger">${parseInt(minPower)}-${parseInt(maxPower)}</span> | <span class="text-success">${parseFloat(minSkill * stamina).toFixed(6)}-${parseFloat(maxSkill * stamina).toFixed(6)}</span> | <span class="text-warning">${parseInt(minExp * stamina)}-${parseInt(maxExp * stamina)}</span>`)
+        $('#btn-cal').removeAttr('disabled')
+    } catch (e) {
+        calResult.html(e.message)
+        $('#btn-cal').removeAttr('disabled')
     }
 }
 
