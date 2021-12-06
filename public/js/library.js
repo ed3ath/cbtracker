@@ -7,6 +7,7 @@ var conAddress = {
         cryptoBlades: '0x39Bea96e13453Ed52A734B6ACEeD4c41F57B2271',
         character: '0xc6f252c2cdd4087e30608a35c022ce490b58179b',
         weapon: '0x7e091b0a220356b157131c831258a9c98ac8031a',
+        shield: '0xf9E9F6019631bBE7db1B71Ec4262778eb6C3c520',
         market: '0x90099dA42806b21128A094C713347C7885aF79e2',
         skillPair: '0x0deb588c1ec6f1d9f348126d401f05c4c7b7a80c',
         tokenPair: '0x58f876857a02d6762e0101bb5c46a8c1ed44dc16'
@@ -17,6 +18,7 @@ var conAddress = {
         cryptoBlades: '0x29869EDb088466a49f75654d8F04edd16Bf60e75',
         character: '0xF6092CDEaabd02069cB56E2b770367AAcf49dfba',
         weapon: '0xa0f254436E43239D2B3947A9D590C495738B6A4C',
+        shield: '0xb4eD70aC5B00ca0fd9526089489979e116E45ec0',
         market: '0x0f6dAA5F4b4277BE496c80aeCD0D101b8dEE6440',
         skillPair: '0x7c9739ecD7882157b1C526a832FfD5A50860078d',
         tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0'
@@ -27,6 +29,7 @@ var conAddress = {
         cryptoBlades: '0x98145a2fEBac238280bbdEDc2757dC162318b16e',
         character: '0x6A1d1803d4EDF5CF27EDb64ae95A22F81707eA38',
         weapon: '0x364759180A6484e57ECD73C042264A6Da75770e8',
+        shield: '0x8c52FabF2442b0EB83518DaB93A8073Ce5B0BA15',
         market: '0x5ea2373e281E92FE3c53dc36cE855D89BF25F6F8',
         skillPair: '0x2d9cdad4b89d91e6a44ec1c8b227b0c2b0d4e2cf',
         tokenPair: '0xa75bd9f086bbc1168b01fd5e750986b5170c2b26'
@@ -37,6 +40,7 @@ var conAddress = {
         cryptoBlades: '0x070b1A95898B927A900A1F9F42b114154648E51A',
         character: '0x929059Fef67b88CE2F4127e59B50bEA123981998',
         weapon: '0xD9C5449EfB3f99952F73e824688724aAFB81dE6E',
+        shield: '0x68a288c2A96e2cd5c45769e02f2bbc2E90BAE39B',
         market: '0xeE6e8467268eA752b027676B3EBcD4eB05749874',
         skillPair: '0x42ba6f3aF9d8A2A30F5e55362c45e7121a932b77',
         tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797'
@@ -47,13 +51,13 @@ var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
     okex: 'https://exchainrpc.okex.org',
-    poly: 'https://matic-mainnet.chainstacklabs.com'
+    poly: 'https://rpc-endpoints.superfluid.dev/matic'
 }
 
 var currentNetwork = localStorage.getItem('network')
 
 if (!networks.includes(currentNetwork)) {
-    currentNetwork = 'bsc'    
+    currentNetwork = 'bsc'
     localStorage.setItem('network', currentNetwork)  
 }
 
@@ -64,6 +68,7 @@ var conStakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].t
 var conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
 var conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
 var conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
+var conShields = new web3.eth.Contract(Shields, conAddress[currentNetwork].shield);
 var conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
 var skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
 var gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
@@ -94,20 +99,20 @@ var getAccountWeapons = async address => {
     );
     return weapons;
 };
-var getAccountSkillReward = address => conCryptoBlades.methods.getTokenRewardsFor(address).call();
-var getOwnRewardsClaimTax = address => conCryptoBlades.methods.getOwnRewardsClaimTax().call({ from: address });
-var getRewardsClaimTaxMax = address => conCryptoBlades.methods.REWARDS_CLAIM_TAX_MAX().call({ from: address });
-var getIngameSkill = address => conCryptoBlades.methods.inGameOnlyFunds(address).call({ from: address });
-var getCharacterExp = charId => conCryptoBlades.methods.getXpRewards(`${charId}`).call();
-var characterTargets = (charId, weapId) => conCryptoBlades.methods.getTargets(charId, weapId).call();
-var getCharacterStamina = charId => conCharacters.methods.getStaminaPoints(`${charId}`).call();
-var getCharacterData = charId => conCharacters.methods.get(`${charId}`).call();
-var getWeaponData = weapId => conWeapons.methods.get(`${weapId}`).call();
-var fetchFightGasOffset = async () => conCryptoBlades.methods.fightRewardGasOffset().call();
-var fetchFightBaseline = async () => conCryptoBlades.methods.fightRewardBaseline().call();
-var usdToSkill = async value => conCryptoBlades.methods.usdToSkill(value).call();
-var decodeAbi = (types, data) => web3.eth.abi.decodeParameters(types, data);
-var getPastLogs = options => web3.eth.getPastLogs(options);
+var getAccountSkillReward = address => conCryptoBlades.methods.getTokenRewardsFor(address).call()
+var getOwnRewardsClaimTax = address => conCryptoBlades.methods.getOwnRewardsClaimTax().call({ from: address })
+var getRewardsClaimTaxMax = address => conCryptoBlades.methods.REWARDS_CLAIM_TAX_MAX().call({ from: address })
+var getIngameSkill = address => conCryptoBlades.methods.inGameOnlyFunds(address).call({ from: address })
+var getCharacterExp = charId => conCryptoBlades.methods.getXpRewards(`${charId}`).call()
+var characterTargets = (charId, weapId) => conCryptoBlades.methods.getTargets(charId, weapId).call()
+var getCharacterStamina = charId => conCharacters.methods.getStaminaPoints(`${charId}`).call()
+var getCharacterData = charId => conCharacters.methods.get(`${charId}`).call()
+var getWeaponData = weapId => conWeapons.methods.get(`${weapId}`).call()
+var fetchFightGasOffset = async () => conCryptoBlades.methods.fightRewardGasOffset().call()
+var fetchFightBaseline = async () => conCryptoBlades.methods.fightRewardBaseline().call()
+var usdToSkill = async value => conCryptoBlades.methods.usdToSkill(value).call()
+var decodeAbi = (types, data) => web3.eth.abi.decodeParameters(types, data)
+var getPastLogs = options => web3.eth.getPastLogs(options)
 var getLatestBlock = async () =>  web3.eth.getBlock('latest')
 var getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCryptoBlades.getPastEvents(event, {fromBlock, toBlock, address, topics})
 var getTransaction = async hash => web3.eth.getTransaction(hash)
@@ -121,6 +126,11 @@ var getPayPerFight = async () => conCryptoBlades.methods.vars(5).call()
 var getMaxPayPerFight = async () => conCryptoBlades.methods.vars(12).call()
 var getLastReset = async () => conCryptoBlades.methods.vars(6).call()
 var getMaxClaim = async () => conCryptoBlades.methods.vars(7).call()
+var getHourlyFights = async () => conCryptoBlades.methods.vars(2).call()
+var getHourlyPowerSum = async () => conCryptoBlades.methods.vars(3).call()
+var getTotalCharacters = async () => conCharacters.methods.totalSupply().call()
+var getTotalWeapons = async () => conWeapons.methods.totalSupply().call()
+var getTotalShields = async () => conShields.methods.totalSupply().call()
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()
@@ -153,6 +163,7 @@ function updateNetwork(network) {
     conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
     conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
     conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
+    conShields = new web3.eth.Contract(Shields, conAddress[currentNetwork].shield);
     conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
     skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
     gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
