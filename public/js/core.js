@@ -189,8 +189,6 @@ async function loadData() {
         var now = moment().unix()
         var timeLeft = (lastClaim + 86400) - now
 
-        console.log(lastClaim, now, timeLeft)
-
         var charCount = parseInt($cardChar.html())
         charCount += charIds.length
         $cardChar.html(charCount)
