@@ -51,7 +51,7 @@ var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
     okex: 'https://exchainrpc.okex.org',
-    poly: 'https://rpc-endpoints.superfluid.dev/matic'
+    poly: 'https://polygon-rpc.com/'
 }
 
 var currentNetwork = localStorage.getItem('network')
