@@ -184,12 +184,10 @@ async function loadData() {
         var unclaimed = await getAccountSkillReward(address)
         var claimTax = await getOwnRewardsClaimTax(address);
         var unclaimedTaxed = unclaimed * (1 - convertClaimTax(claimTax))
-        var claimable = await getClaimable(address)
-        var lastClaim = parseInt(await getLastClaim(address))
+        var claimable = Number(await getClaimable(address))
+        var lastClaim = Number(await getLastClaim(address))
         var now = moment().unix()
         var timeLeft = (lastClaim + 86400) - now
-
-        console.log(lastClaim, now, timeLeft)
 
         var charCount = parseInt($cardChar.html())
         charCount += charIds.length
