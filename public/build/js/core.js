@@ -184,9 +184,12 @@ async function loadData() {
         var unclaimed = await getAccountSkillReward(address)
         var claimTax = await getOwnRewardsClaimTax(address);
         var unclaimedTaxed = unclaimed * (1 - convertClaimTax(claimTax))
-        var ingame = await getIngameSkill(address)
-        var timeLeft = await getStakedTimeLeft(address)
+        var claimable = await getClaimable(address)
+        var lastClaim = parseInt(await getLastClaim(address))
+        var now = moment().unix()
+        var timeLeft = (lastClaim + 86400) - now
 
+        console.log(lastClaim, now, timeLeft)
 
         var charCount = parseInt($cardChar.html())
         charCount += charIds.length
@@ -194,7 +197,7 @@ async function loadData() {
 
         var charLen = charIds.length
 
-        $cardIngame.html((formatNumber(parseFloat($cardIngame.html()) + parseFloat(fromEther(ingame)))))
+        $cardIngame.html((formatNumber(parseFloat($cardIngame.html()) + parseFloat(fromEther(claimable)))))
         $cardUnclaim.html((formatNumber(parseFloat($cardUnclaim.html()) + parseFloat(fromEther(unclaimed)))))
         $cardStake.html((formatNumber(parseFloat($cardStake.html()) + parseFloat(fromEther(staked)))))
         $cardWallet.html((formatNumber(parseFloat($cardWallet.html()) + parseFloat(fromEther(wallet)))))
@@ -239,12 +242,12 @@ async function loadData() {
                             <td rowspan="${charLen}" class='align-middle' data-id="${address}">${storeNames[address]}</td>
                             <td rowspan="${charLen}" class='align-middle address-column'>${address}</td>
                             ${charHtml}
-                            <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(ingame))}<br />${(Number(parseFloat(fromEther(ingame)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(ingame))))})</span>` : '')}</td>
                             <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(unclaimed))}<br />${(Number(parseFloat(fromEther(unclaimed)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(unclaimed))))})</span>` : '')}</td>
+                            <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(claimable))}<br />${(Number(parseFloat(fromEther(claimable)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(claimable))))})</span>` : '')}</td>
                             <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(staked))}<br />${(Number(parseFloat(fromEther(staked)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
                             <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(wallet))}<br />${(Number(parseFloat(fromEther(wallet)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
                             <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(skillTotal))}<br />${(Number(parseFloat(fromEther(skillTotal)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
-                            <td class="unstake-column" rowspan="${charLen}" class='align-middle'>${(timeLeft > 0 ? unstakeSkillAt(timeLeft) : (Number(parseFloat(fromEther(staked)).toFixed(6)) > 0 ? '<span class="text-gold">Claim now</span>' : ''))}</td>
+                            <td class="unstake-column" rowspan="${charLen}" class='align-middle'>${(timeLeft <= 0 ? '<span class="text-gold">Claim now</span>' : unstakeSkillAt(timeLeft))}</td>
                             <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(formatNumber(fromEther(binance)))}<br />${(Number(parseFloat(fromEther(binance)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
