@@ -5,8 +5,8 @@ var $table = $('#table-result tbody')
 
 async function testSimulate() {
     $('#btn-simulate').prop('disabled', true)
-    const charId = $('#combat-character').val()
-    const weapId = $('#combat-weapon').val()
+    var charId = $('#combat-character').val()
+    var weapId = $('#combat-weapon').val()
     $table.html('')
     
     try {
@@ -15,15 +15,15 @@ async function testSimulate() {
         
         $table.html('<tr><td class="text-white text-center" colspan="13">Calculating....</span></tr>')
 
-        const charData = characterFromContract(charId, await getCharacterData(charId))
-        const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
-        const targets = await characterTargets(charId, weapId)
-        const enemies = await getEnemyDetails(targets)
+        var charData = characterFromContract(charId, await getCharacterData(charId))
+        var weapData = weaponFromContract(weapId, await getWeaponData(weapId))
+        var targets = await characterTargets(charId, weapId)
+        var enemies = await getEnemyDetails(targets)
 
-        const results = await Promise.all(enemies.map(async (enemy) => {
-            const alignedPower = getAlignedCharacterPower(charData, weapData)
-            const skill = fromEther((await getTokenReward(enemy.power)).toString().split('.')[0]);            
-            const exp = Math.floor((enemy.power / alignedPower) * 32)
+        var results = await Promise.all(enemies.map(async (enemy) => {
+            var alignedPower = getAlignedCharacterPower(charData, weapData)
+            var skill = fromEther((await getTokenReward(enemy.power)).toString().split('.')[0]);            
+            var exp = Math.floor((enemy.power / alignedPower) * 32)
             return {
                 enemy,
                 skill,
@@ -34,8 +34,8 @@ async function testSimulate() {
         let minSkill = 0, maxSkill = 0, minExp = 0, maxExp = 0;
 
         results.forEach(data => {
-            const skill = Number(data.skill)
-            const exp = Number(data.exp)
+            var skill = Number(data.skill)
+            var exp = Number(data.exp)
 
             if (minSkill === 0) minSkill = skill
             if (skill > maxSkill) maxSkill = skill
@@ -47,7 +47,7 @@ async function testSimulate() {
         })
 
         $table.html('')
-        const fights = parseInt(288 / 40)        
+        var fights = parseInt(288 / 40)        
         for(var i = fights; i > 0; i--) {
             $table.append(` <tr>
                                 <td class="text-white">${i}</td>

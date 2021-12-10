@@ -7,9 +7,9 @@ async function loadWeaponListing() {
     $('#filter-element').prop('disabled', true)
     $('#filter-type').prop('disabled', true)
     $.get(`https://cbtracker-api.herokuapp.com/market/weapons?network=${currentNetwork}`, async result => {
-        $table.html('')
+        $table.html('<tr><td class="text-center text-white" colspan="9">No weapon listed</td></tr>')
         if (result.length > 0) {
-            $table.append(await Promise.all(result.map(async weapId => {
+            const resApp = await Promise.all(result.map(async weapId => {
                 const weapData = weaponFromContract(weapId, await getWeaponData(weapId))
                 const price = await getFinalPrice(conAddress[currentNetwork].weapon, weapId)
                 if (parseFloat(price) > 0) {
@@ -69,9 +69,10 @@ async function loadWeaponListing() {
                             </td>
                         </tr>`
                 }
-            })))
-        } else {
-            $table.append('<tr><td class="text-center text-white" colspan="8">No weapon listed</td></tr>')
+            }))
+            if (resApp.join("").length > 0) {
+                $table.html(resApp)
+            }
         }
         sortTable()
         filterChanges()

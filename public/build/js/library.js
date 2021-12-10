@@ -1,4 +1,4 @@
-var networks = ['bsc', 'heco', 'okex', 'poly']
+var networks = ['bsc', 'heco', 'eoc', 'poly']
 
 var conAddress = {
     bsc: {
@@ -23,7 +23,7 @@ var conAddress = {
         skillPair: '0x7c9739ecD7882157b1C526a832FfD5A50860078d',
         tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0'
     },
-    okex: {
+    eoc: {
         staking: '0xC5707a6a16CCe1963Ec3E6cdEE0A91e4876Be395',
         token: '0xcC137b0713E0DC63b1fA136272014F2A54Dd7aCB',
         cryptoBlades: '0x98145a2fEBac238280bbdEDc2757dC162318b16e',
@@ -50,7 +50,7 @@ var conAddress = {
 var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
-    okex: 'https://exchainrpc.okex.org',
+    eoc: 'https://exchainrpc.okex.org',
     poly: 'https://polygon-rpc.com/'
 }
 
@@ -136,13 +136,13 @@ var getClaimable = address => conCryptoBlades.methods.getRemainingTokenClaimAmou
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()
-    if (currentNetwork === 'okex' || currentNetwork === 'poly') return reserves[0] / reserves[1]
+    if (currentNetwork === 'eoc' || currentNetwork === 'poly') return reserves[0] / reserves[1]
     return reserves[1] / reserves[0]
 }
 
 var getGasPrice = async () => {
     const reserves = await gasPair.methods.getReserves().call()
-    if (currentNetwork === 'okex') return reserves[0] / reserves[1]
+    if (currentNetwork === 'eoc') return reserves[0] / reserves[1]
     return reserves[1] / reserves[0]
 }
 
