@@ -719,7 +719,7 @@ function gasName(network) {
     switch (network) {
         case 'bsc': return 'BNB'
         case 'heco': return 'HT'
-        case 'eoc': return 'OKT'
+        case 'oec': return 'OKT'
         case 'poly': return 'MATIC'
         default: return 'BNB'
     }
