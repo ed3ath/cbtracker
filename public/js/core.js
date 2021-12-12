@@ -328,6 +328,10 @@ async function priceTicker() {
         gasPrice *= 1000000000000
         skillPrice *= gasPrice
     }
+    if (currentNetwork === 'avax') {
+        gasPrice *= 1000000000000
+        skillPrice *= 1000000000000
+    }
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${currencies.join(',')}`, async (result) => {
         usdPrice = result.tether[currCurrency]
         bnbPrice = gasPrice * usdPrice
@@ -721,6 +725,7 @@ function gasName(network) {
         case 'heco': return 'HT'
         case 'oec': return 'OKT'
         case 'poly': return 'MATIC'
+        case 'avax': return 'AVAX'
         default: return 'BNB'
     }
 }
@@ -744,9 +749,9 @@ const getLogs = async (start, end, address) => getPastEvents(
 const delay = async ms => await new Promise(resolve => setTimeout(resolve, ms))
 
 async function logs(address) {
-    const huntResult = $('#table-logs tbody')
+    const fightResult = $('#table-logs tbody')
     const latestBlock = await getLatestBlock()
-    let maxBlocks = 1500
+    let maxBlocks = 3000
     let current = latestBlock.number - (maxBlocks * 20)
     let list = [], fights = 0, wins = 0, skill = 0, exp = 0
 
@@ -754,7 +759,7 @@ async function logs(address) {
         list.push(current)
         current += maxBlocks
     }
-    huntResult.html('')
+    fightResult.html('')
     $('#card-fights').html(0)
     $('#card-winrate').html('0.00%')
     $('#card-skill').html(0)
@@ -777,7 +782,7 @@ async function logs(address) {
                 skill += Number(fromEther(skillGain))
                 exp += Number(xpGain)
                 if (parseInt(playerRoll) > parseInt(enemyRoll)) wins += 1
-                huntResult.append(`<tr>
+                fightResult.append(`<tr>
                                 <td class='text-white text-center'>${(parseInt(playerRoll) > parseInt(enemyRoll) ? '<span class="text-success">Won</span>' : '<span class="text-danger">Lost</span>')}</td>
                                 <td class='text-white text-center'>${character}</td>
                                 <td class='text-white text-center'>${weapon}</td>
@@ -791,7 +796,7 @@ async function logs(address) {
             console.log(e)
         }
     }
-    if (count === 0) huntResult.html('<tr><td class="text-center text-white" colspan="7">No fights retrieved</td></tr>')
+    if (count === 0) fightResult.html('<tr><td class="text-center text-white" colspan="7">No fights retrieved</td></tr>')
     $('#card-fights').html(fights)
     $('#card-winrate').html(`${(wins > 0 ? parseFloat((wins / fights) * 100).toFixed(2) : '0.00')}%`)
     $('#card-skill').html(parseFloat(skill).toFixed(6))

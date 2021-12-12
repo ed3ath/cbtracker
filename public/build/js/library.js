@@ -1,4 +1,4 @@
-var networks = ['bsc', 'heco', 'oec', 'poly']
+var networks = ['bsc', 'heco', 'oec', 'poly', 'avax']
 
 var conAddress = {
     bsc: {
@@ -44,6 +44,17 @@ var conAddress = {
         market: '0xeE6e8467268eA752b027676B3EBcD4eB05749874',
         skillPair: '0x42ba6f3aF9d8A2A30F5e55362c45e7121a932b77',
         tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797'
+    },
+    avax: {
+        staking: '0x96438Debb1419bF0B53119Edae6e664c931504CA',
+        token: '0x483416eB3aFA601B9C6385f63CeC0C82B6aBf1fb',
+        cryptoBlades: '0x46419526a59ec1d73b72620ae16da091bE8486bd',
+        character: '0x28857ccCCa599f0876792094870758A18F581Dc0',
+        weapon: '0xe8f172B51186A4c8127D5eE05617dCA6aAf478fE',
+        shield: '0x1609BD8ea43b1c23dE90071B82CD08FA098DdCF3',
+        market: '0x9469ED8d4b86e4442b4AA848bB94B9f9130f123E',
+        skillPair: '0xF52B3Df311182F43202806ee0E72aCB92d777879',
+        tokenPair: '0xe28984e1ee8d431346d32bec9ec800efb643eef4'
     }
 }
 
@@ -51,7 +62,8 @@ var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
     oec: 'https://exchainrpc.okex.org',
-    poly: 'https://polygon-rpc.com/'
+    poly: 'https://polygon-rpc.com/',
+    avax: 'https://api.avax.network/ext/bc/C/rpc'
 }
 
 var currentNetwork = localStorage.getItem('network')
