@@ -326,10 +326,6 @@ async function priceTicker() {
         gasPrice *= 1000000000000
         skillPrice *= gasPrice
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> beb9d798da7693a2ce50a99133975e58c8a55242
     if (currentNetwork === 'avax') {
         gasPrice *= 1000000000000
         skillPrice *= 1000000000000
