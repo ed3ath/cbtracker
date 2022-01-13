@@ -101,7 +101,7 @@ var gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPa
 
 var isAddress = address => web3.utils.isAddress(address);
 var getBNBBalance = address => web3.eth.getBalance(address);
-var fromEther = (value) => web3.utils.fromWei(BigInt(value).toString(), 'ether');
+var fromEther = (value) => web3.utils.fromWei(BigInt(Math.trunc(value)).toString(), 'ether');
 
 var getRewardsPoolBalance = () => conStakingReward.methods.balanceOf(mainAddress).call();
 var getStakingPoolBalance = () => conStakingToken.methods.balanceOf(stakingRewardAddress).call();
