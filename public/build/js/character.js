@@ -7,9 +7,9 @@ async function loadCharacterListing() {
     $('#filter-element').prop('disabled', true)
     $('#filter-type').prop('disabled', true)
     $.get(`https://cbtracker-api.herokuapp.com/market/characters?network=${currentNetwork}`, async result => {
-        $table.html('')
+        $table.html('<tr><td class="text-center text-white" colspan="8">No character listed</td></tr>')
         if (result.length > 0) {
-            $table.append(await Promise.all(result.map(async charId => {
+            const resApp = await Promise.all(result.map(async charId => {
                 const charData = characterFromContract(charId, await getCharacterData(charId))
                 const stamina = await getCharacterStamina(charId)
                 const price = await getFinalPrice(conAddress[currentNetwork].character, charId)
@@ -33,9 +33,10 @@ async function loadCharacterListing() {
                             <td class="align-middle text-white"><a href="https://app.cryptoblades.io/#/nft-display/character/${charId}" target="_blank" class="btn btn-sm btn-success">Buy</a></td>
                         </tr>`
                 }
-            })))
-        } else {
-            $table.append('<tr><td class="text-center text-white" colspan="8">No character listed</td></tr>')
+            }))
+            if (resApp.join("").length > 0) {
+                $table.html(resApp)
+            }
         }
         sortTable()
         filterChanges()

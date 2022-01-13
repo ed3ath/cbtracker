@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 var networks = ['bsc', 'heco', 'okex', 'poly', 'avax']
+=======
+var networks = ['bsc', 'heco', 'oec', 'poly', 'avax']
+>>>>>>> beb9d798da7693a2ce50a99133975e58c8a55242
 
 var conAddress = {
     bsc: {
@@ -25,7 +29,7 @@ var conAddress = {
         tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0',
         treasury: '0x7843Bd2aDdE5E54bD6e61C28fA89009240a48C08'
     },
-    okex: {
+    oec: {
         staking: '0xC5707a6a16CCe1963Ec3E6cdEE0A91e4876Be395',
         token: '0xcC137b0713E0DC63b1fA136272014F2A54Dd7aCB',
         cryptoBlades: '0x98145a2fEBac238280bbdEDc2757dC162318b16e',
@@ -46,8 +50,12 @@ var conAddress = {
         shield: '0x68a288c2A96e2cd5c45769e02f2bbc2E90BAE39B',
         market: '0xeE6e8467268eA752b027676B3EBcD4eB05749874',
         skillPair: '0x42ba6f3aF9d8A2A30F5e55362c45e7121a932b77',
+<<<<<<< HEAD
         tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797',
         treasury: '0x216AC39765D920D7f86162Daf9BE1f045f321A8D'
+=======
+        tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797'
+>>>>>>> beb9d798da7693a2ce50a99133975e58c8a55242
     },
     avax: {
         staking: '0x96438Debb1419bF0B53119Edae6e664c931504CA',
@@ -57,15 +65,21 @@ var conAddress = {
         weapon: '0xe8f172B51186A4c8127D5eE05617dCA6aAf478fE',
         shield: '0x1609BD8ea43b1c23dE90071B82CD08FA098DdCF3',
         market: '0x9469ED8d4b86e4442b4AA848bB94B9f9130f123E',
+<<<<<<< HEAD
         skillPair: '0xf52b3df311182f43202806ee0e72acb92d777879',
         tokenPair: '0xe28984e1ee8d431346d32bec9ec800efb643eef4',
         treasury: '0x5B1cCb62D2F9c8523abBa89A56432005cef03b99'
+=======
+        skillPair: '0xF52B3Df311182F43202806ee0E72aCB92d777879',
+        tokenPair: '0xe28984e1ee8d431346d32bec9ec800efb643eef4'
+>>>>>>> beb9d798da7693a2ce50a99133975e58c8a55242
     }
 }
 
 var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
+<<<<<<< HEAD
     okex: 'https://exchainrpc.okex.org',
     poly: 'https://polygon-rpc.com/',
     avax: 'https://api.avax.network/ext/bc/C/rpc'
@@ -77,6 +91,11 @@ var skillPartnerIds = {
     okex: 0,
     poly: 1,
     avax: 0
+=======
+    oec: 'https://exchainrpc.okex.org',
+    poly: 'https://polygon-rpc.com/',
+    avax: 'https://api.avax.network/ext/bc/C/rpc'
+>>>>>>> beb9d798da7693a2ce50a99133975e58c8a55242
 }
 
 var currentNetwork = localStorage.getItem('network')
@@ -163,13 +182,13 @@ var getSkillMultiplier = () => conTreasury.methods.getProjectMultiplier(skillPar
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()
-    if (currentNetwork === 'okex' || currentNetwork === 'poly') return reserves[0] / reserves[1]
+    if (currentNetwork === 'oec' || currentNetwork === 'poly') return reserves[0] / reserves[1]
     return reserves[1] / reserves[0]
 }
 
 var getGasPrice = async () => {
     const reserves = await gasPair.methods.getReserves().call()
-    if (currentNetwork === 'okex') return reserves[0] / reserves[1]
+    if (currentNetwork === 'oec') return reserves[0] / reserves[1]
     return reserves[1] / reserves[0]
 }
 
