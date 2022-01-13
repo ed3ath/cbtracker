@@ -80,8 +80,7 @@ var $cardIngame = $('#card-ingame'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
     $convPrice = $('#conv-price'),
-    $convReward = $('#conv-reward'),
-    $convClaim = $('#conv-claim')
+    $convReward = $('#conv-reward')
 
 $('document').ready(async () => {
     priceTicker()
@@ -120,7 +119,6 @@ function fiatConversion() {
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
     if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
     if (isElementNotZero($cardReward)) $convReward.html(`(${toLocaleCurrency(convertToFiat($cardReward.html()))})`)
-    if (isElementNotZero($cardClaim)) $convClaim.html(`(${toLocaleCurrency(convertToFiat($cardClaim.html()))})`)
 }
 function clearFiat() {
     $convIngame.html('')
@@ -131,7 +129,6 @@ function clearFiat() {
     $convBnb.html('')
     $convPrice.html('')
     $convReward.html('')
-    $convClaim.html('')
 }
 
 function isElementNotZero($elem) {
@@ -184,7 +181,7 @@ async function loadData() {
         var unclaimed = await getAccountSkillReward(address)
         var claimTax = await getOwnRewardsClaimTax(address);
         var unclaimedTaxed = unclaimed * (1 - convertClaimTax(claimTax))
-        var claimable = Number(await getClaimable(address))
+        var claimable = unclaimed * Number(fromEther(await getSkillMultiplier()))
         var lastClaim = Number(await getLastClaim(address))
         var now = moment().unix()
         var timeLeft = (lastClaim + 86400) - now
@@ -324,9 +321,15 @@ async function priceTicker() {
     skillPrice = await getSkillPrice()
     gasPrice = await getGasPrice()
 
+
     if (currentNetwork === 'poly') {
         gasPrice *= 1000000000000
         skillPrice *= gasPrice
+    }
+
+    if (currentNetwork === 'avax') {
+        gasPrice *= 1000000000000
+        skillPrice *= 1000000000000
     }
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${currencies.join(',')}`, async (result) => {
         usdPrice = result.tether[currCurrency]
@@ -341,7 +344,7 @@ async function priceTicker() {
 
 async function statTicker() {
     const fightAllowance = await getCurrentAllowance()
-    const maxClaim = await getMaxClaim()
+    const maxClaim = await getSkillMultiplier()
 
     $cardReward.html(parseFloat(fromEther(fightAllowance)).toFixed(6))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
@@ -721,6 +724,7 @@ function gasName(network) {
         case 'heco': return 'HT'
         case 'okex': return 'OKT'
         case 'poly': return 'MATIC'
+        case 'avax': return 'AVAX'
         default: return 'BNB'
     }
 }

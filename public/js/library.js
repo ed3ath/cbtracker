@@ -1,4 +1,4 @@
-var networks = ['bsc', 'heco', 'okex', 'poly']
+var networks = ['bsc', 'heco', 'okex', 'poly', 'avax']
 
 var conAddress = {
     bsc: {
@@ -10,7 +10,8 @@ var conAddress = {
         shield: '0xf9E9F6019631bBE7db1B71Ec4262778eb6C3c520',
         market: '0x90099dA42806b21128A094C713347C7885aF79e2',
         skillPair: '0x0deb588c1ec6f1d9f348126d401f05c4c7b7a80c',
-        tokenPair: '0x58f876857a02d6762e0101bb5c46a8c1ed44dc16'
+        tokenPair: '0x58f876857a02d6762e0101bb5c46a8c1ed44dc16',
+        treasury: '0x812Fa2f7d89e5d837450702bd51120920dccaA99'
     },
     heco: {
         staking: '0x6109A500e5b9CE40FFe075Ea3A6beA6e93c23BcF',
@@ -21,7 +22,8 @@ var conAddress = {
         shield: '0xb4eD70aC5B00ca0fd9526089489979e116E45ec0',
         market: '0x0f6dAA5F4b4277BE496c80aeCD0D101b8dEE6440',
         skillPair: '0x7c9739ecD7882157b1C526a832FfD5A50860078d',
-        tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0'
+        tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0',
+        treasury: '0x7843Bd2aDdE5E54bD6e61C28fA89009240a48C08'
     },
     okex: {
         staking: '0xC5707a6a16CCe1963Ec3E6cdEE0A91e4876Be395',
@@ -32,7 +34,8 @@ var conAddress = {
         shield: '0x8c52FabF2442b0EB83518DaB93A8073Ce5B0BA15',
         market: '0x5ea2373e281E92FE3c53dc36cE855D89BF25F6F8',
         skillPair: '0x2d9cdad4b89d91e6a44ec1c8b227b0c2b0d4e2cf',
-        tokenPair: '0xa75bd9f086bbc1168b01fd5e750986b5170c2b26'
+        tokenPair: '0xa75bd9f086bbc1168b01fd5e750986b5170c2b26',
+        treasury: '0xcBEfF02841370997054AdfF624dC490C8cB20406'
     },
     poly: {
         staking: '0xE34e7cA8e64884E3b5Cd48991ba229d8302E85da',
@@ -43,7 +46,20 @@ var conAddress = {
         shield: '0x68a288c2A96e2cd5c45769e02f2bbc2E90BAE39B',
         market: '0xeE6e8467268eA752b027676B3EBcD4eB05749874',
         skillPair: '0x42ba6f3aF9d8A2A30F5e55362c45e7121a932b77',
-        tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797'
+        tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797',
+        treasury: '0x216AC39765D920D7f86162Daf9BE1f045f321A8D'
+    },
+    avax: {
+        staking: '0x96438Debb1419bF0B53119Edae6e664c931504CA',
+        token: '0x483416eB3aFA601B9C6385f63CeC0C82B6aBf1fb',
+        cryptoBlades: '0x46419526a59ec1d73b72620ae16da091bE8486bd',
+        character: '0x28857ccCCa599f0876792094870758A18F581Dc0',
+        weapon: '0xe8f172B51186A4c8127D5eE05617dCA6aAf478fE',
+        shield: '0x1609BD8ea43b1c23dE90071B82CD08FA098DdCF3',
+        market: '0x9469ED8d4b86e4442b4AA848bB94B9f9130f123E',
+        skillPair: '0xf52b3df311182f43202806ee0e72acb92d777879',
+        tokenPair: '0xe28984e1ee8d431346d32bec9ec800efb643eef4',
+        treasury: '0x5B1cCb62D2F9c8523abBa89A56432005cef03b99'
     }
 }
 
@@ -51,7 +67,16 @@ var nodes = {
     bsc: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
     okex: 'https://exchainrpc.okex.org',
-    poly: 'https://polygon-rpc.com/'
+    poly: 'https://polygon-rpc.com/',
+    avax: 'https://api.avax.network/ext/bc/C/rpc'
+}
+
+var skillPartnerIds = {
+    bsc: 3,
+    heco: 0,
+    okex: 0,
+    poly: 1,
+    avax: 0
 }
 
 var currentNetwork = localStorage.getItem('network')
@@ -70,6 +95,7 @@ var conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork]
 var conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
 var conShields = new web3.eth.Contract(Shields, conAddress[currentNetwork].shield);
 var conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
+var conTreasury = new web3.eth.Contract(Treasury, conAddress[currentNetwork].treasury)
 var skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
 var gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
 
@@ -133,6 +159,7 @@ var getTotalWeapons = () => conWeapons.methods.totalSupply().call()
 var getTotalShields = () => conShields.methods.totalSupply().call()
 var getLastClaim = address => conCryptoBlades.methods.userVars(address, 10002).call()
 var getClaimable = address => conCryptoBlades.methods.getRemainingTokenClaimAmountPreTax().call({ from: address })
+var getSkillMultiplier = () => conTreasury.methods.getProjectMultiplier(skillPartnerIds[currentNetwork]).call()
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()
@@ -160,13 +187,14 @@ function updateNetwork(network) {
     currentNetwork = network
     localStorage.setItem('network', currentNetwork)  
     web3 = new Web3(nodes[currentNetwork]);
-    conStakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking);
-    conStakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token);
-    conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades);
-    conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character);
-    conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon);
-    conShields = new web3.eth.Contract(Shields, conAddress[currentNetwork].shield);
-    conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market);
+    conStakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking)
+    conStakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token)
+    conCryptoBlades = new web3.eth.Contract(CryptoBlades, conAddress[currentNetwork].cryptoBlades)
+    conCharacters = new web3.eth.Contract(Characters, conAddress[currentNetwork].character)
+    conWeapons = new web3.eth.Contract(Weapons, conAddress[currentNetwork].weapon)
+    conShields = new web3.eth.Contract(Shields, conAddress[currentNetwork].shield)
+    conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market)
+    conTreasury = new web3.eth.Contract(Treasury, conAddress[currentNetwork].treasury)
     skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
     gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
 }
