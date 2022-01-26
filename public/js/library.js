@@ -123,7 +123,7 @@ var conMultiCall = new web3.eth.Contract(MultiCall, conAddress[currentNetwork].m
 var isAddress = address => web3.utils.isAddress(address);
 var getBNBBalance = address => web3.eth.getBalance(address);
 var fromEther = (value) => web3.utils.fromWei(BigInt(Math.trunc(value)).toString(), 'ether');
-var toEther = (value) => web3.utils.toWei(parseFloat(value).toString(), 'ether');
+var toEther = (value) => web3.utils.toWei(value.toFixed(18), 'ether');
 
 var getRewardsPoolBalance = () => conStakingReward.methods.balanceOf(mainAddress).call();
 var getStakingPoolBalance = () => conStakingToken.methods.balanceOf(stakingRewardAddress).call();
