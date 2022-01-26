@@ -313,3 +313,11 @@ function toFixed(num, fixed) {
 	const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
 	return num.toString().match(re)[0];
 }
+
+function sumOfStakedSkill (...arr) {
+    let total = 0
+    arr.forEach(i => {
+        total += parseFloat(fromEther(i))
+    })
+    return toEther(total)
+}

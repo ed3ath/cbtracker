@@ -1,7 +1,6 @@
 var accounts = localStorage.getItem('accounts')
 var names = localStorage.getItem('names')
 var hideAddress = (localStorage.getItem('hideAddress') === 'true')
-var includeClaimTax = (localStorage.getItem('includeClaimTax') === 'true')
 var hideChars = (localStorage.getItem('hideChars') === 'true')
 var hideSkills = (localStorage.getItem('hideSkills') === 'true')
 var hideUnstake = (localStorage.getItem('hideUnstake') === 'true')
@@ -33,12 +32,6 @@ if (hideAddress) {
     $('#btn-privacy').prop('checked', true)
 } else {
     $('#btn-privacy').removeAttr('checked')
-}
-
-if (includeClaimTax) {
-    $('#btn-tax').prop('checked', true)
-} else {
-    $('#btn-tax').removeAttr('checked')
 }
 
 if (hideChars) {
@@ -166,25 +159,27 @@ async function loadData() {
     $cardStake.html(0)
     $cardWallet.html(0)
     $cardTotal.html(0)
-    $cardTotalTitle.html(includeClaimTax === true ? "Taxed Skill Assets" : "Total Skill Assets")
     $cardBnb.html(0)
     $cardChar.html(0)
     $cardAccount.html(storeAccounts.length)
+
+    if (currentNetwork === 'bsc') {
+        var accSkillStaked30 = await multicall(getNFTCall(SkillStaking30, conAddress[currentNetwork].skillStaking30, 'balanceOf', storeAccounts.map(acc => [acc])))
+        var accSkillStaked90 = await multicall(getNFTCall(SkillStaking90, conAddress[currentNetwork].skillStaking90, 'balanceOf', storeAccounts.map(acc => [acc])))
+        var accSkillStaked180 = await multicall(getNFTCall(SkillStaking180, conAddress[currentNetwork].skillStaking180, 'balanceOf', storeAccounts.map(acc => [acc])))
+    }
+
+    var accUnclaimed = await multicall(getNFTCall(CryptoBlades, conAddress[currentNetwork].cryptoBlades, 'getTokenRewardsFor', storeAccounts.map(acc => [acc])))
 
 
     var fRowHtml = await Promise.all(storeAccounts.map(async (address, i) => {
         let rowHtml = ''
         var charIds = await getAccountCharacters(address)
         var binance = await getBNBBalance(address)
-        var wallet = await getStakedBalance(address)
-        var staked = await getStakedRewards(address)
-        var unclaimed = await getAccountSkillReward(address)
-        var claimTax = await getOwnRewardsClaimTax(address);
-        var unclaimedTaxed = unclaimed * (1 - convertClaimTax(claimTax))
+        var wallet = await getSkillWallet(address)
+        var staked = (currentNetwork === 'bsc' ? (web3.utils.toBN(sumOfStakedSkill(accSkillStaked30[i], accSkillStaked90[i], accSkillStaked180[i]))) : await getStakedRewards(address))
+        var unclaimed = accUnclaimed[i]
         var claimable = unclaimed * Number(fromEther(await getSkillMultiplier()))
-        var lastClaim = Number(await getLastClaim(address))
-        var now = moment().unix()
-        var timeLeft = (lastClaim + 86400) - now
 
         var charCount = parseInt($cardChar.html())
         charCount += charIds.length
@@ -196,17 +191,20 @@ async function loadData() {
         $cardUnclaim.html((formatNumber(parseFloat($cardUnclaim.html()) + parseFloat(fromEther(unclaimed)))))
         $cardStake.html((formatNumber(parseFloat($cardStake.html()) + parseFloat(fromEther(staked)))))
         $cardWallet.html((formatNumber(parseFloat($cardWallet.html()) + parseFloat(fromEther(wallet)))))
-        $cardTotal.html((formatNumber(parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([includeClaimTax === true ? unclaimedTaxed : unclaimed, staked, wallet]))))))
-        $cardTotalTitle.html(includeClaimTax === true ? "Taxed Skill Assets" : "Total Skill Assets")
+        $cardTotal.html((formatNumber(parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([unclaimed, staked, wallet]))))))
         $cardBnb.html((formatNumber(parseFloat($cardBnb.html()) + parseFloat(fromEther(binance)))))
 
         let charHtml = '', chars = {}
 
+        var charsData = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'get', charIds.map(charId => [charId])))).map((data, i) => characterFromContract(charIds[i], data))
+        var charsExp = (await multicall(getNFTCall(CryptoBlades, conAddress[currentNetwork].cryptoBlades, 'getXpRewards', charIds.map(charId => [charId])))).map(exp => parseInt(exp))
+        var charsSta = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getStaminaPoints', charIds.map(charId => [charId])))).map(sta => sta[0])
+
         if (charLen > 0) {
-            chars = await Promise.all(charIds.map(async charId => {
-                var charData = await characterFromContract(charId, await getCharacterData(charId))
-                var exp = await getCharacterExp(charId)
-                var sta = await getCharacterStamina(charId)
+            chars = charIds.map((charId, i) => {
+                var charData = charsData[i]
+                var exp = charsExp[i]
+                var sta = charsSta[i]
                 var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
                 return {
                     charId,
@@ -219,7 +217,7 @@ async function loadData() {
                     level: charData.level + 1,
                     element: charData.traitName,
                 };
-            }))
+            })
             charHtml = `<td class="char-column" data-cid="${chars[0].charId}">${chars[0].charId}</td>
                         <td class="char-column">${levelToColor(chars[0].level)}</td>
                         <td class="char-column">${elemToColor(chars[0].element)}</td>
@@ -242,7 +240,6 @@ async function loadData() {
                             <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(staked))}<br />${(Number(parseFloat(fromEther(staked)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(staked))))})</span>` : '')}</td>
                             <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(wallet))}<br />${(Number(parseFloat(fromEther(wallet)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(wallet))))})</span>` : '')}</td>
                             <td class="skill-column" rowspan="${charLen}" class='align-middle'>${formatNumber(fromEther(skillTotal))}<br />${(Number(parseFloat(fromEther(skillTotal)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertToFiat(Number(fromEther(skillTotal))))})</span>` : '')}</td>
-                            <td class="unstake-column" rowspan="${charLen}" class='align-middle'>${(timeLeft <= 0 ? '<span class="text-gold">Claim now</span>' : unstakeSkillAt(timeLeft))}</td>
                             <td rowspan="${charLen}" class='align-middle'>${bnbFormatter(formatNumber(fromEther(binance)))}<br />${(Number(parseFloat(fromEther(binance)).toFixed(6)) > 0 ? `<span style="font-size: 10px;">(${toLocaleCurrency(convertBnbToFiat(Number(fromEther(binance))))})</span>` : '')}</td>
                             <td rowspan="${charLen}" class='align-middle'><button type="button" class="btn btn-success btn-sm mb-1" onclick="rename('${address}')">Rename</button><br>
                             <button type="button" class="btn btn-warning btn-sm mb-1" onclick="simulate('${address}')">Combat Simulator</button><br>
@@ -480,12 +477,15 @@ async function simulate(address) {
     var charIds = await getAccountCharacters(address)
     var weapIds = await getAccountWeapons(address)
 
-    var charHtml = await Promise.all(charIds.map(async charId => {
-        var charData = characterFromContract(charId, await getCharacterData(charId))
-        var sta = await getCharacterStamina(charId)
+    var charsData = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'get', charIds.map(charId => [charId])))).map((data, i) => characterFromContract(charIds[i], data))
+    var charsSta = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getStaminaPoints', charIds.map(charId => [charId])))).map(sta => sta[0])
+    var weaponsData = (await multicall(getNFTCall(Weapons, conAddress[currentNetwork].weapon, 'get', weapIds.map(weapId => [weapId])))).map((data, i) => weaponFromContract(weapIds[i], data))
+
+    var charHtml = charIds.map((charId, i) => {
+        var charData = charsData[i]
+        var sta = charsSta[i]
         return `<option style="${getClassFromTrait(charData.trait)}" value="${charId}">${charId} | ${charData.traitName} | Lv. ${(charData.level + 1)} | Sta. ${sta}/200</option>`
-    }))
-    var weaponsData = await Promise.all(weapIds.map(async weapId => weaponFromContract(weapId, await getWeaponData(weapId))));
+    })
     weaponsData.sort((a, b) => b.stars - a.stars);
     var weapHtml = weaponsData.map(weapData => (
         `<option style="${getClassFromTrait(weapData.trait)}" value="${weapData.id}">${weapData.id} | ${weapData.stars + 1}-star ${weapData.element}</option>`
@@ -519,15 +519,17 @@ async function combatSimulate() {
         var targets = await characterTargets(charId, weapId)
         var enemies = await getEnemyDetails(targets)
 
+        var tokenRewards = await multicall(getNFTCall(CryptoBlades, conAddress[currentNetwork].cryptoBlades, 'getTokenGainForFight', enemies.map(enemy => [enemy.power, false])))
+
         combatResult.html('Enemy | Element | Power | Est. Reward | XP | Chance<br><hr>')
-        combatResult.append(await Promise.all(enemies.map(async (enemy, i) => {
+        combatResult.append(enemies.map((enemy, i) => {
             var chance = getWinChance(charData, weapData, enemy.power, enemy.trait)
             enemy.element = traitNumberToName(enemy.trait)
-            var reward = fromEther(await getTokenReward(enemy.power) * parseInt(stamina));
+            var reward = fromEther(tokenRewards[i] * parseInt(stamina));
             var alignedPower = getAlignedCharacterPower(charData, weapData)
             var expReward = Math.floor((enemy.power / alignedPower) * 32) * parseInt(stamina)
             return `#${i + 1} | ${elemToColor(enemy.element)} | ${enemy.power} | ${truncateToDecimals(reward, 6)} | ${expReward} | ${chanceColor(chance)}<br>`
-        })))
+        }))
         $('#btn-simulate').removeAttr('disabled')
     } catch (e) {
         combatResult.html(e.message)
@@ -774,7 +776,7 @@ async function logs(address) {
         try {
             const hResults = await getLogs(i, i + maxBlocks, address)
             count += hResults.length
-            await Promise.all(hResults.map(async result => {
+            hResults.map(result => {
                 const { character, weapon, enemyRoll, playerRoll, skillGain, xpGain } = result.returnValues
                 fights += 1
                 skill += Number(fromEther(skillGain))
@@ -789,7 +791,7 @@ async function logs(address) {
                                 <td class='text-white text-center'>${parseFloat(fromEther(skillGain)).toFixed(6)}</td>
                                 <td class='text-white text-center'>${xpGain}</td>
                             </tr>`)
-            }))
+            })
         } catch (e) {
             console.log(e)
         }
@@ -808,13 +810,6 @@ $('#btn-privacy').on('change', (e) => {
     localStorage.setItem('hideAddress', hideAddress)
     if (hideAddress) $('.address-column').hide()
     else $('.address-column').show()
-})
-
-$("#btn-tax").on('change', (e) => {
-    includeClaimTax = e.currentTarget.checked
-    localStorage.setItem('includeClaimTax', includeClaimTax)
-    clearFiat()
-    refresh()
 })
 
 $("#btn-hchars").on('change', (e) => {

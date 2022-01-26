@@ -11,7 +11,11 @@ var conAddress = {
         market: '0x90099dA42806b21128A094C713347C7885aF79e2',
         skillPair: '0x0deb588c1ec6f1d9f348126d401f05c4c7b7a80c',
         tokenPair: '0x58f876857a02d6762e0101bb5c46a8c1ed44dc16',
-        treasury: '0x812Fa2f7d89e5d837450702bd51120920dccaA99'
+        treasury: '0x812Fa2f7d89e5d837450702bd51120920dccaA99',
+        multicall: '0x1ee38d535d541c55c9dae27b12edf090c608e6fb',
+        skillStaking30: '0xd6b2D8f59Bf30cfE7009fB4fC00a7b13Ca836A2c',
+        skillStaking90: '0xc42dF5397B3C0B45DeDaCB83F7aDb1F30B73097d',
+        skillStaking180: '0x3C06533B42A802f3Ac0E770CCBBeA9fa7Cae9572'
     },
     heco: {
         staking: '0x6109A500e5b9CE40FFe075Ea3A6beA6e93c23BcF',
@@ -23,7 +27,11 @@ var conAddress = {
         market: '0x0f6dAA5F4b4277BE496c80aeCD0D101b8dEE6440',
         skillPair: '0x7c9739ecD7882157b1C526a832FfD5A50860078d',
         tokenPair: '0x3289250099cF4cF9e59Fd728a93F36594C1369f0',
-        treasury: '0x7843Bd2aDdE5E54bD6e61C28fA89009240a48C08'
+        treasury: '0x7843Bd2aDdE5E54bD6e61C28fA89009240a48C08',
+        multicall: '0xCeBFbFb4Bd0d28E5a2662193e35E534ca6465f73',
+        skillStaking30: '',
+        skillStaking90: '',
+        skillStaking180: ''
     },
     oec: {
         staking: '0xC5707a6a16CCe1963Ec3E6cdEE0A91e4876Be395',
@@ -35,7 +43,11 @@ var conAddress = {
         market: '0x5ea2373e281E92FE3c53dc36cE855D89BF25F6F8',
         skillPair: '0x2d9cdad4b89d91e6a44ec1c8b227b0c2b0d4e2cf',
         tokenPair: '0xa75bd9f086bbc1168b01fd5e750986b5170c2b26',
-        treasury: '0xcBEfF02841370997054AdfF624dC490C8cB20406'
+        treasury: '0xcBEfF02841370997054AdfF624dC490C8cB20406',
+        multicall: '0xddBDA43E5675C8A35dcA19007061A1D4A28F9452',
+        skillStaking30: '',
+        skillStaking90: '',
+        skillStaking180: ''
     },
     poly: {
         staking: '0xE34e7cA8e64884E3b5Cd48991ba229d8302E85da',
@@ -47,7 +59,11 @@ var conAddress = {
         market: '0xeE6e8467268eA752b027676B3EBcD4eB05749874',
         skillPair: '0x42ba6f3aF9d8A2A30F5e55362c45e7121a932b77',
         tokenPair: '0x65d43b64e3b31965cd5ea367d4c2b94c03084797',
-        treasury: '0x216AC39765D920D7f86162Daf9BE1f045f321A8D'
+        treasury: '0x216AC39765D920D7f86162Daf9BE1f045f321A8D',
+        multicall: '0x35e4aA226ce52e1E59E5e5Ec24766007bCbE2e7D',
+        skillStaking30: '',
+        skillStaking90: '',
+        skillStaking180: ''
     },
     avax: {
         staking: '0x96438Debb1419bF0B53119Edae6e664c931504CA',
@@ -59,7 +75,11 @@ var conAddress = {
         market: '0x9469ED8d4b86e4442b4AA848bB94B9f9130f123E',
         skillPair: '0xF52B3Df311182F43202806ee0E72aCB92d777879',
         tokenPair: '0xe28984e1ee8d431346d32bec9ec800efb643eef4',
-        treasury: '0x5B1cCb62D2F9c8523abBa89A56432005cef03b99'
+        treasury: '0x5B1cCb62D2F9c8523abBa89A56432005cef03b99',
+        multicall: '0x0FB54156B496b5a040b51A71817aED9e2927912E',
+        skillStaking30: '',
+        skillStaking90: '',
+        skillStaking180: ''
     }
 }
 
@@ -98,15 +118,17 @@ var conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].mark
 var conTreasury = new web3.eth.Contract(Treasury, conAddress[currentNetwork].treasury)
 var skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
 var gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
+var conMultiCall = new web3.eth.Contract(MultiCall, conAddress[currentNetwork].multicall)
 
 var isAddress = address => web3.utils.isAddress(address);
 var getBNBBalance = address => web3.eth.getBalance(address);
 var fromEther = (value) => web3.utils.fromWei(BigInt(Math.trunc(value)).toString(), 'ether');
+var toEther = (value) => web3.utils.toWei(value.toString(), 'ether');
 
 var getRewardsPoolBalance = () => conStakingReward.methods.balanceOf(mainAddress).call();
 var getStakingPoolBalance = () => conStakingToken.methods.balanceOf(stakingRewardAddress).call();
 
-var getStakedBalance = address => conStakingToken.methods.balanceOf(address).call();
+var getSkillWallet = address => conStakingToken.methods.balanceOf(address).call();
 var getStakedRewards = address => conStakingReward.methods.balanceOf(address).call();
 var getStakedTimeLeft = address => conStakingReward.methods.getStakeUnlockTimeLeft().call({ from: address });
 var getAccountCharacters = async address => {
@@ -160,6 +182,27 @@ var getTotalShields = () => conShields.methods.totalSupply().call()
 var getLastClaim = address => conCryptoBlades.methods.userVars(address, 10002).call()
 var getClaimable = address => conCryptoBlades.methods.getRemainingTokenClaimAmountPreTax().call({ from: address })
 var getSkillMultiplier = () => conTreasury.methods.getProjectMultiplier(skillPartnerIds[currentNetwork]).call()
+var multicall = async ({abi, calls}) => {
+    const { Interface } = ethers.utils
+    const itf = new Interface(abi);
+
+    const calldata = calls.map((call) => [
+        call.address.toLowerCase(),
+        itf.encodeFunctionData(call.name, call.params),
+    ]);
+    const { returnData } = await conMultiCall.methods.aggregate(calldata).call();
+    const res = returnData.map((call, i) => itf.decodeFunctionResult(calls[i].name, call));
+    return res
+}
+
+var getNFTCall = (abi, address, name, params) => ({
+    abi,
+    calls: params.map((param) => ({
+      address,
+      name,
+      params: param,
+    })),
+})
 
 var getSkillPrice = async () => {
     const reserves = await skillPair.methods.getReserves().call()
@@ -196,7 +239,8 @@ function updateNetwork(network) {
     conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market)
     conTreasury = new web3.eth.Contract(Treasury, conAddress[currentNetwork].treasury)
     skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
-    gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
+    gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)    
+    conMultiCall = new web3.eth.Contract(MultiCall, conAddress[currentNetwork].multicall)
 }
 
 async function getTokenReward(power) {
@@ -518,4 +562,12 @@ function truncateToDecimals(num, dec = 2) {
 function toFixed(num, fixed) {
 	const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
 	return num.toString().match(re)[0];
+}
+
+function sumOfStakedSkill (...arr) {
+    let total = 0
+    arr.forEach(i => {
+        total += parseFloat(fromEther(i))
+    })
+    return toEther(total)
 }

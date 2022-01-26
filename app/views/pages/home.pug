@@ -81,18 +81,12 @@ main.page-wrapper
               .col-md-12
                 button.btn.btn-sm.btn-light.mb-2.btn-refresh(type='button' onclick='refresh()' disabled)
                   | Refresh
-                .form-check.form-switch(style='float: right;')
-                  input#btn-tax.form-check-input(type="checkbox")
-                  label.form-check-label.text-white(for="btn-tax") Include Claim Taxes
                 .form-check.form-switch(style='float: right; margin-right: 10px !important;')
                   input#btn-privacy.form-check-input(type="checkbox")
                   label.form-check-label.text-white(for="btn-privacy") Hide address
                 .form-check.form-switch(style='float: right; margin-right: 10px !important;')
-                  input#btn-hunstake.form-check-input(type="checkbox")
-                  label.form-check-label.text-white(for="btn-privacy") Hide claim time
-                .form-check.form-switch(style='float: right; margin-right: 10px !important;')
                   input#btn-hskills.form-check-input(type="checkbox")
-                  label.form-check-label.text-white(for="btn-privacy") Hide skill assets                
+                  label.form-check-label.text-white(for="btn-privacy") Hide skill assets
                 .form-check.form-switch(style='float: right; margin-right: 10px !important;')
                   input#btn-hchars.form-check-input(type="checkbox")
                   label.form-check-label.text-white(for="btn-privacy") Hide characters
@@ -109,8 +103,6 @@ main.page-wrapper
                           | Characters
                         th.text-white.skill-column(colspan='5')
                           | Skill Assets
-                        th.text-white.align-middle.unstake-column(rowspan='2')
-                          | Claim Time
                         th#label-balance.text-white.align-middle(rowspan='2')
                           | BNB Balance
                         th.text-white.align-middle(rowspan='2')
