@@ -197,9 +197,9 @@ async function loadData() {
         let charHtml = '', chars = {}
 
         var charsData = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'get', charIds.map(charId => [charId])))).map((data, i) => characterFromContract(charIds[i], data))
-        var charsExp = (await multicall(getNFTCall(CryptoBlades, conAddress[currentNetwork].cryptoBlades, 'getXpRewards', charIds.map(charId => [charId])))).map(exp => parseInt(exp))
         var charsSta = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getStaminaPoints', charIds.map(charId => [charId])))).map(sta => sta[0])
-
+        var charsExp = await conCryptoBlades.methods.getXpRewards(charIds).call()
+        
         if (charLen > 0) {
             chars = charIds.map((charId, i) => {
                 var charData = charsData[i]

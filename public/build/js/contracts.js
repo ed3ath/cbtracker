@@ -2879,35 +2879,6 @@ const CryptoBlades = [
     "inputs": [
       {
         "internalType": "uint24",
-        "name": "basePower",
-        "type": "uint24"
-      },
-      {
-        "internalType": "int128",
-        "name": "weaponMultiplier",
-        "type": "int128"
-      },
-      {
-        "internalType": "uint24",
-        "name": "bonusPower",
-        "type": "uint24"
-      }
-    ],
-    "name": "getPlayerPower",
-    "outputs": [
-      {
-        "internalType": "uint24",
-        "name": "",
-        "type": "uint24"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint24",
         "name": "traitsCWE",
         "type": "uint24"
       }
@@ -2945,30 +2916,6 @@ const CryptoBlades = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "attacker",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "defender",
-        "type": "uint8"
-      }
-    ],
-    "name": "isTraitEffectiveAgainst",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -3036,24 +2983,6 @@ const CryptoBlades = [
       }
     ],
     "name": "mintWeaponUsingStakedSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_minter",
-        "type": "address"
-      },
-      {
-        "internalType": "uint32",
-        "name": "num",
-        "type": "uint32"
-      }
-    ],
-    "name": "mintWeaponNforAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -3626,6 +3555,19 @@ const CryptoBlades = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "chars",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "resetXp",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "getTokenRewards",
     "outputs": [
@@ -3641,17 +3583,17 @@ const CryptoBlades = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "char",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "chars",
+        "type": "uint256[]"
       }
     ],
     "name": "getXpRewards",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint256[]",
         "name": "",
-        "type": "uint256"
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
