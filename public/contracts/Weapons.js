@@ -339,6 +339,19 @@ const Weapons = [
   },
   {
     "inputs": [],
+    "name": "NFTVAR_BUSY",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "NUMBERPARAMETER_FEATURE_BITS",
     "outputs": [
       {
@@ -652,6 +665,30 @@ const Weapons = [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "nftVars",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1145,6 +1182,34 @@ const Weapons = [
         "type": "address"
       },
       {
+        "internalType": "uint32",
+        "name": "amount",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "seed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
+      }
+    ],
+    "name": "mintN",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "seed",
         "type": "uint256"
@@ -1281,48 +1346,18 @@ const Weapons = [
         "type": "address"
       },
       {
-        "internalType": "uint16",
-        "name": "properties",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "stat1",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "stat2",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "stat3",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint8",
-        "name": "level",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "amountLB",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "amount4B",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "amount5B",
-        "type": "uint8"
+        "internalType": "uint256",
+        "name": "metaData",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
         "name": "cosmeticSeed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenID",
         "type": "uint256"
       }
     ],
@@ -2043,6 +2078,11 @@ const Weapons = [
         "internalType": "bool",
         "name": "allowNegativeDurability",
         "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "busyFlag",
+        "type": "uint256"
       }
     ],
     "name": "getFightDataAndDrainDurability",
@@ -2228,6 +2268,53 @@ const Weapons = [
       }
     ],
     "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "weaponID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftVar",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNftVar",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "weaponID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftVar",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "setNftVar",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

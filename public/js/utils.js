@@ -7,10 +7,6 @@ const randomString = (length) => {
     return result;
 };
 
-function CharacterPower(level) {
-    return ((1000 + (level * 10)) * (Math.floor(level / 10) + 1));
-}
-
 const WeaponElement = {
     Fire: 0,
     Earth: 1,
@@ -149,7 +145,10 @@ function getElementAdvantage(playerElement, enemyElement) {
 
 function AdjustStatForTrait(statValue, statTrait, charTrait) {
     let value = statValue;
-    if (statTrait === charTrait) { value = Math.floor(value * 1.07); } else if (statTrait === WeaponTrait.PWR) { value = Math.floor(value * 1.03); }
+    if(statTrait === charTrait)
+        value = Math.floor(value * 1.07);
+    else if(statTrait === WeaponTrait.PWR)
+        value = Math.floor(value * 1.03);
     return value;
 }
 
@@ -174,34 +173,35 @@ function GetTotalMultiplierForTrait(wep, trait) {
 }
 
 function getAlignedCharacterPower(charData, weapData) {
-  const characterPower = CharacterPower(charData.level);
   const playerElement = parseInt(charData.trait, 10);
   const weaponMultiplier = GetTotalMultiplierForTrait(weapData, playerElement);
-  const totalPower = (characterPower * weaponMultiplier) + weapData.bonusPower;
-  return totalPower;
+  return charData.power * weaponMultiplier + weapData.bonusPower;
 }
 
 function getWinChance(charData, weapData, enemyPower, enemyElement) {
     const playerElement = parseInt(charData.trait, 10);
     const weaponElement = parseInt(WeaponElement[weapData.element], 10);
     const totalPower = getAlignedCharacterPower(charData, weapData);
-    const totalMultiplier = 1 + (0.075 * (weaponElement === playerElement ? 1 : 0)) + (0.075 * getElementAdvantage(playerElement, enemyElement));
+    const totalMultiplier = 1 + 0.075 * (weaponElement === playerElement ? 1 : 0) + 0.075 * getElementAdvantage(playerElement, enemyElement);
     const playerMin = totalPower * totalMultiplier * 0.9;
     const playerMax = totalPower * totalMultiplier * 1.1;
+    const playerRange = playerMax - playerMin;
     const enemyMin = enemyPower * 0.9;
     const enemyMax = enemyPower * 1.1;
-    let win = 0;
-    let lose = 0;
-    for (let playerRoll = Math.floor(playerMin); playerRoll <= playerMax; playerRoll++) {
-      for (let enemyRoll = Math.floor(enemyMin); enemyRoll <= enemyMax; enemyRoll++) {
-        if (playerRoll >= enemyRoll) {
-          win++;
-        } else {
-          lose++;
-        }
-      }
+    const enemyRange = enemyMax - enemyMin;
+    let rollingTotal = 0
+    if (playerMin >= enemyMin) {
+        rollingTotal = (playerMin - enemyMin) / enemyRange;
+        rollingTotal += (1 - rollingTotal) * ((playerMax - enemyMax) / playerRange);
+        rollingTotal += (1 - rollingTotal) * 0.5;
     }
-    return win / (win + lose);
+    else {
+        rollingTotal = (enemyMin - playerMin) / playerRange;
+        rollingTotal += (1 - rollingTotal) * ((enemyMax - playerMax) / enemyRange);
+        rollingTotal += (1 - rollingTotal) * 0.5;
+        rollingTotal = 1 - rollingTotal;
+    }
+    return rollingTotal
 }
 
 const SECONDS_IN_MINUTE = 60;
@@ -277,22 +277,18 @@ function getNextTargetExpLevel(level) {
     };
 }
 
-function getPotentialXp(characterPower, enemyPower, trait, weaponData) {
-    const playerElement = parseInt(trait, 10);
-    const weaponMultiplier = GetTotalMultiplierForTrait(weaponData, playerElement);
-    const totalPower = ((characterPower * weaponMultiplier) + weaponData.bonusPower);
-
-    return Math.floor((enemyPower / totalPower) * this.fightXpGain);
+function getPotentialXp(charPower, enemyPower, stamina) {
+    return Math.floor((enemyPower / charPower) * 32) * stamina;
 }
 
 function getEnemyDetails(targets) {
     return targets.map(data => {
-        const n = parseInt(data, 10)
+        const n = parseInt(data, 10);
         return {
             original: data,
             power: n & 16777215,
             trait: n >> 24
-        }
+        };
     })
 }
 

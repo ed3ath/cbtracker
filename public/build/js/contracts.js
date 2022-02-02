@@ -350,6 +350,25 @@ const Characters = [
       {
         "indexed": true,
         "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "Burned",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
         "name": "character",
         "type": "uint256"
       },
@@ -523,6 +542,32 @@ const Characters = [
   },
   {
     "inputs": [],
+    "name": "NFTVAR_BONUS_POWER",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "NFTVAR_BUSY",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "NO_OWNED_LIMIT",
     "outputs": [
       {
@@ -605,6 +650,19 @@ const Characters = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "garrison",
+    "outputs": [
+      {
+        "internalType": "contract Garrison",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -806,6 +864,30 @@ const Characters = [
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "nftVars",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
       }
@@ -904,57 +986,6 @@ const Characters = [
       }
     ],
     "name": "revokeRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "safeTransferFrom",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bytes",
-        "name": "_data",
-        "type": "bytes"
-      }
-    ],
-    "name": "safeTransferFrom",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1164,6 +1195,19 @@ const Characters = [
   {
     "inputs": [
       {
+        "internalType": "contract Garrison",
+        "name": "_garrison",
+        "type": "address"
+      }
+    ],
+    "name": "migrateTo_1a19cbb",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "id",
         "type": "uint256"
@@ -1247,6 +1291,25 @@ const Characters = [
   {
     "inputs": [
       {
+        "internalType": "uint256[]",
+        "name": "burnIds",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "getSoulForBurns",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "minter",
         "type": "address"
@@ -1288,6 +1351,16 @@ const Characters = [
         "internalType": "uint256",
         "name": "seed",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "bonusPower",
+        "type": "uint24"
       }
     ],
     "name": "customMint",
@@ -1298,6 +1371,60 @@ const Characters = [
         "type": "uint256"
       }
     ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "burnIds",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "targetCharId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "burnPowerMultiplier",
+        "type": "uint256"
+      }
+    ],
+    "name": "burnIntoCharacter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "burnIds",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "burnIntoSoul",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "targetCharId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "soulAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "upgradeWithSoul",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1353,6 +1480,25 @@ const Characters = [
         "internalType": "uint24",
         "name": "",
         "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTotalPower",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1447,6 +1593,24 @@ const Characters = [
       }
     ],
     "name": "gainXp",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "chars",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "xps",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "gainXpAll",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1579,6 +1743,11 @@ const Characters = [
         "internalType": "bool",
         "name": "allowNegativeStamina",
         "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "busyFlag",
+        "type": "uint256"
       }
     ],
     "name": "getFightDataAndDrainStamina",
@@ -1618,12 +1787,148 @@ const Characters = [
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "wallet",
+        "type": "address"
+      }
+    ],
+    "name": "getCharactersOwnedBy",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "chars",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "wallet",
+        "type": "address"
+      }
+    ],
+    "name": "getReadyCharacters",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "chars",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "max",
         "type": "uint256"
       }
     ],
     "name": "setCharacterLimit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "characterID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftVar",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNftVar",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "characterID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftVar",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "setNftVar",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -11467,6 +11772,19 @@ const Weapons = [
   },
   {
     "inputs": [],
+    "name": "NFTVAR_BUSY",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "NUMBERPARAMETER_FEATURE_BITS",
     "outputs": [
       {
@@ -11780,6 +12098,30 @@ const Weapons = [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "nftVars",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -12273,6 +12615,34 @@ const Weapons = [
         "type": "address"
       },
       {
+        "internalType": "uint32",
+        "name": "amount",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "seed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "chosenElement",
+        "type": "uint8"
+      }
+    ],
+    "name": "mintN",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "seed",
         "type": "uint256"
@@ -12409,48 +12779,18 @@ const Weapons = [
         "type": "address"
       },
       {
-        "internalType": "uint16",
-        "name": "properties",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "stat1",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "stat2",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "stat3",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint8",
-        "name": "level",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "amountLB",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "amount4B",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "amount5B",
-        "type": "uint8"
+        "internalType": "uint256",
+        "name": "metaData",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
         "name": "cosmeticSeed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenID",
         "type": "uint256"
       }
     ],
@@ -13171,6 +13511,11 @@ const Weapons = [
         "internalType": "bool",
         "name": "allowNegativeDurability",
         "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "busyFlag",
+        "type": "uint256"
       }
     ],
     "name": "getFightDataAndDrainDurability",
@@ -13356,6 +13701,53 @@ const Weapons = [
       }
     ],
     "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "weaponID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftVar",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNftVar",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "weaponID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftVar",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "setNftVar",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
