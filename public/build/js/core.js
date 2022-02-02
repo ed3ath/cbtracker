@@ -516,7 +516,7 @@ async function combatSimulate() {
 
         var charData = characterFromContract(charId, await getCharacterData(charId))
         var weapData = weaponFromContract(weapId, await getWeaponData(weapId))
-        charData.power = parseInt(await conCharacters.methods.getPower(charId).call());
+        charData.power = parseInt(await conCharacters.methods.getTotalPower(charId).call());
         var targets = await characterTargets(charId, weapId)
         var enemies = await getEnemyDetails(targets)
 
