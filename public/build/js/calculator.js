@@ -16,6 +16,7 @@ async function testSimulate() {
         $table.html('<tr><td class="text-white text-center" colspan="13">Calculating....</span></tr>')
 
         var charData = characterFromContract(charId, await getCharacterData(charId))
+        charData.power = parseInt(await conCharacters.methods.getTotalPower(charId).call());
         var weapData = weaponFromContract(weapId, await getWeaponData(weapId))
         var targets = await characterTargets(charId, weapId)
         var enemies = await getEnemyDetails(targets)
