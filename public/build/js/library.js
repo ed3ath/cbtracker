@@ -92,7 +92,7 @@ var nodes = {
 }
 
 var skillPartnerIds = {
-    bsc: 3,
+    bsc: 7,
     heco: 0,
     oec: 0,
     poly: 1,
