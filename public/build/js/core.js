@@ -339,10 +339,10 @@ async function priceTicker() {
 }
 
 async function statTicker() {
-    const fightAllowance = await getCurrentAllowance()
+    const hourlyAvgPower = await getHourlyPowerAvg()()
     const maxClaim = await getSkillMultiplier()
 
-    $cardReward.html(parseFloat(fromEther(fightAllowance)).toFixed(6))
+    $cardReward.html(hourlyAvgPower)
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
 }
 
