@@ -72,8 +72,7 @@ var $cardIngame = $('#card-ingame'),
     $convWallet = $('#conv-wallet'),
     $convTotal = $('#conv-total'),
     $convBnb = $('#conv-bnb'),
-    $convPrice = $('#conv-price'),
-    $convReward = $('#conv-reward')
+    $convPrice = $('#conv-price')
 
 $('document').ready(async () => {
     priceTicker()
@@ -111,7 +110,6 @@ function fiatConversion() {
     if (isElementNotZero($cardTotal)) $convTotal.html(`(${toLocaleCurrency(convertToFiat($cardTotal.html()))})`)
     if (isElementNotZero($cardBnb)) $convBnb.html(`(${toLocaleCurrency(convertBnbToFiat($cardBnb.html()))})`)
     if (isElementNotZero($cardPrice) && currCurrency !== 'usd') $convPrice.html(`(${toLocaleCurrency(localPrice)})`)
-    if (isElementNotZero($cardReward)) $convReward.html(`(${toLocaleCurrency(convertToFiat($cardReward.html()))})`)
 }
 function clearFiat() {
     $convIngame.html('')
@@ -121,7 +119,6 @@ function clearFiat() {
     $convTotal.html('')
     $convBnb.html('')
     $convPrice.html('')
-    $convReward.html('')
 }
 
 function isElementNotZero($elem) {
@@ -339,10 +336,10 @@ async function priceTicker() {
 }
 
 async function statTicker() {
-    const hourlyAvgPower = await getHourlyPowerAvg()()
+    const hourlyAvgPower = await getHourlyPowerAvg()
     const maxClaim = await getSkillMultiplier()
 
-    $cardReward.html(hourlyAvgPower)
+    $cardReward.html(Number(hourlyAvgPower).toLocaleString('en-US'))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
 }
 
