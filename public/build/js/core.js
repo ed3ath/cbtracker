@@ -194,17 +194,20 @@ async function loadData() {
         let charHtml = '', chars = {}
 
         var charsData = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'get', charIds.map(charId => [charId])))).map((data, i) => characterFromContract(charIds[i], data))
-        var charsSta = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getStaminaPoints', charIds.map(charId => [charId])))).map(sta => sta[0])
+        var charsSta = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getStaminaPoints', charIds.map(charId => [charId])))).map(sta => sta[0])        
+        var charsPower = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getTotalPower', charIds.map(charId => [charId]))))
         var charsExp = await conCryptoBlades.methods.getXpRewards(charIds).call()
         
         if (charLen > 0) {
             chars = charIds.map((charId, i) => {
                 var charData = charsData[i]
+                var power = charsPower[i]
                 var exp = charsExp[i]
                 var sta = charsSta[i]
                 var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
                 return {
                     charId,
+                    power,
                     exp,
                     sta,
                     trait: charData.trait,
@@ -218,8 +221,9 @@ async function loadData() {
             charHtml = `<td class="char-column" data-cid="${chars[0].charId}">${chars[0].charId}</td>
                         <td class="char-column">${levelToColor(chars[0].level)}</td>
                         <td class="char-column">${elemToColor(chars[0].element)}</td>
+                        <td class="char-column">${Number(chars[0].power).toLocaleString('en-US')}</td>
                         <td class="char-column"><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
-                        <td class="char-column">${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${chars[0].nextExp}</span> xp left)`)}</span></td>
+                        <td class="char-column">${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${Number(chars[0].nextExp).toLocaleString('en-US')}</span> xp left)`)}</span></td>
                         <td class="char-column" data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         } else {
             charHtml = '<td class="char-column" colspan="6"></td>'
@@ -250,9 +254,10 @@ async function loadData() {
                     rowHtml += `<tr class="text-white align-middle" data-row="${address}">
                                         <td class="char-column">${char.charId}</td>
                                         <td class="char-column">${levelToColor(char.level)}</td>
-                                        <td class="char-column">${elemToColor(char.element)}</td>
+                                        <td class="char-column">${elemToColor(char.element)}</td>                                        
+                                        <td class="char-column">${Number(char.power).toLocaleString('en-US')}</td>
                                         <td class="char-column"><span data-cid="${char.charId}">${char.exp}</span> xp</td>
-                                        <td class="char-column">${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${char.charId}">${char.nextExp}</span> xp left`)})</span></td>
+                                        <td class="char-column">${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${char.charId}">${Number(char.nextExp).toLocaleString('en-US')}</span> xp left`)})</span></td>
                                         <td class="char-column">${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
                                     </tr>`
                 }
