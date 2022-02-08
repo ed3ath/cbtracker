@@ -428,6 +428,10 @@ function getAlignedCharacterPower(charData, weapData) {
   return charData.power * weaponMultiplier + weapData.bonusPower;
 }
 
+function CharacterPower(level) {
+    return ((1000 + level * 10) * (Math.floor(level / 10) + 1));
+}
+
 function getWinChance(charData, weapData, enemyPower, enemyElement) {
     const playerElement = parseInt(charData.trait, 10);
     const weaponElement = parseInt(WeaponElement[weapData.element], 10);
