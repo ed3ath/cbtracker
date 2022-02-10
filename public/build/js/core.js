@@ -168,6 +168,7 @@ async function loadData() {
 
     var accUnclaimed = await multicall(getNFTCall(CryptoBlades, conAddress[currentNetwork].cryptoBlades, 'getTokenRewardsFor', storeAccounts.map(acc => [acc])))
 
+    var skillMultiplier = Number(fromEther(await getSkillMultiplier(await getSkillPartnerId())))
 
     var fRowHtml = await Promise.all(storeAccounts.map(async (address, i) => {
         let rowHtml = ''
@@ -176,7 +177,7 @@ async function loadData() {
         var wallet = await getSkillWallet(address)
         var staked = (currentNetwork === 'bsc' ? (web3.utils.toBN(sumOfStakedSkill(accSkillStaked30[i], accSkillStaked90[i], accSkillStaked180[i]))) : await getStakedRewards(address))
         var unclaimed = accUnclaimed[i]
-        var claimable = unclaimed * Number(fromEther(await getSkillMultiplier()))
+        var claimable = unclaimed * skillMultiplier
 
         var charCount = parseInt($cardChar.html())
         charCount += charIds.length
