@@ -342,7 +342,7 @@ async function priceTicker() {
 
 async function statTicker() {
     const hourlyAvgPower = await getHourlyPowerAvg()
-    const maxClaim = await getSkillMultiplier()
+    const maxClaim = await getSkillMultiplier(await getSkillPartnerId())
 
     $cardReward.html(Number(hourlyAvgPower).toLocaleString('en-US'))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))

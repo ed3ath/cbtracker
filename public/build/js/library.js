@@ -91,14 +91,6 @@ var nodes = {
     avax: 'https://api.avax.network/ext/bc/C/rpc'
 }
 
-var skillPartnerIds = {
-    bsc: 7,
-    heco: 0,
-    oec: 0,
-    poly: 1,
-    avax: 0
-}
-
 var currentNetwork = localStorage.getItem('network')
 
 if (!networks.includes(currentNetwork)) {
@@ -181,7 +173,14 @@ var getTotalWeapons = () => conWeapons.methods.totalSupply().call()
 var getTotalShields = () => conShields.methods.totalSupply().call()
 var getLastClaim = address => conCryptoBlades.methods.userVars(address, 10002).call()
 var getClaimable = address => conCryptoBlades.methods.getRemainingTokenClaimAmountPreTax().call({ from: address })
-var getSkillMultiplier = () => conTreasury.methods.getProjectMultiplier(skillPartnerIds[currentNetwork]).call()
+var getSkillMultiplier = (id) => conTreasury.methods.getProjectMultiplier(id).call()
+var getActivePartnerProjectsIds = () => conTreasury.methods.getActivePartnerProjectsIds().call()
+
+var getSkillPartnerId = async () => {
+    var activePartnerIds = await getActivePartnerProjectsIds()
+    return BigInt((await multicall(getNFTCall(Treasury, conAddress[currentNetwork].treasury, 'getPartnerProject', activePartnerIds.map(id => [id])))).find((data) => data[2] === 'SKILL')[0]).toString()
+}
+
 var multicall = async ({abi, calls}) => {
     const { Interface } = ethers.utils
     const itf = new Interface(abi);
@@ -194,6 +193,7 @@ var multicall = async ({abi, calls}) => {
     const res = returnData.map((call, i) => itf.decodeFunctionResult(calls[i].name, call));
     return res
 }
+
 
 var getNFTCall = (abi, address, name, params) => ({
     abi,
