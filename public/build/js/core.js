@@ -755,8 +755,8 @@ const delay = async ms => await new Promise(resolve => setTimeout(resolve, ms))
 async function logs(address) {
     const fightResult = $('#table-logs tbody')
     const latestBlock = await getLatestBlock()
-    let maxBlocks = 3000
-    let current = latestBlock.number - (maxBlocks * 20)
+    let maxBlocks = 2000
+    let current = latestBlock.number - (maxBlocks * 100)
     let list = [], fights = 0, wins = 0, skill = 0, exp = 0
 
     for (let i = 0; i < 10; i++) {
