@@ -227,7 +227,7 @@ async function loadData() {
                         <td class="char-column">${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${Number(chars[0].nextExp).toLocaleString('en-US')}</span> xp left)`)}</span></td>
                         <td class="char-column" data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         } else {
-            charHtml = '<td class="char-column" colspan="6"></td>'
+            charHtml = '<td class="char-column" colspan="7"></td>'
         }
         if (charLen < 1) {
             charLen = 1
