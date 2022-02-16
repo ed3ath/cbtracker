@@ -743,11 +743,7 @@ const getLogs = async (start, end, address) => getPastEvents(
     'FightOutcome',
     start,
     end,
-    conAddress[currentNetwork].cryptoBlades,
-    [
-        '0x7a58aac6530017822bf3210fccef7efa31f56277f19966bc887bfb11f40ca96d',
-        web3.eth.abi.encodeParameter('address', address)
-    ]
+    address
 );
 
 const delay = async ms => await new Promise(resolve => setTimeout(resolve, ms))
