@@ -157,6 +157,7 @@ async function loadData() {
     $cardChar.html(0)
     $cardSouls.html(0)
     $cardAccount.html(storeAccounts.length)
+    totalSouls = 0
 
     if (currentNetwork === 'bsc') {
         var accSkillStaked30 = await multicall(getNFTCall(SkillStaking30, conAddress[currentNetwork].skillStaking30, 'balanceOf', storeAccounts.map(acc => [acc])))
