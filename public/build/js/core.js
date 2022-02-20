@@ -268,7 +268,7 @@ async function loadData() {
         return rowHtml
     }))
     $table.html(fRowHtml)
-    $cardSouls.html(Number(totalSouls).toLocaleString('en-US'))
+    $cardSouls.html(Number(totalSouls / 10).toLocaleString('en-US'))
     addressHelper(hideAddress)
     charHelper(hideChars)
     skillsHelper(hideSkills)
