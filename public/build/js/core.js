@@ -14,9 +14,7 @@ var localPrice = 0
 var bnbPrice = 0
 var usdPrice = 0
 var gasPrice = 0
-var lastReset = 0
-var notified = (localStorage.getItem('notified') === 'true')
-var resetTime = localStorage.getItem(`${currentNetwork}-reset`) || 0
+var totalSouls = 0
 var $table = $('#table-accounts tbody')
 
 if (!currCurrency) currCurrency = 'usd'
@@ -65,7 +63,7 @@ var $cardIngame = $('#card-ingame'),
     $cardReward = $('#card-reward'),
     $cardClaim = $('#card-claim'),
     $cardReward = $('#card-reward'),
-    $cardReset = $('#card-reset'),
+    $cardSouls = $('#card-souls'),
     $convIngame = $('#conv-ingame'),
     $convUnclaim = $('#conv-unclaim'),
     $convStake = $('#conv-stake'),
@@ -84,7 +82,6 @@ $('document').ready(async () => {
 
     setInterval(() => {
         fiatConversion()
-        resetTicker()
     }, 1000)
     setInterval(() => {
         priceTicker()
@@ -158,6 +155,7 @@ async function loadData() {
     $cardTotal.html(0)
     $cardBnb.html(0)
     $cardChar.html(0)
+    $cardSouls.html(0)
     $cardAccount.html(storeAccounts.length)
 
     if (currentNetwork === 'bsc') {
@@ -206,6 +204,7 @@ async function loadData() {
                 var exp = charsExp[i]
                 var sta = charsSta[i]
                 var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
+                totalSouls += (CharacterPower(charData.level - 1) * 4) - power
                 return {
                     charId,
                     power,
@@ -268,6 +267,7 @@ async function loadData() {
         return rowHtml
     }))
     $table.html(fRowHtml)
+    $cardSouls.html(Number(totalSouls).toLocaleString('en-US'))
     addressHelper(hideAddress)
     charHelper(hideChars)
     skillsHelper(hideSkills)
@@ -347,22 +347,6 @@ async function statTicker() {
 
     $cardReward.html(Number(hourlyAvgPower).toLocaleString('en-US'))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))
-}
-
-async function resetTicker() {
-    if (moment().unix() >= lastReset + 3600) lastReset += 3600
-    var duration = moment.duration(((lastReset + 3600) - moment().unix()) * 1000, 'milliseconds');
-    $cardReset.html(`in ${duration.minutes()}m and ${duration.seconds()}s`)
-    if (duration.minutes() === 0 && duration.seconds() < 59 && !notified) {
-        notify(currentNetwork.toUpperCase(), 'Next reset in less than a minute!')
-        notified = true
-        localStorage.setItem('notified', notified)
-    }
-
-    if (!notified && lastReset !== resetTime) {
-        notified = false        
-        localStorage.setItem(`${currentNetwork}-reset`, parseInt(await getLastReset()))
-    }
 }
 
 async function setRewardsClaimTaxMax() {
@@ -850,12 +834,6 @@ $("#select-network").on('change', async (e) => {
     clearFiat()
     priceTicker()
     statTicker()
-    lastReset = parseInt(await getLastReset())
-    resetTime = parseInt(lastReset)
-    localStorage.setItem(`${currentNetwork}-reset`, resetTime)
-    notified = false
-    localStorage.setItem('notified', notified)
-    resetTicker()
 })
 
 $('#modal-add-account').on('shown.bs.modal', function (e) {
@@ -863,7 +841,7 @@ $('#modal-add-account').on('shown.bs.modal', function (e) {
     $('#inp-address').val('')
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     if (!Notification) {
         alert('Desktop notifications not available in your browser. Try another browser.');
         return;
@@ -881,4 +859,4 @@ function notify(title, message) {
             body: message,
         });
     }
-}
+}*/
