@@ -205,7 +205,7 @@ async function loadData() {
                 var exp = charsExp[i]
                 var sta = charsSta[i]
                 var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
-                totalSouls += ((CharacterPower(charData.level - 1) * 4) - power)
+                totalSouls += ((CharacterPower(charData.level) * 4) - power)
                 return {
                     charId,
                     power,
