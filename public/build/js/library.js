@@ -336,12 +336,14 @@ function weaponFromContract(id, data) {
     const stat2 = data[2];
     const stat3 = data[3];
     const level = +data[4];
-    const blade = data[5];
-    const crossguard = data[6];
-    const grip = data[7];
-    const pommel = data[8];
-    const burnPoints = +data[9];
-    const bonusPower = +data[10];
+    const cosmetics = +data[5];
+    const blade = (cosmetics & 0xff).toString();
+    const crossguard = ((cosmetics >> 8) & 0xff).toString();
+    const grip = ((cosmetics >> 16) & 0xff).toString();
+    const pommel = ((cosmetics >> 24) & 0xff).toString();
+    const burnPoints = +data[6];
+    const bonusPower = +data[7];
+    const weaponType = +data[8];
 
     const stat1Value = +stat1;
     const stat2Value = +stat2;
@@ -383,7 +385,8 @@ function weaponFromContract(id, data) {
         fourStarBurnPoints,
         fiveStarBurnPoints,
         bonusPower,
-        traitNum
+        traitNum,
+        weaponType
     };
 }
 
