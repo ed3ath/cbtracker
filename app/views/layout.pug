@@ -13,6 +13,7 @@ html#main(lang='en')
     link(rel='stylesheet' media='screen' href='/css/theme.min.css')
     link(rel='stylesheet' media='screen' href='/css/core.css')
     link(rel='stylesheet' media='screen' href='/css/main.css')
+    meta(name='coinzilla' content='d327568b4802f2f4e3795febda1adfdf')
     
     // Google Analytics
     script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-2C7J6DL9GR')
@@ -21,16 +22,17 @@ html#main(lang='en')
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-2C7J6DL9GR');
+      
   
   body(style='background-color: #12263f')
     block content
 
-    script(type="text/javascript" src='/build/js/vendor-min.js')
-    script(type="text/javascript" src='/build/js/contracts-min.js')
-    script(type="text/javascript" src='/build/js/library-min.js')
+    script(type='text/javascript' src='/build/js/vendor-min.js')
+    script(type='text/javascript' src='/build/js/contracts-min.js')
+    script(type='text/javascript' src='/build/js/library-min.js')
     if page === 'home'
-      script(type="text/javascript" src='/build/js/core-min.js')
+      script(type='text/javascript' src='/build/js/core-min.js')
     if page === 'calculator'
-      script(type="text/javascript" src='/build/js/calculator-min.js')
+      script(type='text/javascript' src='/build/js/calculator-min.js')
     if page === 'stats'
-      script(type="text/javascript" src='/build/js/stats-min.js')
+      script(type='text/javascript' src='/build/js/stats-min.js')
