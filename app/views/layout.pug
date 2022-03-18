@@ -27,8 +27,8 @@ html#main(lang='en')
   body(style='background-color: #12263f')
     block content
 
-    script(type='text/javascript' src='/build/js/vendor-min.js')
     script(type='text/javascript' src='/build/js/contracts-min.js')
+    script(type='text/javascript' src='/build/js/vendor-min.js')
     script(type='text/javascript' src='/build/js/library-min.js')
     if page === 'home'
       script(type='text/javascript' src='/build/js/core-min.js')
@@ -37,7 +37,16 @@ html#main(lang='en')
     if page === 'stats'
       script(type='text/javascript' src='/build/js/stats-min.js')   
 
-    script(src='https://coinzillatag.com/lib/sticky.js')    
+    script(src='https://coinzillatag.com/lib/sticky.js' id='coinzilla')    
     script(async='' src='https://coinzillatag.com/lib/display.js')
     script.
       window.coinzilla_sticky = window.coinzilla_sticky || [];function czilla(){coinzilla_sticky.push(arguments);}czilla('1426231acdf7b29b116');
+      
+      var timer = setInterval(()=>{
+        try {
+          if (!coinzilla_id_session) {}
+        } catch(e) {
+          return alert('Please disable ad blocker to use this tool.')
+        }
+        return clearInterval(timer)
+      }, 1000)
