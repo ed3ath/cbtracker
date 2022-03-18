@@ -15,7 +15,8 @@ var conAddress = {
         multicall: '0x1ee38d535d541c55c9dae27b12edf090c608e6fb',
         skillStaking30: '0xd6b2D8f59Bf30cfE7009fB4fC00a7b13Ca836A2c',
         skillStaking90: '0xc42dF5397B3C0B45DeDaCB83F7aDb1F30B73097d',
-        skillStaking180: '0x3C06533B42A802f3Ac0E770CCBBeA9fa7Cae9572'
+        skillStaking180: '0x3C06533B42A802f3Ac0E770CCBBeA9fa7Cae9572',
+        quest: '0xD6CDf4072EB6bcF10ef1b715aaA0fDF755B52327'
     },
     heco: {
         staking: '0x6109A500e5b9CE40FFe075Ea3A6beA6e93c23BcF',
@@ -31,7 +32,8 @@ var conAddress = {
         multicall: '0xCeBFbFb4Bd0d28E5a2662193e35E534ca6465f73',
         skillStaking30: '',
         skillStaking90: '',
-        skillStaking180: ''
+        skillStaking180: '',
+        quest: '0xd3813bb74A8AB232e5CF61319b7b686CFd8788DA'
     },
     oec: {
         staking: '0xC5707a6a16CCe1963Ec3E6cdEE0A91e4876Be395',
@@ -47,7 +49,8 @@ var conAddress = {
         multicall: '0xddBDA43E5675C8A35dcA19007061A1D4A28F9452',
         skillStaking30: '',
         skillStaking90: '',
-        skillStaking180: ''
+        skillStaking180: '',
+        quest: '0x47a3c3e3925624beBf5193717d80EF494Bc9B8A7'
     },
     poly: {
         staking: '0xE34e7cA8e64884E3b5Cd48991ba229d8302E85da',
@@ -63,7 +66,8 @@ var conAddress = {
         multicall: '0x35e4aA226ce52e1E59E5e5Ec24766007bCbE2e7D',
         skillStaking30: '',
         skillStaking90: '',
-        skillStaking180: ''
+        skillStaking180: '',
+        quest: '0xc97011880a37139BD5eEEAE7A2cf683a82D615e0'
     },
     avax: {
         staking: '0x96438Debb1419bF0B53119Edae6e664c931504CA',
@@ -79,7 +83,8 @@ var conAddress = {
         multicall: '0x0FB54156B496b5a040b51A71817aED9e2927912E',
         skillStaking30: '',
         skillStaking90: '',
-        skillStaking180: ''
+        skillStaking180: '',
+        quest: ''
     }
 }
 
@@ -179,6 +184,42 @@ var getActivePartnerProjectsIds = () => conTreasury.methods.getActivePartnerProj
 var getSkillPartnerId = async () => {
     var activePartnerIds = await getActivePartnerProjectsIds()
     return BigInt((await multicall(getNFTCall(Treasury, conAddress[currentNetwork].treasury, 'getPartnerProject', activePartnerIds.map(id => [id])))).find((data) => data[2] === 'SKILL')[0]).toString()
+}
+
+var getReputationLevelRequirements = async () => {
+    const conQuest = new web3.eth.Contract(SimpleQuest, conAddress[currentNetwork].quest)
+    const VAR_REPUTATION_LEVEL_2 = await conQuest.methods.VAR_REPUTATION_LEVEL_2().call();
+    const VAR_REPUTATION_LEVEL_3 = await conQuest.methods.VAR_REPUTATION_LEVEL_3().call();
+    const VAR_REPUTATION_LEVEL_4 = await conQuest.methods.VAR_REPUTATION_LEVEL_4().call();
+    const VAR_REPUTATION_LEVEL_5 = await conQuest.methods.VAR_REPUTATION_LEVEL_5().call();
+    const requirementsRaw = await conQuest.methods.getVars([
+      VAR_REPUTATION_LEVEL_2,
+      VAR_REPUTATION_LEVEL_3,
+      VAR_REPUTATION_LEVEL_4,
+      VAR_REPUTATION_LEVEL_5,
+    ]).call();
+
+    return {
+      level2: +requirementsRaw[0],
+      level3: +requirementsRaw[1],
+      level4: +requirementsRaw[2],
+      level5: +requirementsRaw[3],
+    };
+}
+
+
+var getReputationTier = (reputation, reputationLevelRequirements) => {
+    if (reputation < reputationLevelRequirements.level2) {
+      return ReputationTier.PEASANT;
+    } else if (reputation < reputationLevelRequirements.level3) {
+      return ReputationTier.TRADESMAN;
+    } else if (reputation < reputationLevelRequirements.level4) {
+      return ReputationTier.NOBLE;
+    } else if (reputation < reputationLevelRequirements.level5) {
+      return ReputationTier.KNIGHT;
+    } else {
+      return ReputationTier.KING;
+    }
 }
 
 var multicall = async ({abi, calls}) => {

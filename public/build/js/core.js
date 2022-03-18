@@ -191,19 +191,26 @@ async function loadData() {
         $cardTotal.html((formatNumber(parseFloat($cardTotal.html()) + parseFloat(fromEther(sumOfArray([unclaimed, staked, wallet]))))))
         $cardBnb.html((formatNumber(parseFloat($cardBnb.html()) + parseFloat(fromEther(binance)))))
 
-        let charHtml = '', chars = {}
+        var charHtml = '', chars = {}
+        var charsRep = []
 
         var charsData = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'get', charIds.map(charId => [charId])))).map((data, i) => characterFromContract(charIds[i], data))
-        var charsSta = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getStaminaPoints', charIds.map(charId => [charId])))).map(sta => sta[0])        
+        var charsSta = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getStaminaPoints', charIds.map(charId => [charId])))).map(sta => sta[0])
         var charsPower = (await multicall(getNFTCall(Characters, conAddress[currentNetwork].character, 'getTotalPower', charIds.map(charId => [charId]))))
+
+        if (currentNetwork !== 'avax') {
+            charsRep =  (await multicall(getNFTCall(SimpleQuest, conAddress[currentNetwork].quest, 'getCharacterQuestData', charIds.map(charId => [charId]))))
+        }
         var charsExp = await conCryptoBlades.methods.getXpRewards(charIds).call()
         
         if (charLen > 0) {
+            var reputationLevelRequirements = await getReputationLevelRequirements()
             chars = charIds.map((charId, i) => {
                 var charData = charsData[i]
                 var power = charsPower[i]
                 var exp = charsExp[i]
                 var sta = charsSta[i]
+                var rep = getReputationTier(charsRep[i] ? Number(charsRep[i][0][2]) : 0, reputationLevelRequirements)
                 var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
                 totalSouls += ((CharacterPower(charData.level) * 4) - power)
                 return {
@@ -211,6 +218,7 @@ async function loadData() {
                     power,
                     exp,
                     sta,
+                    rep,
                     trait: charData.trait,
                     nextLevel: nextTargetExpLevel.level + 1,
                     nextExp: nextTargetExpLevel.exp - (parseInt(charData.xp) + parseInt(exp)),
@@ -223,11 +231,22 @@ async function loadData() {
                         <td class="char-column">${levelToColor(chars[0].level)}</td>
                         <td class="char-column">${elemToColor(chars[0].element)}</td>
                         <td class="char-column">${Number(chars[0].power).toLocaleString('en-US')} / ${Number(CharacterPower(chars[0].level - 1) * 4).toLocaleString('en-US')}</td>
+                        <td class="char-column">${reputationToTier(chars[0].rep)}</td>
                         <td class="char-column"><span data-cid="${chars[0].charId}">${chars[0].exp}</span> xp</td>
                         <td class="char-column">${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${Number(chars[0].nextExp).toLocaleString('en-US')}</span> xp left)`)}</span></td>
                         <td class="char-column" data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         } else {
-            charHtml = '<td class="char-column" colspan="7"></td>'
+            charHtml = `<td class="char-column" colspan="8">
+                            <div class="coinzilla" data-zone="C-1836231acdf79c70725"></div>
+                            <script>
+                                window.coinzilla_display = window.coinzilla_display || [];
+                                var c_display_preferences = {};
+                                c_display_preferences.zone = "1836231acdf79c70725";
+                                c_display_preferences.width = "728";
+                                c_display_preferences.height = "90";
+                                coinzilla_display.push(c_display_preferences);
+                            </script>
+                        </td>`
         }
         if (charLen < 1) {
             charLen = 1
@@ -257,6 +276,7 @@ async function loadData() {
                                         <td class="char-column">${levelToColor(char.level)}</td>
                                         <td class="char-column">${elemToColor(char.element)}</td>                                        
                                         <td class="char-column">${Number(char.power).toLocaleString('en-US')} / ${Number(CharacterPower(char.level - 1) * 4).toLocaleString('en-US')}</td>
+                                        <td class="char-column">${reputationToTier(char.rep)}</td>
                                         <td class="char-column"><span data-cid="${char.charId}">${char.exp}</span> xp</td>
                                         <td class="char-column">${char.nextLevel}<br/><span style='font-size: 10px'>(${(char.mustClaim ? '<span class="text-gold">Claim now</span>' : `<span data-xp="${char.charId}">${Number(char.nextExp).toLocaleString('en-US')}</span> xp left`)})</span></td>
                                         <td class="char-column">${staminaToColor(char.sta)}<br/>${staminaFullAt(char.sta)}</td>
