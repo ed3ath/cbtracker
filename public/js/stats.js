@@ -14,9 +14,7 @@ var $card1 = $('#card-1'),
     $card8 = $('#card-8'),
     $card9 = $('#card-9'),
     $card10 = $('#card-10'),
-    $card11 = $('#card-11'),
-    $card12 = $('#card-12'),
-    $card13 = $('#card-13')
+    $card11 = $('#card-11')
 
 $('document').ready(async () => {
     priceTicker()
@@ -58,7 +56,7 @@ async function priceTicker() {
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd`, async (result) => {
         usdPrice = result.tether.usd
         gasUSDPrice = gasPrice * usdPrice
-        if (currentNetwork === 'bsc') {
+        if (currentNetwork === 'bnb') {
             skillPrice *= gasPrice
         }
         $card1.html(skillPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
@@ -68,26 +66,22 @@ async function priceTicker() {
 
 async function statTicker() {
     const fightAllowance = await getCurrentAllowance()
-    const hourlyPay = await getPayPerFight()
-    const maxClaim = await getMaxClaim()
-    const maxPay = await getMaxPayPerFight()
+    const skillMultiplier = await getSkillMultiplier(await getSkillPartnerId())
     const hourlyFights = await getHourlyFights()
     const hourlyAvgPower = await getHourlyPowerAvg()
     const hourlyTotalPower = await getHourlyPowerSum()
     const totalChars = await getTotalCharacters()
     const totalWeaps = await getTotalWeapons()
     const totalShields = await getTotalShields()
-
+    
     $card4.html(parseFloat(fromEther(fightAllowance)).toFixed(6))
-    $card5.html(parseFloat(fromEther(maxClaim)).toFixed(6))
-    $card6.html(parseFloat(fromEther(maxPay)).toFixed(6))
-    $card7.html(parseFloat(fromEther(hourlyPay)).toFixed(6))
-    $card8.html(Number(hourlyFights).toLocaleString('en-US'))
-    $card9.html(Number(hourlyAvgPower).toLocaleString('en-US'))
-    $card10.html(Number(hourlyTotalPower).toLocaleString('en-US'))
-    $card11.html(Number(totalChars).toLocaleString('en-US'))
-    $card12.html(Number(totalWeaps).toLocaleString('en-US'))
-    $card13.html(Number(totalShields).toLocaleString('en-US'))
+    $card5.html(parseFloat(fromEther(skillMultiplier)).toFixed(6))
+    $card6.html(Number(hourlyFights).toLocaleString('en-US'))
+    $card7.html(Number(hourlyAvgPower).toLocaleString('en-US'))
+    $card8.html(Number(hourlyTotalPower).toLocaleString('en-US'))
+    $card9.html(Number(totalChars).toLocaleString('en-US'))
+    $card10.html(Number(totalWeaps).toLocaleString('en-US'))
+    $card11.html(Number(totalShields).toLocaleString('en-US'))
 }
 
 async function resetTicker() {
@@ -98,7 +92,7 @@ async function resetTicker() {
 
 function gasName(network) {
     switch (network) {
-        case 'bsc': return 'BNB'
+        case 'bnb': return 'BNB'
         case 'heco': return 'HT'
         case 'oec': return 'OKT'
         case 'poly': return 'MATIC'
@@ -122,8 +116,6 @@ $("#select-network").on('change', async (e) => {
     $card9.html(0)
     $card10.html(0)
     $card11.html(0)
-    $card12.html(0)
-    $card13.html(0)
     updateNetwork(e.currentTarget.value)
     populateNetwork()
     updateGasLabel()
