@@ -204,13 +204,13 @@ async function loadData() {
         var charsExp = await conCryptoBlades.methods.getXpRewards(charIds).call()
         
         if (charLen > 0) {
-            var reputationLevelRequirements = await getReputationLevelRequirements()
+            var reputationLevelRequirements = (currentNetwork !== 'avax' ? await getReputationLevelRequirements() : undefined)
             chars = charIds.map((charId, i) => {
                 var charData = charsData[i]
                 var power = charsPower[i]
                 var exp = charsExp[i]
                 var sta = charsSta[i]
-                var rep = getReputationTier(charsRep[i] ? Number(charsRep[i][0][2]) : 0, reputationLevelRequirements)
+                var rep = (currentNetwork !== 'avax' ? getReputationTier(charsRep[i] ? Number(charsRep[i][0][2]) : 0, reputationLevelRequirements) : 0)
                 var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
                 totalSouls += ((CharacterPower(charData.level) * 4) - power)
                 return {
