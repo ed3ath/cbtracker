@@ -2,7 +2,7 @@
 FROM keymetrics/pm2:latest
 
 # Define working directory
-WORKDIR /
+WORKDIR /opt/cbtracker
 
 ADD . .
 
