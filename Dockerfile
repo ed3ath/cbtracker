@@ -2,7 +2,6 @@
 FROM keymetrics/pm2:latest
 
 # Define working directory
-VOLUME /opt/cbtracker
 WORKDIR /opt/cbtracker
 
 ADD . .
