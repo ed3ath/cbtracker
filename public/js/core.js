@@ -159,7 +159,7 @@ async function loadData() {
     $cardAccount.html(storeAccounts.length)
     totalSouls = 0
 
-    if (currentNetwork === 'bsc') {
+    if (currentNetwork === 'bnb') {
         var accSkillStaked30 = await multicall(getNFTCall(SkillStaking30, conAddress[currentNetwork].skillStaking30, 'balanceOf', storeAccounts.map(acc => [acc])))
         var accSkillStaked90 = await multicall(getNFTCall(SkillStaking90, conAddress[currentNetwork].skillStaking90, 'balanceOf', storeAccounts.map(acc => [acc])))
         var accSkillStaked180 = await multicall(getNFTCall(SkillStaking180, conAddress[currentNetwork].skillStaking180, 'balanceOf', storeAccounts.map(acc => [acc])))
@@ -174,7 +174,7 @@ async function loadData() {
         var charIds = await getAccountCharacters(address)
         var binance = await getBNBBalance(address)
         var wallet = await getSkillWallet(address)
-        var staked = (currentNetwork === 'bsc' ? (web3.utils.toBN(sumOfStakedSkill(accSkillStaked30[i], accSkillStaked90[i], accSkillStaked180[i]))) : await getStakedRewards(address))
+        var staked = (currentNetwork === 'bnb' ? (web3.utils.toBN(sumOfStakedSkill(accSkillStaked30[i], accSkillStaked90[i], accSkillStaked180[i]))) : await getStakedRewards(address))
         var unclaimed = accUnclaimed[i]
         var claimable = unclaimed * skillMultiplier
 
@@ -204,13 +204,13 @@ async function loadData() {
         var charsExp = await conCryptoBlades.methods.getXpRewards(charIds).call()
         
         if (charLen > 0) {
-            var reputationLevelRequirements = await getReputationLevelRequirements()
+            var reputationLevelRequirements = (currentNetwork !== 'avax' ? await getReputationLevelRequirements() : undefined)
             chars = charIds.map((charId, i) => {
                 var charData = charsData[i]
                 var power = charsPower[i]
                 var exp = charsExp[i]
                 var sta = charsSta[i]
-                var rep = getReputationTier(charsRep[i] ? Number(charsRep[i][0][2]) : 0, reputationLevelRequirements)
+                var rep = (currentNetwork !== 'avax' ? getReputationTier(charsRep[i] ? Number(charsRep[i][0][2]) : 0, reputationLevelRequirements) : 0)
                 var nextTargetExpLevel = getNextTargetExpLevel(charData.level)
                 totalSouls += ((CharacterPower(charData.level) * 4) - power)
                 return {
@@ -354,7 +354,7 @@ async function priceTicker() {
     $.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${currencies.join(',')}`, async (result) => {
         usdPrice = result.tether[currCurrency]
         bnbPrice = gasPrice * usdPrice
-        if (currentNetwork === 'bsc') {
+        if (currentNetwork === 'bnb') {
             skillPrice *= gasPrice
         }
         localPrice = usdPrice * skillPrice
@@ -730,7 +730,7 @@ function unstakeSkillAt(timeLeft) {
 
 function gasName(network) {
     switch (network) {
-        case 'bsc': return 'BNB'
+        case 'bnb': return 'BNB'
         case 'heco': return 'HT'
         case 'oec': return 'OKT'
         case 'poly': return 'MATIC'

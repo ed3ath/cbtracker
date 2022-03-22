@@ -1,7 +1,7 @@
-var networks = ['bsc', 'heco', 'oec', 'poly', 'avax']
+var networks = ['bnb', 'heco', 'oec', 'poly', 'avax']
 
 var conAddress = {
-    bsc: {
+    bnb: {
         staking: '0xd6b2D8f59Bf30cfE7009fB4fC00a7b13Ca836A2c',
         token: '0x154a9f9cbd3449ad22fdae23044319d6ef2a1fab',
         cryptoBlades: '0x39Bea96e13453Ed52A734B6ACEeD4c41F57B2271',
@@ -89,7 +89,7 @@ var conAddress = {
 }
 
 var nodes = {
-    bsc: 'https://bsc-dataseed1.defibit.io/',
+    bnb: 'https://bsc-dataseed1.defibit.io/',
     heco: 'https://http-mainnet.hecochain.com',
     oec: 'https://exchainrpc.okex.org',
     poly: 'https://polygon-rpc.com/',
@@ -99,7 +99,7 @@ var nodes = {
 var currentNetwork = localStorage.getItem('network')
 
 if (!networks.includes(currentNetwork)) {
-    currentNetwork = 'bsc'
+    currentNetwork = 'bnb'
     localStorage.setItem('network', currentNetwork)  
 }
 
