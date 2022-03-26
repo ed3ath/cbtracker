@@ -1,2022 +1,1942 @@
 const CryptoBlades = [
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "character",
-        "type": "uint256"
+        indexed: true,
+        internalType: "uint256",
+        name: "character",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "weapon",
-        "type": "uint256"
+        indexed: false,
+        internalType: "uint256",
+        name: "weapon",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "target",
-        "type": "uint32"
+        indexed: false,
+        internalType: "uint32",
+        name: "target",
+        type: "uint32",
       },
       {
-        "indexed": false,
-        "internalType": "uint24",
-        "name": "playerRoll",
-        "type": "uint24"
+        indexed: false,
+        internalType: "uint24",
+        name: "playerRoll",
+        type: "uint24",
       },
       {
-        "indexed": false,
-        "internalType": "uint24",
-        "name": "enemyRoll",
-        "type": "uint24"
+        indexed: false,
+        internalType: "uint24",
+        name: "enemyRoll",
+        type: "uint24",
       },
       {
-        "indexed": false,
-        "internalType": "uint16",
-        "name": "xpGain",
-        "type": "uint16"
+        indexed: false,
+        internalType: "uint16",
+        name: "xpGain",
+        type: "uint16",
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "skillGain",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: "uint256",
+        name: "skillGain",
+        type: "uint256",
+      },
     ],
-    "name": "FightOutcome",
-    "type": "event"
+    name: "FightOutcome",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "skillAmount",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: "uint256",
+        name: "skillAmount",
+        type: "uint256",
+      },
     ],
-    "name": "InGameOnlyFundsGiven",
-    "type": "event"
+    name: "InGameOnlyFundsGiven",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "previousAdminRole",
-        "type": "bytes32"
+        indexed: true,
+        internalType: "bytes32",
+        name: "previousAdminRole",
+        type: "bytes32",
       },
       {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "newAdminRole",
-        "type": "bytes32"
-      }
+        indexed: true,
+        internalType: "bytes32",
+        name: "newAdminRole",
+        type: "bytes32",
+      },
     ],
-    "name": "RoleAdminChanged",
-    "type": "event"
+    name: "RoleAdminChanged",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "account",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
+        indexed: true,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
     ],
-    "name": "RoleGranted",
-    "type": "event"
+    name: "RoleGranted",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "account",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
+        indexed: true,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
     ],
-    "name": "RoleRevoked",
-    "type": "event"
+    name: "RoleRevoked",
+    type: "event",
   },
   {
-    "inputs": [],
-    "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [
+    inputs: [],
+    name: "DEFAULT_ADMIN_ROLE",
+    outputs: [
       {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "GAME_ADMIN",
-    "outputs": [
+    inputs: [],
+    name: "GAME_ADMIN",
+    outputs: [
       {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "PAYMENT_USING_STAKED_SKILL_COST_AFTER_DISCOUNT",
-    "outputs": [
+    inputs: [],
+    name: "PAYMENT_USING_STAKED_SKILL_COST_AFTER_DISCOUNT",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "USERVAR_CLAIM_TIMESTAMP",
-    "outputs": [
+    inputs: [],
+    name: "USERVAR_CLAIM_TIMESTAMP",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "USERVAR_DAILY_CLAIMED_AMOUNT",
-    "outputs": [
+    inputs: [],
+    name: "USERVAR_DAILY_CLAIMED_AMOUNT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_CLAIM_DEPOSIT_AMOUNT",
-    "outputs": [
+    inputs: [],
+    name: "VAR_CLAIM_DEPOSIT_AMOUNT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_DAILY_MAX_CLAIM",
-    "outputs": [
+    inputs: [],
+    name: "VAR_DAILY_MAX_CLAIM",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_DISTRIBUTION",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_DISTRIBUTION",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_FIGHTS",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_FIGHTS",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_INCOME",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_INCOME",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_MAX_POWER_AVERAGE",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_MAX_POWER_AVERAGE",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_PAY_PER_FIGHT",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_PAY_PER_FIGHT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_POWER_AVERAGE",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_POWER_AVERAGE",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_POWER_SUM",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_POWER_SUM",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_HOURLY_TIMESTAMP",
-    "outputs": [
+    inputs: [],
+    name: "VAR_HOURLY_TIMESTAMP",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_PARAM_DAILY_CLAIM_DEPOSIT_PERCENT",
-    "outputs": [
+    inputs: [],
+    name: "VAR_PARAM_DAILY_CLAIM_DEPOSIT_PERCENT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_PARAM_DAILY_CLAIM_FIGHTS_LIMIT",
-    "outputs": [
+    inputs: [],
+    name: "VAR_PARAM_DAILY_CLAIM_FIGHTS_LIMIT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_PARAM_HOURLY_MAX_POWER_PERCENT",
-    "outputs": [
+    inputs: [],
+    name: "VAR_PARAM_HOURLY_MAX_POWER_PERCENT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_PARAM_HOURLY_PAY_ALLOWANCE",
-    "outputs": [
+    inputs: [],
+    name: "VAR_PARAM_HOURLY_PAY_ALLOWANCE",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_PARAM_MAX_FIGHT_PAYOUT",
-    "outputs": [
+    inputs: [],
+    name: "VAR_PARAM_MAX_FIGHT_PAYOUT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_PARAM_PAYOUT_INCOME_PERCENT",
-    "outputs": [
+    inputs: [],
+    name: "VAR_PARAM_PAYOUT_INCOME_PERCENT",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_PARAM_SIGNIFICANT_HOUR_FIGHTS",
-    "outputs": [
+    inputs: [],
+    name: "VAR_PARAM_SIGNIFICANT_HOUR_FIGHTS",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "VAR_UNCLAIMED_SKILL",
-    "outputs": [
+    inputs: [],
+    name: "VAR_UNCLAIMED_SKILL",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "blacksmith",
-    "outputs": [
+    inputs: [],
+    name: "blacksmith",
+    outputs: [
       {
-        "internalType": "contract Blacksmith",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract Blacksmith",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "burnWeaponFee",
-    "outputs": [
+    inputs: [],
+    name: "burnWeaponFee",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "characters",
-    "outputs": [
+    inputs: [],
+    name: "characters",
+    outputs: [
       {
-        "internalType": "contract Characters",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract Characters",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "fightRewardBaseline",
-    "outputs": [
+    inputs: [],
+    name: "fightRewardBaseline",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "fightRewardGasOffset",
-    "outputs": [
+    inputs: [],
+    name: "fightRewardGasOffset",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "fightTraitBonus",
-    "outputs": [
+    inputs: [],
+    name: "fightTraitBonus",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "fightXpGain",
-    "outputs": [
+    inputs: [],
+    name: "fightXpGain",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      }
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
     ],
-    "name": "getRoleAdmin",
-    "outputs": [
+    name: "getRoleAdmin",
+    outputs: [
       {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
     ],
-    "name": "getRoleMember",
-    "outputs": [
+    name: "getRoleMember",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      }
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
     ],
-    "name": "getRoleMemberCount",
-    "outputs": [
+    name: "getRoleMemberCount",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "grantRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "grantRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "hasRole",
-    "outputs": [
+    name: "hasRole",
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "name": "inGameOnlyFunds",
-    "outputs": [
+    name: "inGameOnlyFunds",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "mintCharacterFee",
-    "outputs": [
+    inputs: [],
+    name: "mintCharacterFee",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "mintWeaponFee",
-    "outputs": [
+    inputs: [],
+    name: "mintWeaponFee",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "oneFrac",
-    "outputs": [
+    inputs: [],
+    name: "oneFrac",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "priceOracleSkillPerUsd",
-    "outputs": [
+    inputs: [],
+    name: "priceOracleSkillPerUsd",
+    outputs: [
       {
-        "internalType": "contract IPriceOracle",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract IPriceOracle",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "promos",
-    "outputs": [
+    inputs: [],
+    name: "promos",
+    outputs: [
       {
-        "internalType": "contract Promos",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract Promos",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "randoms",
-    "outputs": [
+    inputs: [],
+    name: "randoms",
+    outputs: [
       {
-        "internalType": "contract IRandoms",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract IRandoms",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "refillStaminaFee",
-    "outputs": [
+    inputs: [],
+    name: "refillStaminaFee",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "reforgeWeaponFee",
-    "outputs": [
+    inputs: [],
+    name: "reforgeWeaponFee",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "reforgeWeaponWithDustFee",
-    "outputs": [
+    inputs: [],
+    name: "reforgeWeaponWithDustFee",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "renounceRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "renounceRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
       },
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "revokeRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "revokeRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "skillToken",
-    "outputs": [
+    inputs: [],
+    name: "skillToken",
+    outputs: [
       {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "stakeFromGameImpl",
-    "outputs": [
+    inputs: [],
+    name: "specialWeaponsManager",
+    outputs: [
       {
-        "internalType": "contract IStakeFromGame",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract SpecialWeaponsManager",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "totalInGameOnlyFunds",
-    "outputs": [
+    inputs: [],
+    name: "stakeFromGameImpl",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "contract IStakeFromGame",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "totalMintPaymentSkillRefundable",
-    "outputs": [
+    inputs: [],
+    name: "totalInGameOnlyFunds",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [],
+    name: "totalMintPaymentSkillRefundable",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "name": "userVars",
-    "outputs": [
+    name: "userVars",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "name": "vars",
-    "outputs": [
+    name: "vars",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "weapons",
-    "outputs": [
+    inputs: [],
+    name: "weapons",
+    outputs: [
       {
-        "internalType": "contract Weapons",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract Weapons",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "contract IERC20",
-        "name": "_skillToken",
-        "type": "address"
+        internalType: "contract IERC20",
+        name: "_skillToken",
+        type: "address",
       },
       {
-        "internalType": "contract Characters",
-        "name": "_characters",
-        "type": "address"
+        internalType: "contract Characters",
+        name: "_characters",
+        type: "address",
       },
       {
-        "internalType": "contract Weapons",
-        "name": "_weapons",
-        "type": "address"
+        internalType: "contract Weapons",
+        name: "_weapons",
+        type: "address",
       },
       {
-        "internalType": "contract IPriceOracle",
-        "name": "_priceOracleSkillPerUsd",
-        "type": "address"
+        internalType: "contract IPriceOracle",
+        name: "_priceOracleSkillPerUsd",
+        type: "address",
       },
       {
-        "internalType": "contract IRandoms",
-        "name": "_randoms",
-        "type": "address"
-      }
+        internalType: "contract IRandoms",
+        name: "_randoms",
+        type: "address",
+      },
     ],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "initialize",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "contract Promos",
-        "name": "_promos",
-        "type": "address"
-      }
+        internalType: "contract Promos",
+        name: "_promos",
+        type: "address",
+      },
     ],
-    "name": "migrateTo_ef994e2",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "migrateTo_ef994e2",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "contract IStakeFromGame",
-        "name": "_stakeFromGame",
-        "type": "address"
-      }
+        internalType: "contract IStakeFromGame",
+        name: "_stakeFromGame",
+        type: "address",
+      },
     ],
-    "name": "migrateTo_23b3a8b",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "migrateTo_23b3a8b",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "migrateTo_801f279",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "migrateTo_801f279",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "contract Blacksmith",
-        "name": "_blacksmith",
-        "type": "address"
-      }
+        internalType: "contract Blacksmith",
+        name: "_blacksmith",
+        type: "address",
+      },
     ],
-    "name": "migrateTo_60872c8",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "migrateTo_60872c8",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "migrateTo_6a97bd1",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "migrateTo_6a97bd1",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+        internalType: "contract SpecialWeaponsManager",
+        name: "_swm",
+        type: "address",
+      },
     ],
-    "name": "recoverSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "migrateTo_e1fe97c",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "REWARDS_CLAIM_TAX_MAX",
-    "outputs": [
+    inputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    name: "recoverSkill",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "REWARDS_CLAIM_TAX_DURATION",
-    "outputs": [
+    inputs: [],
+    name: "REWARDS_CLAIM_TAX_MAX",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [],
+    name: "REWARDS_CLAIM_TAX_DURATION",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "_needed",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_needed",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "_available",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_available",
+        type: "uint256",
+      },
     ],
-    "name": "getSkillToSubtractSingle",
-    "outputs": [
+    name: "getSkillToSubtractSingle",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "_used",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "_used",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "_remainder",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_remainder",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "pure",
-    "type": "function"
+    stateMutability: "pure",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "_inGameOnlyFunds",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "_inGameOnlyFunds",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "_tokenRewards",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "_tokenRewards",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "_skillNeeded",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_skillNeeded",
+        type: "uint256",
+      },
     ],
-    "name": "getSkillToSubtract",
-    "outputs": [
+    name: "getSkillToSubtract",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "fromInGameOnlyFunds",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "fromInGameOnlyFunds",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "fromTokenRewards",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "fromTokenRewards",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "fromUserWallet",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "fromUserWallet",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "pure",
-    "type": "function"
+    stateMutability: "pure",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
+        internalType: "address",
+        name: "playerAddress",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "skillNeeded",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "skillNeeded",
+        type: "uint256",
       },
       {
-        "internalType": "bool",
-        "name": "allowInGameOnlyFunds",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "allowInGameOnlyFunds",
+        type: "bool",
+      },
     ],
-    "name": "getSkillNeededFromUserWallet",
-    "outputs": [
+    name: "getSkillNeededFromUserWallet",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "skillNeededFromUserWallet",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "skillNeededFromUserWallet",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint96",
-        "name": "playerData",
-        "type": "uint96"
-      }
+        internalType: "uint96",
+        name: "playerData",
+        type: "uint96",
+      },
     ],
-    "name": "unpackFightData",
-    "outputs": [
+    name: "unpackFightData",
+    outputs: [
       {
-        "internalType": "uint8",
-        "name": "charTrait",
-        "type": "uint8"
+        internalType: "uint8",
+        name: "charTrait",
+        type: "uint8",
       },
       {
-        "internalType": "uint24",
-        "name": "basePowerLevel",
-        "type": "uint24"
+        internalType: "uint24",
+        name: "basePowerLevel",
+        type: "uint24",
       },
       {
-        "internalType": "uint64",
-        "name": "timestamp",
-        "type": "uint64"
-      }
+        internalType: "uint64",
+        name: "timestamp",
+        type: "uint64",
+      },
     ],
-    "stateMutability": "pure",
-    "type": "function"
+    stateMutability: "pure",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "char",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "char",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "wep",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "wep",
+        type: "uint256",
       },
       {
-        "internalType": "uint32",
-        "name": "target",
-        "type": "uint32"
+        internalType: "uint32",
+        name: "target",
+        type: "uint32",
       },
       {
-        "internalType": "uint8",
-        "name": "fightMultiplier",
-        "type": "uint8"
-      }
+        internalType: "uint8",
+        name: "fightMultiplier",
+        type: "uint8",
+      },
     ],
-    "name": "fight",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "fight",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint32",
-        "name": "target",
-        "type": "uint32"
-      }
+        internalType: "uint32",
+        name: "target",
+        type: "uint32",
+      },
     ],
-    "name": "getMonsterPower",
-    "outputs": [
+    name: "getMonsterPower",
+    outputs: [
       {
-        "internalType": "uint24",
-        "name": "",
-        "type": "uint24"
-      }
+        internalType: "uint24",
+        name: "",
+        type: "uint24",
+      },
     ],
-    "stateMutability": "pure",
-    "type": "function"
+    stateMutability: "pure",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint24",
-        "name": "monsterPower",
-        "type": "uint24"
+        internalType: "uint24",
+        name: "monsterPower",
+        type: "uint24",
       },
       {
-        "internalType": "bool",
-        "name": "applyLimit",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "applyLimit",
+        type: "bool",
+      },
     ],
-    "name": "getTokenGainForFight",
-    "outputs": [
+    name: "getTokenGainForFight",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint24",
-        "name": "traitsCWE",
-        "type": "uint24"
-      }
+        internalType: "uint24",
+        name: "traitsCWE",
+        type: "uint24",
+      },
     ],
-    "name": "getPlayerTraitBonusAgainst",
-    "outputs": [
+    name: "getPlayerTraitBonusAgainst",
+    outputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "char",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "char",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "wep",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "wep",
+        type: "uint256",
+      },
     ],
-    "name": "getTargets",
-    "outputs": [
+    name: "getTargets",
+    outputs: [
       {
-        "internalType": "uint32[4]",
-        "name": "",
-        "type": "uint32[4]"
-      }
+        internalType: "uint32[4]",
+        name: "",
+        type: "uint32[4]",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "mintCharacter",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "mintCharacter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint32",
-        "name": "num",
-        "type": "uint32"
+        internalType: "uint32",
+        name: "num",
+        type: "uint32",
       },
       {
-        "internalType": "uint8",
-        "name": "chosenElement",
-        "type": "uint8"
-      }
-    ],
-    "name": "mintWeaponN",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "chosenElement",
-        "type": "uint8"
-      }
-    ],
-    "name": "mintWeapon",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint32",
-        "name": "num",
-        "type": "uint32"
+        internalType: "uint8",
+        name: "chosenElement",
+        type: "uint8",
       },
       {
-        "internalType": "uint8",
-        "name": "chosenElement",
-        "type": "uint8"
-      }
+        internalType: "uint256",
+        name: "eventId",
+        type: "uint256",
+      },
     ],
-    "name": "mintWeaponNUsingStakedSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "mintWeaponN",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint8",
-        "name": "chosenElement",
-        "type": "uint8"
-      }
-    ],
-    "name": "mintWeaponUsingStakedSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "burnID",
-        "type": "uint256"
-      }
-    ],
-    "name": "burnWeapon",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "burnIDs",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "burnWeapons",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "reforgeID",
-        "type": "uint256"
+        internalType: "uint8",
+        name: "chosenElement",
+        type: "uint8",
       },
       {
-        "internalType": "uint256",
-        "name": "burnID",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "eventId",
+        type: "uint256",
+      },
     ],
-    "name": "reforgeWeapon",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "mintWeapon",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "reforgeID",
-        "type": "uint256"
+        internalType: "uint32",
+        name: "num",
+        type: "uint32",
       },
       {
-        "internalType": "uint8",
-        "name": "amountLB",
-        "type": "uint8"
+        internalType: "uint8",
+        name: "chosenElement",
+        type: "uint8",
       },
       {
-        "internalType": "uint8",
-        "name": "amount4B",
-        "type": "uint8"
+        internalType: "uint256",
+        name: "eventId",
+        type: "uint256",
+      },
+    ],
+    name: "mintWeaponNUsingStakedSkill",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "chosenElement",
+        type: "uint8",
       },
       {
-        "internalType": "uint8",
-        "name": "amount5B",
-        "type": "uint8"
-      }
+        internalType: "uint256",
+        name: "eventId",
+        type: "uint256",
+      },
     ],
-    "name": "reforgeWeaponWithDust",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "mintWeaponUsingStakedSkill",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "burnID",
-        "type": "uint256"
-      }
+        internalType: "contract IRandoms",
+        name: "_newRandoms",
+        type: "address",
+      },
     ],
-    "name": "burnWeaponUsingStakedSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "migrateRandoms",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256[]",
-        "name": "burnIDs",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "burnWeaponsUsingStakedSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "reforgeID",
-        "type": "uint256"
+        internalType: "address",
+        name: "playerAddress",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "burnID",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "convertedAmount",
+        type: "uint256",
+      },
     ],
-    "name": "reforgeWeaponUsingStakedSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "payPlayerConverted",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "reforgeID",
-        "type": "uint256"
+        internalType: "address",
+        name: "playerAddress",
+        type: "address",
       },
       {
-        "internalType": "uint8",
-        "name": "amountLB",
-        "type": "uint8"
+        internalType: "uint256",
+        name: "convertedAmount",
+        type: "uint256",
+      },
+    ],
+    name: "payContractTokenOnly",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "playerAddress",
+        type: "address",
       },
       {
-        "internalType": "uint8",
-        "name": "amount4B",
-        "type": "uint8"
+        internalType: "uint256",
+        name: "convertedAmount",
+        type: "uint256",
       },
       {
-        "internalType": "uint8",
-        "name": "amount5B",
-        "type": "uint8"
-      }
+        internalType: "bool",
+        name: "track",
+        type: "bool",
+      },
     ],
-    "name": "reforgeWeaponWithDustUsingStakedSkill",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "payContractTokenOnly",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "contract IRandoms",
-        "name": "_newRandoms",
-        "type": "address"
-      }
-    ],
-    "name": "migrateRandoms",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
+        internalType: "address",
+        name: "playerAddress",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "convertedAmount",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "convertedAmount",
+        type: "uint256",
+      },
     ],
-    "name": "payPlayerConverted",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+    name: "payContractConvertedSupportingStaked",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
+        internalType: "uint256",
+        name: "_fromInGameOnlyFunds",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "convertedAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "payContractTokenOnly",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "playerAddress",
-        "type": "address"
+        internalType: "uint256",
+        name: "_fromTokenRewards",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "convertedAmount",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "_fromUserWallet",
+        type: "uint256",
       },
       {
-        "internalType": "bool",
-        "name": "track",
-        "type": "bool"
-      }
+        internalType: "uint256",
+        name: "_fromStaked",
+        type: "uint256",
+      },
     ],
-    "name": "payContractTokenOnly",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
+        internalType: "address",
+        name: "playerAddress",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "player",
-        "type": "address"
-      }
+        internalType: "uint256",
+        name: "convertedAmount",
+        type: "uint256",
+      },
     ],
-    "name": "deductAfterPartnerClaim",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "payContractStakedOnly",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "income",
-        "type": "uint256"
-      }
-    ],
-    "name": "trackIncome",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "cents",
-        "type": "uint256"
-      }
-    ],
-    "name": "setCharacterMintValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "cents",
-        "type": "uint256"
-      }
-    ],
-    "name": "setWeaponMintValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "cents",
-        "type": "uint256"
-      }
-    ],
-    "name": "setBurnWeaponValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "cents",
-        "type": "uint256"
-      }
-    ],
-    "name": "setReforgeWeaponValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "cents",
-        "type": "uint256"
-      }
-    ],
-    "name": "setReforgeWeaponWithDustValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "points",
-        "type": "uint8"
-      }
-    ],
-    "name": "setStaminaCostFight",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "points",
-        "type": "uint8"
-      }
-    ],
-    "name": "setDurabilityCostFight",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "average",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFightXpGain",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_percent",
-        "type": "uint256"
-      }
-    ],
-    "name": "setRewardsClaimTaxMaxAsPercent",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_rewardsClaimTaxDuration",
-        "type": "uint256"
-      }
-    ],
-    "name": "setRewardsClaimTaxDuration",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "varField",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
     ],
-    "name": "setVar",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "deductAfterPartnerClaim",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256[]",
-        "name": "varFields",
-        "type": "uint256[]"
+        internalType: "uint256",
+        name: "income",
+        type: "uint256",
+      },
+    ],
+    name: "trackIncome",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "cents",
+        type: "uint256",
+      },
+    ],
+    name: "setCharacterMintValue",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "cents",
+        type: "uint256",
+      },
+    ],
+    name: "setWeaponMintValue",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "points",
+        type: "uint8",
+      },
+    ],
+    name: "setStaminaCostFight",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "points",
+        type: "uint8",
+      },
+    ],
+    name: "setDurabilityCostFight",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "average",
+        type: "uint256",
+      },
+    ],
+    name: "setFightXpGain",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_percent",
+        type: "uint256",
+      },
+    ],
+    name: "setRewardsClaimTaxMaxAsPercent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_rewardsClaimTaxDuration",
+        type: "uint256",
+      },
+    ],
+    name: "setRewardsClaimTaxDuration",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "varField",
+        type: "uint256",
       },
       {
-        "internalType": "uint256[]",
-        "name": "values",
-        "type": "uint256[]"
-      }
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
     ],
-    "name": "setVars",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setVar",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
+        internalType: "uint256[]",
+        name: "varFields",
+        type: "uint256[]",
       },
       {
-        "internalType": "uint256",
-        "name": "skillAmount",
-        "type": "uint256"
-      }
+        internalType: "uint256[]",
+        name: "values",
+        type: "uint256[]",
+      },
     ],
-    "name": "giveInGameOnlyFunds",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setVars",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "skillAmount",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "skillAmount",
+        type: "uint256",
+      },
     ],
-    "name": "giveInGameOnlyFundsFromContractBalance",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "giveInGameOnlyFunds",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "int128",
-        "name": "usdAmount",
-        "type": "int128"
-      }
-    ],
-    "name": "usdToSkill",
-    "outputs": [
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "skillAmount",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    name: "giveInGameOnlyFundsFromContractBalance",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "claimTokenRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [
+      {
+        internalType: "int128",
+        name: "usdAmount",
+        type: "int128",
+      },
+    ],
+    name: "usdToSkill",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_claimingAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "claimTokenRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "claimTokenRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "isDailyTokenClaimAmountExpired",
-    "outputs": [
+    inputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: "uint256",
+        name: "_claimingAmount",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    name: "claimTokenRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getClaimedTokensToday",
-    "outputs": [
+    inputs: [],
+    name: "isDailyTokenClaimAmountExpired",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getRemainingTokenClaimAmountPreTax",
-    "outputs": [
+    inputs: [],
+    name: "getClaimedTokensToday",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getMaxTokenClaimAmountPreTax",
-    "outputs": [
+    inputs: [],
+    name: "getRemainingTokenClaimAmountPreTax",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [],
+    name: "getMaxTokenClaimAmountPreTax",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "name": "stakeUnclaimedRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "stakeUnclaimedRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "stakeUnclaimedRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "claimXpRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "stakeUnclaimedRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "chars",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "resetXp",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "claimXpRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getTokenRewards",
-    "outputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256[]",
+        name: "chars",
+        type: "uint256[]",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    name: "resetXp",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [],
+    name: "getTokenRewards",
+    outputs: [
       {
-        "internalType": "uint256[]",
-        "name": "chars",
-        "type": "uint256[]"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "name": "getXpRewards",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "wallet",
-        "type": "address"
-      }
+        internalType: "uint256[]",
+        name: "chars",
+        type: "uint256[]",
+      },
     ],
-    "name": "getTokenRewardsFor",
-    "outputs": [
+    name: "getXpRewards",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "wallet",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "wallet",
+        type: "address",
+      },
     ],
-    "name": "getTotalSkillOwnedBy",
-    "outputs": [
+    name: "getTokenRewardsFor",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getOwnRewardsClaimTax",
-    "outputs": [
+    inputs: [
       {
-        "internalType": "int128",
-        "name": "",
-        "type": "int128"
-      }
+        internalType: "address",
+        name: "wallet",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-]
+    name: "getTotalSkillOwnedBy",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getOwnRewardsClaimTax",
+    outputs: [
+      {
+        internalType: "int128",
+        name: "",
+        type: "int128",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];

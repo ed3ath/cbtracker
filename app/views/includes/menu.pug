@@ -9,7 +9,7 @@ header.header.navbar.navbar-expand-lg.navbar-dark.navbar-floating.navbar-sticky(
                 select#select-currency.form-select2(style='float: right !important;')
             .d-flex.align-items-center.order-lg-3.ms-lg-auto
                 select#select-network.form-select2(style='float: right !important; margin-left: 5px !important;')
-        else
+        else if (page !== 'diagnostic')
             .d-flex.align-items-center.order-lg-3.ms-lg-auto
                 select#select-network.form-select2(style='float: right !important;')
         #primaryMenu.offcanvas.offcanvas-collapse.order-lg-2
@@ -22,7 +22,11 @@ header.header.navbar.navbar-expand-lg.navbar-dark.navbar-floating.navbar-sticky(
                     li.nav-item
                         a.nav-link(href='/') Home
                     li.nav-item
-                        a.nav-link(href='/calculator') Rewards Calculator        
+                        a.nav-link(href='/calculator') Rewards Calculator
                     li.nav-item
                         a.nav-link(href='/stats') CryptoBlades Stats
+                    li.nav-item.dropdown
+                        a.nav-link.dropdown-toggle(data-bs-toggle="dropdown" href='javascript:void(0)' role='button' aria-haspopup='true' aria-expanded='false') Tools
+                        .dropdown-menu
+                            a.dropdown-item(href='/diagnostic') Diagnostic
 

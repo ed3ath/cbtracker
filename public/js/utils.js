@@ -178,6 +178,34 @@ function weaponFromContract(id, data) {
   };
 }
 
+function shieldFromContract(id, data) {
+  const properties = data[0];
+  const stat1 = data[1];
+  const stat2 = data[2];
+  const stat3 = data[3];
+
+  const stat1Value = +stat1;
+  const stat2Value = +stat2;
+  const stat3Value = +stat3;
+
+  const statPattern = getStatPatternFromProperties(+properties);
+  const stat1Type = getStat1Trait(statPattern);
+  const stat2Type = getStat2Trait(statPattern);
+  const stat3Type = getStat3Trait(statPattern);
+
+  const traitNum = getWeaponTraitFromProperties(+properties);
+
+  const stars = (+properties) & 0x7;
+  return {
+    id: +id, properties,
+    element: traitNumberToName(traitNum),
+    stat1: statNumberToName(stat1Type), stat1Value, stat1Type,
+    stat2: statNumberToName(stat2Type), stat2Value, stat2Type,
+    stat3: statNumberToName(stat3Type), stat3Value, stat3Type,
+    stars,
+  };
+}
+
 function getElementAdvantage(playerElement, enemyElement) {
   if ((playerElement + 1) % 4 === enemyElement) return 1;
   if ((enemyElement + 1) % 4 === playerElement) return -1;
@@ -387,4 +415,8 @@ function sumOfStakedSkill(...arr) {
     total += parseFloat(fromEther(i));
   });
   return toEther(total);
+}
+
+function ucfirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }

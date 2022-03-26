@@ -1,115 +1,356 @@
-const Characters = [
+const Raid = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "approved",
-        type: "address",
-      },
       {
         indexed: true,
         internalType: "uint256",
-        name: "tokenId",
+        name: "raidIndex",
         type: "uint256",
-      },
-    ],
-    name: "Approval",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "operator",
-        type: "address",
       },
       {
         indexed: false,
-        internalType: "bool",
-        name: "approved",
-        type: "bool",
-      },
-    ],
-    name: "ApprovalForAll",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address",
+        internalType: "uint8",
+        name: "outcome",
+        type: "uint8",
       },
       {
-        indexed: true,
+        indexed: false,
         internalType: "uint256",
-        name: "id",
+        name: "bossRoll",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "playerRoll",
         type: "uint256",
       },
     ],
-    name: "Burned",
+    name: "RaidCompleted",
     type: "event",
   },
   {
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
         indexed: true,
         internalType: "address",
-        name: "owner",
+        name: "user",
         type: "address",
       },
       {
         indexed: true,
         internalType: "uint256",
         name: "character",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "weapon",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "skillPaid",
+        type: "uint256",
+      },
+    ],
+    name: "RaidJoined",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint8",
+        name: "bossTrait",
+        type: "uint8",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "bossPower",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "endTime",
+        type: "uint256",
+      },
+    ],
+    name: "RaidStarted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "characterCount",
+        type: "uint256",
+      },
+    ],
+    name: "RewardClaimed",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint32",
+        name: "amount",
+        type: "uint32",
+      },
+    ],
+    name: "RewardedDust4B",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint32",
+        name: "amount",
+        type: "uint32",
+      },
+    ],
+    name: "RewardedDust5B",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint32",
+        name: "amount",
+        type: "uint32",
+      },
+    ],
+    name: "RewardedDustLB",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint8",
+        name: "stars",
+        type: "uint8",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenID",
+        type: "uint256",
+      },
+    ],
+    name: "RewardedJunk",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenID",
+        type: "uint256",
+      },
+    ],
+    name: "RewardedKeyBox",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint8",
+        name: "stars",
+        type: "uint8",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "effect",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenID",
+        type: "uint256",
+      },
+    ],
+    name: "RewardedTrinket",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint8",
+        name: "stars",
+        type: "uint8",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenID",
+        type: "uint256",
+      },
+    ],
+    name: "RewardedWeapon",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "raidIndex",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "charID",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint16",
-        name: "level",
+        name: "amount",
         type: "uint16",
       },
     ],
-    name: "LevelUp",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "character",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "minter",
-        type: "address",
-      },
-    ],
-    name: "NewCharacter",
+    name: "RewardedXpBonus",
     type: "event",
   },
   {
@@ -188,31 +429,6 @@ const Characters = [
     type: "event",
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "Transfer",
-    type: "event",
-  },
-  {
     inputs: [],
     name: "DEFAULT_ADMIN_ROLE",
     outputs: [
@@ -240,20 +456,7 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "MINTER_ROLE",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "NFTVAR_BONUS_POWER",
+    name: "LINK_JUNK",
     outputs: [
       {
         internalType: "uint256",
@@ -266,7 +469,7 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "NFTVAR_BUSY",
+    name: "LINK_KEYBOX",
     outputs: [
       {
         internalType: "uint256",
@@ -279,7 +482,7 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "NFTVAR_REPUTATION",
+    name: "LINK_TRINKET",
     outputs: [
       {
         internalType: "uint256",
@@ -292,7 +495,7 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "NFTVAR_SIMPLEQUEST_PROGRESS",
+    name: "NUMBERPARAMETER_AUTO_BOSSPOWER_PERCENT",
     outputs: [
       {
         internalType: "uint256",
@@ -305,7 +508,7 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "NFTVAR_SIMPLEQUEST_TYPE",
+    name: "NUMBERPARAMETER_AUTO_DURATION",
     outputs: [
       {
         internalType: "uint256",
@@ -318,12 +521,12 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "NO_OWNED_LIMIT",
+    name: "STATUS_LOST",
     outputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint8",
         name: "",
-        type: "bytes32",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -331,49 +534,12 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "SIMPLEQUEST_TYPE_RAID",
+    name: "STATUS_PAUSED",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint8",
         name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "approve",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-    ],
-    name: "balanceOf",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -381,12 +547,12 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "baseURI",
+    name: "STATUS_STARTED",
     outputs: [
       {
-        internalType: "string",
+        internalType: "uint8",
         name: "",
-        type: "string",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -394,12 +560,12 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "characterLimit",
+    name: "STATUS_UNSTARTED",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint8",
         name: "",
-        type: "uint256",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -407,10 +573,23 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "garrison",
+    name: "STATUS_WON",
     outputs: [
       {
-        internalType: "contract Garrison",
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "characters",
+    outputs: [
+      {
+        internalType: "contract Characters",
         name: "",
         type: "address",
       },
@@ -419,17 +598,24 @@ const Characters = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "getApproved",
+    inputs: [],
+    name: "durabilityCost",
     outputs: [
       {
-        internalType: "address",
+        internalType: "uint64",
+        name: "",
+        type: "uint64",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "game",
+    outputs: [
+      {
+        internalType: "contract CryptoBlades",
         name: "",
         type: "address",
       },
@@ -542,69 +728,13 @@ const Characters = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "operator",
-        type: "address",
-      },
-    ],
-    name: "isApprovedForAll",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "lastTransferTimestamp",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "maxStamina",
+    name: "joinCost",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "int128",
         name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "name",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
+        type: "int128",
       },
     ],
     stateMutability: "view",
@@ -617,37 +747,32 @@ const Characters = [
         name: "",
         type: "uint256",
       },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
     ],
-    name: "nftVars",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "ownerOf",
+    name: "links",
     outputs: [
       {
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "numberParameters",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -674,7 +799,7 @@ const Characters = [
         type: "uint256",
       },
     ],
-    name: "raidsDone",
+    name: "raidBossPower",
     outputs: [
       {
         internalType: "uint256",
@@ -693,12 +818,198 @@ const Characters = [
         type: "uint256",
       },
     ],
-    name: "raidsWon",
+    name: "raidBossTrait",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "raidEndTime",
     outputs: [
       {
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "raidIndex",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "raidParticipantIndices",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "raidParticipants",
+    outputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "charID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "wepID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint24",
+        name: "power",
+        type: "uint24",
+      },
+      {
+        internalType: "uint24",
+        name: "traitsCWS",
+        type: "uint24",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "raidPlayerPower",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "raidRewardClaimed",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "raidSeed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "raidStatus",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -742,49 +1053,12 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "secondsPerStamina",
+    name: "staminaCost",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint64",
         name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "operator",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "approved",
-        type: "bool",
-      },
-    ],
-    name: "setApprovalForAll",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes4",
-        name: "interfaceId",
-        type: "bytes4",
-      },
-    ],
-    name: "supportsInterface",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        type: "uint64",
       },
     ],
     stateMutability: "view",
@@ -792,74 +1066,12 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "symbol",
+    name: "weapons",
     outputs: [
       {
-        internalType: "string",
+        internalType: "contract Weapons",
         name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "tokenByIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
         type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "tokenOfOwnerByIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "tokenURI",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
       },
     ],
     stateMutability: "view",
@@ -867,12 +1079,12 @@ const Characters = [
   },
   {
     inputs: [],
-    name: "totalSupply",
+    name: "xpReward",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "",
-        type: "uint256",
+        type: "uint16",
       },
     ],
     stateMutability: "view",
@@ -882,81 +1094,18 @@ const Characters = [
     inputs: [
       {
         internalType: "address",
-        name: "from",
+        name: "gameContract",
         type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
       },
     ],
-    name: "transferFrom",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "initialize",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256[255]",
-        name: "_experienceTable",
-        type: "uint256[255]",
-      },
-    ],
-    name: "migrateTo_1ee400a",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "migrateTo_951a020",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "contract Promos",
-        name: "_promos",
-        type: "address",
-      },
-    ],
-    name: "migrateTo_ef994e2",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "migrateTo_b627f23",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "contract Garrison",
-        name: "_garrison",
-        type: "address",
-      },
-    ],
-    name: "migrateTo_1a19cbb",
+    name: "doRaidAuto",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -965,110 +1114,41 @@ const Characters = [
     inputs: [
       {
         internalType: "uint256",
-        name: "id",
+        name: "bossPower",
         type: "uint256",
-      },
-    ],
-    name: "get",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
       },
       {
         internalType: "uint8",
-        name: "",
+        name: "bossTrait",
         type: "uint8",
+      },
+      {
+        internalType: "uint256",
+        name: "durationMinutes",
+        type: "uint256",
+      },
+    ],
+    name: "doRaid",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "bossPower",
+        type: "uint256",
       },
       {
         internalType: "uint8",
-        name: "",
+        name: "bossTrait",
         type: "uint8",
       },
       {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
-      },
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
-      },
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
-      },
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
-      },
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
-      },
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
-      },
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint256",
-        name: "id",
+        name: "durationMinutes",
         type: "uint256",
-      },
-    ],
-    name: "getCosmeticsSeed",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256[]",
-        name: "burnIds",
-        type: "uint256[]",
-      },
-    ],
-    name: "getSoulForBurns",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "minter",
-        type: "address",
       },
       {
         internalType: "uint256",
@@ -1076,97 +1156,7 @@ const Characters = [
         type: "uint256",
       },
     ],
-    name: "mint",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "minter",
-        type: "address",
-      },
-      {
-        internalType: "uint16",
-        name: "xp",
-        type: "uint16",
-      },
-      {
-        internalType: "uint8",
-        name: "level",
-        type: "uint8",
-      },
-      {
-        internalType: "uint8",
-        name: "trait",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "seed",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenID",
-        type: "uint256",
-      },
-      {
-        internalType: "uint24",
-        name: "bonusPower",
-        type: "uint24",
-      },
-      {
-        internalType: "uint16",
-        name: "reputation",
-        type: "uint16",
-      },
-    ],
-    name: "customMint",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256[]",
-        name: "burnIds",
-        type: "uint256[]",
-      },
-      {
-        internalType: "uint256",
-        name: "targetCharId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "burnPowerMultiplier",
-        type: "uint256",
-      },
-    ],
-    name: "burnIntoCharacter",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256[]",
-        name: "burnIds",
-        type: "uint256[]",
-      },
-    ],
-    name: "burnIntoSoul",
+    name: "doRaidWithSeed",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1175,16 +1165,21 @@ const Characters = [
     inputs: [
       {
         internalType: "uint256",
-        name: "targetCharId",
+        name: "bossPower",
         type: "uint256",
       },
       {
+        internalType: "uint8",
+        name: "bossTrait",
+        type: "uint8",
+      },
+      {
         internalType: "uint256",
-        name: "soulAmount",
+        name: "durationMinutes",
         type: "uint256",
       },
     ],
-    name: "upgradeWithSoul",
+    name: "startRaid",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1193,130 +1188,16 @@ const Characters = [
     inputs: [
       {
         internalType: "uint256",
-        name: "id",
+        name: "characterID",
         type: "uint256",
       },
-    ],
-    name: "getLevel",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint8",
-        name: "currentLevel",
-        type: "uint8",
-      },
-    ],
-    name: "getRequiredXpForNextLevel",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
       {
         internalType: "uint256",
-        name: "id",
+        name: "weaponID",
         type: "uint256",
       },
     ],
-    name: "getPower",
-    outputs: [
-      {
-        internalType: "uint24",
-        name: "",
-        type: "uint24",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "getTotalPower",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint8",
-        name: "level",
-        type: "uint8",
-      },
-    ],
-    name: "getPowerAtLevel",
-    outputs: [
-      {
-        internalType: "uint24",
-        name: "",
-        type: "uint24",
-      },
-    ],
-    stateMutability: "pure",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "getTrait",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint8",
-        name: "trait",
-        type: "uint8",
-      },
-    ],
-    name: "setTrait",
+    name: "joinRaid",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1325,330 +1206,94 @@ const Characters = [
     inputs: [
       {
         internalType: "uint256",
-        name: "id",
+        name: "index",
         type: "uint256",
       },
-    ],
-    name: "getXp",
-    outputs: [
-      {
-        internalType: "uint32",
-        name: "",
-        type: "uint32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint16",
-        name: "xp",
-        type: "uint16",
-      },
-    ],
-    name: "gainXp",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256[]",
-        name: "chars",
-        type: "uint256[]",
-      },
-      {
-        internalType: "uint256[]",
-        name: "xps",
-        type: "uint256[]",
-      },
-    ],
-    name: "gainXpAll",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "getStaminaTimestamp",
-    outputs: [
-      {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint64",
-        name: "timestamp",
-        type: "uint64",
-      },
-    ],
-    name: "setStaminaTimestamp",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "getStaminaPoints",
-    outputs: [
       {
         internalType: "uint8",
-        name: "",
+        name: "status",
         type: "uint8",
       },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint64",
-        name: "timestamp",
-        type: "uint64",
-      },
-    ],
-    name: "getStaminaPointsFromTimestamp",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "isStaminaFull",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
+    name: "setRaidStatus",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [],
-    name: "getStaminaMaxWait",
-    outputs: [
-      {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
-      },
-    ],
-    stateMutability: "pure",
+    name: "completeRaid",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "fighter",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint8",
-        name: "amount",
-        type: "uint8",
-      },
-      {
-        internalType: "bool",
-        name: "allowNegativeStamina",
-        type: "bool",
-      },
-      {
-        internalType: "uint256",
-        name: "busyFlag",
-        type: "uint256",
-      },
-    ],
-    name: "getFightDataAndDrainStamina",
-    outputs: [
       {
         internalType: "uint96",
-        name: "",
+        name: "playerData",
         type: "uint96",
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "won",
-        type: "bool",
-      },
-      {
-        internalType: "uint16",
-        name: "xp",
-        type: "uint16",
-      },
-    ],
-    name: "processRaidParticipation",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "wallet",
-        type: "address",
-      },
-    ],
-    name: "getCharactersOwnedBy",
+    name: "unpackFightData",
     outputs: [
       {
-        internalType: "uint256[]",
-        name: "chars",
-        type: "uint256[]",
+        internalType: "uint8",
+        name: "charTrait",
+        type: "uint8",
+      },
+      {
+        internalType: "uint24",
+        name: "basePowerLevel",
+        type: "uint24",
+      },
+      {
+        internalType: "uint64",
+        name: "timestamp",
+        type: "uint64",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "pure",
     type: "function",
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "wallet",
-        type: "address",
+        internalType: "uint24",
+        name: "playerPower",
+        type: "uint24",
+      },
+      {
+        internalType: "uint8",
+        name: "charTrait",
+        type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "bossTrait",
+        type: "uint8",
       },
     ],
-    name: "getReadyCharacters",
+    name: "getPlayerFinalPower",
     outputs: [
       {
-        internalType: "uint256[]",
-        name: "chars",
-        type: "uint256[]",
+        internalType: "uint24",
+        name: "",
+        type: "uint24",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "pure",
     type: "function",
   },
   {
     inputs: [
       {
         internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256[]",
-        name: "fields",
-        type: "uint256[]",
-      },
-      {
-        internalType: "uint256[]",
-        name: "values",
-        type: "uint256[]",
-      },
-    ],
-    name: "setNFTVars",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256[]",
-        name: "fields",
-        type: "uint256[]",
-      },
-    ],
-    name: "getNFTVars",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "values",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
+        name: "claimRaidIndex",
         type: "uint256",
       },
     ],
-    name: "safeTransferFrom",
+    name: "claimReward",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1657,26 +1302,42 @@ const Characters = [
     inputs: [
       {
         internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
+        name: "addr",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "tokenId",
+        name: "index",
         type: "uint256",
       },
+    ],
+    name: "registerLink",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
+        internalType: "uint8",
+        name: "points",
+        type: "uint8",
       },
     ],
-    name: "safeTransferFrom",
+    name: "setStaminaPointCost",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "points",
+        type: "uint8",
+      },
+    ],
+    name: "setDurabilityPointCost",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1685,29 +1346,18 @@ const Characters = [
     inputs: [
       {
         internalType: "uint256",
-        name: "max",
+        name: "cents",
         type: "uint256",
       },
     ],
-    name: "setCharacterLimit",
+    name: "setJoinCostInCents",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "nftVar",
-        type: "uint256",
-      },
-    ],
-    name: "getNftVar",
+    inputs: [],
+    name: "getJoinCostInSkill",
     outputs: [
       {
         internalType: "uint256",
@@ -1721,13 +1371,21 @@ const Characters = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
+        internalType: "uint16",
+        name: "xp",
+        type: "uint16",
       },
+    ],
+    name: "setXpReward",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       {
         internalType: "uint256",
-        name: "nftVar",
+        name: "paramIndex",
         type: "uint256",
       },
       {
@@ -1736,7 +1394,7 @@ const Characters = [
         type: "uint256",
       },
     ],
-    name: "setNftVar",
+    name: "setNumberParameter",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1744,14 +1402,427 @@ const Characters = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "baseUri",
-        type: "string",
+        internalType: "uint256",
+        name: "paramIndex",
+        type: "uint256",
       },
     ],
-    name: "setBaseURI",
-    outputs: [],
-    stateMutability: "nonpayable",
+    name: "getNumberParameter",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getRaidStatus",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getRaidEndTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getRaidBossTrait",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getRaidBossPower",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getRaidPlayerPower",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getRaidParticipantCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "startIndex",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endIndex",
+        type: "uint256",
+      },
+    ],
+    name: "getEligibleRewardIndexes",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "isEligibleForReward",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getParticipatingCharacters",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getParticipatingWeapons",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getAccountsRaiderIndexes",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getAccountsPower",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "characterID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "weaponID",
+        type: "uint256",
+      },
+    ],
+    name: "canJoinRaid",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "characterID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "weaponID",
+        type: "uint256",
+      },
+    ],
+    name: "haveEnoughEnergy",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isRaidStarted",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "weaponID",
+        type: "uint256",
+      },
+    ],
+    name: "isWeaponRaiding",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "characterID",
+        type: "uint256",
+      },
+    ],
+    name: "isCharacterRaiding",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "linkIndex",
+        type: "uint256",
+      },
+    ],
+    name: "getLinkAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getRaidData",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endTime",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "raiderCount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "playerPower",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "bossPower",
+        type: "uint256",
+      },
+      {
+        internalType: "uint8",
+        name: "trait",
+        type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "status",
+        type: "uint8",
+      },
+      {
+        internalType: "uint256",
+        name: "joinSkill",
+        type: "uint256",
+      },
+      {
+        internalType: "uint64",
+        name: "stamina",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "durability",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "xp",
+        type: "uint64",
+      },
+      {
+        internalType: "uint256",
+        name: "accountPower",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];

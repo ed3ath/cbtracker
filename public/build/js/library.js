@@ -16,7 +16,10 @@ var conAddress = {
         skillStaking30: '0xd6b2D8f59Bf30cfE7009fB4fC00a7b13Ca836A2c',
         skillStaking90: '0xc42dF5397B3C0B45DeDaCB83F7aDb1F30B73097d',
         skillStaking180: '0x3C06533B42A802f3Ac0E770CCBBeA9fa7Cae9572',
-        quest: '0xD6CDf4072EB6bcF10ef1b715aaA0fDF755B52327'
+        quest: '0xD6CDf4072EB6bcF10ef1b715aaA0fDF755B52327',
+        pvp: '0x8ADB6c9f7FAdB959a9847fd9Bd0ED503446942Ca',
+        raid: '0x1067d34D7bEBe2BE81657e8a2E3CFEBb0161F96b',
+        garrison: '0x0D0Ebe222F8Fc996cC1BcF497d653082708b45E4'
     },
     heco: {
         staking: '0x6109A500e5b9CE40FFe075Ea3A6beA6e93c23BcF',
@@ -33,7 +36,10 @@ var conAddress = {
         skillStaking30: '',
         skillStaking90: '',
         skillStaking180: '',
-        quest: '0xd3813bb74A8AB232e5CF61319b7b686CFd8788DA'
+        quest: '0xd3813bb74A8AB232e5CF61319b7b686CFd8788DA',
+        pvp: '0x0cA50Cc9481FB3c5C0E8a02fAca97B25b0C73D5C',
+        raid: '0x0aBb23EA06960608a4fa1529678C9abc208b4E8d',
+        garrison: '0x17afD75CBD5B51B4baE8D071ED9394f4Ef13ceCe'
     },
     oec: {
         staking: '0xC5707a6a16CCe1963Ec3E6cdEE0A91e4876Be395',
@@ -50,7 +56,10 @@ var conAddress = {
         skillStaking30: '',
         skillStaking90: '',
         skillStaking180: '',
-        quest: '0x47a3c3e3925624beBf5193717d80EF494Bc9B8A7'
+        quest: '0x47a3c3e3925624beBf5193717d80EF494Bc9B8A7',
+        pvp: '0x306d0D035b802a13cBfa389faFfb488ca1bbA874',
+        raid: '0x29F8917c2E6e6bAcc9FD813354bCBEd8A8dD89E3',
+        garrison: '0xb1f45Dbd94013B379BEC270B9cE9da14A476b649'
     },
     poly: {
         staking: '0xE34e7cA8e64884E3b5Cd48991ba229d8302E85da',
@@ -67,7 +76,10 @@ var conAddress = {
         skillStaking30: '',
         skillStaking90: '',
         skillStaking180: '',
-        quest: '0xc97011880a37139BD5eEEAE7A2cf683a82D615e0'
+        quest: '0xc97011880a37139BD5eEEAE7A2cf683a82D615e0',
+        pvp: '0x1229Aad0b813fb5636834Eb82a7732A3f90a0149',
+        raid: '0x6F104F58fFFC13b66A1BD45AA228167c4ADf746F',
+        garrison: '0x4D1559DF0B0724aC4bb095C713564211613683Ed'
     },
     avax: {
         staking: '0x96438Debb1419bF0B53119Edae6e664c931504CA',
@@ -84,7 +96,10 @@ var conAddress = {
         skillStaking30: '',
         skillStaking90: '',
         skillStaking180: '',
-        quest: ''
+        quest: '',
+        pvp: '0xC4Ca6D299ed56318FcB30344f47F5763aFB3c396',
+        raid: '0xbAC6B71a5bC3517Bee588299980B3C357a518e5C',
+        garrison: '0xB861C1196BEb96856FD0733Bba108304b1B51806'
     }
 }
 
@@ -100,7 +115,7 @@ var currentNetwork = localStorage.getItem('network')
 
 if (!networks.includes(currentNetwork)) {
     currentNetwork = 'bnb'
-    localStorage.setItem('network', currentNetwork)  
+    localStorage.setItem('network', currentNetwork)
 }
 
 var web3 = new Web3(nodes[currentNetwork]);
@@ -116,6 +131,9 @@ var conTreasury = new web3.eth.Contract(Treasury, conAddress[currentNetwork].tre
 var skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
 var gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
 var conMultiCall = new web3.eth.Contract(MultiCall, conAddress[currentNetwork].multicall)
+var conPvp = new web3.eth.Contract(PvpArena, conAddress[currentNetwork].pvp)
+var conRaid = new web3.eth.Contract(Raid, conAddress[currentNetwork].raid)
+var conGarrison = new web3.eth.Contract(Garrison, conAddress[currentNetwork].garrison)
 
 var isAddress = address => web3.utils.isAddress(address);
 var getBNBBalance = address => web3.eth.getBalance(address);
@@ -139,7 +157,7 @@ var getAccountCharacters = async address => {
 var getAccountWeapons = async address => {
     var numberOfWeapons = parseInt(await conWeapons.methods.balanceOf(address).call(), 10)
     var weapons = await Promise.all(
-        [...Array(numberOfWeapons).keys()].map((_, i) => 
+        [...Array(numberOfWeapons).keys()].map((_, i) =>
             conWeapons.methods.tokenOfOwnerByIndex(address, i).call())
     );
     return weapons;
@@ -153,6 +171,7 @@ var characterTargets = (charId, weapId) => conCryptoBlades.methods.getTargets(ch
 var getCharacterStamina = charId => conCharacters.methods.getStaminaPoints(`${charId}`).call()
 var getCharacterData = charId => conCharacters.methods.get(`${charId}`).call()
 var getWeaponData = weapId => conWeapons.methods.get(`${weapId}`).call()
+var getShieldData = shieldId => conShields.methods.get(`${shieldId}`).call()
 var fetchFightGasOffset = () => conCryptoBlades.methods.fightRewardGasOffset().call()
 var fetchFightBaseline = () => conCryptoBlades.methods.fightRewardBaseline().call()
 var usdToSkill = value => conCryptoBlades.methods.usdToSkill(value).call()
@@ -267,9 +286,9 @@ function populateNetwork() {
     })
 }
 
-function updateNetwork(network) {    
+function updateNetwork(network) {
     currentNetwork = network
-    localStorage.setItem('network', currentNetwork)  
+    localStorage.setItem('network', currentNetwork)
     web3 = new Web3(nodes[currentNetwork]);
     conStakingReward = new web3.eth.Contract(IStakingRewards, conAddress[currentNetwork].staking)
     conStakingToken = new web3.eth.Contract(IERC20, conAddress[currentNetwork].token)
@@ -280,8 +299,11 @@ function updateNetwork(network) {
     conMarket = new web3.eth.Contract(NFTMarket, conAddress[currentNetwork].market)
     conTreasury = new web3.eth.Contract(Treasury, conAddress[currentNetwork].treasury)
     skillPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].skillPair)
-    gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)    
+    gasPair = new web3.eth.Contract(SwapPair, conAddress[currentNetwork].tokenPair)
     conMultiCall = new web3.eth.Contract(MultiCall, conAddress[currentNetwork].multicall)
+    conPvp = new web3.eth.Contract(PvpArena, conAddress[currentNetwork].pvp)
+    conRaid = new web3.eth.Contract(Raid, conAddress[currentNetwork].raid)
+    conGarrison = new web3.eth.Contract(Garrison, conAddress[currentNetwork].garrison)
 }
 
 async function getTokenReward(power) {
@@ -289,6 +311,7 @@ async function getTokenReward(power) {
 }
 
 populateNetwork()
+
 const WeaponElement = {
   Fire: 0,
   Earth: 1,
@@ -466,6 +489,34 @@ function weaponFromContract(id, data) {
     bonusPower,
     traitNum,
     weaponType,
+  };
+}
+
+function shieldFromContract(id, data) {
+  const properties = data[0];
+  const stat1 = data[1];
+  const stat2 = data[2];
+  const stat3 = data[3];
+
+  const stat1Value = +stat1;
+  const stat2Value = +stat2;
+  const stat3Value = +stat3;
+
+  const statPattern = getStatPatternFromProperties(+properties);
+  const stat1Type = getStat1Trait(statPattern);
+  const stat2Type = getStat2Trait(statPattern);
+  const stat3Type = getStat3Trait(statPattern);
+
+  const traitNum = getWeaponTraitFromProperties(+properties);
+
+  const stars = (+properties) & 0x7;
+  return {
+    id: +id, properties,
+    element: traitNumberToName(traitNum),
+    stat1: statNumberToName(stat1Type), stat1Value, stat1Type,
+    stat2: statNumberToName(stat2Type), stat2Value, stat2Type,
+    stat3: statNumberToName(stat3Type), stat3Value, stat3Type,
+    stars,
   };
 }
 
@@ -678,4 +729,8 @@ function sumOfStakedSkill(...arr) {
     total += parseFloat(fromEther(i));
   });
   return toEther(total);
+}
+
+function ucfirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }

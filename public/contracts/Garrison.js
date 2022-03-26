@@ -1,15 +1,21 @@
-const BasicPriceOracle = [
+const Garrison = [
   {
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: "uint256",
-        name: "currentPrice",
+        name: "character",
         type: "uint256",
       },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "minter",
+        type: "address",
+      },
     ],
-    name: "CurrentPriceUpdated",
+    name: "CharacterReceived",
     type: "event",
   },
   {
@@ -102,12 +108,31 @@ const BasicPriceOracle = [
   },
   {
     inputs: [],
-    name: "PRICE_UPDATER",
+    name: "GAME_ADMIN",
     outputs: [
       {
         internalType: "bytes32",
         name: "",
         type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "characterOwner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -254,15 +279,53 @@ const BasicPriceOracle = [
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "contract Characters",
+        name: "_characters",
+        type: "address",
+      },
+    ],
     name: "initialize",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "contract CryptoBlades",
+        name: "_game",
+        type: "address",
+      },
+    ],
+    name: "migrateTo_d514745",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
-    name: "currentPrice",
+    name: "getUserCharacters",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "tokens",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
     outputs: [
       {
         internalType: "uint256",
@@ -277,12 +340,170 @@ const BasicPriceOracle = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_currentPrice",
+        name: "id",
         type: "uint256",
       },
     ],
-    name: "setCurrentPrice",
+    name: "sendToGarrison",
     outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "redirectToGarrison",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "restoreFromGarrison",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "plazaId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "garrisonId",
+        type: "uint256",
+      },
+    ],
+    name: "swapWithGarrison",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "transferFromGarrison",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "chars",
+        type: "uint256[]",
+      },
+    ],
+    name: "claimAllXp",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "playerAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "burnedId",
+        type: "uint256",
+      },
+    ],
+    name: "updateOnBurn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "contract IERC721",
+        name: "_tokenAddress",
+        type: "address",
+      },
+    ],
+    name: "allowToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "contract IERC721",
+        name: "_tokenAddress",
+        type: "address",
+      },
+    ],
+    name: "disallowToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    name: "onERC721Received",
+    outputs: [
+      {
+        internalType: "bytes4",
+        name: "",
+        type: "bytes4",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },
