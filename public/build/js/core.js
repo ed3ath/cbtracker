@@ -202,8 +202,7 @@ async function loadData() {
             charsRep =  (await multicall(getNFTCall(SimpleQuest, conAddress[currentNetwork].quest, 'getCharacterQuestData', charIds.map(charId => [charId]))))
         }
         var charsExp = await conCryptoBlades.methods.getXpRewards(charIds).call()
-        var first = true
-
+        
         if (charLen > 0) {
             var reputationLevelRequirements = (currentNetwork !== 'avax' ? await getReputationLevelRequirements() : undefined)
             chars = charIds.map((charId, i) => {
@@ -237,8 +236,6 @@ async function loadData() {
                         <td class="char-column">${chars[0].nextLevel}<br/><span style='font-size: 10px'>${(chars[0].mustClaim ? '<span class="text-gold">(Claim now)</span>' : `<span data-xp="${chars[0].charId}">(${Number(chars[0].nextExp).toLocaleString('en-US')}</span> xp left)`)}</span></td>
                         <td class="char-column" data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         } else {
-          if (first) {
-            first = false
             charHtml = `<td class="char-column" colspan="8">
                             <div class="coinzilla" data-zone="C-1836231acdf79c70725"></div>
                             <script>
@@ -250,9 +247,6 @@ async function loadData() {
                                 coinzilla_display.push(c_display_preferences);
                             </script>
                         </td>`
-          } else {
-            charHtml = '<td class="char-column" colspan="8"></td>'
-          }
         }
         if (charLen < 1) {
             charLen = 1
@@ -280,7 +274,7 @@ async function loadData() {
                     rowHtml += `<tr class="text-white align-middle" data-row="${address}">
                                         <td class="char-column">${char.charId}</td>
                                         <td class="char-column">${levelToColor(char.level)}</td>
-                                        <td class="char-column">${elemToColor(char.element)}</td>
+                                        <td class="char-column">${elemToColor(char.element)}</td>                                        
                                         <td class="char-column">${Number(char.power).toLocaleString('en-US')} / ${Number(CharacterPower(char.level - 1) * 4).toLocaleString('en-US')}</td>
                                         <td class="char-column">${reputationToTier(char.rep)}</td>
                                         <td class="char-column"><span data-cid="${char.charId}">${char.exp}</span> xp</td>
