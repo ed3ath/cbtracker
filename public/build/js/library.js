@@ -202,7 +202,10 @@ var getActivePartnerProjectsIds = () => conTreasury.methods.getActivePartnerProj
 
 var getSkillPartnerId = async () => {
     var activePartnerIds = await getActivePartnerProjectsIds()
-    return BigInt((await multicall(getNFTCall(Treasury, conAddress[currentNetwork].treasury, 'getPartnerProject', activePartnerIds.map(id => [id])))).find((data) => data[2] === 'SKILL')[0]).toString()
+
+    var skillPartner =  (await multicall(getNFTCall(Treasury, conAddress[currentNetwork].treasury, 'partneredProjects', activePartnerIds.map(id => [id])))).find((data) => data[2] === 'SKILL')
+
+    return skillPartner ? BigInt(skillPartner[0]).toString() : false
 }
 
 var getReputationLevelRequirements = async () => {

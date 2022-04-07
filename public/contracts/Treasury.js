@@ -246,6 +246,150 @@ const Treasury = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "partneredProjects",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "tokenSymbol",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenSupply",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenPrice",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "isActive",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "projectDetails",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "projectDistributionTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "projectLogo",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "projectNote",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "projectWebsite",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "bytes32",
         name: "role",
         type: "bytes32",
@@ -295,6 +439,25 @@ const Treasury = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "tokensClaimed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "contract CryptoBlades",
         name: "_game",
         type: "address",
@@ -311,7 +474,7 @@ const Treasury = [
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "activeCount",
         type: "uint256",
       },
     ],
@@ -324,7 +487,7 @@ const Treasury = [
     outputs: [
       {
         internalType: "uint256[]",
-        name: "",
+        name: "activeProjectsIds",
         type: "uint256[]",
       },
     ],
@@ -339,80 +502,7 @@ const Treasury = [
         type: "uint256",
       },
     ],
-    name: "getPartnerProject",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "partnerId",
-        type: "uint256",
-      },
-    ],
     name: "getProjectMultiplier",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "partnerId",
-        type: "uint256",
-      },
-    ],
-    name: "getProjectClaimedAmount",
     outputs: [
       {
         internalType: "uint256",
@@ -478,7 +568,7 @@ const Treasury = [
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "amountWithMultiplier",
         type: "uint256",
       },
     ],
@@ -489,16 +579,31 @@ const Treasury = [
     inputs: [
       {
         internalType: "uint256",
-        name: "projectId",
+        name: "partnerId",
         type: "uint256",
       },
     ],
-    name: "getProjectDistributionTime",
+    name: "getProjectData",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "string",
         name: "",
-        type: "uint256",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -540,6 +645,26 @@ const Treasury = [
         internalType: "bool",
         name: "isActive",
         type: "bool",
+      },
+      {
+        internalType: "string",
+        name: "logo",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "details",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "website",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "note",
+        type: "string",
       },
     ],
     name: "addPartnerProject",
@@ -677,6 +802,78 @@ const Treasury = [
       },
     ],
     name: "setDefaultSlippage",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "partnerId",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "logo",
+        type: "string",
+      },
+    ],
+    name: "setProjectLogo",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "partnerId",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "details",
+        type: "string",
+      },
+    ],
+    name: "setProjectDetails",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "partnerId",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "website",
+        type: "string",
+      },
+    ],
+    name: "setProjectWebsite",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "partnerId",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "note",
+        type: "string",
+      },
+    ],
+    name: "setProjectNote",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

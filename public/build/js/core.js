@@ -166,8 +166,9 @@ async function loadData() {
     }
 
     var accUnclaimed = await multicall(getNFTCall(CryptoBlades, conAddress[currentNetwork].cryptoBlades, 'getTokenRewardsFor', storeAccounts.map(acc => [acc])))
-
-    var skillMultiplier = Number(fromEther(await getSkillMultiplier(await getSkillPartnerId())))
+    var skillPartnerId = await getSkillPartnerId()
+    var skillMultiplier = skillPartnerId ? Number(fromEther(await getSkillMultiplier(skillPartnerId))) : 0
+    var first = true;
 
     var fRowHtml = await Promise.all(storeAccounts.map(async (address, i) => {
         let rowHtml = ''
@@ -202,7 +203,6 @@ async function loadData() {
             charsRep =  (await multicall(getNFTCall(SimpleQuest, conAddress[currentNetwork].quest, 'getCharacterQuestData', charIds.map(charId => [charId]))))
         }
         var charsExp = await conCryptoBlades.methods.getXpRewards(charIds).call()
-        var first = true
 
         if (charLen > 0) {
             var reputationLevelRequirements = (currentNetwork !== 'avax' ? await getReputationLevelRequirements() : undefined)
@@ -238,7 +238,6 @@ async function loadData() {
                         <td class="char-column" data-sta="${chars[0].charId}">${staminaToColor(chars[0].sta)}<br/>${staminaFullAt(chars[0].sta)}</td>`
         } else {
           if (first) {
-            first = false
             charHtml = `<td class="char-column" colspan="8">
                             <div class="coinzilla" data-zone="C-1836231acdf79c70725"></div>
                             <script>
@@ -250,6 +249,7 @@ async function loadData() {
                                 coinzilla_display.push(c_display_preferences);
                             </script>
                         </td>`
+              first = false;
           } else {
             charHtml = '<td class="char-column" colspan="8"></td>'
           }
@@ -370,7 +370,8 @@ async function priceTicker() {
 
 async function statTicker() {
     const hourlyAvgPower = await getHourlyPowerAvg()
-    const maxClaim = await getSkillMultiplier(await getSkillPartnerId())
+    const skillPartnerId = await getSkillPartnerId()
+    const maxClaim = skillPartnerId ? await getSkillMultiplier(skillPartnerId) : 0
 
     $cardReward.html(Number(hourlyAvgPower).toLocaleString('en-US'))
     $cardClaim.html(parseFloat(fromEther(maxClaim)).toFixed(6))

@@ -1095,6 +1095,19 @@ const Weapons = [
   {
     inputs: [
       {
+        internalType: "string",
+        name: "baseUri",
+        type: "string",
+      },
+    ],
+    name: "setBaseURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "minter",
         type: "address",
