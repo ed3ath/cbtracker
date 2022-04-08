@@ -1,70 +1,7 @@
-const Shields = [
+const PvpArena = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "questID",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-    ],
-    name: "QuestAssigned",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "questID",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-    ],
-    name: "QuestComplete",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "questID",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-    ],
-    name: "QuestProgressed",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "questID",
-        type: "uint256",
-      },
       {
         indexed: true,
         internalType: "uint256",
@@ -73,12 +10,18 @@ const Shields = [
       },
       {
         indexed: false,
-        internalType: "uint256[]",
-        name: "rewards",
-        type: "uint256[]",
+        internalType: "uint256",
+        name: "kickedBy",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
       },
     ],
-    name: "QuestRewarded",
+    name: "CharacterKicked",
     type: "event",
   },
   {
@@ -87,30 +30,47 @@ const Shields = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "questID",
+        name: "attacker",
         type: "uint256",
       },
       {
         indexed: true,
         internalType: "uint256",
-        name: "characterID",
+        name: "defender",
         type: "uint256",
       },
-    ],
-    name: "QuestSkipped",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
-        indexed: true,
+        indexed: false,
         internalType: "uint256",
-        name: "rewardID",
+        name: "timestamp",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "attackerRoll",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "defenderRoll",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "attackerWon",
+        type: "bool",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "bonusRank",
         type: "uint256",
       },
     ],
-    name: "RewardAdded",
+    name: "DuelFinished",
     type: "event",
   },
   {
@@ -192,44 +152,19 @@ const Shields = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
         indexed: true,
         internalType: "uint256",
-        name: "rewardID",
+        name: "newSeason",
         type: "uint256",
       },
       {
         indexed: false,
-        internalType: "uint256[]",
-        name: "rewards",
-        type: "uint256[]",
-      },
-    ],
-    name: "WeeklyRewardClaimed",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         internalType: "uint256",
-        name: "rewardID",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "week",
+        name: "timestamp",
         type: "uint256",
       },
     ],
-    name: "WeeklyRewardSet",
+    name: "SeasonRestarted",
     type: "event",
   },
   {
@@ -260,182 +195,7 @@ const Shields = [
   },
   {
     inputs: [],
-    name: "VAR_COMMON_TIER",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_CONTRACT_ENABLED",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_EPIC_TIER",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_LEGENDARY_TIER",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_RARE_TIER",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_REPUTATION_LEVEL_2",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_REPUTATION_LEVEL_3",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_REPUTATION_LEVEL_4",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_REPUTATION_LEVEL_5",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_SKIP_QUEST_STAMINA_COST",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_UNCOMMON_TIER",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "VAR_WEEKLY_COMPLETIONS_GOAL",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "burningManager",
-    outputs: [
-      {
-        internalType: "contract BurningManager",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "characterQuest",
+    name: "arenaAccess",
     outputs: [
       {
         internalType: "uint256",
@@ -454,6 +214,148 @@ const Shields = [
         internalType: "contract Characters",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentRankedSeason",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decisionSeconds",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "duelOffsetCost",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "excessWagerByCharacter",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "fighterByCharacter",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "characterID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "weaponID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "shieldID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "wager",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "useShield",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "finderByOpponent",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "game",
+    outputs: [
+      {
+        internalType: "contract CryptoBlades",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "gameCofferTaxDue",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -564,220 +466,232 @@ const Shields = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "isCharacterInArena",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "isDefending",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "isShieldInArena",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "isWeaponInArena",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
-    name: "junk",
+    name: "losingPoints",
     outputs: [
       {
-        internalType: "contract Junk",
+        internalType: "uint8",
         name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "lastFreeSkipUsage",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "nextQuestID",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "nextRewardID",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "partnerVault",
-    outputs: [
-      {
-        internalType: "contract PartnerVault",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "questDeadlines",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "questIndexes",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "questSupplies",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "questTemplates",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "quests",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "enum SimpleQuests.Rarity",
-        name: "tier",
         type: "uint8",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
       {
-        internalType: "enum SimpleQuests.ItemType",
-        name: "requirementType",
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "matchByFinder",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "attackerID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "defenderID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "createdAt",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "previousTierByCharacter",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
         type: "uint8",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
       {
         internalType: "uint256",
-        name: "requirementRarity",
+        name: "",
         type: "uint256",
       },
+    ],
+    name: "prizePercentages",
+    outputs: [
       {
         internalType: "uint256",
-        name: "requirementAmount",
+        name: "",
         type: "uint256",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "pvpBotAddress",
+    outputs: [
       {
-        internalType: "address",
-        name: "requirementExternalAddress",
+        internalType: "address payable",
+        name: "",
         type: "address",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "randoms",
+    outputs: [
       {
-        internalType: "enum SimpleQuests.ItemType",
-        name: "rewardType",
+        internalType: "contract IRandoms",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "rankingPointsByCharacter",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "",
         type: "uint8",
       },
+    ],
+    name: "rankingsPoolByTier",
+    outputs: [
       {
         internalType: "uint256",
-        name: "rewardRarity",
+        name: "",
         type: "uint256",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "reRollFeePercent",
+    outputs: [
       {
         internalType: "uint256",
-        name: "rewardAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "rewardExternalAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "reputationAmount",
+        name: "",
         type: "uint256",
       },
     ],
@@ -828,36 +742,11 @@ const Shields = [
         type: "uint256",
       },
     ],
-    name: "rewards",
+    name: "seasonByCharacter",
     outputs: [
       {
         internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "enum SimpleQuests.ItemType",
-        name: "rewardType",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "rewardRarity",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "rewardAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "rewardExternalAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "reputationAmount",
+        name: "",
         type: "uint256",
       },
     ],
@@ -866,12 +755,25 @@ const Shields = [
   },
   {
     inputs: [],
-    name: "safeRandoms",
+    name: "seasonDuration",
     outputs: [
       {
-        internalType: "contract SafeRandoms",
+        internalType: "uint256",
         name: "",
-        type: "address",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "seasonStartedAt",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -891,35 +793,11 @@ const Shields = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "tierChances",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "trinket",
+    name: "skillToken",
     outputs: [
       {
-        internalType: "contract RaidTrinket",
+        internalType: "contract IERC20",
         name: "",
         type: "address",
       },
@@ -935,12 +813,25 @@ const Shields = [
         type: "uint256",
       },
     ],
-    name: "vars",
+    name: "specialWeaponRerollTimestamp",
     outputs: [
       {
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "wageringFactor",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -960,19 +851,21 @@ const Shields = [
     type: "function",
   },
   {
-    inputs: [
+    inputs: [],
+    name: "winningPoints",
+    outputs: [
       {
-        internalType: "address",
+        internalType: "uint8",
         name: "",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        type: "uint8",
       },
     ],
-    name: "weeklyCompletions",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawFeePercent",
     outputs: [
       {
         internalType: "uint256",
@@ -987,85 +880,17 @@ const Shields = [
     inputs: [
       {
         internalType: "address",
-        name: "",
+        name: "gameContract",
         type: "address",
       },
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "weeklyRewardClaimed",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "weeklyRewards",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "contract Characters",
-        name: "_characters",
+        internalType: "address",
+        name: "shieldsContract",
         type: "address",
       },
       {
-        internalType: "contract Weapons",
-        name: "_weapons",
-        type: "address",
-      },
-      {
-        internalType: "contract Junk",
-        name: "_junk",
-        type: "address",
-      },
-      {
-        internalType: "contract RaidTrinket",
-        name: "_trinket",
-        type: "address",
-      },
-      {
-        internalType: "contract Shields",
-        name: "_shields",
-        type: "address",
-      },
-      {
-        internalType: "contract BurningManager",
-        name: "_burningManager",
-        type: "address",
-      },
-      {
-        internalType: "contract SafeRandoms",
-        name: "_safeRandoms",
-        type: "address",
-      },
-      {
-        internalType: "contract PartnerVault",
-        name: "_partnerVault",
+        internalType: "address",
+        name: "randomsContract",
         type: "address",
       },
     ],
@@ -1081,8 +906,23 @@ const Shields = [
         name: "characterID",
         type: "uint256",
       },
+      {
+        internalType: "uint256",
+        name: "weaponID",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "shieldID",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "useShield",
+        type: "bool",
+      },
     ],
-    name: "generateRequestQuestSeed",
+    name: "enterArena",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1095,64 +935,7 @@ const Shields = [
         type: "uint256",
       },
     ],
-    name: "requestQuest",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-    ],
-    name: "skipQuest",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-    ],
-    name: "completeQuest",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "questRewards",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-    ],
-    name: "generateRewardQuestSeed",
+    name: "withdrawFromArena",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1161,42 +944,51 @@ const Shields = [
     inputs: [
       {
         internalType: "uint256",
-        name: "rewardID",
+        name: "characterID",
         type: "uint256",
       },
     ],
-    name: "generateRewardWeeklySeed",
+    name: "findOpponent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "characterID",
+        type: "uint256",
+      },
+    ],
+    name: "reRollOpponent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "attackerID",
+        type: "uint256",
+      },
+    ],
+    name: "prepareDuel",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawRankedRewards",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [],
-    name: "claimWeeklyReward",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "weeklyRewardIDs",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256[]",
-        name: "tokenIds",
-        type: "uint256[]",
-      },
-    ],
-    name: "submitProgress",
+    name: "restartRankedSeason",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1204,17 +996,12 @@ const Shields = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        internalType: "uint256[]",
+        name: "attackerIDs",
+        type: "uint256[]",
       },
     ],
-    name: "submitProgressAmount",
+    name: "performDuels",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1227,7 +1014,7 @@ const Shields = [
         type: "uint256",
       },
     ],
-    name: "hasRandomQuestSeedRequested",
+    name: "isCharacterWithinDecisionTime",
     outputs: [
       {
         internalType: "bool",
@@ -1246,7 +1033,7 @@ const Shields = [
         type: "uint256",
       },
     ],
-    name: "hasRandomQuestRewardSeedRequested",
+    name: "isCharacterUnderAttack",
     outputs: [
       {
         internalType: "bool",
@@ -1261,11 +1048,11 @@ const Shields = [
     inputs: [
       {
         internalType: "uint256",
-        name: "rewardID",
+        name: "characterID",
         type: "uint256",
       },
     ],
-    name: "hasRandomWeeklyRewardSeedRequested",
+    name: "isCharacterInDuel",
     outputs: [
       {
         internalType: "bool",
@@ -1279,36 +1066,17 @@ const Shields = [
   {
     inputs: [
       {
-        internalType: "uint256[]",
-        name: "varFields",
-        type: "uint256[]",
-      },
-    ],
-    name: "getVars",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint256",
-        name: "reputationLevel",
+        name: "characterID",
         type: "uint256",
       },
     ],
-    name: "getTierChances",
+    name: "getEntryWager",
     outputs: [
       {
-        internalType: "uint256[4]",
+        internalType: "uint256",
         name: "",
-        type: "uint256[4]",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -1322,7 +1090,160 @@ const Shields = [
         type: "uint8",
       },
     ],
-    name: "getQuestTemplates",
+    name: "getEntryWagerByTier",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "characterID",
+        type: "uint256",
+      },
+    ],
+    name: "getDuelCost",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "tier",
+        type: "uint8",
+      },
+    ],
+    name: "getDuelCostByTier",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "characterID",
+        type: "uint256",
+      },
+    ],
+    name: "getArenaTier",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "level",
+        type: "uint8",
+      },
+    ],
+    name: "getArenaTierForLevel",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "attackerID",
+        type: "uint256",
+      },
+    ],
+    name: "getOpponent",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "tier",
+        type: "uint8",
+      },
+    ],
+    name: "getTierTopCharacters",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPrizePercentages",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPlayerPrizePoolRewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getDuelQueue",
     outputs: [
       {
         internalType: "uint256[]",
@@ -1341,12 +1262,12 @@ const Shields = [
         type: "uint256",
       },
     ],
-    name: "getCharacterQuestData",
+    name: "getCharacterPower",
     outputs: [
       {
-        internalType: "uint256[]",
+        internalType: "uint24",
         name: "",
-        type: "uint256[]",
+        type: "uint24",
       },
     ],
     stateMutability: "view",
@@ -1355,17 +1276,27 @@ const Shields = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "characterID",
-        type: "uint256",
+        internalType: "uint8",
+        name: "characterTrait",
+        type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "weaponTrait",
+        type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "opponentTrait",
+        type: "uint8",
       },
     ],
-    name: "hasFreeSkip",
+    name: "getPVPTraitBonusAgainst",
     outputs: [
       {
-        internalType: "bool",
+        internalType: "int128",
         name: "",
-        type: "bool",
+        type: "int128",
       },
     ],
     stateMutability: "view",
@@ -1373,54 +1304,42 @@ const Shields = [
   },
   {
     inputs: [],
-    name: "nextWeeklyQuestCompletionGoalReset",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "nextFreeSkip",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-    ],
-    name: "getWeeklyCompletions",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
+    name: "fillGameCoffers",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
       {
         internalType: "uint256",
-        name: "varField",
+        name: "cents",
+        type: "uint256",
+      },
+    ],
+    name: "setBaseWagerInCents",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "cents",
+        type: "uint256",
+      },
+    ],
+    name: "setTierWagerInCents",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
         type: "uint256",
       },
       {
@@ -1429,7 +1348,7 @@ const Shields = [
         type: "uint256",
       },
     ],
-    name: "setVar",
+    name: "setPrizePercentage",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1437,17 +1356,12 @@ const Shields = [
   {
     inputs: [
       {
-        internalType: "uint256[]",
-        name: "varFields",
-        type: "uint256[]",
-      },
-      {
-        internalType: "uint256[]",
-        name: "values",
-        type: "uint256[]",
+        internalType: "uint8",
+        name: "factor",
+        type: "uint8",
       },
     ],
-    name: "setVars",
+    name: "setWageringFactor",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1456,16 +1370,141 @@ const Shields = [
     inputs: [
       {
         internalType: "uint256",
-        name: "tier",
+        name: "percent",
         type: "uint256",
       },
+    ],
+    name: "setReRollFeePercent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       {
-        internalType: "uint256[4]",
-        name: "chances",
-        type: "uint256[4]",
+        internalType: "uint256",
+        name: "percent",
+        type: "uint256",
       },
     ],
-    name: "setTierChances",
+    name: "setWithdrawFeePercent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "percent",
+        type: "uint8",
+      },
+    ],
+    name: "setRankingsPoolTaxPercent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "secs",
+        type: "uint256",
+      },
+    ],
+    name: "setDecisionSeconds",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "pts",
+        type: "uint8",
+      },
+    ],
+    name: "setWinningPoints",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "pts",
+        type: "uint8",
+      },
+    ],
+    name: "setLosingPoints",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "max",
+        type: "uint8",
+      },
+    ],
+    name: "setMaxTopCharactersPerTier",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "duration",
+        type: "uint256",
+      },
+    ],
+    name: "setSeasonDuration",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "accessFlags",
+        type: "uint256",
+      },
+    ],
+    name: "setArenaAccess",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "cost",
+        type: "uint256",
+      },
+    ],
+    name: "setDuelOffsetCost",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address payable",
+        name: "botAddress",
+        type: "address",
+      },
+    ],
+    name: "setPvpBotAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1478,95 +1517,12 @@ const Shields = [
         type: "uint8",
       },
       {
-        internalType: "enum SimpleQuests.ItemType",
-        name: "requirementType",
-        type: "uint8",
-      },
-      {
         internalType: "uint256",
-        name: "requirementRarity",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "requirementAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "requirementExternalAddress",
-        type: "address",
-      },
-      {
-        internalType: "enum SimpleQuests.ItemType",
-        name: "rewardType",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "rewardRarity",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "rewardAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "rewardExternalAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "reputationAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "supply",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "deadline",
+        name: "amount",
         type: "uint256",
       },
     ],
-    name: "addNewQuestTemplate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "enum SimpleQuests.ItemType",
-        name: "rewardType",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "rewardRarity",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "rewardAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "rewardExternalAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "reputationAmount",
-        type: "uint256",
-      },
-    ],
-    name: "addReward",
+    name: "increaseRankingsPool",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1575,34 +1531,30 @@ const Shields = [
     inputs: [
       {
         internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "timestamp",
+        name: "characterID",
         type: "uint256",
       },
     ],
-    name: "setWeeklyReward",
-    outputs: [],
-    stateMutability: "nonpayable",
+    name: "getMatchablePlayerCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
       {
         internalType: "uint256",
-        name: "tier",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "questID",
+        name: "characterID",
         type: "uint256",
       },
     ],
-    name: "deleteQuestTemplate",
+    name: "forceRemoveCharacterFromArena",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

@@ -1,0 +1,45 @@
+main.page-wrapper
+  include ../includes/menu
+  section.position-relative.zindex-5.pb-4.mb-md-3.mx-5.pt-6
+    .row
+      include ../includes/alerts
+    .row.mx-n2.py-2
+      .col-md-12.col-sm-6.px-2.mb-3
+        .card.bg-dark
+          .card-header
+            .row.align-items-center
+              .col
+                h4.card-header-title.text-white
+                  | Diagnostic
+          .card-body
+            .row
+              .col-md-3.col-sm-6.px-2.mb-3
+                .form-group.mb-3
+                  select#diag-chain.form-control.form-control.bg-dark.text-white
+                    option(value='' readonly) -- Select Chain --
+                    option(value='bnb') BNB
+                    option(value='heco') HECO
+                    option(value='oec') OEC
+                    option(value='polygon') POLYGON
+                    option(value='avax') AVAX
+                .form-group.mb-3
+                  input#diag-id.form-control.form-control.bg-dark.text-white(placeholder='NFT ID')
+                .form-group.mb-3
+                  select#diag-type.form-control.form-control.bg-dark.text-white
+                    option(value='' readonly) -- Select Type --
+                    option(value='character') Character
+                    option(value='weapon') Weapon
+                    option(value='shield') Shield
+              .col-md-7.col-sm-6.px-2.mb-3
+                p#diag-result.text-white
+              .col-md-2.col-sm-6.px-2.mb-3
+                .coinzilla(data-zone='C-8496231acdf7913993')
+                  script.
+                      window.coinzilla_display = window.coinzilla_display || [];
+                      var c_display_preferences = {};
+                      c_display_preferences.zone = "8496231acdf7913993";
+                      c_display_preferences.width = "300";
+                      c_display_preferences.height = "250";
+                      coinzilla_display.push(c_display_preferences);
+            button#btn-diag.btn.btn-secondary(type='button' onclick='runDiag()') Run
+include ../footer
