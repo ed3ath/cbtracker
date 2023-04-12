@@ -170,15 +170,15 @@
           <div class="w-full text-sm font-medium dark:text-white text-right">{{formatNumber(balances.gas)}}</div>
         </div>
         <div class="flex items-center mb-2">
-          <div class="w-64 text-sm font-medium text-warning-500">SKILL in Wallet</div>
+          <div class="w-64 text-sm font-medium text-warning-500">{{utilService.version === 2 && web3Service.activeChain === 'BNB' ? 'VALOR' : 'SKILL'}} in Wallet</div>
           <div class="w-full text-sm font-medium dark:text-white text-right">{{formatNumber(balances.wallet)}}</div>
         </div>
         <div class="flex items-center mb-2">
-          <div class="w-64 text-sm font-medium text-warning-500">Unclaimed SKILL</div>
+          <div class="w-64 text-sm font-medium text-warning-500">Unclaimed {{utilService.version === 2 && web3Service.activeChain === 'BNB' ? 'VALOR' : 'SKILL'}}</div>
           <div class="w-full text-sm font-medium dark:text-white text-right">{{formatNumber(balances.unclaimed)}}</div>
         </div>
         <div class="flex items-center mb-2">
-          <div class="w-64 text-sm font-medium text-warning-500">Claimable SKILL</div>
+          <div class="w-64 text-sm font-medium text-warning-500">Claimable {{utilService.version === 2 && web3Service.activeChain === 'BNB' ? 'VALOR' : 'SKILL'}}</div>
           <div class="w-full text-sm font-medium dark:text-white text-right">{{formatNumber(balances.claimable)}}</div>
         </div>
       </div>

@@ -35,9 +35,9 @@
                 [ngClass]="i === 0 ? 'rounded-t-lg' : 'rounded-none'"
                 type="button"
                 data-te-collapse-init
-                [attr.data-te-collapse-collapsed]="i === 0 ? null : ''"
+                [attr.data-te-collapse-collapsed]="expanded ? null : ''"
                 [attr.data-te-target]="'#account-content-' + i "
-                [attr.aria-expanded]="i === 0 ? true : false"
+                [attr.aria-expanded]="expanded ? true : false"
                 [attr.aria-controls]="'#account-content-' + i ">
                 <span
                   class="mr-3 h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec]
@@ -54,8 +54,12 @@
                       0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </span>
                 {{groupService.getAccountName(account)}}
-                ({{utilService.addressPrivacy(account)}})
+                ({{utilService.addressPrivacy(account)}}) | Unc:
+                {{utilService.formatNumber(accountBalances
+                && accountBalances[i] ? accountBalances[i].unclaimed
+                : 0)}}
               </button>
+              <span class="bg-yellow-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-500 dark:text-white">{{readyToFight[i]}}</span>
               <a class="ml-auto cursor-pointer px-4 text-md text-warning-500"
                 (click)="showAccountDrawer(account)">...</a>
             </div>
@@ -63,11 +67,10 @@
           <!-- content -->
           <div
             [id]="'account-content-' + i"
-            [class]="i === 0 ? '!visible' : '!visible hidden'"
+            [class]="expanded ? '!visible' : '!visible hidden'"
             [attr.aria-labelledby]="'account-head-' + i"
             data-te-collapse-item
-            [attr.data-te-collapse-show]="i === 0 ? '' : null"
-            data-te-parent="#accounts">
+            [attr.data-te-collapse-show]="expanded ? '' : null">
             <div class="px-5 py-4">
               <div
                 class="grid w-full grid-cols-1 gap-4 xl:grid-cols-5">
@@ -342,7 +345,8 @@
           text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-warning-600
           dark:hover:bg-warning-700 focus:outline-none
           dark:focus:ring-warning-800
-          block" (click)="showManageGroupDrawer()" [disabled]="groupService.getAllGroups().length === 0">Manage Group</button>
+          block" (click)="showManageGroupDrawer()"
+          [disabled]="groupService.getAllGroups().length === 0">Manage Group</button>
         <button type="button" class="text-white bg-success-700
           hover:bg-success-800
           w-full focus:ring-4 focus:ring-success-300 font-medium rounded-lg
@@ -352,7 +356,6 @@
           block" (click)="showNewGroupDrawer()">New Group</button>
 
         <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-
         <button type="button" class="text-white bg-primary-700
           hover:bg-primary-800
           w-full focus:ring-4 focus:ring-primary-300 font-medium rounded-lg
@@ -612,3 +615,8 @@
     </div>
   </div>
 </div>
+
+<button (click)="toggleList()"
+  class="fixed z-20 bottom-4 right-4 bg-warning-600 w-12 h-12 rounded-full
+  drop-shadow-lg flex justify-center items-center text-white text-4xl
+  hover:bg-warning-700 hover:drop-shadow-2xl hover:animate-bounce duration-300">{{expanded ? '&minus;' : '&plus;'}}</button>

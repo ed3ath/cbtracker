@@ -24,14 +24,15 @@ export class AccountsComponent implements OnInit, OnDestroy {
   combatDrawer!: DrawerInterface
 
   accountChars: any[] = []
-  // accountWeapons: any[] = []
   accountBalances: any[] = []
   repRequirements: any
 
   activeAccountIndex = -1
   simulations: any[] = []
+  readyToFight: any[] = []
 
   simulating = false
+  expanded = false
 
   constructor(
     private eventService: EventService,
@@ -39,12 +40,6 @@ export class AccountsComponent implements OnInit, OnDestroy {
     public web3Service: Web3Service,
     public utilService: UtilService
   ) {
-    this.eventService.subscribe('chain_changed', () => {
-      this.default()
-      this.web3Service.getReputationLevelRequirements().then(() => {
-        this.loadData()
-      });
-    })
   }
 
   default() {
@@ -55,6 +50,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       unclaimed: 0,
       claimable: 0
     }))
+    this.readyToFight = this.groupService.getActiveGroupAccounts().map(() => 0)
     this.accountChars = this.groupService.getActiveGroupAccounts().map(() => [])
   }
 
@@ -65,7 +61,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       bodyScrolling: false,
       edge: false,
       edgeOffset: '',
-      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30',
+      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-90',
     }
     this.groupDrawer = new Drawer(document.getElementById('groups-drawer'), options);
     this.newGroupDrawer = new Drawer(document.getElementById('new-group-drawer'), options)
@@ -76,13 +72,31 @@ export class AccountsComponent implements OnInit, OnDestroy {
 
     this.loadGroups()
     this.default()
-    this.web3Service.getReputationLevelRequirements().then(() => {
+    this.loadAllData()
+
+    this.expanded = this.getToggle()
+    this.eventService.subscribe('chain_changed', () => {
+      this.isLoading = true
+      this.default()
+      this.loadAllData()
+    })
+    this.eventService.subscribe('version_changed', () => {
+      this.isLoading = true
+      this.default()
+      this.loadAllData()
+    })
+  }
+
+  loadAllData() {
+    this.web3Service.getReputationLevelRequirements().then((repRequirements) => {
+      this.repRequirements = repRequirements
       this.loadData()
     });
   }
 
   ngOnDestroy(): void {
     this.eventService.destroy('chain_changed')
+    this.eventService.destroy('version_changed')
   }
 
   loadGroups() {
@@ -287,6 +301,9 @@ export class AccountsComponent implements OnInit, OnDestroy {
     this.isLoading = true
     const time = new Date().getTime()
     const multicallContract = this.web3Service.getMulticall(this.web3Service.activeChain)
+    const characterContract = this.web3Service.getContract(this.web3Service.activeChain, 'characters')
+
+    const charRepId = await characterContract.NFTVAR_REPUTATION()
     const accounts = this.groupService.getActiveGroupAccounts()
     if (accounts.length > 0) {
       const accountData = await multicallContract.call([
@@ -318,7 +335,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       const charCountResults = accountData.results['charCounts'].callsReturnContext
       const weaponCountResults = accountData.results['weaponCounts'].callsReturnContext
 
-      this.accountBalances = await this.web3Service.getAccountBalances(accounts, false)
+      this.accountBalances = await this.web3Service.getAccountBalances(accounts, this.utilService.version === 2)
 
       const charCountCalls: any[] = [];
       const weaponCountCalls: any[] = [];
@@ -356,37 +373,6 @@ export class AccountsComponent implements OnInit, OnDestroy {
         }
       ])
 
-      /*if (nftCallResults.results['weaponIds']) {
-        const weaponDataCalls: any[] = []
-        accounts.forEach((address: string) => {
-          const accountWeaponIds = this.getNftIds(nftCallResults.results['weaponIds']?.callsReturnContext, address)
-          accountWeaponIds.forEach((weaponId: string) => {
-            weaponDataCalls.push({
-              reference: weaponId,
-              methodName: 'get',
-              methodParameters: [weaponId]
-            })
-          })
-        })
-        const accountWeaponInfo = await multicallContract.call([
-          {
-            reference: 'weaponData',
-            contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'weapons'),
-            abi: this.web3Service.abis['weapons'],
-            calls: weaponDataCalls
-          }
-        ])
-        this.accountWeapons = accounts.map((address: string) => {
-          const accountWeaponIds = this.getNftIds(nftCallResults.results['weaponIds']?.callsReturnContext, address)
-          return accountWeaponIds.map((weaponId: string) => {
-            const data = this.utilService.weaponFromContract(weaponId, accountWeaponInfo.results['weaponData'].callsReturnContext.find((i: any) => i.reference === weaponId)?.returnValues)
-            return {
-              data
-            }
-          })
-        }).sort((a: any, b: any) => a.stars - b.stars)
-      }*/
-
       if (nftCallResults.results['charIds']) {
 
         const charDataCalls: any[] = []
@@ -421,7 +407,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
             charsRepCall.push({
               reference: charId,
               methodName: 'getNftVar',
-              methodParameters: [charId, 103]
+              methodParameters: [charId, charRepId?.toString()]
             })
           })
         })
@@ -464,14 +450,17 @@ export class AccountsComponent implements OnInit, OnDestroy {
 
         const accountCharInfo = await multicallContract.call(allCall)
 
-        this.accountChars = accounts.map((address: string) => {
+        this.accountChars = accounts.map((address: string, index: number) => {
           const accountCharIds = this.getNftIds(nftCallResults.results['charIds']?.callsReturnContext, address)
           return accountCharIds.map((charId: string) => {
             const data = this.utilService.characterFromContract(charId, accountCharInfo.results['charData'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues)
             const power = this.web3Service.multicallBnToNumber(accountCharInfo.results['charPower'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0])
             const stamina = accountCharInfo.results['charStamina'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]
-            const rep = this.web3Service.activeChain !== 'AVAX' ? accountCharInfo.results['charRep'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0] : 0
+            const rep = this.web3Service.activeChain !== 'AVAX' ? this.web3Service.multicallBnToNumber(accountCharInfo.results['charRep'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]) : 0
             const exp = this.web3Service.multicallBnToNumber(accountCharInfo.results['charExp'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0])
+            if (stamina > 40) {
+              this.readyToFight[index] += 1
+            }
             return {
               data,
               power,
@@ -482,7 +471,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
           })
         })
       }
-      console.log(new Date().getTime() - time)
+      console.log('Took', new Date().getTime() - time, 'ms to load.')
       this.isLoading = false
     }
   }
@@ -531,5 +520,18 @@ export class AccountsComponent implements OnInit, OnDestroy {
       })
       this.simulating = false
     }
+  }
+
+  toggleList() {
+    this.expanded = !this.expanded
+    this.saveToggle()
+  }
+
+  saveToggle() {
+    localStorage.setItem('expanded', `${this.expanded}`)
+  }
+
+  getToggle() {
+    return localStorage.getItem('expanded') === 'true'
   }
 }

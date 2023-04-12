@@ -20,7 +20,7 @@ export class UtilService {
     KING: number
   }
   characterNames: any
-  theme = 'light'
+  version = 1
 
   constructor() {
     this.experienceTable = [
@@ -71,6 +71,7 @@ export class UtilService {
     }
 
     this.characterNames = characterNames
+    this.version = this.getVersion()
   }
 
   getNextTargetExpLevel(level: number) {
@@ -464,5 +465,18 @@ export class UtilService {
     const wepTrait = data[5];
     const shieldTrait = data[6];
     return { pvePower, pvpTierPower, pvpFfaPower, charTrait, wepTrait, shieldTrait };
+  }
+
+  saveVersion() {
+    localStorage.setItem('version', `${this.version}`)
+  }
+
+  getVersion() {
+    return +(localStorage.getItem('version') || '1')
+  }
+
+  toggleVersion() {
+    this.version = this.version === 1 ? 2 : 1
+    this.saveVersion()
   }
 }

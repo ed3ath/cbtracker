@@ -6,6 +6,8 @@ import { NavigationEnd, Router } from "@angular/router";
 import { Web3Service } from 'src/app/services/web3.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { ThemeService } from 'src/app/services/theme.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +20,14 @@ export class NavbarComponent implements OnInit {
   currencyDrawer!: DrawerInterface
   chainDrawer!: DrawerInterface
 
-  constructor(private router: Router, public web3Service: Web3Service, public currencyService: CurrencyService, public themeService: ThemeService) {
+  constructor(
+    private router: Router,
+    public web3Service: Web3Service,
+    public currencyService: CurrencyService,
+    public themeService: ThemeService,
+    public utilService: UtilService,
+    private eventService: EventService
+  ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.page = this.router.url.split('tracker/')[1];
@@ -29,6 +38,11 @@ export class NavbarComponent implements OnInit {
 
   toggleTheme() {
     this.themeService.toggleDarkMode();
+  }
+
+  toggleVersion() {
+    this.utilService.toggleVersion()
+    this.eventService.publish('version_changed', this.utilService.version)
   }
 
   setActivePage(page: string) {
@@ -43,22 +57,16 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currencyDrawer = new Drawer (document.getElementById('currency-menu'), {
+    const options = {
       placement: 'right',
       backdrop: true,
       bodyScrolling: false,
       edge: false,
       edgeOffset: '',
-      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30',
-    });
-    this.chainDrawer = new Drawer (document.getElementById('chain-menu'), {
-      placement: 'right',
-      backdrop: true,
-      bodyScrolling: false,
-      edge: false,
-      edgeOffset: '',
-      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30',
-    });
+      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-90',
+    }
+    this.currencyDrawer = new Drawer(document.getElementById('currency-menu'), options);
+    this.chainDrawer = new Drawer(document.getElementById('chain-menu'), options);
   }
 
   setCurrency(currency: string) {
@@ -80,7 +88,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getLogo(chain: string) {
-    const file = this.theme === 'light' && chain === 'METER' ?  `${chain.toLowerCase()}-light` : chain.toLowerCase()
+    const file = this.themeService.theme === 'light' && chain === 'METER' ? `${chain.toLowerCase()}-light` : chain.toLowerCase()
     return `./assets/icons/chains/${file}.svg`
   }
 

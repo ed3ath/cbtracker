@@ -1,4 +1,4 @@
-<nav class="bg-white border-gray-200 dark:bg-gray-900">
+<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
   <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto
     p-4">
@@ -48,6 +48,17 @@
         </svg>
       </button>
       <!-- end theme switch -->
+      <!-- version switch -->
+      <button
+        type="button"
+        (click)="toggleVersion()"
+        class="inline-flex items-center font-medium justify-center px-4 py-2
+        text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer
+        hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white
+        uppercase">
+        {{utilService.version === 1 ? 'v1' : 'v2'}}
+      </button>
+      <!-- version switch -->
       <button
         type="button"
         (click)="showCurrencyDrawer()"

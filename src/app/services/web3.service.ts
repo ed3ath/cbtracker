@@ -206,7 +206,7 @@ export class Web3Service {
       }
     })
     const unclaimedCall = accounts.map((address: string) => {
-      if (isGen2) {
+      if (isGen2 && this.activeChain === 'BNB') {
         return {
           reference: address,
           methodName: 'userVars',

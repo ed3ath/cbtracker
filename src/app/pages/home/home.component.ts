@@ -5,6 +5,7 @@ import { EventService } from 'src/app/services/event.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { GroupService } from 'src/app/services/group.service';
 import { CurrencyService } from 'src/app/services/currency.service';
+import { UtilService } from 'src/app/services/util.service';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private eventService: EventService,
      public web3Service: Web3Service,
      public groupService: GroupService,
-     public currencyService: CurrencyService
+     public currencyService: CurrencyService,
+     public utilService: UtilService
      ) {
     this.accounts = this.groupService.getActiveGroupAccounts()
   }
@@ -78,11 +80,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.eventService.subscribe('currency_changed', () => {
       this.loadPrices()
     })
+    this.eventService.subscribe('version_changed', () => {
+      this.loadBalances()
+    })
   }
 
   ngOnDestroy(): void {
     this.eventService.destroy('currency_changed')
     this.eventService.destroy('chain_changed')
+    this.eventService.destroy('version_changed')
   }
 
   formatPrice(val: number) {
@@ -124,7 +130,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     await this.loadPrices()
     await this.loadBalances()
     this.isLoading = false
-    console.log(new Date().getTime() - time)
+    console.log('Took', new Date().getTime() - time, 'ms to load.')
   }
 
   async loadPrices() {
@@ -140,11 +146,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   async loadBalances() {
     if (this.accounts.length > 0) {
-      const accountBalances: any = await this.web3Service.getAccountBalances(this.accounts, false)
+      this.isLoading = true
+      const accountBalances: any = await this.web3Service.getAccountBalances(this.accounts, this.utilService.version === 2)
       this.balances.gas = accountBalances.reduce((a: number, b: any) => a + +b.gas, 0)
       this.balances.wallet = accountBalances.reduce((a: number, b: any) => a + b.wallet, 0)
       this.balances.unclaimed = accountBalances.reduce((a: number, b: any) => a + b.unclaimed, 0)
       this.balances.claimable = accountBalances.reduce((a: number, b: any) => a + b.claimable, 0)
+      this.isLoading = false
     }
   }
 
