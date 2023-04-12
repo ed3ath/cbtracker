@@ -1,6 +1,6 @@
 
 <div class="pt4 flex justify-center items-center text-center">
-  <app-ads type="970x90"></app-ads>
+  <app-ads></app-ads>
 </div>
 <div class="px-2 pt-4">
   <div class="p-4 bg-white border border-warning-200 rounded-lg shadow-sm
@@ -66,8 +66,7 @@
             [id]="'partner-content-' + i"
             class="!visible hidden"
             [attr.aria-labelledby]="'partner-head-' + i"
-            data-te-collapse-item
-            data-te-parent="#partners">
+            data-te-collapse-item>
             <div class="px-5 py-4">
               <h4 class="text-2xl text-warning-500 mb-4">Token: <span
                   class="text-gray-900 dark:text-white">${{partner.symbol}}</span></h4>

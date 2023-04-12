@@ -3,6 +3,7 @@ import { Drawer, DrawerInterface } from 'flowbite';
 import Swal from 'sweetalert2'
 
 import { EventService } from 'src/app/services/event.service';
+import { ConfigService } from 'src/app/services/config.service';
 import { GroupService } from 'src/app/services/group.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -30,12 +31,14 @@ export class AccountsComponent implements OnInit, OnDestroy {
   activeAccountIndex = -1
   simulations: any[] = []
   readyToFight: any[] = []
+  fightMultiplier = 1
 
   simulating = false
   expanded = false
 
   constructor(
     private eventService: EventService,
+    public configService: ConfigService,
     public groupService: GroupService,
     public web3Service: Web3Service,
     public utilService: UtilService
@@ -74,7 +77,6 @@ export class AccountsComponent implements OnInit, OnDestroy {
     this.default()
     this.loadAllData()
 
-    this.expanded = this.getToggle()
     this.eventService.subscribe('chain_changed', () => {
       this.isLoading = true
       this.default()
@@ -100,7 +102,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
   }
 
   loadGroups() {
-    this.groups = this.groupService.getAllGroups()
+    this.groups = this.configService.getAllGroups()
   }
 
   showGroupsDrawer() {
@@ -199,7 +201,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.isConfirmed) {
         const accounts = this.groupService.getActiveGroupAccounts()
-        const names = this.groupService.getAllAccountNames()
+        const names = this.configService.getAllAccountNames()
         accounts.forEach((address: string) => {
           delete names[address]
         })
@@ -522,16 +524,32 @@ export class AccountsComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleList() {
-    this.expanded = !this.expanded
-    this.saveToggle()
+  toggleExpanded() {
+    this.configService.expanded = !this.configService.expanded
+    this.configService.saveExpanded()
   }
 
-  saveToggle() {
-    localStorage.setItem('expanded', `${this.expanded}`)
+  getStaminaColor(stamina: number) {
+    if (stamina >= 200) {
+      return 'text-danger'
+    } else if (stamina >= 180) {
+      return 'text-warning'
+    } else if (stamina >= 120) {
+      return 'text-primary'
+    } else if (stamina >= 80) {
+      return 'text-success'
+    }
+    return ''
   }
 
-  getToggle() {
-    return localStorage.getItem('expanded') === 'true'
+  getMultiplierColor() {
+    switch(this.fightMultiplier) {
+      case 5: return 'bg-danger text-white'
+      case 4: return 'bg-warning text-white'
+      case 3: return 'bg-primary text-white'
+      case 2: return 'bg-success text-white'
+      case 1: return 'bg-gray-700 text-white'
+      default: return 'bg-gray-700 text-white'
+    }
   }
 }

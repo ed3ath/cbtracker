@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { GroupService } from 'src/app/services/group.service';
+import { ConfigService } from 'src/app/services/config.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private eventService: EventService,
      public web3Service: Web3Service,
      public groupService: GroupService,
+     public configService: ConfigService,
      public currencyService: CurrencyService,
      public utilService: UtilService
      ) {
@@ -92,7 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   formatPrice(val: number) {
-    return val.toLocaleString('en-US', { style: 'currency', currency: this.currencyService.activeCurrency.toUpperCase() })
+    return val.toLocaleString('en-US', { style: 'currency', currency: this.configService.currency.toUpperCase() })
   }
 
   formatNumber(val: number, decimal = 4) {

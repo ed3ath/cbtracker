@@ -222,7 +222,7 @@ export class Web3Service {
     const calls = [];
     calls.push({
       reference: 'wallet',
-      contractAddress: this.getConfigAddress(this.activeChain, 'skill'),
+      contractAddress: this.getConfigAddress(this.activeChain, isGen2 && this.activeChain === 'BNB' ? 'valor' : 'skill'),
       abi: this.abis['token'],
       calls: balanceCall
     })

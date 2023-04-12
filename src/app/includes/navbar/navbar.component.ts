@@ -4,6 +4,7 @@ import { Drawer, DrawerInterface } from 'flowbite';
 import { NavigationEnd, Router } from "@angular/router";
 
 import { Web3Service } from 'src/app/services/web3.service';
+import { ConfigService } from 'src/app/services/config.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
   constructor(
     private router: Router,
     public web3Service: Web3Service,
+    public configService: ConfigService,
     public currencyService: CurrencyService,
     public themeService: ThemeService,
     public utilService: UtilService,
@@ -88,7 +90,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getLogo(chain: string) {
-    const file = this.themeService.theme === 'light' && chain === 'METER' ? `${chain.toLowerCase()}-light` : chain.toLowerCase()
+    const file = this.configService.theme === 'light' && chain === 'METER' ? `${chain.toLowerCase()}-light` : chain.toLowerCase()
     return `./assets/icons/chains/${file}.svg`
   }
 

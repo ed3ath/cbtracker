@@ -109,7 +109,6 @@ export class TreasuryComponent implements OnInit {
         }
       })
     }
-    console.log(this.partners)
     this.isLoading = false
   }
 

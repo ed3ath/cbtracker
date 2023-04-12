@@ -1,39 +1,33 @@
 import { Injectable } from '@angular/core';
 import * as ethers from 'ethers'
 
+import { ConfigService } from './config.service';
+
 @Injectable({
   providedIn: 'root',
 })
 export class GroupService {
 
-  getActiveGroupIndex() {
-    return parseInt(localStorage.getItem('activeGroupIndex') || '0')
-  }
+  constructor(private configService: ConfigService) {
 
-  getAllGroups() {
-    return JSON.parse(localStorage.getItem('groups') || '[]')
-  }
-
-  getAllAccountNames() {
-    return JSON.parse(localStorage.getItem('names') || '[]')
   }
 
   getGroupName(index: number) {
-    const groups = this.getAllGroups()
+    const groups = this.configService.getAllGroups()
     return groups[index]?.name
   }
 
   getGroupAccounts(index: number) {
-    const groups = this.getAllGroups()
+    const groups = this.configService.getAllGroups()
     return groups[index]?.accounts || []
   }
 
   getActiveGroupName() {
-    return this.getGroupName(this.getActiveGroupIndex())
+    return this.getGroupName(this.configService.getActiveGroupIndex())
   }
 
   getActiveGroupAccounts() {
-    return this.getGroupAccounts(this.getActiveGroupIndex())
+    return this.getGroupAccounts(this.configService.getActiveGroupIndex())
   }
 
   setGroups(groups: any) {
@@ -41,7 +35,7 @@ export class GroupService {
   }
 
   setActiveGroupIndex(index: number) {
-    const groups = this.getAllGroups()
+    const groups = this.configService.getAllGroups()
     if (index >= 0 && index < groups.length) {
       localStorage.setItem('activeGroupIndex', `${index}`)
     }
@@ -49,8 +43,8 @@ export class GroupService {
 
   importOldAccounts() {
     const oldAccounts = JSON.parse(localStorage.getItem('accounts') || '[]')
-    const names = this.getAllAccountNames()
-    if (oldAccounts.length > 0 && this.getAllGroups().length > 0) {
+    const names = this.configService.getAllAccountNames()
+    if (oldAccounts.length > 0 && this.configService.getAllGroups().length > 0) {
       oldAccounts.forEach((account: string, i: number) => {
         this.addGroupAccount(names[i] ? names[i] : `Unnamed ${i+1}`, account)
       })
@@ -58,7 +52,7 @@ export class GroupService {
   }
 
   newGroup(name: string) {
-    const groups = this.getAllGroups()
+    const groups = this.configService.getAllGroups()
     if (groups.find((i: any) => i.name === name)) {
       return -1
     } else {
@@ -72,14 +66,14 @@ export class GroupService {
   }
 
   setActiveGroupName(name: string) {
-    const groups = this.getAllGroups()
-    groups[this.getActiveGroupIndex()].name = name
+    const groups = this.configService.getAllGroups()
+    groups[this.configService.getActiveGroupIndex()].name = name
     this.setGroups(groups)
   }
 
   setActiveGroupAccounts(accounts: string[]) {
-    const groups = this.getAllGroups()
-    groups[this.getActiveGroupIndex()].accounts = accounts
+    const groups = this.configService.getAllGroups()
+    groups[this.configService.getActiveGroupIndex()].accounts = accounts
     this.setGroups(groups)
   }
 
@@ -88,7 +82,7 @@ export class GroupService {
   }
 
   checkAccountNameExists(name: string) {
-    const names = this.getAllAccountNames()
+    const names = this.configService.getAllAccountNames()
     return Object.keys(names).find(i => names[i] === name) ? true : false
   }
 
@@ -98,13 +92,13 @@ export class GroupService {
   }
 
   setAccountName(name: string, address: string) {
-    const names = this.getAllAccountNames()
+    const names = this.configService.getAllAccountNames()
     this.setAccountNames({...names, [address]: name})
   }
 
   deleteActiveGroup() {
-    const groups = this.getAllGroups()
-    groups.splice(this.getActiveGroupIndex(), 1)
+    const groups = this.configService.getAllGroups()
+    groups.splice(this.configService.getActiveGroupIndex(), 1)
     this.setActiveGroupIndex(groups.length - 1)
     this.setGroups(groups)
   }
@@ -123,12 +117,12 @@ export class GroupService {
   }
 
   getAccountName(address: string) {
-    return this.getAllAccountNames()[address] ? this.getAllAccountNames()[address] : ''
+    return this.configService.getAllAccountNames()[address] ? this.configService.getAllAccountNames()[address] : ''
   }
 
   deleteAccount(address: string) {
     const accounts = this.getActiveGroupAccounts()
-    const names = this.getAllAccountNames()
+    const names = this.configService.getAllAccountNames()
     accounts.splice(accounts.indexOf(address), 1)
     delete names[address]
     this.setActiveGroupAccounts(accounts)
