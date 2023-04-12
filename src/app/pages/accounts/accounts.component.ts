@@ -148,6 +148,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       if (newGroupIndex >= 0) {
         if (newGroupIndex === 0) {
           this.groupService.importOldAccounts()
+          this.loadData()
         }
         this.loadGroups()
         this.setGroupIndex(newGroupIndex)

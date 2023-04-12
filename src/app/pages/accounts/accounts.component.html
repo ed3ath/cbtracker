@@ -342,7 +342,7 @@
           text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-warning-600
           dark:hover:bg-warning-700 focus:outline-none
           dark:focus:ring-warning-800
-          block" (click)="showManageGroupDrawer()">Manage Group</button>
+          block" (click)="showManageGroupDrawer()" [disabled]="groupService.getAllGroups().length === 0">Manage Group</button>
         <button type="button" class="text-white bg-success-700
           hover:bg-success-800
           w-full focus:ring-4 focus:ring-success-300 font-medium rounded-lg
