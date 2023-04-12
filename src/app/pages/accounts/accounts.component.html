@@ -35,9 +35,9 @@
                 [ngClass]="i === 0 ? 'rounded-t-lg' : 'rounded-none'"
                 type="button"
                 data-te-collapse-init
-                [attr.data-te-collapse-collapsed]="expanded ? null : ''"
+                [attr.data-te-collapse-collapsed]="configService.expanded ? null : ''"
                 [attr.data-te-target]="'#account-content-' + i "
-                [attr.aria-expanded]="expanded ? true : false"
+                [attr.aria-expanded]="configService.expanded ? true : false"
                 [attr.aria-controls]="'#account-content-' + i ">
                 <span
                   class="mr-3 h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec]
@@ -61,16 +61,16 @@
               </button>
               <span class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded" [ngClass]="getMultiplierColor()">{{readyToFight[i]}}</span>
               <a class="ml-auto cursor-pointer px-4 text-md text-warning-500"
-                (click)="showAccountDrawer(account)">...</a>
+                (click)="showAccountDrawer(account)">...</a>`
             </div>
           </h2>
           <!-- content -->
           <div
             [id]="'account-content-' + i"
-            [class]="expanded ? '!visible' : '!visible hidden'"
+            [class]="configService.expanded ? '!visible' : '!visible hidden'"
             [attr.aria-labelledby]="'account-head-' + i"
             data-te-collapse-item
-            [attr.data-te-collapse-show]="expanded ? '' : null">
+            [attr.data-te-collapse-show]="configService.expanded ? '' : null">
             <div class="px-5 py-4">
               <div
                 class="grid w-full grid-cols-1 gap-4 xl:grid-cols-5">
@@ -184,7 +184,7 @@
                 <div
                   class="items-center justify-between p-2 col-span-4">
                   <div class="w-full">
-                    <div class="relative overflow-scroll hover:overflow-scroll
+                    <div class="relative overflow-x-scroll hover:overflow-x-scroll
                       shadow-md">
                       <table class="w-full text-sm text-left text-gray-500
                         dark:text-gray-400">
@@ -609,6 +609,32 @@
             block" (click)="simulateCombat()" [disabled]="simulating">{{simulating
             ? 'Simulating...' : 'Simulate'}}</button>
           <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700">
+          <div class="grid w-full grid-cols-3 grid-rows-2 mb-4" *ngFor="let data of simulations; let i=index">
+            <div class="border border-2 border-warning-500 text-center p-2">
+              <p class="text-warning-500">Enemy</p>
+              <span class="text-gray-500 dark:text-white">#{{i + 1}}</span>
+            </div>
+            <div class="border border-2 border-warning-500 text-center p-2">
+              <p class="text-warning-500">Power</p>
+              <span class="text-gray-500 dark:text-white">{{data.power}}</span>
+            </div>
+            <div class="border border-2 border-warning-500 text-center p-2">
+              <p class="text-warning">Element</p>
+              <span [class]="utilService.elementColor(data.element)">{{data.element}}</span>
+            </div>
+            <div class="border border-2 border-warning-500 text-center p-2">
+              <p class="text-warning-500">Exp</p>
+              <span class="text-gray-500 dark:text-white">{{data.exp}}</span>
+            </div>
+            <div class="border border-2 border-warning-500 text-center p-2">
+              <p class="text-warning-500">Reward</p>
+              <span class="text-gray-500 dark:text-white">{{utilService.formatNumber(data.reward)}}</span>
+            </div>
+            <div class="border border-2 border-warning-500 text-center p-2">
+              <p class="text-warning-500">Chance</p>
+              <span class="text-gray-500 dark:text-white">{{utilService.formatNumber(data.chance * 100, 2)}}</span>
+            </div>
+          </div>
         </form>
       </div>
       <!-- end combat drawer -->
@@ -619,4 +645,4 @@
 <button (click)="toggleExpanded()"
   class="fixed z-20 bottom-4 right-4 bg-warning-600 w-12 h-12 rounded-full
   drop-shadow-lg flex justify-center items-center text-white text-4xl
-  hover:bg-warning-700 hover:drop-shadow-2xl hover:animate-bounce duration-300">{{expanded ? '&minus;' : '&plus;'}}</button>
+  hover:bg-warning-700 hover:drop-shadow-2xl hover:animate-bounce duration-300">{{configService.expanded ? '&minus;' : '&plus;'}}</button>

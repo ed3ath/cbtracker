@@ -34,7 +34,6 @@ export class AccountsComponent implements OnInit, OnDestroy {
   fightMultiplier = 1
 
   simulating = false
-  expanded = false
 
   constructor(
     private eventService: EventService,
@@ -227,6 +226,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       } else {
         this.groupService.addGroupAccount(elName.value, elAddress.value)
         this.loadGroups()
+        this.readyToFight = this.groupService.getActiveGroupAccounts().map(() => 0)
         this.addAccountDrawer.hide()
         this.loadData()
         Swal.fire('', `Account "${elName.value}" have been added.`, 'success')
@@ -507,7 +507,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       ])
       const rewards = rewardResults.results['rewards']?.callsReturnContext.map((result: any) => this.web3Service.multicallBnToNumber(result.returnValues[0], true) * +elMultiplier.value)
       this.simulations = enemies.map((enemy: any, i: number) => {
-        const chance = this.utilService.getWinChance(enemy.power,  powerData.pvePower[4])
+        const chance = this.utilService.getWinChance(enemy.power, powerData.pvePower[4])
         const exp = Math.floor((enemy.power / powerData.pvePower[4]) * baseExp) * +elMultiplier.value
         const reward = rewards[i]
         const power = enemies[i].power
@@ -543,7 +543,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
   }
 
   getMultiplierColor() {
-    switch(this.fightMultiplier) {
+    switch (this.fightMultiplier) {
       case 5: return 'bg-danger text-white'
       case 4: return 'bg-warning text-white'
       case 3: return 'bg-primary text-white'

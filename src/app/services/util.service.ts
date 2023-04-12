@@ -479,4 +479,14 @@ export class UtilService {
     this.version = this.version === 1 ? 2 : 1
     this.saveVersion()
   }
+
+  elementColor(element: string) {
+    switch(element) {
+      case 'Fire': return 'text-red-800'
+      case 'Earth': return 'text-green-900'
+      case 'Lightning': return 'text-yellow-400'
+      case 'Water': return 'text-blue-600'
+      default: return 'text-white dark:text-gray-500'
+    }
+  }
 }
