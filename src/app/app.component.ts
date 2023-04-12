@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'cbtracker';
+export class AppComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+    const importTE = async () => {
+      await import('tw-elements');
+    };
+    importTE();
+  }
 }

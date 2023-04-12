@@ -1,0 +1,16 @@
+<svg id="okex" xmlns="http://www.w3.org/2000/svg" width="29.999" height="29.999" viewBox="0 0 29.999 29.999">
+  <g id="Group_1071" data-name="Group 1071">
+    <g id="OKEx-logo">
+      <g id="Path-raw">
+        <circle id="Oval" cx="6.792" cy="6.792" r="6.792" transform="translate(8.208 0)" fill="#88bdf3"/>
+        <circle id="Oval-Copy" cx="6.792" cy="6.792" r="6.792" transform="translate(8.208 16.415)" fill="#3075ee"/>
+        <circle id="Oval-Copy-2" cx="6.792" cy="6.792" r="6.792" transform="translate(16.415 8.208)" fill="#5795f1"/>
+        <circle id="Oval-Copy-3" cx="6.792" cy="6.792" r="6.792" transform="translate(0 8.208)" fill="#205fec"/>
+        <path id="Combined-Shape" d="M64.345,64.345a6.8,6.8,0,0,1-5-5,6.8,6.8,0,0,1,5,5Z" transform="translate(-50.951 -50.951)" fill="#134bef" fill-rule="evenodd"/>
+        <path id="Combined-Shape-2" data-name="Combined-Shape" d="M59.35,122.345a6.8,6.8,0,0,1,5-5A6.8,6.8,0,0,1,59.35,122.345Z" transform="translate(-50.951 -100.744)" fill="#0932e8" fill-rule="evenodd"/>
+        <path id="Combined-Shape-3" data-name="Combined-Shape" d="M117.35,117.35a6.8,6.8,0,0,1,5,5,6.8,6.8,0,0,1-5-5Z" transform="translate(-100.744 -100.744)" fill="#164bea" fill-rule="evenodd"/>
+        <path id="Combined-Shape-4" data-name="Combined-Shape" d="M122.345,59.35a6.8,6.8,0,0,1-5,5,6.8,6.8,0,0,1,5-5Z" transform="translate(-100.744 -50.951)" fill="#3170f1" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>

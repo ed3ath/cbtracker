@@ -1,0 +1,11 @@
+{
+  "BNB": "binancecoin",
+  "HECO": "huobi-token",
+  "OEC": "oec-token",
+  "POLYGON": "matic-network",
+  "AVAX": "avalanche-2",
+  "AURORA": "aurora-near",
+  "SKALE": "skale",
+  "COINEX": "coinex-token",
+  "METER": "meter-stable"
+}

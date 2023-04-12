@@ -1,0 +1,108 @@
+
+<div class="pt4 flex justify-center items-center text-center">
+  <app-ads type="970x90"></app-ads>
+</div>
+<div class="px-2 pt-4">
+  <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm
+    2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <!-- skeleton -->
+    <div class="mb-6 animate-pulse" *ngIf="isLoading" role="status">
+      <div class="h-8 bg-gray-200 rounded-full
+        dark:bg-gray-700 w-full
+        mb-6 mt-1"></div>
+    </div>
+    <!-- end skeleton-->
+    <div class="mb-6" *ngIf="!isLoading">
+
+      <div id="partners" *ngFor="let partner of partners; let
+        i=index">
+        <div
+          class="border border-2 border-gray-500 bg-white
+          dark:border-gray-600 dark:bg-gray-800">
+          <!-- header -->
+          <h2 class="mb-0" [id]="'partner-head-' + i">
+            <button
+              class="group relative flex w-full items-center rounded-none
+              border-0 bg-white px-5 py-4 text-left text-base text-gray-800
+              transition [overflow-anchor:none] hover:z-[2] focus:z-[3]
+              focus:outline-none dark:bg-gray-800 dark:text-white
+              [&:not([data-te-collapse-collapsed])]:bg-white
+              [&:not([data-te-collapse-collapsed])]:text-primary
+              [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)]
+              dark:[&:not([data-te-collapse-collapsed])]:bg-gray-800
+              dark:[&:not([data-te-collapse-collapsed])]:text-primary-400
+              dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]"
+              type="button"
+              data-te-collapse-init
+              data-te-collapse-collapsed
+              [attr.data-te-target]="'#partner-content-' + i "
+              aria-expanded="false"
+              [attr.aria-controls]="'#partner-content-' + i ">
+
+              <div class="w-12 mr-4" style="content: url({{partner.data[0]}});"></div>
+              <div class="grid grid-rows-2 grid-flow-col gap-2">
+                <div class="col-span-2">{{partner.name}}</div>
+                <div class="col-span-2 text-base text-warning-500">Multiplier:
+                  x{{utilService.formatNumber(partner.multiplier)}}</div>
+              </div>
+              <span
+                class="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec]
+                transition-transform duration-200 ease-in-out
+                group-[[data-te-collapse-collapsed]]:rotate-0
+                group-[[data-te-collapse-collapsed]]:fill-[#212529]
+                motion-reduce:transition-none dark:fill-blue-300
+                dark:group-[[data-te-collapse-collapsed]]:fill-white">
+
+                <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0
+                  20 20" xmlns="http://www.w3.org/2000/svg"><path
+                    fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10
+                    10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414
+                    0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              </span>
+            </button>
+          </h2>
+          <!-- content -->
+          <div
+            [id]="'partner-content-' + i"
+            class="!visible hidden"
+            [attr.aria-labelledby]="'partner-head-' + i"
+            data-te-collapse-item
+            data-te-parent="#partners">
+            <div class="px-5 py-4">
+              <h4 class="text-2xl text-warning-500 mb-4">Token: <span
+                  class="text-gray-900 dark:text-white">${{partner.symbol}}</span></h4>
+              <div
+                class="grid w-full grid-rows-2 grid-flow-col gap-2">
+
+                <div class="col-span-3 grid grid-cols-2 gap-4">
+                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                    <p class="text-warning-500">SKILL/{{partner.symbol}}</p>
+                    <span class="dark:text-white">{{formatSkillRatio(partner.ratio)}}</span>
+                  </div>
+                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                    <p class="text-warning-500">Multiplier</p>
+                    <span class="dark:text-white">x{{utilService.formatNumber(partner.multiplier)}}</span>
+                  </div>
+                </div>
+                <div class="col-span-3 grid grid-cols-2 gap-4">
+                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                    <p class="text-warning-500">$/Unclaimed</p>
+                    <span class="dark:text-white">{{moneyPerUnclaimed(partner.price, partner.ratio, partner.multiplier)}}</span>
+                  </div>
+                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                    <p class="text-warning-500">Distribution</p>
+                    <span class="dark:text-white">{{partner.distribution}} days</span>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full justify-center py-4 text-gray-900 dark:text-white">
+                {{partner.data[1]}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

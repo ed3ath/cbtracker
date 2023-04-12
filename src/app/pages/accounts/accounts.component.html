@@ -1,0 +1,600 @@
+<div class="pt4 flex justify-center items-center text-center">
+  <app-ads type="970x90"></app-ads>
+</div>
+<div class="px-2 pt-4">
+  <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm
+    2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div class="mb-6">
+
+      <h2 class="text-2xl font-medium leading-tight text-center
+        text-warning-500 cursor-pointer mb-4" (click)="showGroupsDrawer()">{{groupService.getAllGroups().length
+        > 0 ? groupService.getActiveGroupName() : 'No Group'}}</h2>
+
+
+      <div id="accounts" *ngFor="let account of
+        groupService.getActiveGroupAccounts(); let
+        i=index">
+        <div
+          class="border border-2 border-warning-500 bg-white
+          dark:border-warning-600 dark:bg-gray-800"
+          [ngClass]="i === 0 ? 'rounded-t-lg' : 'rounded-none'">
+          <!-- header -->
+          <h2 class="mb-0" [id]="'account-head-' + i">
+            <div class="group relative flex w-full items-center">
+              <button
+                class="group relative flex w-full items-center
+                border-0 bg-white px-5 py-4 text-left text-base text-gray-800
+                transition [overflow-anchor:none] hover:z-[2] focus:z-[3]
+                focus:outline-none dark:bg-gray-800 dark:text-white
+                [&:not([data-te-collapse-collapsed])]:bg-white
+                [&:not([data-te-collapse-collapsed])]:text-primary
+                [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)]
+                dark:[&:not([data-te-collapse-collapsed])]:bg-gray-800
+                dark:[&:not([data-te-collapse-collapsed])]:text-primary-400
+                dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]"
+                [ngClass]="i === 0 ? 'rounded-t-lg' : 'rounded-none'"
+                type="button"
+                data-te-collapse-init
+                [attr.data-te-collapse-collapsed]="i === 0 ? null : ''"
+                [attr.data-te-target]="'#account-content-' + i "
+                [attr.aria-expanded]="i === 0 ? true : false"
+                [attr.aria-controls]="'#account-content-' + i ">
+                <span
+                  class="mr-3 h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec]
+                  transition-transform duration-200 ease-in-out
+                  group-[[data-te-collapse-collapsed]]:rotate-0
+                  group-[[data-te-collapse-collapsed]]:fill-[#212529]
+                  motion-reduce:transition-none dark:fill-blue-300
+                  dark:group-[[data-te-collapse-collapsed]]:fill-white">
+
+                  <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0
+                    20 20" xmlns="http://www.w3.org/2000/svg"><path
+                      fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10
+                      10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414
+                      0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </span>
+                {{groupService.getAccountName(account)}}
+                ({{utilService.addressPrivacy(account)}})
+              </button>
+              <a class="ml-auto cursor-pointer px-4 text-md text-warning-500"
+                (click)="showAccountDrawer(account)">...</a>
+            </div>
+          </h2>
+          <!-- content -->
+          <div
+            [id]="'account-content-' + i"
+            [class]="i === 0 ? '!visible' : '!visible hidden'"
+            [attr.aria-labelledby]="'account-head-' + i"
+            data-te-collapse-item
+            [attr.data-te-collapse-show]="i === 0 ? '' : null"
+            data-te-parent="#accounts">
+            <div class="px-5 py-4">
+              <div
+                class="grid w-full grid-cols-1 gap-4 xl:grid-cols-5">
+                <!-- characters info -->
+                <div
+                  class="items-center justify-between p-2 col-span-4">
+                  <!-- skeleton -->
+                  <div role="status" class="animate-pulse w-full"
+                    *ngIf="isLoading">
+                    <div
+                      class="grid w-full grid-cols-2 gap-4 xl:grid-cols-4">
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium text-gray-500
+                            dark:text-gray-400">
+                            <div class="h-6 bg-gray-200 rounded-full
+                              dark:bg-gray-700 w-24"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium text-gray-500
+                            dark:text-gray-400">
+                            <div class="h-6 bg-gray-200 rounded-full
+                              dark:bg-gray-700 w-24"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium text-gray-500
+                            dark:text-gray-400">
+                            <div class="h-6 bg-gray-200 rounded-full
+                              dark:bg-gray-700 w-24"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium text-gray-500
+                            dark:text-gray-400">
+                            <div class="h-6 bg-gray-200 rounded-full
+                              dark:bg-gray-700 w-24"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end skeleton -->
+                  <div class="w-full" *ngIf="!isLoading">
+                    <div
+                      class="grid w-full grid-cols-2 gap-4 xl:grid-cols-4">
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium
+                            text-warning-500">{{web3Service.getChainSymbol(web3Service.activeChain)}}</div>
+                          <div class="w-full text-sm font-medium
+                            dark:text-white
+                            text-right">{{utilService.formatNumber(accountBalances && accountBalances[i] ? accountBalances[i].gas : 0)}}</div>
+                        </div>
+                      </div>
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium
+                            text-warning-500">Unclaimed</div>
+                          <div class="w-full text-sm font-medium
+                            dark:text-white
+                            text-right">{{utilService.formatNumber(accountBalances && accountBalances[i] ? accountBalances[i].unclaimed : 0)}}</div>
+                        </div>
+                      </div>
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium
+                            text-warning-500">Claimable</div>
+                          <div class="w-full text-sm font-medium
+                            dark:text-white
+                            text-right">{{utilService.formatNumber(accountBalances && accountBalances[i] ? accountBalances[i].claimable : 0)}}</div>
+                        </div>
+                      </div>
+                      <div class="items-center p-2 border border-2 border-warning-500 rounded">
+                        <div class="flex items-center mb-2">
+                          <div class="w-16 text-sm font-medium
+                            text-warning-500">Wallet</div>
+                          <div class="w-full text-sm font-medium
+                            dark:text-white
+                            text-right">{{utilService.formatNumber(accountBalances && accountBalances[i] ? accountBalances[i].wallet : 0)}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end characters info -->
+                <!-- character table -->
+                <div
+                  class="items-center justify-between p-2 col-span-4">
+                  <div class="w-full">
+                    <div class="relative overflow-scroll hover:overflow-scroll
+                      shadow-md">
+                      <table class="w-full text-sm text-left text-gray-500
+                        dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase
+                          bg-gray-50
+                          dark:bg-gray-700 dark:text-gray-400">
+                          <tr>
+                            <th scope="col" class="px-6 py-3">
+                              ID
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                              Level
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                              Element
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                              Power
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                              Reputation
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                              Unc. Exp
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                              Next Level
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                              Stamina
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr role="status" class="animate-pulse"
+                            *ngIf="isLoading">
+                            <th scope="row" class="px-6 py-4 font-medium
+                              text-gray-900 whitespace-nowrap
+                              dark:text-white">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12
+                                mb-6 mt-1"></div>
+                            </th>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
+                          </tr>
+                          <tr class="bg-white border-b dark:bg-gray-900
+                            dark:border-gray-700" *ngFor="let char of
+                            accountChars[i]; let j=index">
+                            <th scope="row" class="px-6 py-4 font-medium
+                              text-gray-900 whitespace-nowrap
+                              dark:text-white">
+                              {{char && char.data ? char.data.id : ''}}
+                            </th>
+                            <td class="px-6 py-4">
+                              {{char && char.data ? char.data.level + 1 : '0'}}
+                            </td>
+                            <td class="px-6 py-4">
+                              {{char && char.data ? char.data.traitName : ''}}
+                            </td>
+                            <td class="px-6 py-4">
+                              {{char && char.power ? char.power : ''}}
+                            </td>
+                            <td class="px-6 py-4">
+                              {{(char && char.rep && repRequirements ?
+                              utilService.reputationToTier(utilService.getReputationTier(char.rep,
+                              repRequirements)) : 'PEASANT')}}
+                            </td>
+                            <td class="px-6 py-4">
+                              {{char && char.exp ? char.exp : ''}}
+                            </td>
+                            <td class="px-6 py-4">
+                              {{char && char.data ? utilService.getNextTargetExpLevel(char.data.level).level
+                              + 1 : ''}}
+                            </td>
+                            <td class="px-6 py-4">
+                              {{char && char.stamina ? char.stamina : ''}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- end character table -->
+                <!-- ads -->
+                <div class="w-full row-span-2 p-2 flex items-center justify-center">
+                    <app-ads type="250x250"></app-ads>
+                </div>
+                <!-- end ads -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- groups drawer -->
+      <div id="groups-drawer" #groupMenu class="fixed top-0 right-0 z-40
+        h-screen
+        p-4 overflow-y-auto transition-transform translate-x-full bg-white
+        w-80
+        dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+        <hr class="h-px mb-2 bg-gray-200 border-0 dark:bg-gray-700">
+        <!-- select group -->
+        <h5 id="groups-label" class="items-center mb-2
+          text-base font-semibold text-gray-500 dark:text-gray-400
+          text-center">Select
+          Group</h5>
+        <ul class="py-2 font-medium" role="none">
+          <li *ngFor="let group of groups; let i= index">
+            <a (click)="setGroupIndex(i)"
+              class="block px-4 py-2 text-sm text-white hover:bg-gray-100
+              dark:text-white dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem">
+              <div class="inline-flex items-center uppercase cursor-pointer">
+                {{group.name}}
+              </div>
+            </a>
+          </li>
+        </ul>
+        <h5 id="groups-label" class="items-center mb-2
+          text-base font-semibold text-gray-500 dark:text-gray-400
+          text-center">Actions</h5>
+        <ul class="py-2 font-medium" role="none">
+          <li>
+            <a (click)="showNewGroupDrawer()"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+              dark:text-success dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem">
+              <div class="inline-flex items-center uppercase cursor-pointer">
+                New Group
+              </div>
+            </a>
+          </li>
+          <li>
+            <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
+          </li>
+          <li>
+            <a (click)="showManageGroupDrawer()"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+              dark:text-primary dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem">
+              <div class="inline-flex items-center uppercase cursor-pointer">
+                Manage Group
+              </div>
+            </a>
+          </li>
+          <li>
+            <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
+          </li>
+          <li>
+            <a (click)="showAddAccountDrawer()"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+              dark:text-warning dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem">
+              <div class="inline-flex items-center uppercase cursor-pointer">
+                Add Account
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- end groups drawer -->
+
+      <!-- new group drawer -->
+      <div id="new-group-drawer" class="fixed top-0 right-0 z-40
+        h-screen
+        p-4 overflow-y-auto transition-transform translate-x-full bg-white
+        w-80
+        dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+        <hr class="h-px mb-2 bg-gray-200 border-0 dark:bg-gray-700">
+        <h5 id="new-group-label" class="items-center mb-2
+          text-base font-semibold text-gray-500 dark:text-gray-400
+          text-center">New
+          Group</h5>
+        <form class="mb-6">
+          <div class="mb-6">
+            <label for="input-group-name" class="block mb-2 text-sm
+              font-medium
+              text-gray-900 dark:text-white">Group Name</label>
+            <input type="text" id="input-group-name" class="bg-gray-50 border
+              border-gray-300 text-gray-900 text-sm rounded-lg
+              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+              dark:text-white dark:focus:ring-blue-500
+              dark:focus:border-blue-500"
+              required>
+          </div>
+          <button type="button" class="text-white bg-blue-700
+            hover:bg-blue-800
+            w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
+            dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+            block" (click)="saveNewGroup()">Save</button>
+        </form>
+      </div>
+      <!-- end new group drawer -->
+
+      <!-- new group drawer -->
+      <div id="manage-group-drawer" class="fixed top-0 right-0 z-40
+        h-screen
+        p-4 overflow-y-auto transition-transform translate-x-full bg-white
+        w-80
+        dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+        <hr class="h-px mb-2 bg-gray-200 border-0 dark:bg-gray-700">
+        <h5 id="manage-group-label" class="items-center mb-2
+          text-base font-semibold text-gray-500 dark:text-gray-400
+          text-center">Manage
+          Group</h5>
+        <form class="mb-6">
+          <div class="mb-6">
+            <label for="input-manage-group-name" class="block mb-2 text-sm
+              font-medium
+              text-gray-900 dark:text-white">Group Name</label>
+            <input type="text" id="input-manage-group-name" class="bg-gray-50
+              border
+              border-gray-300 text-gray-900 text-sm rounded-lg
+              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+              dark:text-white dark:focus:ring-blue-500
+              dark:focus:border-blue-500"
+              required [value]="groupService.getActiveGroupName()">
+          </div>
+          <button type="button" class="text-white bg-blue-700
+            hover:bg-blue-800
+            w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
+            dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+            block" (click)="saveGroup()">Save</button>
+          <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700">
+          <button type="button" class="text-white bg-danger-700
+            hover:bg-danger-800
+            w-full focus:ring-4 focus:ring-danger-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-danger-600
+            dark:hover:bg-danger-700 focus:outline-none
+            dark:focus:ring-danger-800
+            block" (click)="deleteGroup()">Delete</button>
+        </form>
+      </div>
+      <!-- end new group drawer -->
+
+      <!-- add account drawer -->
+      <div id="add-account-drawer" class="fixed top-0 right-0 z-40
+        h-screen
+        p-4 overflow-y-auto transition-transform translate-x-full bg-white
+        w-80
+        dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+        <hr class="h-px mb-2 bg-gray-200 border-0 dark:bg-gray-700">
+        <h5 id="add-account-label" class="items-center mb-2
+          text-base font-semibold text-gray-500 dark:text-gray-400
+          text-center">Add
+          Account</h5>
+        <form class="mb-6">
+          <div class="mb-6">
+            <label for="input-add-account-name" class="block mb-2 text-sm
+              font-medium
+              text-gray-900 dark:text-white">Account Name</label>
+            <input type="text" id="input-add-account-name" class="bg-gray-50
+              border
+              border-gray-300 text-gray-900 text-sm rounded-lg
+              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+              dark:text-white dark:focus:ring-blue-500
+              dark:focus:border-blue-500"
+              required>
+          </div>
+          <div class="mb-6">
+            <label for="input-add-account-address" class="block mb-2 text-sm
+              font-medium
+              text-gray-900 dark:text-white">Address</label>
+            <input type="text" id="input-add-account-address"
+              class="bg-gray-50
+              border
+              border-gray-300 text-gray-900 text-sm rounded-lg
+              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+              dark:text-white dark:focus:ring-blue-500
+              dark:focus:border-blue-500"
+              required>
+          </div>
+          <button type="button" class="text-white bg-blue-700
+            hover:bg-blue-800
+            w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
+            dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+            block" (click)="saveAccount()">Save</button>
+        </form>
+      </div>
+      <!-- end add account drawer -->
+
+      <!-- manage account drawer -->
+      <div id="manage-account-drawer" class="fixed top-0 right-0 z-40
+        h-screen
+        p-4 overflow-y-auto transition-transform translate-x-full bg-white
+        w-80
+        dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+        <hr class="h-px mb-2 bg-gray-200 border-0 dark:bg-gray-700">
+        <h5 id="manage-account-label" class="items-center mb-2
+          text-base font-semibold text-gray-500 dark:text-gray-400
+          text-center">Manage
+          Account</h5>
+        <form class="mb-6">
+          <div class="mb-6">
+            <label for="input-manage-account-name" class="block mb-2 text-sm
+              font-medium
+              text-gray-900 dark:text-white">Account Name</label>
+            <input type="text" id="input-manage-account-name" class="bg-gray-50
+              border
+              border-gray-300 text-gray-900 text-sm rounded-lg
+              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+              dark:text-white dark:focus:ring-blue-500
+              dark:focus:border-blue-500"
+              required>
+          </div>
+          <div class="mb-6">
+            <label for="input-manage-account-name" class="block mb-2 text-sm
+              font-medium
+              text-gray-900 dark:text-white">Account Address</label>
+            <input type="text" id="input-manage-account-address" readonly
+              class="bg-gray-50
+              border
+              border-gray-300 text-gray-900 text-sm rounded-lg
+              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+              dark:text-white dark:focus:ring-blue-500
+              dark:focus:border-blue-500"
+              required>
+          </div>
+          <button type="button" class="text-white bg-blue-700
+            hover:bg-blue-800
+            w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
+            dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+            block" (click)="saveManageAccount()">Save</button>
+          <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700">
+          <button type="button" class="text-white bg-warning-700
+            hover:bg-warning-800
+            w-full focus:ring-4 focus:ring-warning-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-warning-600
+            dark:hover:bg-warning-700 focus:outline-none dark:focus:ring-warning-800
+            block" (click)="showCombatDrawer()" [disabled]="isLoading" [innerHTML]="isLoading ? 'Loading data...' : 'Combat Simulator'"></button>
+            <button type="button" class="text-white bg-success-700
+            hover:bg-success-800
+            w-full focus:ring-4 focus:ring-success-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-success-600
+            dark:hover:bg-success-700 focus:outline-none dark:focus:ring-success-800
+            block" (click)="showLogsDrawer()">Fight Logs</button>
+          <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700">
+          <button type="button" class="text-white bg-danger-700 bottom-0
+            hover:bg-danger-800
+            w-full focus:ring-4 focus:ring-danger-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-danger-600
+            dark:hover:bg-danger-700 focus:outline-none
+            dark:focus:ring-danger-800
+            block" (click)="deleteAccount()" [disabled]="isLoading">Delete</button>
+        </form>
+      </div>
+      <!-- end manage account drawer -->
+
+      <!-- combat drawer -->
+      <div id="combat-drawer" class="fixed top-0 right-0 z-40
+        h-screen
+        p-4 overflow-y-auto transition-transform translate-x-full bg-white
+        w-80
+        dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+        <hr class="h-px mb-2 bg-gray-200 border-0 dark:bg-gray-700">
+        <h5 id="combat-label" class="items-center mb-2
+          text-base font-semibold text-gray-500 dark:text-gray-400
+          text-center">Combat Simulator</h5>
+        <form class="mb-6">
+          <div class="mb-6">
+            <label for="input-character" class="block mb-2 text-sm
+              font-medium
+              text-warning-500">Character</label>
+              <select id="input-character" data-te-select-init data-te-select-filter="true" class="">
+                <option [value]="char.data.id" *ngFor="let char of accountChars[activeAccountIndex]">{{char.data.id}} | {{char.data.traitName}} | Lv. {{char.data.level + 1}} | {{char.stamina}}/200</option>
+              </select>
+          </div>
+          <div class="mb-6">
+            <label for="input-multiplier" class="block mb-2 text-sm
+              font-medium
+              text-warning-500">Stamina</label>
+              <select id="input-multiplier" data-te-select-init data-te-select-filter="true" class="">
+                <option value="1">40</option>
+                <option value="2">80</option>
+                <option value="3">120</option>
+                <option value="4">160</option>
+                <option value="5">200</option>
+              </select>
+          </div>
+          <button type="button" class="text-white bg-blue-700
+            hover:bg-blue-800
+            w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
+            text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
+            dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+            block" (click)="simulateCombat()" [disabled]="simulating">{{simulating ? 'Simulating...' : 'Simulate'}}</button>
+          <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700">
+        </form>
+      </div>
+      <!-- end combat drawer -->
+    </div>
+  </div>
+</div>
