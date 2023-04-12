@@ -35,10 +35,10 @@ export class NavbarComponent implements OnInit {
     const list = document.querySelectorAll('a.block.py-2.pl-3.pr-4.rounded')
     const e = document.querySelector(`a[routerLink="/tracker/${page}"]`)
     list.forEach(el => {
-      el.className = 'block py-2 pl-3 pr-4 rounded text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
+      el.className = 'block py-2 pl-3 pr-4 rounded text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-warning-700 md:p-0 dark:text-white md:dark:hover:text-warning-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
     })
     if (e) {
-      e.className = 'block py-2 pl-3 pr-4 text-white md:p-0 dark:text-white rounded bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500'
+      e.className = 'block py-2 pl-3 pr-4 text-white md:p-0 dark:text-white rounded bg-blue-700 md:bg-transparent md:text-warning-700 md:dark:text-warning-500'
     }
   }
 

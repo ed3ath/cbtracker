@@ -3,8 +3,8 @@
   <app-ads type="970x90"></app-ads>
 </div>
 <div class="px-2 pt-4">
-  <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm
-    2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+  <div class="p-4 bg-white border border-warning-200 rounded-lg shadow-sm
+    2xl:col-span-2 dark:border-warning-700 sm:p-6 dark:bg-gray-800">
     <!-- skeleton -->
     <div class="mb-6 animate-pulse" *ngIf="isLoading" role="status">
       <div class="h-8 bg-gray-200 rounded-full
@@ -17,8 +17,8 @@
       <div id="partners" *ngFor="let partner of partners; let
         i=index">
         <div
-          class="border border-2 border-gray-500 bg-white
-          dark:border-gray-600 dark:bg-gray-800">
+          class="border border-2 border-warning-500 bg-white
+          dark:border-warning-600 dark:bg-gray-800">
           <!-- header -->
           <h2 class="mb-0" [id]="'partner-head-' + i">
             <button
@@ -27,10 +27,10 @@
               transition [overflow-anchor:none] hover:z-[2] focus:z-[3]
               focus:outline-none dark:bg-gray-800 dark:text-white
               [&:not([data-te-collapse-collapsed])]:bg-white
-              [&:not([data-te-collapse-collapsed])]:text-primary
+              [&:not([data-te-collapse-collapsed])]:text-warning
               [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)]
               dark:[&:not([data-te-collapse-collapsed])]:bg-gray-800
-              dark:[&:not([data-te-collapse-collapsed])]:text-primary-400
+              dark:[&:not([data-te-collapse-collapsed])]:text-warning-400
               dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]"
               type="button"
               data-te-collapse-init
@@ -75,21 +75,21 @@
                 class="grid w-full grid-rows-2 grid-flow-col gap-2">
 
                 <div class="col-span-3 grid grid-cols-2 gap-4">
-                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                  <div class="row-span-2 border border-2 border-warning-500 dark:border-warning-200 p-4">
                     <p class="text-warning-500">SKILL/{{partner.symbol}}</p>
                     <span class="dark:text-white">{{formatSkillRatio(partner.ratio)}}</span>
                   </div>
-                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                  <div class="row-span-2 border border-2 border-warning-500 dark:border-warning-200 p-4">
                     <p class="text-warning-500">Multiplier</p>
                     <span class="dark:text-white">x{{utilService.formatNumber(partner.multiplier)}}</span>
                   </div>
                 </div>
                 <div class="col-span-3 grid grid-cols-2 gap-4">
-                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                  <div class="row-span-2 border border-2 border-warning-500 dark:border-warning-200 p-4">
                     <p class="text-warning-500">$/Unclaimed</p>
                     <span class="dark:text-white">{{moneyPerUnclaimed(partner.price, partner.ratio, partner.multiplier)}}</span>
                   </div>
-                  <div class="row-span-2 border border-2 border-gray-500 dark:border-gray-200 p-4">
+                  <div class="row-span-2 border border-2 border-warning-500 dark:border-warning-200 p-4">
                     <p class="text-warning-500">Distribution</p>
                     <span class="dark:text-white">{{partner.distribution}} days</span>
                   </div>
