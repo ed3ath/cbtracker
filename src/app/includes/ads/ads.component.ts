@@ -82,7 +82,7 @@ export class AdsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.banner) {
-      document.querySelectorAll('script[src*=cdn]').forEach((el) => {
+      document.querySelectorAll('script[src*=cdn.bmcdn4]').forEach((el) => {
         el.remove()
       })
       if (this.scriptAds) {
