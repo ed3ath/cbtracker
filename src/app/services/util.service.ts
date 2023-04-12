@@ -489,4 +489,11 @@ export class UtilService {
       default: return 'text-white dark:text-gray-500'
     }
   }
+
+  chanceColor(chance: number) {
+    if (chance >= 0.8) return 'text-green-700'
+    if (chance >= 0.6) return 'text-blue-700'
+    if (chance >= 0.5) return 'text-yellow-700'
+    return 'text-red-700'
+  }
 }

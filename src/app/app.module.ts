@@ -9,6 +9,7 @@ import { NavbarComponent } from './includes/navbar/navbar.component';
 import { SpinnerComponent } from './common/spinner/spinner.component';
 import { AccountsComponent } from './pages/accounts/accounts.component';
 import { TreasuryComponent } from './pages/treasury/treasury.component';
+import { OptionsComponent } from './pages/options/options.component';
 import { AdsComponent } from './includes/ads/ads.component';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { AdsComponent } from './includes/ads/ads.component';
     SpinnerComponent,
     AccountsComponent,
     TreasuryComponent,
+    OptionsComponent,
     AdsComponent
   ],
   imports: [

@@ -31,7 +31,6 @@ export class AccountsComponent implements OnInit, OnDestroy {
   activeAccountIndex = -1
   simulations: any[] = []
   readyToFight: any[] = []
-  fightMultiplier = 1
 
   simulating = false
 
@@ -460,15 +459,21 @@ export class AccountsComponent implements OnInit, OnDestroy {
             const stamina = accountCharInfo.results['charStamina'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]
             const rep = this.web3Service.activeChain !== 'AVAX' ? this.web3Service.multicallBnToNumber(accountCharInfo.results['charRep'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]) : 0
             const exp = this.web3Service.multicallBnToNumber(accountCharInfo.results['charExp'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0])
-            if (stamina > 40) {
+            if (stamina >= this.configService.fightMultiplier * 40) {
               this.readyToFight[index] += 1
             }
+            const nextLevel = this.utilService.getNextTargetExpLevel(data.level)
+            const nextExp = nextLevel.exp - (data.xp + exp)
+            const rank = this.repRequirements ? this.utilService.reputationToTier(this.utilService.getReputationTier(rep, this.repRequirements)) : 'PEASANT'
             return {
               data,
               power,
               stamina,
               rep,
-              exp
+              exp,
+              nextLevel,
+              nextExp,
+              rank
             }
           })
         })
@@ -543,7 +548,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
   }
 
   getMultiplierColor() {
-    switch (this.fightMultiplier) {
+    switch (this.configService.fightMultiplier) {
       case 5: return 'bg-danger text-white'
       case 4: return 'bg-warning text-white'
       case 3: return 'bg-primary text-white'

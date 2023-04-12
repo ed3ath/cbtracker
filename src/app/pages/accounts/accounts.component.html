@@ -263,29 +263,25 @@
                             <th scope="row" class="px-6 py-4 font-medium
                               text-gray-900 whitespace-nowrap
                               dark:text-white">
-                              {{char && char.data ? char.data.id : ''}}
+                              {{char.data.id}}
                             </th>
                             <td class="px-6 py-4">
-                              {{char && char.data ? char.data.level + 1 : '0'}}
+                              {{char.data.level + 1}}
+                            </td>
+                            <td class="px-6 py-4" [ngClass]="utilService.elementColor(char.data.traitName)">
+                              {{char.data.traitName}}
                             </td>
                             <td class="px-6 py-4">
-                              {{char && char.data ? char.data.traitName : ''}}
+                              {{char.power}}
                             </td>
                             <td class="px-6 py-4">
-                              {{char && char.power ? char.power : ''}}
+                              {{char.rank}}
                             </td>
                             <td class="px-6 py-4">
-                              {{(char && char.rep && repRequirements ?
-                              utilService.reputationToTier(utilService.getReputationTier(char.rep,
-                              repRequirements)) : 'PEASANT')}}
+                              {{char.exp}}
                             </td>
                             <td class="px-6 py-4">
-                              {{char && char.exp ? char.exp : ''}}
-                            </td>
-                            <td class="px-6 py-4">
-                              {{char && char.data ?
-                              utilService.getNextTargetExpLevel(char.data.level).level
-                              + 1 : ''}}
+                              {{char.nextLevel.level}} (<span [class]="char.nextExp <= 0 ? 'text-warning-500' : null">{{char.nextExp <= 0 ? 'Claim now' : char.nextExp.toLocaleString('en-US') + ' exp left'}}</span>)
                             </td>
                             <td class="px-6 py-4" [ngClass]="getStaminaColor(char.stamina)">
                               {{char && char.stamina ? char.stamina : ''}}
@@ -610,29 +606,29 @@
             ? 'Simulating...' : 'Simulate'}}</button>
           <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700">
           <div class="grid w-full grid-cols-3 grid-rows-2 mb-4" *ngFor="let data of simulations; let i=index">
-            <div class="border border-2 border-warning-500 text-center p-2">
-              <p class="text-warning-500">Enemy</p>
+            <div class="border border-2 border-gray-500 text-center p-2">
+              <p class="text-warning-600 border-b-2 border-gray-500">Enemy</p>
               <span class="text-gray-500 dark:text-white">#{{i + 1}}</span>
             </div>
-            <div class="border border-2 border-warning-500 text-center p-2">
-              <p class="text-warning-500">Power</p>
+            <div class="border border-2 border-gray-500 text-center p-2">
+              <p class="text-warning-600 border-b-2 border-gray-500">Power</p>
               <span class="text-gray-500 dark:text-white">{{data.power}}</span>
             </div>
-            <div class="border border-2 border-warning-500 text-center p-2">
-              <p class="text-warning">Element</p>
+            <div class="border border-2 border-gray-500 text-center p-2">
+              <p class="text-warning-600 border-b-2 border-gray-500">Element</p>
               <span [class]="utilService.elementColor(data.element)">{{data.element}}</span>
             </div>
-            <div class="border border-2 border-warning-500 text-center p-2">
-              <p class="text-warning-500">Exp</p>
+            <div class="border border-2 border-gray-500 text-center p-2">
+              <p class="text-warning-600 border-b-2 border-gray-500">Exp</p>
               <span class="text-gray-500 dark:text-white">{{data.exp}}</span>
             </div>
-            <div class="border border-2 border-warning-500 text-center p-2">
-              <p class="text-warning-500">Reward</p>
+            <div class="border border-2 border-gray-500 text-center p-2">
+              <p class="text-warning-600 border-b-2 border-gray-500">Reward</p>
               <span class="text-gray-500 dark:text-white">{{utilService.formatNumber(data.reward)}}</span>
             </div>
-            <div class="border border-2 border-warning-500 text-center p-2">
-              <p class="text-warning-500">Chance</p>
-              <span class="text-gray-500 dark:text-white">{{utilService.formatNumber(data.chance * 100, 2)}}</span>
+            <div class="border border-2 border-gray-500 text-center p-2">
+              <p class="text-warning-600 border-b-2 border-gray-500">Chance</p>
+              <span [class]="utilService.chanceColor(data.chance)">{{utilService.formatNumber(data.chance * 100, 2)}}</span>
             </div>
           </div>
         </form>
