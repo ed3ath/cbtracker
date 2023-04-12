@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 
 import { ScriptService } from 'src/app/services/script.service';
 import { ResponsiveService } from 'src/app/services/responsive.service';
@@ -8,7 +8,7 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
   templateUrl: './ads.component.html',
   styleUrls: ['./ads.component.css']
 })
-export class AdsComponent implements OnInit, AfterViewInit {
+export class AdsComponent implements OnInit, AfterViewInit, OnDestroy {
   zones = {
     '970x90': {
       desktop: '63780c0b3c0a9f5c7b6bdf3c',
@@ -78,6 +78,17 @@ export class AdsComponent implements OnInit, AfterViewInit {
         this.loadAds()
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    if (this.banner) {
+      document.querySelectorAll('script[src*=cdn]').forEach((el) => {
+        el.remove()
+      })
+      if (this.scriptAds) {
+        this.scriptAds.remove()
+      }
+    }
   }
 
   ngAfterViewInit() {

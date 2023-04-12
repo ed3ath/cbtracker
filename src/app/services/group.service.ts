@@ -47,6 +47,16 @@ export class GroupService {
     }
   }
 
+  importOldAccounts() {
+    const oldAccounts = JSON.parse(localStorage.getItem('accounts') || '[]')
+    const names = this.getAllAccountNames()
+    if (oldAccounts.length > 0 && this.getAllGroups().length > 0) {
+      oldAccounts.forEach((account: string, i: number) => {
+        this.addGroupAccount(names[i] ? names[i] : `Unnamed ${i+1}`, account)
+      })
+    }
+  }
+
   newGroup(name: string) {
     const groups = this.getAllGroups()
     if (groups.find((i: any) => i.name === name)) {

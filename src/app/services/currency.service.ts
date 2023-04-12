@@ -19,10 +19,12 @@ export class CurrencyService {
   constructor(private eventService: EventService) {
     this.currencies = currencies
     this.coingecko = coingecko
+    this.activeCurrency = this.getCurrency()
   }
 
   setActiveCurrency(currency: string) {
     this.activeCurrency = currencies.includes(currency) ? currency : 'usd'
+    this.saveCurrency(currency)
     this.eventService.publish('currency_changed', currency)
   }
 
@@ -34,5 +36,13 @@ export class CurrencyService {
       skill: res.data.cryptoblades[this.activeCurrency],
       valor: chain !== 'BNB' ? 0 : 0
     }
+  }
+
+  saveCurrency(currency: string) {
+    localStorage.setItem('currency', currency)
+  }
+
+  getCurrency() {
+    return localStorage.getItem('currency') || 'usd'
   }
 }
