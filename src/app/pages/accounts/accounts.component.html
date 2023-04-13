@@ -6,7 +6,7 @@
     2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
     <div class="mb-6">
 
-      <h2 class="text-2xl font-medium leading-tight text-center
+      <h2 id="group-menu-btn" class="text-2xl font-medium leading-tight text-center
         text-warning-500 cursor-pointer mb-4" (click)="showGroupsDrawer()">{{configService.getAllGroups().length
         > 0 ? groupService.getActiveGroupName() : 'No Group'}}</h2>
 
@@ -21,7 +21,7 @@
           <!-- header -->
           <h2 class="mb-0" [id]="'account-head-' + i">
             <div class="group relative flex w-full items-center">
-              <button
+              <button [id]="'account-head-' + i + '-btn'"
                 class="group relative flex w-full items-center
                 border-0 bg-white px-5 py-4 text-left text-base text-gray-800
                 transition [overflow-anchor:none] hover:z-[2] focus:z-[3]
@@ -60,7 +60,7 @@
                 : 0)}}
               </button>
               <span class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded" [ngClass]="getMultiplierColor()">{{readyToFight[i]}}</span>
-              <a class="ml-auto cursor-pointer px-4 text-md text-warning-500"
+              <a id="account-menu-btn" class="ml-auto cursor-pointer px-4 text-md text-warning-500"
                 (click)="showAccountDrawer(account)">...</a>`
             </div>
           </h2>
@@ -335,7 +335,7 @@
         <h5 id="groups-label" class="items-center mb-2
           text-base font-semibold text-gray-500 dark:text-gray-400
           text-center">Actions</h5>
-        <button type="button" class="text-white bg-warning-700
+        <button id="manage-group-btn" type="button" class="text-white bg-warning-700
           hover:bg-warning-800
           w-full focus:ring-4 focus:ring-warning-300 font-medium rounded-lg
           text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-warning-600
@@ -343,7 +343,7 @@
           dark:focus:ring-warning-800
           block" (click)="showManageGroupDrawer()"
           [disabled]="configService.getAllGroups().length === 0">Manage Group</button>
-        <button type="button" class="text-white bg-success-700
+        <button id="new-group-btn" type="button" class="text-white bg-success-700
           hover:bg-success-800
           w-full focus:ring-4 focus:ring-success-300 font-medium rounded-lg
           text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-success-600
@@ -352,7 +352,7 @@
           block" (click)="showNewGroupDrawer()">New Group</button>
 
         <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-        <button type="button" class="text-white bg-primary-700
+        <button id="add-account-btn" type="button" class="text-white bg-primary-700
           hover:bg-primary-800
           w-full focus:ring-4 focus:ring-primary-300 font-medium rounded-lg
           text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600
@@ -386,7 +386,7 @@
               dark:focus:border-blue-500"
               required>
           </div>
-          <button type="button" class="text-white bg-blue-700
+          <button id="save-new-group-btn" type="button" class="text-white bg-blue-700
             hover:bg-blue-800
             w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
             text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
@@ -396,7 +396,7 @@
       </div>
       <!-- end new group drawer -->
 
-      <!-- new group drawer -->
+      <!-- manage group drawer -->
       <div id="manage-group-drawer" class="fixed top-0 right-0 z-40
         h-screen
         p-4 overflow-y-auto transition-transform translate-x-full bg-white
@@ -421,7 +421,7 @@
               dark:focus:border-blue-500"
               required [value]="groupService.getActiveGroupName()">
           </div>
-          <button type="button" class="text-white bg-blue-700
+          <button id="save-manage-group-btn" type="button" class="text-white bg-blue-700
             hover:bg-blue-800
             w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
             text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
@@ -437,7 +437,7 @@
             block" (click)="deleteGroup()">Delete</button>
         </form>
       </div>
-      <!-- end new group drawer -->
+      <!-- end manage group drawer -->
 
       <!-- add account drawer -->
       <div id="add-account-drawer" class="fixed top-0 right-0 z-40
@@ -478,7 +478,7 @@
               dark:focus:border-blue-500"
               required>
           </div>
-          <button type="button" class="text-white bg-blue-700
+          <button id="save-new-account-btn" type="button" class="text-white bg-blue-700
             hover:bg-blue-800
             w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
             text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
@@ -527,14 +527,14 @@
               dark:focus:border-blue-500"
               required>
           </div>
-          <button type="button" class="text-white bg-blue-700
+          <button id="save-manage-account-btn" type="button" class="text-white bg-blue-700
             hover:bg-blue-800
             w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
             text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
             dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
             block" (click)="saveManageAccount()">Save</button>
           <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700">
-          <button type="button" class="text-white bg-warning-700
+          <button id="combat-simulate-btn" type="button" class="text-white bg-warning-700
             hover:bg-warning-800
             w-full focus:ring-4 focus:ring-warning-300 font-medium rounded-lg
             text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-warning-600
@@ -542,7 +542,7 @@
             dark:focus:ring-warning-800
             block" (click)="showCombatDrawer()" [disabled]="isLoading"
             [innerHTML]="isLoading ? 'Loading data...' : 'Combat Simulator'"></button>
-          <button type="button" class="text-white bg-success-700
+          <button id="fight-logs-btn" type="button" class="text-white bg-success-700
             hover:bg-success-800
             w-full focus:ring-4 focus:ring-success-300 font-medium rounded-lg
             text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-success-600

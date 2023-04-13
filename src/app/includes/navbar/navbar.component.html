@@ -50,6 +50,7 @@
       <!-- end theme switch -->
       <!-- version switch -->
       <button
+        id="version-toggle"
         type="button"
         (click)="toggleVersion()"
         class="inline-flex items-center font-medium justify-center px-4 py-2
@@ -60,6 +61,7 @@
       </button>
       <!-- version switch -->
       <button
+        id="currency-btn"
         type="button"
         (click)="showCurrencyDrawer()"
         class="inline-flex items-center font-medium justify-center px-4 py-2
@@ -69,6 +71,7 @@
         {{configService.currency}}
       </button>
       <button
+        id="chain-btn"
         type="button"
         (click)="showChainDrawer()"
         class="inline-flex items-center font-medium justify-center px-4 py-2
