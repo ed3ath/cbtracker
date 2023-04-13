@@ -21,9 +21,10 @@
             focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
             dark:text-white dark:focus:ring-primary-500
-            dark:focus:border-primary-500">
+            dark:focus:border-primary-500" (change)="setLanguage($event)">
             <option [value]="language.value" *ngFor="let language of languages;
-              let i=index">{{language.text}}</option>
+              let i=index" [selected]="language.value ===
+              configService.language">{{language.text}}</option>
           </select>
         </div>
         <div class="mb-6">
@@ -34,9 +35,10 @@
             focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
             dark:text-white dark:focus:ring-primary-500
-            dark:focus:border-primary-500">
+            dark:focus:border-primary-500" (change)="setTimezone($event)">
             <option [value]="timezone.utc[0]" *ngFor="let timezone of timezones;
-              let i=index">{{timezone.text}}</option>
+              let i=index" [selected]="configService.timezone ===
+              timezone.utc[0]">{{timezone.text}}</option>
           </select>
         </div>
       </div>
@@ -70,6 +72,7 @@
       </div>
     </div>
     <div class="col-span-2">
+      <!-- general config -->
       <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg
         shadow-sm 2xl:col-span-3 dark:border-gray-700 sm:p-6
         dark:bg-gray-800">
@@ -79,37 +82,46 @@
           <div class="col-span-2">
             <label for="first-name" class="block mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Chain</label>
-            <select id="settings-timezone" name="countries" class="bg-gray-50
+            <select id="select-chain" name="countries" class="bg-gray-50
               border-gray-300 text-gray-900 sm:text-sm rounded-lg
               focus:ring-primary-500 focus:border-primary-500 block w-full
               p-2.5
               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
               dark:text-white dark:focus:ring-primary-500
-              dark:focus:border-primary-500">
+              dark:focus:border-primary-500" (change)="setChain($event)">
+              <option [value]="chain" class="uppercase" *ngFor="let chain of
+                web3Service.chains" [selected]="chain === configService.chain">{{chain}}</option>
             </select>
           </div>
           <div class="col-span-2">
             <label for="last-name" class="block mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Currency</label>
-            <select id="settings-timezone" name="countries" class="bg-gray-50
+            <select id="select-currency" name="countries" class="bg-gray-50
               border-gray-300 text-gray-900 sm:text-sm rounded-lg
               focus:ring-primary-500 focus:border-primary-500 block w-full
               p-2.5
               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
               dark:text-white dark:focus:ring-primary-500
-              dark:focus:border-primary-500">
+              dark:focus:border-primary-500 uppercase"
+              (change)="setCurrency($event)">
+              <option [value]="currency" class="uppercase" *ngFor="let currency
+                of currencyService.currencies" [selected]="currency ===
+                configService.currency">{{currency}}</option>
             </select>
           </div>
           <div class="col-span-2">
             <label for="country" class="block mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Version</label>
-            <select id="settings-timezone" name="countries" class="bg-gray-50
+            <select id="select-version" name="countries" class="bg-gray-50
               border-gray-300 text-gray-900 sm:text-sm rounded-lg
               focus:ring-primary-500 focus:border-primary-500 block w-full
               p-2.5
               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
               dark:text-white dark:focus:ring-primary-500
-              dark:focus:border-primary-500">
+              dark:focus:border-primary-500"
+              (change)="configService.toggleVersion()">
+              <option [value]="version" class="uppercase" *ngFor="let version of
+                [1, 2]" [selected]="version === configService.version">V{{version}}</option>
             </select>
           </div>
           <div class="col-span-2">
@@ -120,9 +132,11 @@
                 <div class="text-base font-normal text-gray-500
                   dark:text-gray-400">Toggle light/dark theme</div>
               </div>
-              <label for="company-news" class="relative flex items-center
+              <label for="toggle-theme" class="relative flex items-center
                 cursor-pointer">
-                <input type="checkbox" id="company-news" class="sr-only">
+                <input type="checkbox" id="toggle-theme" class="sr-only"
+                  [checked]="configService.theme === 'dark'"
+                  (click)="themeService.toggleDarkMode()">
                 <span class="h-6 bg-gray-200 border border-gray-200
                   rounded-full
                   w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
@@ -137,9 +151,10 @@
                 <div class="text-base font-normal text-gray-500
                   dark:text-gray-400">Displays tokens/balance in local currency</div>
               </div>
-              <label for="company-news" class="relative flex items-center
+              <label for="toggle-currency" class="relative flex items-center
                 cursor-pointer">
-                <input type="checkbox" id="company-news" class="sr-only">
+                <input type="checkbox" id="toggle-currency" class="sr-only"
+                  [checked]="configService.display" (click)="toggleDisplay()">
                 <span class="h-6 bg-gray-200 border border-gray-200
                   rounded-full
                   w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
@@ -148,12 +163,35 @@
           </div>
         </div>
       </div>
+      <!-- end general config -->
 
+      <!-- rpc urls -->
+      <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg
+        shadow-sm 2xl:col-span-3 dark:border-gray-700 sm:p-6
+        dark:bg-gray-800">
+        <h3 class="mb-4 text-xl font-semibold dark:text-white">RPC Urls (Temporarily Free)</h3>
+        <div class="grid grid-cols-6 gap-6">
+
+          <div class="col-span-6 sm:col-span-3" *ngFor="let chain of web3Service.chains; let i=index">
+            <label [for]="'chain-rpc-' + chain" class="block mb-2 text-sm font-medium
+              text-gray-900 dark:text-white uppercase">{{chain}}</label>
+            <input type="text" [name]="'chain-rpc-' + chain" [id]="'chain-rpc-' + chain"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+              sm:text-sm rounded-lg focus:ring-primary-500
+              focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700
+              dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+              dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              required="" [value]="web3Service.getChainRpc(chain)" (change)="setRpcUrl($event)" [attr.data-chain]="chain">
+          </div>
+
+        </div>
+      </div>
+      <!-- end rpc urls -->
       <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg
         shadow-sm 2xl:col-span-3 dark:border-gray-700 sm:p-6
         dark:bg-gray-800">
         <h3 class="text-xl font-semibold dark:text-white">Alerts &amp;
-          Notifications</h3>
+          Notifications (Temporarily Free)</h3>
         <div class="divide-y divide-gray-200 dark:divide-gray-700">
           <!-- Item 1 -->
           <div class="flex items-center justify-between py-4">
@@ -164,9 +202,9 @@
                 dark:text-gray-400">Get CryptoBlades news, announcements, and
                 game updates</div>
             </div>
-            <label for="company-news" class="relative flex items-center
+            <label for="news-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="company-news" class="sr-only">
+              <input type="checkbox" id="news-alert" class="sr-only">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>
@@ -177,12 +215,12 @@
               <div class="text-lg font-semibold text-gray-900
                 dark:text-white">Account Activity</div>
               <div class="text-base font-normal text-gray-500
-                dark:text-gray-400">Get important notifications about account activities</div>
+                dark:text-gray-400">Get important notifications about account
+                activities</div>
             </div>
-            <label for="account-activity" class="relative flex items-center
+            <label for="account-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="account-activity" class="sr-only"
-                checked="">
+              <input type="checkbox" id="account-alert" class="sr-only">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>
@@ -195,9 +233,9 @@
               <div class="text-base font-normal text-gray-500
                 dark:text-gray-400">Get raid notifications</div>
             </div>
-            <label for="meetups" class="relative flex items-center
+            <label for="raid-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="meetups" class="sr-only" checked="">
+              <input type="checkbox" id="raid-alert" class="sr-only">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>
@@ -210,9 +248,9 @@
               <div class="text-base font-normal text-gray-500
                 dark:text-gray-400">Get notifications about price changes.</div>
             </div>
-            <label for="new-messages" class="relative flex items-center
+            <label for="price-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="new-messages" class="sr-only">
+              <input type="checkbox" id="price-alert" class="sr-only">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>

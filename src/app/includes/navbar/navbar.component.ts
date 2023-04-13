@@ -43,8 +43,8 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleVersion() {
-    this.utilService.toggleVersion()
-    this.eventService.publish('version_changed', this.utilService.version)
+    this.configService.toggleVersion()
+    this.eventService.publish('version_changed', this.configService.version)
   }
 
   setActivePage(page: string) {

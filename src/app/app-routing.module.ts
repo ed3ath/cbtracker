@@ -7,6 +7,8 @@ import { AccountsComponent } from './pages/accounts/accounts.component';
 import { TreasuryComponent } from './pages/treasury/treasury.component';
 import { OptionsComponent } from './pages/options/options.component';
 
+import { DeactivateGuard } from './guard/deactivate.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -23,7 +25,8 @@ const routes: Routes = [
       { path: 'treasury', component: TreasuryComponent },
       { path: 'options', component: OptionsComponent },
       { path: '*', redirectTo: '/home', pathMatch: 'full' },
-    ]
+    ],
+    canDeactivate: [DeactivateGuard]
   },
   {
     path: '*',

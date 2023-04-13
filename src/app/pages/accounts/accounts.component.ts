@@ -1,22 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { Drawer, DrawerInterface } from 'flowbite';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2'
 
 import { EventService } from 'src/app/services/event.service';
+import { VariableService } from 'src/app/services/variable.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { GroupService } from 'src/app/services/group.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
+
+import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.css']
 })
-export class AccountsComponent implements OnInit, OnDestroy {
+export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactivate  {
   isLoading = true
-  activeGroupIndex = 0
-  groups: any[] = []
   groupDrawer!: DrawerInterface
   newGroupDrawer!: DrawerInterface
   manageGroupDrawer!: DrawerInterface
@@ -24,35 +26,37 @@ export class AccountsComponent implements OnInit, OnDestroy {
   manageAccountDrawer!: DrawerInterface
   combatDrawer!: DrawerInterface
 
-  accountChars: any[] = []
-  accountBalances: any[] = []
-  repRequirements: any
-
   activeAccountIndex = -1
   simulations: any[] = []
-  readyToFight: any[] = []
 
   simulating = false
 
   constructor(
     private eventService: EventService,
+    public variableService: VariableService,
     public configService: ConfigService,
     public groupService: GroupService,
     public web3Service: Web3Service,
     public utilService: UtilService
-  ) {
+  ) {}
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    this.configService.firstLoad = true
+    this.configService.saveFirstLoad()
+    return true
   }
 
   default() {
-    this.repRequirements = null
-    this.accountBalances = this.groupService.getActiveGroupAccounts().map(() => ({
+    this.variableService.repRequirements = null
+    this.variableService.accountBalances = this.groupService.getActiveGroupAccounts().map(() => ({
       gas: 0,
       wallet: 0,
       unclaimed: 0,
       claimable: 0
     }))
-    this.readyToFight = this.groupService.getActiveGroupAccounts().map(() => 0)
-    this.accountChars = this.groupService.getActiveGroupAccounts().map(() => [])
+    this.variableService.readyToFight = this.groupService.getActiveGroupAccounts().map(() => 0)
+    this.variableService.accountChars = this.groupService.getActiveGroupAccounts().map(() => [])
   }
 
   ngOnInit(): void {
@@ -71,25 +75,32 @@ export class AccountsComponent implements OnInit, OnDestroy {
     this.manageAccountDrawer = new Drawer(document.getElementById('manage-account-drawer'), options)
     this.combatDrawer = new Drawer(document.getElementById('combat-drawer'), options)
 
+    this.eventService.subscribe('chain_changed', () => {
+      this.initAll()
+    })
+    this.eventService.subscribe('version_changed', () => {
+      this.initAll()
+    })
+
+    if (this.configService.firstLoad) {
+      this.configService.firstLoad = false
+      this.configService.saveFirstLoad()
+      this.initAll()
+    } else {
+      this.isLoading = false
+    }
+  }
+
+  initAll() {
+    this.isLoading = true
     this.loadGroups()
     this.default()
     this.loadAllData()
-
-    this.eventService.subscribe('chain_changed', () => {
-      this.isLoading = true
-      this.default()
-      this.loadAllData()
-    })
-    this.eventService.subscribe('version_changed', () => {
-      this.isLoading = true
-      this.default()
-      this.loadAllData()
-    })
   }
 
   loadAllData() {
     this.web3Service.getReputationLevelRequirements().then((repRequirements) => {
-      this.repRequirements = repRequirements
+      this.variableService.repRequirements = repRequirements
       this.loadData()
     });
   }
@@ -100,7 +111,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
   }
 
   loadGroups() {
-    this.groups = this.configService.getAllGroups()
+    this.variableService.groups = this.configService.getAllGroups()
   }
 
   showGroupsDrawer() {
@@ -225,7 +236,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       } else {
         this.groupService.addGroupAccount(elName.value, elAddress.value)
         this.loadGroups()
-        this.readyToFight = this.groupService.getActiveGroupAccounts().map(() => 0)
+        this.variableService.readyToFight = this.groupService.getActiveGroupAccounts().map(() => 0)
         this.addAccountDrawer.hide()
         this.loadData()
         Swal.fire('', `Account "${elName.value}" have been added.`, 'success')
@@ -271,14 +282,14 @@ export class AccountsComponent implements OnInit, OnDestroy {
           this.activeAccountIndex = -1
           const accountIndex = accounts.indexOf(elAddress.value)
 
-          const accountChars = [...this.accountChars]
-          const accountBalances = [...this.accountBalances]
+          const accountChars = [...this.variableService.accountChars]
+          const accountBalances = [...this.variableService.accountBalances]
 
           accountChars.splice(accountIndex, 1)
           accountBalances.splice(accountIndex, 1)
 
-          this.accountChars = accountChars
-          this.accountBalances = accountBalances
+          this.variableService.accountChars = accountChars
+          this.variableService.accountBalances = accountBalances
 
           this.loadGroups()
           this.manageAccountDrawer.hide()
@@ -301,8 +312,8 @@ export class AccountsComponent implements OnInit, OnDestroy {
   async loadData() {
     this.isLoading = true
     const time = new Date().getTime()
-    const multicallContract = this.web3Service.getMulticall(this.web3Service.activeChain)
-    const characterContract = this.web3Service.getContract(this.web3Service.activeChain, 'characters')
+    const multicallContract = this.web3Service.getMulticall(this.configService.chain)
+    const characterContract = this.web3Service.getContract(this.configService.chain, 'characters')
 
     const charRepId = await characterContract.NFTVAR_REPUTATION()
     const accounts = this.groupService.getActiveGroupAccounts()
@@ -310,7 +321,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       const accountData = await multicallContract.call([
         {
           reference: 'charCounts',
-          contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'characters'),
+          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
           abi: this.web3Service.abis['characters'],
           calls: accounts.map((address: string) => {
             return {
@@ -322,7 +333,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
         },
         {
           reference: 'weaponCounts',
-          contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'weapons'),
+          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'weapons'),
           abi: this.web3Service.abis['weapons'],
           calls: accounts.map((address: string) => {
             return {
@@ -336,7 +347,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       const charCountResults = accountData.results['charCounts'].callsReturnContext
       const weaponCountResults = accountData.results['weaponCounts'].callsReturnContext
 
-      this.accountBalances = await this.web3Service.getAccountBalances(accounts, this.utilService.version === 2)
+      this.variableService.accountBalances = await this.web3Service.getAccountBalances(accounts, this.configService.version === 2)
 
       const charCountCalls: any[] = [];
       const weaponCountCalls: any[] = [];
@@ -362,13 +373,13 @@ export class AccountsComponent implements OnInit, OnDestroy {
       const nftCallResults = await multicallContract.call([
         {
           reference: 'charIds',
-          contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'characters'),
+          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
           abi: this.web3Service.abis['characters'],
           calls: charCountCalls,
         },
         {
           reference: 'weaponIds',
-          contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'weapons'),
+          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'weapons'),
           abi: this.web3Service.abis['weapons'],
           calls: weaponCountCalls,
         }
@@ -416,34 +427,34 @@ export class AccountsComponent implements OnInit, OnDestroy {
         const allCall = [
           {
             reference: 'charData',
-            contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'characters'),
+            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
             abi: this.web3Service.abis['characters'],
             calls: charDataCalls
           },
           {
             reference: 'charPower',
-            contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'characters'),
+            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
             abi: this.web3Service.abis['characters'],
             calls: charPowerCall
           },
           {
             reference: 'charStamina',
-            contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'characters'),
+            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
             abi: this.web3Service.abis['characters'],
             calls: charStaminaCall
           },
           {
             reference: 'charExp',
-            contractAddress: this.web3Service.getConfigAddress(this.web3Service.activeChain, 'cryptoblades'),
+            contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'cryptoblades'),
             abi: this.web3Service.abis['cryptoblades'],
             calls: charsExpCall
           }
         ]
 
-        if (this.web3Service.activeChain !== 'AVAX') {
+        if (this.configService.chain !== 'AVAX') {
           allCall.push({
             reference: 'charRep',
-            contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, 'characters'),
+            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
             abi: this.web3Service.abis['characters'],
             calls: charsRepCall
           })
@@ -451,20 +462,20 @@ export class AccountsComponent implements OnInit, OnDestroy {
 
         const accountCharInfo = await multicallContract.call(allCall)
 
-        this.accountChars = accounts.map((address: string, index: number) => {
+        this.variableService.accountChars = accounts.map((address: string, index: number) => {
           const accountCharIds = this.getNftIds(nftCallResults.results['charIds']?.callsReturnContext, address)
           return accountCharIds.map((charId: string) => {
             const data = this.utilService.characterFromContract(charId, accountCharInfo.results['charData'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues)
             const power = this.web3Service.multicallBnToNumber(accountCharInfo.results['charPower'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0])
             const stamina = accountCharInfo.results['charStamina'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]
-            const rep = this.web3Service.activeChain !== 'AVAX' ? this.web3Service.multicallBnToNumber(accountCharInfo.results['charRep'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]) : 0
+            const rep = this.configService.chain !== 'AVAX' ? this.web3Service.multicallBnToNumber(accountCharInfo.results['charRep'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]) : 0
             const exp = this.web3Service.multicallBnToNumber(accountCharInfo.results['charExp'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0])
             if (stamina >= this.configService.fightMultiplier * 40) {
-              this.readyToFight[index] += 1
+              this.variableService.readyToFight[index] += 1
             }
             const nextLevel = this.utilService.getNextTargetExpLevel(data.level)
             const nextExp = nextLevel.exp - (data.xp + exp)
-            const rank = this.repRequirements ? this.utilService.reputationToTier(this.utilService.getReputationTier(rep, this.repRequirements)) : 'PEASANT'
+            const rank = this.variableService.repRequirements ? this.utilService.reputationToTier(this.utilService.getReputationTier(rep, this.variableService.repRequirements)) : 'PEASANT'
             return {
               data,
               power,
@@ -490,9 +501,9 @@ export class AccountsComponent implements OnInit, OnDestroy {
     if (elChar.value && elMultiplier.value) {
       this.simulating = true
       this.simulations = []
-      const cryptobladesContract = this.web3Service.getContract(this.web3Service.activeChain, 'cryptoblades')
-      const equipmentContract = this.web3Service.getContract(this.web3Service.activeChain, 'equipment')
-      const multicallContract = this.web3Service.getMulticall(this.web3Service.activeChain)
+      const cryptobladesContract = this.web3Service.getContract(this.configService.chain, 'cryptoblades')
+      const equipmentContract = this.web3Service.getContract(this.configService.chain, 'equipment')
+      const multicallContract = this.web3Service.getMulticall(this.configService.chain)
 
       const targets = await cryptobladesContract.getTargets(elChar.value);
       const baseExp = +(await cryptobladesContract.fightXpGain()).toString()
@@ -501,7 +512,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       const rewardResults = await multicallContract.call([
         {
           reference: 'rewards',
-          contractAddress: this.web3Service.getConfigAddress(this.web3Service.activeChain, 'cryptoblades'),
+          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'cryptoblades'),
           abi: this.web3Service.abis['cryptoblades'],
           calls: enemies.map((enemy: any) => ({
             reference: enemy.id,

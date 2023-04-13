@@ -104,8 +104,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   async loadData() {
     const time = new Date().getTime()
     this.isLoading = true
-    this.treasuryContract = this.web3Service.getContract(this.web3Service.activeChain, 'treasury')
-    this.multicallContract = this.web3Service.getMulticall(this.web3Service.activeChain)
+    this.treasuryContract = this.web3Service.getContract(this.configService.chain, 'treasury')
+    this.multicallContract = this.web3Service.getMulticall(this.configService.chain)
 
     if (this.accounts.length > 0) {
       const balanceCall = this.accounts.map((address: string) => {
@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       for (const nft of ['characters', 'weapons', 'shields']) {
         calls.push({
           reference: nft,
-          contractAddress: this.web3Service.getOtherContractAddress(this.web3Service.activeChain, nft),
+          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, nft),
           abi: this.web3Service.abis[nft],
           calls: balanceCall
         })
@@ -142,20 +142,24 @@ export class HomeComponent implements OnInit, OnDestroy {
       skill: 0,
       valor: 0
     }
-    this.prices = await this.currencyService.loadPrices(this.web3Service.activeChain)
+    this.prices = await this.currencyService.loadPrices(this.configService.chain)
     this.isLoadingCurrency = false
   }
 
   async loadBalances() {
     if (this.accounts.length > 0) {
       this.isLoading = true
-      const accountBalances: any = await this.web3Service.getAccountBalances(this.accounts, this.utilService.version === 2)
+      const accountBalances: any = await this.web3Service.getAccountBalances(this.accounts, this.configService.version === 2)
       this.balances.gas = accountBalances.reduce((a: number, b: any) => a + +b.gas, 0)
       this.balances.wallet = accountBalances.reduce((a: number, b: any) => a + b.wallet, 0)
       this.balances.unclaimed = accountBalances.reduce((a: number, b: any) => a + b.unclaimed, 0)
       this.balances.claimable = accountBalances.reduce((a: number, b: any) => a + b.claimable, 0)
       this.isLoading = false
     }
+  }
+
+  convertTokenToLocalCurrency(amount: number) {
+    //return amount * (this.configService.version === 1 ? this.prices.skill : this.prices.valor
   }
 
 }

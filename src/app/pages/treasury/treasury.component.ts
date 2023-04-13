@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
 
 import { Web3Service } from 'src/app/services/web3.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'app-treasury',
@@ -14,7 +15,8 @@ export class TreasuryComponent implements OnInit {
 
   constructor(
     public web3Service: Web3Service,
-    public utilService: UtilService
+    public utilService: UtilService,
+    public configService: ConfigService
   ) { }
 
   ngOnInit() {
@@ -23,7 +25,7 @@ export class TreasuryComponent implements OnInit {
 
   async loadPartners() {
     this.isLoading = true
-    const multicallContract = this.web3Service.getMulticall(this.web3Service.activeChain)
+    const multicallContract = this.web3Service.getMulticall(this.configService.chain)
     const partners = await this.web3Service.getPartners()
 
     if (partners) {
@@ -63,31 +65,31 @@ export class TreasuryComponent implements OnInit {
       const partnerResults = await multicallContract.call([
         {
           reference: 'data',
-          contractAddress: this.web3Service.getConfigAddress(this.web3Service.activeChain, 'treasury'),
+          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
           abi: this.web3Service.abis['treasury'],
           calls: dataCalls
         },
         {
           reference: 'multiplier',
-          contractAddress: this.web3Service.getConfigAddress(this.web3Service.activeChain, 'treasury'),
+          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
           abi: this.web3Service.abis['treasury'],
           calls: multiplierCalls
         },
         {
           reference: 'supply',
-          contractAddress: this.web3Service.getConfigAddress(this.web3Service.activeChain, 'treasury'),
+          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
           abi: this.web3Service.abis['treasury'],
           calls: supplyCalls
         },
         {
           reference: 'ratio',
-          contractAddress: this.web3Service.getConfigAddress(this.web3Service.activeChain, 'treasury'),
+          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
           abi: this.web3Service.abis['treasury'],
           calls: ratioCalls
         },
         {
           reference: 'distribution',
-          contractAddress: this.web3Service.getConfigAddress(this.web3Service.activeChain, 'treasury'),
+          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
           abi: this.web3Service.abis['treasury'],
           calls: distributionCalls
         }
@@ -124,6 +126,7 @@ export class TreasuryComponent implements OnInit {
   }
 
   moneyPerUnclaimed(price: number, ratio: number, multiplier: number) {
+    console.log(price)
     return this.utilService.currencyFormat((price /
         Number(this.formatSkillRatio(ratio))) *
         Number(multiplier)

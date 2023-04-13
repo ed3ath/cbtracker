@@ -5,6 +5,7 @@ import {
 } from 'ethereum-multicall';
 
 import { EventService } from './event.service';
+import { ConfigService } from './config.service';
 
 import appConfig from 'build/app-config.json'
 import otherAddress from 'build/other.json'
@@ -33,10 +34,12 @@ export class Web3Service {
 
   envName: any
   otherAddress: any
-  activeChain = 'BNB'
   multiplier = 0
 
-  constructor(private eventService: EventService) {
+  constructor(
+    private eventService: EventService,
+    private configService: ConfigService
+  ) {
     this.chains = appConfig.supportedChains
     this.chainInfo = appConfig.environments.production.chains
     this.abis = {
@@ -52,11 +55,11 @@ export class Web3Service {
     }
     this.envName = envName
     this.otherAddress = otherAddress
-    this.activeChain = this.getChain()
   }
 
   getChainRpc(chain: string) {
-    return this.chainInfo[chain].rpcUrls[0]
+    const localRpcUrls = this.configService.getRpcUrls()
+    return localRpcUrls[chain] ? localRpcUrls[chain] : this.chainInfo[chain].rpcUrls[0]
   }
 
   getConfigAddress(chain: string, contract: string) {
@@ -69,6 +72,19 @@ export class Web3Service {
 
   getOtherContractAddress(chain: string, nft: string): string {
     return this.otherAddress[chain][nft]
+  }
+
+  async getNetwork(url: string)  {
+    try {
+      const rpc = new ethers.providers.JsonRpcProvider(url)
+      return (await rpc.getNetwork()).chainId
+    } catch (e) {
+      return -1
+    }
+  }
+
+  getNetworkId(chain: string) {
+    return +this.chainInfo[chain].VUE_APP_NETWORK_ID
   }
 
   getContract(chain: string, contract: string): any {
@@ -104,10 +120,10 @@ export class Web3Service {
   }
 
   setActiveChain(chain: string) {
-    this.activeChain = chain
     this.eventService.publish('chain_changed', chain)
     this.multiplier = 0
-    this.saveChain(chain)
+    this.configService.chain = chain
+    this.configService.saveChain()
   }
 
   multicallBnToNumber(val: any, format = false) {
@@ -119,8 +135,8 @@ export class Web3Service {
   }
 
   async getReputationLevelRequirements() {
-    const conQuest = this.getContract(this.activeChain, 'quest')
-    const conMultiCall = this.getMulticall(this.activeChain)
+    const conQuest = this.getContract(this.configService.chain, 'quest')
+    const conMultiCall = this.getMulticall(this.configService.chain)
     const calls = [
       {
         reference: 'VAR_REPUTATION_LEVEL_2',
@@ -146,7 +162,7 @@ export class Web3Service {
     const result = await conMultiCall.call([
       {
         reference: 'repRequirements',
-        contractAddress: this.getConfigAddress(this.activeChain, 'quest'),
+        contractAddress: this.getConfigAddress(this.configService.chain, 'quest'),
         abi: this.abis['quest'],
         calls
       },
@@ -170,12 +186,12 @@ export class Web3Service {
   }
 
   async getPartners() {
-    const treasuryContract = this.getContract(this.activeChain, 'treasury')
-    const multicallContract = this.getMulticall(this.activeChain)
+    const treasuryContract = this.getContract(this.configService.chain, 'treasury')
+    const multicallContract = this.getMulticall(this.configService.chain)
     const partnerIds = await treasuryContract.getActivePartnerProjectsIds()
     const results = this.parseMulticallResult(await multicallContract.call([{
       reference: 'treasury',
-      contractAddress: this.getConfigAddress(this.activeChain, 'treasury'),
+      contractAddress: this.getConfigAddress(this.configService.chain, 'treasury'),
       abi: this.abis['treasury'],
       calls: partnerIds.map((partnerId: any) => {
         return {
@@ -196,8 +212,8 @@ export class Web3Service {
   }
 
   async getAccountBalances(accounts: string[], isGen2: boolean) {
-    const treasuryContract = this.getContract(this.activeChain, 'treasury')
-    const multicallContract = this.getMulticall(this.activeChain)
+    const treasuryContract = this.getContract(this.configService.chain, 'treasury')
+    const multicallContract = this.getMulticall(this.configService.chain)
     const balanceCall = accounts.map((address: string) => {
       return {
         reference: address,
@@ -206,7 +222,7 @@ export class Web3Service {
       }
     })
     const unclaimedCall = accounts.map((address: string) => {
-      if (isGen2 && this.activeChain === 'BNB') {
+      if (isGen2 && this.configService.chain === 'BNB') {
         return {
           reference: address,
           methodName: 'userVars',
@@ -222,21 +238,20 @@ export class Web3Service {
     const calls = [];
     calls.push({
       reference: 'wallet',
-      contractAddress: this.getConfigAddress(this.activeChain, isGen2 && this.activeChain === 'BNB' ? 'valor' : 'skill'),
+      contractAddress: this.getConfigAddress(this.configService.chain, isGen2 && this.configService.chain === 'BNB' ? 'valor' : 'skill'),
       abi: this.abis['token'],
       calls: balanceCall
     })
     calls.push({
       reference: 'unclaimed',
-      contractAddress: this.getConfigAddress(this.activeChain, 'cryptoblades'),
+      contractAddress: this.getConfigAddress(this.configService.chain, 'cryptoblades'),
       abi: this.abis['cryptoblades'],
       calls: unclaimedCall
     })
     const gasBalance = await Promise.all(accounts.map(async (address: string) => {
-      return ethers.utils.formatEther((await this.getBalance(this.activeChain, address)).toString())
+      return ethers.utils.formatEther((await this.getBalance(this.configService.chain, address)).toString())
     }))
     const results = await multicallContract.call(calls)
-    const parsedResults = this.parseMulticallResult(results)
 
     const partners = await this.getPartners()
     if (partners) {
@@ -261,13 +276,5 @@ export class Web3Service {
         claimable
       }
     })
-  }
-
-  saveChain(chain: string) {
-    localStorage.setItem('chain', chain)
-  }
-
-  getChain() {
-    return localStorage.getItem('chain') || 'BNB'
   }
 }
