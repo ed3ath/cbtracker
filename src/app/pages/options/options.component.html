@@ -45,9 +45,9 @@
       <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg
         shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6
         dark:bg-gray-800">
-        <h3 class="mb-4 text-xl font-semibold dark:text-white">Misc.</h3>
+        <h3 class="mb-4 text-xl font-semibold dark:text-white">Data</h3>
         <div class="grid grid-cols-6 gap-6">
-          <div class="col-span-3">
+          <div class="col-start-1 col-span-6 sm:col-span-3">
             <label for="settings-language" class="block mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Import Data</label>
             <div class="mt-6">
@@ -58,7 +58,8 @@
                 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Import</button>
             </div>
           </div>
-          <div class="col-span-3"> <label for="settings-language" class="block
+          <div class="col-start-1 col-span-6 sm:col-span-3">
+            <label for="settings-language" class="block
               mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Export Data</label>
             <div class="mt-6">
@@ -79,7 +80,7 @@
         <h3 class="mb-4 text-xl font-semibold dark:text-white">General
           Configurations</h3>
         <div class="grid grid-cols-6 gap-6">
-          <div class="col-span-2">
+          <div class="col-start-1 col-span-6 sm:col-span-2">
             <label for="first-name" class="block mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Chain</label>
             <select id="select-chain" name="countries" class="bg-gray-50
@@ -93,7 +94,7 @@
                 web3Service.chains" [selected]="chain === configService.chain">{{chain}}</option>
             </select>
           </div>
-          <div class="col-span-2">
+          <div class="col-start-1 col-span-6 sm:col-span-2">
             <label for="last-name" class="block mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Currency</label>
             <select id="select-currency" name="countries" class="bg-gray-50
@@ -109,7 +110,7 @@
                 configService.currency">{{currency}}</option>
             </select>
           </div>
-          <div class="col-span-2">
+          <div class="col-start-1 col-span-6 sm:col-span-2">
             <label for="country" class="block mb-2 text-sm font-medium
               text-gray-900 dark:text-white">Version</label>
             <select id="select-version" name="countries" class="bg-gray-50
@@ -124,7 +125,7 @@
                 [1, 2]" [selected]="version === configService.version">V{{version}}</option>
             </select>
           </div>
-          <div class="col-span-2">
+          <div class="col-start-1 col-span-6 sm:col-span-2">
             <div class="flex items-center justify-between py-4">
               <div class="flex flex-col flex-grow">
                 <div class="text-lg font-semibold text-gray-900
@@ -143,7 +144,7 @@
               </label>
             </div>
           </div>
-          <div class="col-span-2">
+          <div class="col-start-1 col-span-6 sm:col-span-2">
             <div class="flex items-center justify-between py-4">
               <div class="flex flex-col flex-grow">
                 <div class="text-lg font-semibold text-gray-900
@@ -169,19 +170,24 @@
       <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg
         shadow-sm 2xl:col-span-3 dark:border-gray-700 sm:p-6
         dark:bg-gray-800">
-        <h3 class="mb-4 text-xl font-semibold dark:text-white">RPC Urls (Temporarily Free)</h3>
+        <h3 class="mb-4 text-xl font-semibold dark:text-white">RPC Urls
+          (Temporarily Free)</h3>
         <div class="grid grid-cols-6 gap-6">
 
-          <div class="col-span-6 sm:col-span-3" *ngFor="let chain of web3Service.chains; let i=index">
-            <label [for]="'chain-rpc-' + chain" class="block mb-2 text-sm font-medium
+          <div class="col-span-6 sm:col-span-3" *ngFor="let chain of
+            web3Service.chains; let i=index">
+            <label [for]="'chain-rpc-' + chain" class="block mb-2 text-sm
+              font-medium
               text-gray-900 dark:text-white uppercase">{{chain}}</label>
-            <input type="text" [name]="'chain-rpc-' + chain" [id]="'chain-rpc-' + chain"
+            <input type="text" [name]="'chain-rpc-' + chain" [id]="'chain-rpc-'
+              + chain"
               class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
               sm:text-sm rounded-lg focus:ring-primary-500
               focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700
               dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
               dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              required="" [value]="web3Service.getChainRpc(chain)" (change)="setRpcUrl($event)" [attr.data-chain]="chain">
+              required="" [value]="web3Service.getChainRpc(chain)"
+              (change)="setRpcUrl($event)" [attr.data-chain]="chain">
           </div>
 
         </div>
