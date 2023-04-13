@@ -96,7 +96,7 @@
           Currency</h5>
         <ul class="py-2 font-medium" role="none">
           <li *ngFor="let currency of currencyService.currencies">
-            <a (click)="setCurrency(currency)"
+            <a [id]="'select-currency-' + currency" (click)="setCurrency(currency)"
               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
               dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
               role="menuitem">
@@ -121,7 +121,7 @@
           Chain</h5>
         <ul class="py-2 font-medium" role="none">
           <li *ngFor="let chain of web3Service.chains">
-            <a (click)="setChain(chain)"
+            <a [id]="'select-chain-' + chain" (click)="setChain(chain)"
               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
               dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
               role="menuitem">

@@ -1,7 +1,7 @@
 <div class="pt4 flex justify-center items-center text-center">
   <app-ads></app-ads>
 </div>
-<div class="px-2 pt-4">
+<div class="px-2 pt-4 mb-16">
   <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm
     2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
     <div class="mb-6">
@@ -60,7 +60,7 @@
                 : 0)}}
               </button>
               <span class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded" [ngClass]="getMultiplierColor()">{{readyToFight[i]}}</span>
-              <a id="account-menu-btn" class="ml-auto cursor-pointer px-4 text-md text-warning-500"
+              <a [id]="'account-menu-btn-' + i" class="ml-auto cursor-pointer px-4 text-md text-warning-500"
                 (click)="showAccountDrawer(account)">...</a>`
             </div>
           </h2>
@@ -296,7 +296,7 @@
                 <!-- ads -->
                 <div class="w-full row-span-2 p-2 flex items-center
                   justify-center">
-                  <!--<app-ads type="250x250"></app-ads>-->
+                  <app-ads provider="flyersquare" type="250x250"></app-ads>
                 </div>
                 <!-- end ads -->
               </div>

@@ -1,6 +1,9 @@
-<div style='text-align: center;overflow: auto;'>
+<div style='text-align: center;overflow: auto;' *ngIf="provider === 'coinserom'">
   <iframe src='//ads.coinserom.com/publisher?adsunit=41'
     style='width:728px;height:90px;border:0px;padding:0;background-color:
     transparent;overflow: auto;'>
   </iframe>
 </div>
+<div class="xc449bad4854773ff" [attr.data-placement]="zone.id"
+  [style]="'width:'+zone.width + 'px;height:' +zone.height +
+  'px;display: inline-block;margin: 0 auto'" *ngIf="provider === 'flyersquare'"></div>
