@@ -271,7 +271,9 @@ export class Web3Service {
     if (partners) {
       let rewardId = partners.find((i: any) => i.symbol === 'SKILL')?.id
       price = partners.find((i: any) => i.symbol === 'SKILL')?.price
-      ratio = price / Number(this.utilService.formatSkillRatio(partners.find((i: any) => i.symbol === 'VALOR')?.ratio))
+      if (partners.find((i: any) => i.symbol === 'VALOR')) {
+        ratio = price / Number(this.utilService.formatSkillRatio(partners.find((i: any) => i.symbol === 'VALOR')?.ratio))
+      }
       if (isGen2 && this.configService.chain === 'BNB') {
         rewardId = partners.find((i: any) => i.symbol === 'VALOR')?.id
       }
