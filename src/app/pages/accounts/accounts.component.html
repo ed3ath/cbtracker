@@ -57,7 +57,7 @@
                 ({{utilService.addressPrivacy(account)}}) | Unc:
                 {{utilService.formatNumber(variableService.accountBalances
                 && variableService.accountBalances[i] ? variableService.accountBalances[i].unclaimed
-                : 0)}}
+                : 0)}}{{configService.display ? ' (' + utilService.convertTokenToLocalCurrency(variableService.accountBalances[i].unclaimed, configService.version, prices, configService.currency) + ')' : ''}}
               </button>
               <span class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded" [ngClass]="getMultiplierColor()">{{variableService.readyToFight[i]}}</span>
               <a [id]="'account-menu-btn-' + i" class="ml-auto cursor-pointer px-4 text-md text-warning-500"
@@ -81,7 +81,7 @@
                   <div role="status" class="animate-pulse w-full"
                     *ngIf="isLoading">
                     <div
-                      class="grid w-full grid-cols-2 gap-4 xl:grid-cols-4">
+                      class="grid w-full grid-cols-1 lg:grid-cols-2 gap-4 xl:grid-cols-4">
                       <div class="items-center p-2 border border-2
                         border-warning-500 rounded">
                         <div class="flex items-center mb-2">
@@ -127,7 +127,7 @@
                   <!-- end skeleton -->
                   <div class="w-full" *ngIf="!isLoading">
                     <div
-                      class="grid w-full grid-cols-2 gap-4 xl:grid-cols-4">
+                      class="grid w-full grid-cols-1 lg:grid-cols-2 gap-4 xl:grid-cols-4">
                       <div class="items-center p-2 border border-2
                         border-warning-500 rounded">
                         <div class="flex items-center mb-2">
@@ -137,7 +137,7 @@
                             dark:text-white
                             text-right">{{utilService.formatNumber(variableService.accountBalances
                             && variableService.accountBalances[i] ? variableService.accountBalances[i].gas :
-                            0)}}</div>
+                            0)}}{{configService.display ? ' (' + utilService.convertGasToLocalCurrency(variableService.accountBalances[i].gas, prices, configService.currency) + ')' : ''}}</div>
                         </div>
                       </div>
                       <div class="items-center p-2 border border-2
@@ -149,7 +149,7 @@
                             dark:text-white
                             text-right">{{utilService.formatNumber(variableService.accountBalances
                             && variableService.accountBalances[i] ? variableService.accountBalances[i].unclaimed
-                            : 0)}}</div>
+                            : 0)}}{{configService.display ? ' (' + utilService.convertTokenToLocalCurrency(variableService.accountBalances[i].unclaimed, configService.version, prices, configService.currency) + ')' : ''}}</div>
                         </div>
                       </div>
                       <div class="items-center p-2 border border-2
@@ -161,7 +161,7 @@
                             dark:text-white
                             text-right">{{utilService.formatNumber(variableService.accountBalances
                             && variableService.accountBalances[i] ? variableService.accountBalances[i].claimable
-                            : 0)}}</div>
+                            : 0)}}{{configService.display ? ' (' + utilService.convertTokenToLocalCurrency(variableService.accountBalances[i].claimable, configService.version, prices, configService.currency) + ')' : ''}}</div>
                         </div>
                       </div>
                       <div class="items-center p-2 border border-2
@@ -173,7 +173,7 @@
                             dark:text-white
                             text-right">{{utilService.formatNumber(variableService.accountBalances
                             && variableService.accountBalances[i] ? variableService.accountBalances[i].wallet :
-                            0)}}</div>
+                            0)}}{{configService.display ? ' (' + utilService.convertTokenToLocalCurrency(variableService.accountBalances[i].wallet, configService.version, prices, configService.currency) + ')' : ''}}</div>
                         </div>
                       </div>
                     </div>

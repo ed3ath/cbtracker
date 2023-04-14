@@ -36,7 +36,7 @@ export class CurrencyService {
     return {
       gas: res.data[this.coingecko[chain]][this.configService.currency],
       skill: res.data.cryptoblades[this.configService.currency],
-      valor: chain !== 'BNB' ? 0 : 0
+      valor: res.data.cryptoblades[this.configService.currency]
     }
   }
 }

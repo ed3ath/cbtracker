@@ -6,6 +6,7 @@ import {
 
 import { EventService } from './event.service';
 import { ConfigService } from './config.service';
+import { UtilService } from './util.service';
 
 import appConfig from 'build/app-config.json'
 import otherAddress from 'build/other.json'
@@ -38,7 +39,8 @@ export class Web3Service {
 
   constructor(
     private eventService: EventService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private utilService: UtilService
   ) {
     this.chains = appConfig.supportedChains
     this.chainInfo = appConfig.environments.production.chains
@@ -74,7 +76,7 @@ export class Web3Service {
     return this.otherAddress[chain][nft]
   }
 
-  async getNetwork(url: string)  {
+  async getNetwork(url: string) {
     try {
       const rpc = new ethers.providers.JsonRpcProvider(url)
       return (await rpc.getNetwork()).chainId
@@ -193,21 +195,31 @@ export class Web3Service {
       reference: 'treasury',
       contractAddress: this.getConfigAddress(this.configService.chain, 'treasury'),
       abi: this.abis['treasury'],
-      calls: partnerIds.map((partnerId: any) => {
-        return {
-          reference: partnerId,
-          methodName: 'partneredProjects',
-          methodParameters: [partnerId]
-        }
-      })
+      calls: partnerIds.map((partnerId: any) => ({
+        reference: partnerId,
+        methodName: 'partneredProjects',
+        methodParameters: [partnerId]
+      }))
+    },
+    {
+      reference: 'ratio',
+      contractAddress: this.getConfigAddress(this.configService.chain, 'treasury'),
+      abi: this.abis['treasury'],
+      calls: partnerIds.map((partnerId: any) => ({
+        reference: partnerId,
+        methodName: 'getSkillToPartnerRatio',
+        methodParameters: [partnerId]
+      }))
     }]))
-    return results.treasury?.map((partner: any) => ({
+
+    return results.treasury?.map((partner: any, i: number) => ({
       id: this.multicallBnToNumber(partner[0]),
       name: partner[1],
       symbol: partner[2],
       address: partner[3],
       supply: this.multicallBnToNumber(partner[4]),
-      price: this.multicallBnToNumber(partner[5], true)
+      price: this.multicallBnToNumber(partner[5], true),
+      ratio: this.multicallBnToNumber(results.ratio[i][0], true)
     }))
   }
 
@@ -226,7 +238,7 @@ export class Web3Service {
         return {
           reference: address,
           methodName: 'userVars',
-          methodParameters: [address, 1011]
+          methodParameters: [address, 10011]
         }
       }
       return {
@@ -254,9 +266,13 @@ export class Web3Service {
     const results = await multicallContract.call(calls)
 
     const partners = await this.getPartners()
+    let ratio = 0
+    let price = 0
     if (partners) {
-      let rewardId = partners.find((i: any) => i.symbol === 'SKILL')?.id;
-      if (isGen2) {
+      let rewardId = partners.find((i: any) => i.symbol === 'SKILL')?.id
+      price = partners.find((i: any) => i.symbol === 'SKILL')?.price
+      ratio = price / Number(this.utilService.formatSkillRatio(partners.find((i: any) => i.symbol === 'VALOR')?.ratio))
+      if (isGen2 && this.configService.chain === 'BNB') {
         rewardId = partners.find((i: any) => i.symbol === 'VALOR')?.id
       }
       if (rewardId) {
@@ -264,17 +280,19 @@ export class Web3Service {
       }
     }
 
-    return accounts.map((address: string, i: number) => {
-      const gas = gasBalance[i]
-      const unclaimed = this.multicallBnToNumber(results.results['unclaimed'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
-      const wallet = this.multicallBnToNumber(results.results['wallet'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
-      const claimable = unclaimed * this.multiplier
-      return {
-        gas,
-        unclaimed,
-        wallet,
-        claimable
-      }
-    })
+    return {
+      ratio, balances: accounts.map((address: string, i: number) => {
+        const gas = gasBalance[i]
+        const unclaimed = this.multicallBnToNumber(results.results['unclaimed'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
+        const wallet = this.multicallBnToNumber(results.results['wallet'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
+        const claimable = unclaimed * this.multiplier
+        return {
+          gas,
+          unclaimed,
+          wallet,
+          claimable
+        }
+      })
+    }
   }
 }

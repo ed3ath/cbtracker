@@ -18,9 +18,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoading = true
   isLoadingCurrency = true
   isGen2 = false
-  treasuryContract: any
   multicallContract: any
   accounts: any[] = []
+  partners: any[] = []
 
   nfts = {
     characters: 0,
@@ -43,12 +43,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
-     public web3Service: Web3Service,
-     public groupService: GroupService,
-     public configService: ConfigService,
-     public currencyService: CurrencyService,
-     public utilService: UtilService
-     ) {
+    public web3Service: Web3Service,
+    public groupService: GroupService,
+    public configService: ConfigService,
+    public currencyService: CurrencyService,
+    public utilService: UtilService
+  ) {
     this.accounts = this.groupService.getActiveGroupAccounts()
   }
 
@@ -104,7 +104,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   async loadData() {
     const time = new Date().getTime()
     this.isLoading = true
-    this.treasuryContract = this.web3Service.getContract(this.configService.chain, 'treasury')
     this.multicallContract = this.web3Service.getMulticall(this.configService.chain)
 
     if (this.accounts.length > 0) {
@@ -149,17 +148,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   async loadBalances() {
     if (this.accounts.length > 0) {
       this.isLoading = true
-      const accountBalances: any = await this.web3Service.getAccountBalances(this.accounts, this.configService.version === 2)
-      this.balances.gas = accountBalances.reduce((a: number, b: any) => a + +b.gas, 0)
-      this.balances.wallet = accountBalances.reduce((a: number, b: any) => a + b.wallet, 0)
-      this.balances.unclaimed = accountBalances.reduce((a: number, b: any) => a + b.unclaimed, 0)
-      this.balances.claimable = accountBalances.reduce((a: number, b: any) => a + b.claimable, 0)
+      const { ratio, balances }: any = await this.web3Service.getAccountBalances(this.accounts, this.configService.version === 2)
+      this.prices.valor = ratio * this.prices.valor
+      this.balances.gas = balances.reduce((a: number, b: any) => a + +b.gas, 0)
+      this.balances.wallet = balances.reduce((a: number, b: any) => a + b.wallet, 0)
+      this.balances.unclaimed = balances.reduce((a: number, b: any) => a + b.unclaimed, 0)
+      this.balances.claimable = balances.reduce((a: number, b: any) => a + b.claimable, 0)
       this.isLoading = false
     }
-  }
-
-  convertTokenToLocalCurrency(amount: number) {
-    //return amount * (this.configService.version === 1 ? this.prices.skill : this.prices.valor
   }
 
 }

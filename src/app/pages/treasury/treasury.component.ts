@@ -114,23 +114,4 @@ export class TreasuryComponent implements OnInit {
     this.isLoading = false
   }
 
-  formatSkillRatio(value: any) {
-    return this.utilService
-      .toBn(1)
-      .dividedBy(
-        this.utilService
-          .toBn(this.utilService.toEther(value).toString())
-          .dividedBy(this.utilService.toBn(2).exponentiatedBy(64))
-      )
-      .toFixed(4);
-  }
-
-  moneyPerUnclaimed(price: number, ratio: number, multiplier: number) {
-    console.log(price)
-    return this.utilService.currencyFormat((price /
-        Number(this.formatSkillRatio(ratio))) *
-        Number(multiplier)
-    );
-  }
-
 }

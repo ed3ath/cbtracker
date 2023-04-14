@@ -466,7 +466,7 @@ export class UtilService {
   }
 
   elementColor(element: string) {
-    switch(element) {
+    switch (element) {
       case 'Fire': return 'text-red-800'
       case 'Earth': return 'text-green-900'
       case 'Lightning': return 'text-yellow-400'
@@ -480,5 +480,50 @@ export class UtilService {
     if (chance >= 0.6) return 'text-blue-700'
     if (chance >= 0.5) return 'text-yellow-700'
     return 'text-red-700'
+  }
+
+  formatSkillRatio(value: any) {
+    return this.toBn(1)
+      .dividedBy(
+        this.toBn(this.toEther(value).toString())
+          .dividedBy(this.toBn(2).exponentiatedBy(64))
+      )
+      .toFixed(4);
+  }
+
+  moneyPerUnclaimed(price: number, ratio: number, multiplier: number) {
+    return this.currencyFormat((price /
+      Number(this.formatSkillRatio(ratio))) *
+      Number(multiplier)
+    );
+  }
+
+  convertTokenToLocalCurrency(amount: number, version: number, prices: any, currency: string) {
+    return this.currencyFormat(amount * (version === 1 ? prices.skill : prices.valor), currency)
+  }
+
+  convertGasToLocalCurrency(amount: number, prices: any, currency: string) {
+    return this.currencyFormat(amount * prices.gas, currency)
+  }
+
+  parseOrNot(str: any) {
+    try {
+      return JSON.parse(str)
+    } catch (e) {
+      return str
+    }
+  }
+
+  isValidJson(str: any) {
+    try {
+      JSON.parse(str)
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+
+  isArrayOrObject(vr: any) {
+    return ((!!vr) && (vr.constructor === Array)) || ((!!vr) && (vr.constructor === Object))
   }
 }

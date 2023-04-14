@@ -9,6 +9,7 @@ import { ConfigService } from 'src/app/services/config.service';
 import { GroupService } from 'src/app/services/group.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
+import { CurrencyService } from 'src/app/services/currency.service';
 
 import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
@@ -30,6 +31,12 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   simulations: any[] = []
 
   simulating = false
+  prices: any = {
+    gas: 0,
+    skill: 0,
+    valor: 0
+  }
+  isLoadingCurrency = false
 
   constructor(
     private eventService: EventService,
@@ -37,8 +44,11 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     public configService: ConfigService,
     public groupService: GroupService,
     public web3Service: Web3Service,
-    public utilService: UtilService
-  ) {}
+    public utilService: UtilService,
+    public currencyService: CurrencyService
+  ) {
+    this.loadPrices()
+  }
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
@@ -347,7 +357,9 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
       const charCountResults = accountData.results['charCounts'].callsReturnContext
       const weaponCountResults = accountData.results['weaponCounts'].callsReturnContext
 
-      this.variableService.accountBalances = await this.web3Service.getAccountBalances(accounts, this.configService.version === 2)
+      const { ratio, balances } = await this.web3Service.getAccountBalances(accounts, this.configService.version === 2)
+      this.variableService.accountBalances = balances
+      this.prices.valor = ratio * this.prices.valor
 
       const charCountCalls: any[] = [];
       const weaponCountCalls: any[] = [];
@@ -492,6 +504,17 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
       console.log('Took', new Date().getTime() - time, 'ms to load.')
       this.isLoading = false
     }
+  }
+
+  async loadPrices() {
+    this.isLoadingCurrency = true
+    this.prices = {
+      gas: 0,
+      skill: 0,
+      valor: 0
+    }
+    this.prices = await this.currencyService.loadPrices(this.configService.chain)
+    this.isLoadingCurrency = false
   }
 
   async simulateCombat() {
