@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const fetch = require('node-fetch');
+const axios = require('axios');
 const ethers = require('ethers')
 
 const ABIS = [
@@ -26,12 +26,12 @@ const task = async () => {
   fs.ensureDirSync('./build/contracts');
 
   await Promise.all(ABIS.map(async (name) => {
-    const abi = await fetch(`${ABI_URL}/${name}.json`).then((res) => res.json());
+    const abi = await axios.get(`${ABI_URL}/${name}.json`).then((res) => res.data);
 
     await fs.writeJson(`./build/contracts/${name}.json`, abi);
   }));
 
-  const ts = await fetch(`${ABI_URL}/abi-interfaces.ts`).then((res) => res.text());
+  const ts = await axios.get(`${ABI_URL}/abi-interfaces.ts`).then((res) => res.data.toString());
   await fs.writeFile(`./build/abi-interfaces.ts`, ts);
 
 };
@@ -39,9 +39,10 @@ const task = async () => {
 const appConfigTask = async () => {
   fs.ensureDirSync('./');
 
-  const appConfig = await fetch(`${APP_CONFIG_URL}/${APP_CONFIG}.json`).then((res) => res.text());
+  const appConfig = await axios.get(`${APP_CONFIG_URL}/${APP_CONFIG}.json`).then((res) => res.data);
 
-  await fs.writeFile(`./build/app-config.json`, appConfig);
+
+  await fs.writeJson(`./build/app-config.json`, appConfig);
 };
 
 const nftRetrievalTask = async () => {
