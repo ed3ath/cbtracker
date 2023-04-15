@@ -8,9 +8,7 @@ import { ConfigService } from './config.service';
 })
 export class GroupService {
 
-  constructor(private configService: ConfigService) {
-
-  }
+  constructor(private configService: ConfigService) { }
 
   getGroupName(index: number) {
     const groups = this.configService.getAllGroups()
@@ -46,7 +44,7 @@ export class GroupService {
     const names = this.configService.getAllAccountNames()
     if (oldAccounts.length > 0 && this.configService.getAllGroups().length > 0) {
       oldAccounts.forEach((account: string, i: number) => {
-        this.addGroupAccount(names[i] ? names[i] : `Unnamed ${i+1}`, account)
+        this.addGroupAccount(names[i] ? names[i] : `Unnamed ${i + 1}`, account)
       })
     }
   }
@@ -93,7 +91,7 @@ export class GroupService {
 
   setAccountName(name: string, address: string) {
     const names = this.configService.getAllAccountNames()
-    this.setAccountNames({...names, [address]: name})
+    this.setAccountNames({ ...names, [address]: name })
   }
 
   deleteActiveGroup() {

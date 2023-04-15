@@ -28,6 +28,7 @@ export class ThemeService implements OnDestroy {
       );
     }
   }
+
   private toggleClassOnThemeChanges(): void {
     this.theme$.pipe(takeUntil(this._destroyed$)).subscribe((theme) => {
       if (theme === 'dark') {
