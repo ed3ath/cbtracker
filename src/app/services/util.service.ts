@@ -130,11 +130,11 @@ export class UtilService {
   }
 
   fromEther(value: any) {
-    return ethers.utils.formatEther(BigInt(Math.trunc(value)).toString()).toString()
+    return ethers.formatEther(BigInt(Math.trunc(value)).toString()).toString()
   }
 
   toEther(value: any) {
-    return ethers.utils.parseEther(value.toFixed(18))
+    return ethers.parseEther(value.toFixed(18))
   }
 
   sumOfStakedSkill(...arr: any[]) {
@@ -525,5 +525,17 @@ export class UtilService {
 
   isArrayOrObject(vr: any) {
     return ((!!vr) && (vr.constructor === Array)) || ((!!vr) && (vr.constructor === Object))
+  }
+
+  bnToNumber(val: any) {
+    return +BigInt(val).toString()
+  }
+
+  splitArray(arr: any[], len: number, size = 2) {
+    const newArr = []
+    for (let i = 0; i < len; i++) {
+      newArr.push(arr.splice(0, arr.length >= size ? size : arr.length))
+    }
+    return newArr
   }
 }

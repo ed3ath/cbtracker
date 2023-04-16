@@ -25,82 +25,25 @@ export class TreasuryComponent implements OnInit {
 
   async loadPartners() {
     this.isLoading = true
-    const multicallContract = this.web3Service.getMulticall(this.configService.chain)
     const partners = await this.web3Service.getPartners()
 
     if (partners) {
-      const dataCalls: any[] = []
-      const multiplierCalls: any[] = []
-      const supplyCalls: any[] = []
-      const ratioCalls: any[] = []
-      const distributionCalls: any[] = []
+      const calls = [
+      ...this.web3Service.getCalls('getProjectData', partners.map((partner: any) => partner.id)),
+      ...this.web3Service.getCalls('getProjectMultiplier', partners.map((partner: any) => partner.id)),
+      ...this.web3Service.getCalls('getRemainingPartnerTokenSupply', partners.map((partner: any) => partner.id)),
+      ...this.web3Service.getCalls('projectDistributionTime', partners.map((partner: any) => partner.id))
+      ]
 
-      partners.forEach((partner: any) => {
-        dataCalls.push({
-          reference: partner.id,
-          methodName: 'getProjectData',
-          methodParameters: [partner.id]
-        })
-        multiplierCalls.push({
-          reference: partner.id,
-          methodName: 'getProjectMultiplier',
-          methodParameters: [partner.id]
-        })
-        supplyCalls.push({
-          reference: partner.id,
-          methodName: 'getRemainingPartnerTokenSupply',
-          methodParameters: [partner.id]
-        })
-        ratioCalls.push({
-          reference: partner.id,
-          methodName: 'getSkillToPartnerRatio',
-          methodParameters: [partner.id]
-        })
-        distributionCalls.push({
-          reference: partner.id,
-          methodName: 'projectDistributionTime',
-          methodParameters: [partner.id]
-        })
-      })
-      const partnerResults = await multicallContract.call([
-        {
-          reference: 'data',
-          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
-          abi: this.web3Service.abis['treasury'],
-          calls: dataCalls
-        },
-        {
-          reference: 'multiplier',
-          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
-          abi: this.web3Service.abis['treasury'],
-          calls: multiplierCalls
-        },
-        {
-          reference: 'supply',
-          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
-          abi: this.web3Service.abis['treasury'],
-          calls: supplyCalls
-        },
-        {
-          reference: 'ratio',
-          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
-          abi: this.web3Service.abis['treasury'],
-          calls: ratioCalls
-        },
-        {
-          reference: 'distribution',
-          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'treasury'),
-          abi: this.web3Service.abis['treasury'],
-          calls: distributionCalls
-        }
-      ])
+      const results = await this.web3Service.multicall(this.configService.chain, this.web3Service.getBatchCallData(this.web3Service.abis['treasury'], this.web3Service.getConfigAddress(this.configService.chain, 'treasury'), calls))
+      const [projData, projMultiplier, projSupply, projDistribution ] = this.utilService.splitArray(results, 4, partners.length)
 
-      this.partners = partners.map((partner: any) => {
-        const data = partnerResults.results['data'].callsReturnContext.find((i: any) => i.reference === partner.id)?.returnValues
-        const multiplier = this.web3Service.multicallBnToNumber(partnerResults.results['multiplier'].callsReturnContext.find((i: any) => i.reference === partner.id)?.returnValues[0], true)
-        const remaining = this.web3Service.multicallBnToNumber(partnerResults.results['supply'].callsReturnContext.find((i: any) => i.reference === partner.id)?.returnValues[0], true)
-        const ratio = this.web3Service.multicallBnToNumber(partnerResults.results['ratio'].callsReturnContext.find((i: any) => i.reference === partner.id)?.returnValues[0], true)
-        const distribution = this.web3Service.multicallBnToNumber(partnerResults.results['distribution'].callsReturnContext.find((i: any) => i.reference === partner.id)?.returnValues[0])
+      this.partners = partners.map((partner: any, i: number) => {
+        const data = projData[i]
+        const multiplier = this.utilService.fromEther(this.utilService.bnToNumber(projMultiplier[i]))
+        const remaining = +this.utilService.fromEther(this.utilService.bnToNumber(projSupply[i]))
+        const ratio = partner.ratio
+        const distribution = this.utilService.bnToNumber(projDistribution[i])
         return {
           ...partner,
           data,

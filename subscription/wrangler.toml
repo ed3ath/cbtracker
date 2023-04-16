@@ -1,0 +1,17 @@
+name = "subscription"
+main = "src/index.ts"
+compatibility_date = "2023-04-15"
+usage_model = "bundled"
+env = {}
+
+[triggers]
+crons = [ ]
+
+[[d1_databases]]
+binding = "CB_TRACKER"
+database_name = "cbtracker"
+database_id = "56aa4579-3afa-4e85-a5fa-d5bba1bd5c33"
+
+[vars]
+RPC_URL = "https://rpc.testnet.fantom.network"
+CONTRACT = "0xF5c5149c35B6F425c35819F77647266125871C1A"

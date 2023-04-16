@@ -61,7 +61,7 @@ export class OptionsComponent implements OnInit {
     if (event.target) {
       const rpcUrl = event.target.value
       const chain = event.target.dataset.chain
-      this.web3Service.getNetwork(rpcUrl).then((networkId: number) => {
+      this.web3Service.getNetwork(rpcUrl).then((networkId: any) => {
         if (networkId > 0) {
           if (networkId === this.web3Service.getNetworkId(chain)) {
             this.configService.rpcUrls = { ...this.configService.rpcUrls, [chain]: rpcUrl }

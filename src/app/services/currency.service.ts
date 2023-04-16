@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import axios from 'axios'
-import * as ethers from 'ethers'
 
 import currencies from 'src/app/data/currencies.json';
 import coingecko from 'src/app/data/coingecko.json'

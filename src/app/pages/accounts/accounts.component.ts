@@ -110,8 +110,9 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
 
   loadAllData() {
     this.web3Service.getReputationLevelRequirements().then((repRequirements) => {
-      this.variableService.repRequirements = repRequirements
-      this.loadData()
+      console.log(repRequirements)
+      // this.variableService.repRequirements = repRequirements
+      // this.loadData()
     });
   }
 
@@ -328,7 +329,7 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     const charRepId = await characterContract.NFTVAR_REPUTATION()
     const accounts = this.groupService.getActiveGroupAccounts()
     if (accounts.length > 0) {
-      const accountData = await multicallContract.call([
+      /*const accountData = await multicallContract.call([
         {
           reference: 'charCounts',
           contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
@@ -500,7 +501,7 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
             }
           })
         })
-      }
+      } */
       console.log('Took', new Date().getTime() - time, 'ms to load.')
       this.isLoading = false
     }
@@ -522,7 +523,7 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     const elMultiplier = (<HTMLInputElement>document.getElementById('input-multiplier'))
 
     if (elChar.value && elMultiplier.value) {
-      this.simulating = true
+      /*this.simulating = true
       this.simulations = []
       const cryptobladesContract = this.web3Service.getContract(this.configService.chain, 'cryptoblades')
       const equipmentContract = this.web3Service.getContract(this.configService.chain, 'equipment')
@@ -558,7 +559,7 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
           power,
           element
         }
-      })
+      })*/
       this.simulating = false
     }
   }

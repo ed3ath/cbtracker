@@ -25,9 +25,10 @@
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "ethereum-multicall": "^2.16.1",
-    "ethers": "5.7.1",
+    "ethers": "6.2.0",
     "flowbite": "^1.6.4",
     "https-browserify": "^1.0.0",
+    "lodash": "^4.17.21",
     "os-browserify": "^0.3.0",
     "process": "^0.11.10",
     "rxjs": "~7.5.0",
@@ -45,11 +46,14 @@
     "@angular-devkit/build-angular": "~13.3.9",
     "@angular/cli": "~13.3.9",
     "@angular/compiler-cli": "~13.3.0",
+    "@cloudflare/workers-types": "^4.20230404.0",
     "@types/fs-extra": "^11.0.1",
     "@types/jasmine": "~3.10.0",
+    "@types/lodash": "^4.14.194",
     "@types/node": "^12.11.1",
     "@types/seedrandom": "^3.0.5",
     "autoprefixer": "^10.4.14",
+    "better-sqlite3": "8.0.1",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -58,7 +62,8 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1",
-    "typescript": "~4.6.2"
+    "typescript": "~4.6.2",
+    "wrangler": "^2.15.1"
   },
   "engines": {
     "node": ">=16.18.1"

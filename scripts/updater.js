@@ -16,25 +16,11 @@ const ABIS = [
   'EquipmentManager',
   'SkillStakingRewardsUpgradeable',
   'SkillStakingRewardsUpgradeable90',
-  'SkillStakingRewardsUpgradeable180'
+  'SkillStakingRewardsUpgradeable180',
 ];
 const APP_CONFIG_URL = 'https://config.cryptoblades.io';
 const ABI_URL = 'https://app.cryptoblades.io/abi'
 const APP_CONFIG = 'app-config';
-
-const task = async () => {
-  fs.ensureDirSync('./build/contracts');
-
-  await Promise.all(ABIS.map(async (name) => {
-    const abi = await axios.get(`${ABI_URL}/${name}.json`).then((res) => res.data);
-
-    await fs.writeJson(`./build/contracts/${name}.json`, abi);
-  }));
-
-  const ts = await axios.get(`${ABI_URL}/abi-interfaces.ts`).then((res) => res.data.toString());
-  await fs.writeFile(`./build/abi-interfaces.ts`, ts);
-
-};
 
 const appConfigTask = async () => {
   fs.ensureDirSync('./');
@@ -74,5 +60,5 @@ const nftRetrievalTask = async () => {
   await fs.writeFile(`./build/other.json`, JSON.stringify(other));
 }
 
-task().then(() => appConfigTask().then(() => nftRetrievalTask()))
+appConfigTask().then(() => nftRetrievalTask())
 
