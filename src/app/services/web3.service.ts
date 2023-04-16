@@ -63,16 +63,16 @@ export class Web3Service {
     return localRpcUrls[chain] ? localRpcUrls[chain] : this.chainInfo[chain].rpcUrls[0]
   }
 
-  getConfigAddress(chain: string, contract: string) {
-    return this.chainInfo[chain][this.envName[contract]]
+  getConfigAddress(contract: string) {
+    return this.chainInfo[this.configService.chain][this.envName[contract]]
   }
 
-  getProvider(chain: string) {
-    return new ethers.JsonRpcProvider(this.getChainRpc(chain))
+  getProvider() {
+    return new ethers.JsonRpcProvider(this.getChainRpc(this.configService.chain))
   }
 
-  getOtherContractAddress(chain: string, nft: string): string {
-    return this.otherAddress[chain][nft]
+  getOtherContractAddress(nft: string): string {
+    return this.otherAddress[this.configService.chain][nft]
   }
 
   async getNetwork(url: string) {
@@ -88,24 +88,24 @@ export class Web3Service {
     return +this.chainInfo[chain].VUE_APP_NETWORK_ID
   }
 
-  getContract(chain: string, contract: string): any {
-    return new ethers.Contract(other.includes(contract) ? this.getOtherContractAddress(chain, contract) : this.getConfigAddress(chain, contract), this.abis[contract], this.getProvider(chain))
+  getContract(contract: string): any {
+    return new ethers.Contract(other.includes(contract) ? this.getOtherContractAddress(contract) : this.getConfigAddress(contract), this.abis[contract], this.getProvider())
   }
 
-  getChainSymbol(chain: string) {
-    return this.chainInfo[chain].currencySymbol
+  getChainSymbol() {
+    return this.chainInfo[this.configService.chain].currencySymbol
   }
 
-  async getBalance(chain: string, address: string) {
-    return await this.getProvider(chain).getBalance(address)
+  async getBalance(address: string) {
+    return await this.getProvider().getBalance(address)
   }
 
-  getMulticallAddress(chain: string) {
-    return this.chainInfo[chain].VUE_APP_MULTICALL_CONTRACT_ADDRESS
+  getMulticallAddress() {
+    return this.chainInfo[this.configService.chain].VUE_APP_MULTICALL_CONTRACT_ADDRESS
   }
 
-  getMulticall(chain: string) {
-    return new ethers.Contract(this.getMulticallAddress(chain), multicallAbi, this.getProvider(chain))
+  getMulticall() {
+    return new ethers.Contract(this.getMulticallAddress(), multicallAbi, this.getProvider())
   }
 
   getCalls(name: string, params: any) {
@@ -126,14 +126,13 @@ export class Web3Service {
     }
   }
 
-  async multicall(chain: string, { abi, calls }: any) {
-    const itf = new ethers.Interface(abi)
-    const contract = this.getMulticall(chain)
 
+  async multicall({ abi, calls }: any) {
+    const itf = new ethers.Interface(abi)
+    const contract = this.getMulticall()
     const calldata = calls.map((call: any) => [
       call.address.toLowerCase(),
       itf.encodeFunctionData(call.name, call.params)
-      // coder.encode(_.find(abi, (i: any) => i.name === call.name).inputs, call.params),
     ])
     const { returnData } = await contract['aggregate'](calldata)
     return returnData.map((data: any, i: number) => itf.decodeFunctionResult(calls[i].name, data))
@@ -163,7 +162,7 @@ export class Web3Service {
   }
 
   async getReputationLevelRequirements() {
-    const conQuest = this.getContract(this.configService.chain, 'quest')
+    const conQuest = this.getContract('quest')
     const calls = [
       {
         name: 'VAR_REPUTATION_LEVEL_2',
@@ -182,7 +181,7 @@ export class Web3Service {
         params: []
       }
     ]
-    const result = await this.multicall(this.configService.chain, this.getBatchCallData(this.abis['quest'], this.getConfigAddress(this.configService.chain, 'quest'), calls))
+    const result = await this.multicall(this.getBatchCallData(this.abis['quest'], this.getConfigAddress('quest'), calls))
     const [VAR_REPUTATION_LEVEL_2, VAR_REPUTATION_LEVEL_3, VAR_REPUTATION_LEVEL_4, VAR_REPUTATION_LEVEL_5] = result.map((i: any) => this.utilService.bnToNumber(i))
 
     const requirementsRaw = (await conQuest.getVars([
@@ -201,7 +200,7 @@ export class Web3Service {
   }
 
   async getPartners() {
-    const treasuryContract = this.getContract(this.configService.chain, 'treasury')
+    const treasuryContract = this.getContract('treasury')
     const partnerIds = await treasuryContract.getActivePartnerProjectsIds()
 
     const calls = [
@@ -209,7 +208,7 @@ export class Web3Service {
       ...this.getCalls('getSkillToPartnerRatio', partnerIds.map((id: number | string) => this.utilService.bnToNumber(id)))
     ]
 
-    const results = await this.multicall(this.configService.chain, this.getBatchCallData(this.abis['treasury'], this.getConfigAddress(this.configService.chain, 'treasury'), calls))
+    const results = await this.multicall(this.getBatchCallData(this.abis['treasury'], this.getConfigAddress('treasury'), calls))
     const [partner, ratio] = this.utilService.splitArray(results, 2, partnerIds.length)
 
     return partnerIds.map((id: any, i: number) => ({
@@ -224,47 +223,12 @@ export class Web3Service {
   }
 
   async getAccountBalances(accounts: string[], isGen2: boolean) {
-    const treasuryContract = this.getContract(this.configService.chain, 'treasury')
-    const multicallContract = this.getMulticall(this.configService.chain)
-    /*const balanceCall = accounts.map((address: string) => {
-      return {
-        reference: address,
-        methodName: 'balanceOf',
-        methodParameters: [address]
-      }
-    })
-    const unclaimedCall = accounts.map((address: string) => {
-      if (isGen2 && this.configService.chain === 'BNB') {
-        return {
-          reference: address,
-          methodName: 'userVars',
-          methodParameters: [address, 10011]
-        }
-      }
-      return {
-        reference: address,
-        methodName: 'getTokenRewardsFor',
-        methodParameters: [address]
-      }
-    })
-    const calls = [];
-    calls.push({
-      reference: 'wallet',
-      contractAddress: this.getConfigAddress(this.configService.chain, isGen2 && this.configService.chain === 'BNB' ? 'valor' : 'skill'),
-      abi: this.abis['token'],
-      calls: balanceCall
-    })
-    calls.push({
-      reference: 'unclaimed',
-      contractAddress: this.getConfigAddress(this.configService.chain, 'cryptoblades'),
-      abi: this.abis['cryptoblades'],
-      calls: unclaimedCall
-    })
+    const treasuryContract = this.getContract('treasury')
+    const walletBalances = await this.multicall(this.getBatchCallData(this.abis['token'], this.getConfigAddress(isGen2 && this.configService.chain === 'BNB' ? 'valor' : 'skill'), this.getCalls('balanceOf', accounts)))
+    const unclaimedBalances = await this.multicall(this.getBatchCallData(this.abis['cryptoblades'], this.getConfigAddress('cryptoblades'), isGen2 && this.configService.chain === 'BNB' ? this.getCalls('userVars', accounts.map((account: string) => [account, 10011])) : this.getCalls('getTokenRewardsFor', accounts)))
     const gasBalance = await Promise.all(accounts.map(async (address: string) => {
-      return ethers.formatEther((await this.getBalance(this.configService.chain, address)).toString())
+      return ethers.formatEther((await this.getBalance(address)).toString())
     }))
-    const results = await multicallContract.call(calls)
-
     const partners = await this.getPartners()
     let ratio = 0
     let price = 0
@@ -285,8 +249,8 @@ export class Web3Service {
     return {
       ratio, balances: accounts.map((address: string, i: number) => {
         const gas = gasBalance[i]
-        const unclaimed = this.multicallBnToNumber(results.results['unclaimed'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
-        const wallet = this.multicallBnToNumber(results.results['wallet'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
+        const unclaimed = +this.utilService.fromEther(this.utilService.bnToNumber(walletBalances[i]))
+        const wallet = +this.utilService.fromEther(this.utilService.bnToNumber(unclaimedBalances[i]))
         const claimable = unclaimed * this.multiplier
         return {
           gas,
@@ -295,6 +259,6 @@ export class Web3Service {
           claimable
         }
       })
-    }*/
+    }
   }
 }

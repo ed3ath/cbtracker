@@ -18,7 +18,7 @@ import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.css']
 })
-export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactivate  {
+export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
   isLoading = true
   groupDrawer!: DrawerInterface
   newGroupDrawer!: DrawerInterface
@@ -110,9 +110,8 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
 
   loadAllData() {
     this.web3Service.getReputationLevelRequirements().then((repRequirements) => {
-      console.log(repRequirements)
-      // this.variableService.repRequirements = repRequirements
-      // this.loadData()
+      this.variableService.repRequirements = repRequirements
+      this.loadData()
     });
   }
 
@@ -322,173 +321,67 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
 
   async loadData() {
     this.isLoading = true
+    this.default()
     const time = new Date().getTime()
-    const multicallContract = this.web3Service.getMulticall(this.configService.chain)
-    const characterContract = this.web3Service.getContract(this.configService.chain, 'characters')
+    const characterContract = this.web3Service.getContract('characters')
+    const cryptobladesContract = this.web3Service.getContract('cryptoblades')
 
     const charRepId = await characterContract.NFTVAR_REPUTATION()
     const accounts = this.groupService.getActiveGroupAccounts()
     if (accounts.length > 0) {
-      /*const accountData = await multicallContract.call([
-        {
-          reference: 'charCounts',
-          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
-          abi: this.web3Service.abis['characters'],
-          calls: accounts.map((address: string) => {
-            return {
-              reference: address,
-              methodName: 'balanceOf',
-              methodParameters: [address]
-            }
-          })
-        },
-        {
-          reference: 'weaponCounts',
-          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'weapons'),
-          abi: this.web3Service.abis['weapons'],
-          calls: accounts.map((address: string) => {
-            return {
-              reference: address,
-              methodName: 'balanceOf',
-              methodParameters: [address]
-            }
-          })
-        }
-      ])
-      const charCountResults = accountData.results['charCounts'].callsReturnContext
-      const weaponCountResults = accountData.results['weaponCounts'].callsReturnContext
-
       const { ratio, balances } = await this.web3Service.getAccountBalances(accounts, this.configService.version === 2)
       this.variableService.accountBalances = balances
       this.prices.valor = ratio * this.prices.valor
 
-      const charCountCalls: any[] = [];
-      const weaponCountCalls: any[] = [];
-      accounts.forEach((address: string) => {
-        [...Array(this.parseAccountResult(charCountResults, address)).keys()].map((i: any) => {
-          charCountCalls.push({
-            reference: address,
-            methodName: 'tokenOfOwnerByIndex',
-            methodParameters: [address, i]
-          })
-        })
-      })
-      accounts.forEach((address: string) => {
-        [...Array(this.parseAccountResult(weaponCountResults, address)).keys()].map((i: any) => {
-          weaponCountCalls.push({
-            reference: address,
-            methodName: 'tokenOfOwnerByIndex',
-            methodParameters: [address, i]
-          })
-        })
-      })
+      const accountData = await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['characters'], this.web3Service.getOtherContractAddress('characters'), accounts.map((account: string) => ({
+        name: 'balanceOf',
+        params: [account]
+      }))))
 
-      const nftCallResults = await multicallContract.call([
-        {
-          reference: 'charIds',
-          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
-          abi: this.web3Service.abis['characters'],
-          calls: charCountCalls,
-        },
-        {
-          reference: 'weaponIds',
-          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'weapons'),
-          abi: this.web3Service.abis['weapons'],
-          calls: weaponCountCalls,
+      const accountCharIds = await Promise.all(accounts.map(async (address: string, i: number) => {
+        const count = this.utilService.bnToNumber(accountData[i])
+        if (count > 0) {
+          const calls = [...Array(count).keys()].map((j: number) => ({
+            name: 'tokenOfOwnerByIndex',
+            params: [address, j]
+          }))
+          return await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['characters'], this.web3Service.getOtherContractAddress('characters'), calls))
+        } else {
+          return []
         }
-      ])
+      }))
 
-      if (nftCallResults.results['charIds']) {
+      this.variableService.accountChars = await Promise.all(
+        accounts.map(async (account: string, i: number) => {
+          const charsExp = await cryptobladesContract.getXpRewards([...accountCharIds[i].map((j: any) => this.utilService.bnToNumber(j))])
+          return await Promise.all(accountCharIds[i].map((j: any) => this.utilService.bnToNumber(j)).map(async (charId: string, j: number) => {
+            const charsInfo = await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['characters'], this.web3Service.getOtherContractAddress('characters'), [{
+              name: 'get',
+              params: [charId]
+            }, {
+              name: 'getTotalPower',
+              params: [charId]
+            }, {
+              name: 'getStaminaPoints',
+              params: [charId]
+            }, {
+              name: 'getNftVar',
+              params: [charId, charRepId?.toString()]
+            }]))
 
-        const charDataCalls: any[] = []
-        const charPowerCall: any[] = []
-        const charStaminaCall: any[] = []
-        const charsExpCall: any[] = []
-        const charsRepCall: any[] = []
+            const data = this.utilService.characterFromContract(charId, charsInfo[0].map((k: any) => this.utilService.bnToNumber(k)))
+            const power = this.utilService.bnToNumber(charsInfo[1])
+            const stamina = this.utilService.bnToNumber(charsInfo[2])
+            const rep = this.utilService.bnToNumber(charsInfo[3])
+            const exp = this.utilService.bnToNumber(charsExp[j])
 
-        accounts.forEach((address: string) => {
-          const accountCharIds = this.getNftIds(nftCallResults.results['charIds']?.callsReturnContext, address)
-          accountCharIds.forEach((charId: string) => {
-            charDataCalls.push({
-              reference: charId,
-              methodName: 'get',
-              methodParameters: [charId]
-            })
-            charPowerCall.push({
-              reference: charId,
-              methodName: 'getTotalPower',
-              methodParameters: [charId]
-            })
-            charStaminaCall.push({
-              reference: charId,
-              methodName: 'getStaminaPoints',
-              methodParameters: [charId]
-            })
-            charsExpCall.push({
-              reference: charId,
-              methodName: 'getXpRewards',
-              methodParameters: [[charId]]
-            })
-            charsRepCall.push({
-              reference: charId,
-              methodName: 'getNftVar',
-              methodParameters: [charId, charRepId?.toString()]
-            })
-          })
-        })
-
-        const allCall = [
-          {
-            reference: 'charData',
-            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
-            abi: this.web3Service.abis['characters'],
-            calls: charDataCalls
-          },
-          {
-            reference: 'charPower',
-            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
-            abi: this.web3Service.abis['characters'],
-            calls: charPowerCall
-          },
-          {
-            reference: 'charStamina',
-            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
-            abi: this.web3Service.abis['characters'],
-            calls: charStaminaCall
-          },
-          {
-            reference: 'charExp',
-            contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'cryptoblades'),
-            abi: this.web3Service.abis['cryptoblades'],
-            calls: charsExpCall
-          }
-        ]
-
-        if (this.configService.chain !== 'AVAX') {
-          allCall.push({
-            reference: 'charRep',
-            contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, 'characters'),
-            abi: this.web3Service.abis['characters'],
-            calls: charsRepCall
-          })
-        }
-
-        const accountCharInfo = await multicallContract.call(allCall)
-
-        this.variableService.accountChars = accounts.map((address: string, index: number) => {
-          const accountCharIds = this.getNftIds(nftCallResults.results['charIds']?.callsReturnContext, address)
-          return accountCharIds.map((charId: string) => {
-            const data = this.utilService.characterFromContract(charId, accountCharInfo.results['charData'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues)
-            const power = this.web3Service.multicallBnToNumber(accountCharInfo.results['charPower'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0])
-            const stamina = accountCharInfo.results['charStamina'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]
-            const rep = this.configService.chain !== 'AVAX' ? this.web3Service.multicallBnToNumber(accountCharInfo.results['charRep'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0]) : 0
-            const exp = this.web3Service.multicallBnToNumber(accountCharInfo.results['charExp'].callsReturnContext.find((i: any) => i.reference === charId)?.returnValues[0])
             if (stamina >= this.configService.fightMultiplier * 40) {
-              this.variableService.readyToFight[index] += 1
+              this.variableService.readyToFight[i] += 1
             }
             const nextLevel = this.utilService.getNextTargetExpLevel(data.level)
             const nextExp = nextLevel.exp - (data.xp + exp)
             const rank = this.variableService.repRequirements ? this.utilService.reputationToTier(this.utilService.getReputationTier(rep, this.variableService.repRequirements)) : 'PEASANT'
+
             return {
               data,
               power,
@@ -499,14 +392,13 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
               nextExp,
               rank
             }
-          })
+          }))
         })
-      } */
-      console.log('Took', new Date().getTime() - time, 'ms to load.')
-      this.isLoading = false
+      )
     }
+    console.log('Took', new Date().getTime() - time, 'ms to load.')
+    this.isLoading = false
   }
-
   async loadPrices() {
     this.isLoadingCurrency = true
     this.prices = {
@@ -523,33 +415,26 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     const elMultiplier = (<HTMLInputElement>document.getElementById('input-multiplier'))
 
     if (elChar.value && elMultiplier.value) {
-      /*this.simulating = true
+      this.simulating = true
       this.simulations = []
-      const cryptobladesContract = this.web3Service.getContract(this.configService.chain, 'cryptoblades')
-      const equipmentContract = this.web3Service.getContract(this.configService.chain, 'equipment')
-      const multicallContract = this.web3Service.getMulticall(this.configService.chain)
+      const cryptobladesContract = this.web3Service.getContract('cryptoblades')
+      const equipmentContract = this.web3Service.getContract('equipment')
 
-      const targets = await cryptobladesContract.getTargets(elChar.value);
+      const targets = await cryptobladesContract.getTargets(elChar.value)
       const baseExp = +(await cryptobladesContract.fightXpGain()).toString()
       const powerData = this.utilService.powerDataFromContract(await equipmentContract.getStoredPowerData(elChar.value))
-      const enemies = this.utilService.getEnemyDetails(targets);
-      const rewardResults = await multicallContract.call([
-        {
-          reference: 'rewards',
-          contractAddress: this.web3Service.getConfigAddress(this.configService.chain, 'cryptoblades'),
-          abi: this.web3Service.abis['cryptoblades'],
-          calls: enemies.map((enemy: any) => ({
-            reference: enemy.id,
-            methodName: 'getTokenGainForFight',
-            methodParameters: [enemy.power]
-          }))
-        }
-      ])
-      const rewards = rewardResults.results['rewards']?.callsReturnContext.map((result: any) => this.web3Service.multicallBnToNumber(result.returnValues[0], true) * +elMultiplier.value)
+      const enemies = this.utilService.getEnemyDetails(targets.map((i: any) => this.utilService.bnToNumber(i)))
+
+      const rewards = await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['cryptoblades'], this.web3Service.getConfigAddress('cryptoblades'), [...enemies].map((enemy: any) => ({
+        name: 'getTokenGainForFight',
+        params: [enemy.power]
+      }))))
+
+
       this.simulations = enemies.map((enemy: any, i: number) => {
-        const chance = this.utilService.getWinChance(enemy.power, powerData.pvePower[4])
+        const chance = this.utilService.getWinChance(enemy.power, powerData.pvePower[enemy.trait])
         const exp = Math.floor((enemy.power / powerData.pvePower[4]) * baseExp) * +elMultiplier.value
-        const reward = rewards[i]
+        const reward = +this.utilService.fromEther(this.utilService.bnToNumber(rewards[i]))
         const power = enemies[i].power
         const element = enemies[i].element
         return {
@@ -559,7 +444,7 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
           power,
           element
         }
-      })*/
+      })
       this.simulating = false
     }
   }

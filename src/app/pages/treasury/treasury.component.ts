@@ -35,7 +35,7 @@ export class TreasuryComponent implements OnInit {
       ...this.web3Service.getCalls('projectDistributionTime', partners.map((partner: any) => partner.id))
       ]
 
-      const results = await this.web3Service.multicall(this.configService.chain, this.web3Service.getBatchCallData(this.web3Service.abis['treasury'], this.web3Service.getConfigAddress(this.configService.chain, 'treasury'), calls))
+      const results = await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['treasury'], this.web3Service.getConfigAddress('treasury'), calls))
       const [projData, projMultiplier, projSupply, projDistribution ] = this.utilService.splitArray(results, 4, partners.length)
 
       this.partners = partners.map((partner: any, i: number) => {

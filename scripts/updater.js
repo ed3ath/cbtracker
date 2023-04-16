@@ -47,7 +47,6 @@ const nftRetrievalTask = async () => {
     const raidContract = new ethers.Contract(config.environments.production.chains[chain].VUE_APP_RAID_CONTRACT_ADDRESS, require('../build/contracts/Raid1.json').abi, new ethers.providers.JsonRpcProvider(config.environments.production.chains[chain].rpcUrls[0]))
     const shields = await bsContract.shields()
     const linkId = (await raidContract.LINK_EQUIPMENT_MANAGER()).toString()
-    console.log(linkId)
     const equipment = await raidContract.links(linkId)
 
     other[chain] = {

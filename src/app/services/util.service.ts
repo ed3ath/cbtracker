@@ -538,4 +538,18 @@ export class UtilService {
     }
     return newArr
   }
+
+  splitArrayDynamic(arr: any[], len: number, sizes: number[]) {
+    const newArr: any[] = []
+    for (let i = 0; i < len; i++) {
+      for (let j = 0; j < sizes[i]; j++) {
+        if (arr.length > 0) {
+          newArr.push(arr.splice(0, arr.length >= sizes[i] ? sizes[i] : arr.length))
+        } else {
+          newArr.push([])
+        }
+      }
+    }
+    return newArr
+  }
 }
