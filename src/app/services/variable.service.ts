@@ -12,6 +12,7 @@ export class VariableService {
   repRequirements: any
   readyToFight: any[] = []
   readyToFightClass = 'bg-gray-700 text-white'
+  adScript: any
 
   constructor() { }
 }

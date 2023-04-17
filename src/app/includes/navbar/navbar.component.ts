@@ -9,6 +9,8 @@ import { CurrencyService } from 'src/app/services/currency.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/services/event.service';
+import { VariableService } from 'src/app/services/variable.service';
+import { ScriptService } from 'src/app/services/script.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,12 +30,25 @@ export class NavbarComponent implements OnInit {
     public currencyService: CurrencyService,
     public themeService: ThemeService,
     public utilService: UtilService,
-    private eventService: EventService
+    private eventService: EventService,
+    private variableService: VariableService,
+    private scriptService: ScriptService
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.page = this.router.url.split('tracker/')[1];
         this.setActivePage(this.page)
+        if (this.variableService.adScript) {
+          this.variableService.adScript.remove()
+        }
+        this.variableService.adScript = this.scriptService.loadJsScript(`(function(__htavim){
+          var d = document,
+              s = d.createElement('script'),
+              l = d.scripts[d.scripts.length - 1];
+          s.settings = __htavim || {};
+          s.src = "\/\/nowhaphopi.com\/d.mPFezadOGUlDtBPS3vpBvfbSmOVkJQZhDi0a0gN\/j\/gE4kMHzwYM1gL\/THQx2\/O\/D\/g\/zcNej-YL";
+          l.parentNode.insertBefore(s, l);
+          })()`)
       }
     });
   }
