@@ -7,10 +7,10 @@ import { Component, OnInit, HostListener } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
 
   @HostListener('window:beforeunload')
-  canDeactivate() {}
+  canDeactivate() { }
 
   ngOnInit() {
     const importTE = async () => {

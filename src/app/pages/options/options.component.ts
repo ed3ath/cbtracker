@@ -11,10 +11,12 @@ import { ThemeService } from 'src/app/services/theme.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/services/event.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
-const keys = ['currency', 'rpcUrls', 'display', 'theme', 'activeGroupIndex', 'expanded', 'names', 'chain', 'groups', 'timezone', 'version']
+const keys = ['currency', 'rpcUrls', 'display', 'theme', 'activeGroupIndex', 'expanded', 'names', 'chain', 'groups', 'timezone', 'version', 'newsAlert', 'accountAlert']
 @Component({
   selector: 'app-options',
   templateUrl: './options.component.html',
@@ -29,7 +31,9 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
     public themeService: ThemeService,
     public currencyService: CurrencyService,
     public web3Service: Web3Service,
-    public utilService: UtilService
+    public utilService: UtilService,
+    private eventService: EventService,
+    private notifService: NotificationService
   ) { }
 
   @HostListener('window:beforeunload')
@@ -65,6 +69,27 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
   setLanguage(event: any) {
     this.configService.language = event.target ? event.target.value : this.configService.language
     this.configService.saveLanguage()
+  }
+
+  setFightMultiplier(event: any) {
+    this.eventService.publish('multiplier_changed', +event.target.value)
+    this.configService.setFightMultiplier(event.target ? +event.target.value : this.configService.fightMultiplier)
+  }
+
+  toggleNewsAlert() {
+    this.configService.newsAlert = !this.configService.newsAlert
+    this.configService.saveNewsAlert()
+    if (this.configService.newsAlert && this.notifService.getPermission() !== "granted") {
+      this.notifService.requestPermission()
+    }
+  }
+
+  toggleAccountAlert() {
+    this.configService.accountAlert = !this.configService.accountAlert
+    this.configService.saveAccountAlert()
+    if (this.configService.accountAlert && this.notifService.getPermission() !== "granted") {
+      this.notifService.requestPermission()
+    }
   }
 
   setRpcUrl(event: any) {

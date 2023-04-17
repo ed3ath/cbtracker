@@ -126,6 +126,21 @@
             </select>
           </div>
           <div class="col-start-1 col-span-6 sm:col-span-2">
+            <label for="country" class="block mb-2 text-sm font-medium
+              text-gray-900 dark:text-white">Fight Multiplier</label>
+            <select id="select-version" name="countries" class="bg-gray-50
+              border-gray-300 text-gray-900 sm:text-sm rounded-lg
+              focus:ring-primary-500 focus:border-primary-500 block w-full
+              p-2.5
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+              dark:text-white dark:focus:ring-primary-500
+              dark:focus:border-primary-500"
+              (change)="setFightMultiplier($event)">
+              <option [value]="multiplier" class="uppercase" *ngFor="let multiplier of
+                [1, 2, 3, 4, 5]" [selected]="multiplier === configService.fightMultiplier">x{{multiplier}} ({{multiplier * 40}} Stamina)</option>
+            </select>
+          </div>
+          <div class="col-start-1 col-span-6 sm:col-span-2">
             <div class="flex items-center justify-between py-4">
               <div class="flex flex-col flex-grow">
                 <div class="text-lg font-semibold text-gray-900
@@ -199,7 +214,6 @@
         <h3 class="text-xl font-semibold dark:text-white">Alerts &amp;
           Notifications (Temporarily Free)</h3>
         <div class="divide-y divide-gray-200 dark:divide-gray-700">
-          <!-- Item 1 -->
           <div class="flex items-center justify-between py-4">
             <div class="flex flex-col flex-grow">
               <div class="text-lg font-semibold text-gray-900
@@ -210,12 +224,11 @@
             </div>
             <label for="news-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="news-alert" class="sr-only">
+              <input type="checkbox" id="news-alert" class="sr-only" [checked]="configService.newsAlert" (click)="toggleNewsAlert()">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>
           </div>
-          <!-- Item 2 -->
           <div class="flex items-center justify-between py-4">
             <div class="flex flex-col flex-grow">
               <div class="text-lg font-semibold text-gray-900
@@ -226,37 +239,7 @@
             </div>
             <label for="account-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="account-alert" class="sr-only">
-              <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
-                w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
-            </label>
-          </div>
-          <!-- Item 3 -->
-          <div class="flex items-center justify-between py-4">
-            <div class="flex flex-col flex-grow">
-              <div class="text-lg font-semibold text-gray-900
-                dark:text-white">Raid Notification</div>
-              <div class="text-base font-normal text-gray-500
-                dark:text-gray-400">Get raid notifications</div>
-            </div>
-            <label for="raid-alert" class="relative flex items-center
-              cursor-pointer">
-              <input type="checkbox" id="raid-alert" class="sr-only">
-              <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
-                w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
-            </label>
-          </div>
-          <!-- Item 4 -->
-          <div class="flex items-center justify-between pt-4">
-            <div class="flex flex-col flex-grow">
-              <div class="text-lg font-semibold text-gray-900
-                dark:text-white">Price Alerts</div>
-              <div class="text-base font-normal text-gray-500
-                dark:text-gray-400">Get notifications about price changes.</div>
-            </div>
-            <label for="price-alert" class="relative flex items-center
-              cursor-pointer">
-              <input type="checkbox" id="price-alert" class="sr-only">
+              <input type="checkbox" id="account-alert" class="sr-only" [checked]="configService.accountAlert" (click)="toggleAccountAlert()">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Drawer, DrawerInterface } from 'flowbite';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2'
@@ -18,7 +18,7 @@ import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.css']
 })
-export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+export class AccountsComponent implements OnInit, ComponentCanDeactivate {
   isLoading = true
   groupDrawer!: DrawerInterface
   newGroupDrawer!: DrawerInterface
@@ -54,6 +54,10 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   canDeactivate(): Observable<boolean> | boolean {
     this.configService.firstLoad = true
     this.configService.saveFirstLoad()
+    this.eventService.destroy('chain_changed')
+    this.eventService.destroy('version_changed')
+    this.eventService.destroy('currency_changed')
+    this.eventService.destroy('multiplier_changed')
     return true
   }
 
@@ -84,6 +88,7 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     this.addAccountDrawer = new Drawer(document.getElementById('add-account-drawer'), options)
     this.manageAccountDrawer = new Drawer(document.getElementById('manage-account-drawer'), options)
     this.combatDrawer = new Drawer(document.getElementById('combat-drawer'), options)
+    this.variableService.readyToFightClass = this.getMultiplierColor()
 
     this.eventService.subscribe('chain_changed', () => {
       this.initAll()
@@ -93,6 +98,9 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     })
     this.eventService.subscribe('currency_changed', () => {
       this.loadPrices()
+    })
+    this.eventService.subscribe('multiplier_changed', () => {
+      this.variableService.readyToFightClass = this.getMultiplierColor()
     })
 
     if (this.configService.firstLoad) {
@@ -116,11 +124,6 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
       this.variableService.repRequirements = repRequirements
       this.loadData()
     });
-  }
-
-  ngOnDestroy(): void {
-    this.eventService.destroy('chain_changed')
-    this.eventService.destroy('version_changed')
   }
 
   loadGroups() {

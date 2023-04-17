@@ -59,7 +59,7 @@
                 && variableService.accountBalances[i] ? variableService.accountBalances[i].unclaimed
                 : 0)}}{{configService.display ? ' (' + utilService.convertTokenToLocalCurrency(variableService.accountBalances[i].unclaimed, configService.version, prices, configService.currency) + ')' : ''}}
               </button>
-              <span class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded" [ngClass]="getMultiplierColor()">{{variableService.readyToFight[i]}}</span>
+              <span [class]="'text-xs font-medium mr-2 px-2.5 py-0.5 rounded ' + variableService.readyToFightClass">{{variableService.readyToFight[i]}}</span>
               <a [id]="'account-menu-btn-' + i" class="ml-auto cursor-pointer px-4 text-md text-warning-500"
                 (click)="showAccountDrawer(account)">...</a>`
             </div>

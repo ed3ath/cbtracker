@@ -11,6 +11,7 @@ export class VariableService {
   accountBalances: any[] = []
   repRequirements: any
   readyToFight: any[] = []
+  readyToFightClass = 'bg-gray-700 text-white'
 
   constructor() { }
 }

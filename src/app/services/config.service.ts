@@ -15,6 +15,8 @@ export class ConfigService {
   timezone = 'Etc/GMT+12'
   language = 'en-US'
   rpcUrls: any
+  newsAlert = false
+  accountAlert = false
 
   constructor() {
     this.fightMultiplier = this.getFightMultiplier()
@@ -28,6 +30,8 @@ export class ConfigService {
     this.timezone = this.getTimezone()
     this.language = this.getLanguage()
     this.rpcUrls = this.getRpcUrls()
+    this.newsAlert = this.getNewsAlert()
+    this.accountAlert = this.getAccountAlert()
   }
 
   getFightMultiplier() {
@@ -141,5 +145,21 @@ export class ConfigService {
 
   saveRpcUrls() {
     localStorage.setItem('rpcUrls', JSON.stringify(this.rpcUrls))
+  }
+
+  getNewsAlert() {
+    return localStorage.getItem('newsAlert') === 'true'
+  }
+
+  saveNewsAlert() {
+    localStorage.setItem('newsAlert', `${this.newsAlert}`)
+  }
+
+  getAccountAlert() {
+    return localStorage.getItem('accountAlert') === 'true'
+  }
+
+  saveAccountAlert() {
+    localStorage.setItem('accountAlert', `${this.accountAlert}`)
   }
 }
