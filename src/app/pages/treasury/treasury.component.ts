@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfigService } from 'src/app/services/config.service';
+
+import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
 @Component({
   selector: 'app-treasury',
   templateUrl: './treasury.component.html',
   styleUrls: ['./treasury.component.css']
 })
-export class TreasuryComponent implements OnInit {
+export class TreasuryComponent implements OnInit, ComponentCanDeactivate {
   isLoading = true
   partners: any[] = []
 
@@ -18,6 +21,13 @@ export class TreasuryComponent implements OnInit {
     public utilService: UtilService,
     public configService: ConfigService
   ) { }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    this.configService.firstLoad = true
+    this.configService.saveFirstLoad()
+    return true
+  }
 
   ngOnInit() {
     this.loadPartners()

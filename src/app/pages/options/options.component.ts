@@ -1,5 +1,6 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2'
 
 import timezones from 'src/app/data/timezone.json'
@@ -11,13 +12,15 @@ import { CurrencyService } from 'src/app/services/currency.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
 
+import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
+
 const keys = ['currency', 'rpcUrls', 'display', 'theme', 'activeGroupIndex', 'expanded', 'names', 'chain', 'groups', 'timezone', 'version']
 @Component({
   selector: 'app-options',
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css']
 })
-export class OptionsComponent implements OnInit {
+export class OptionsComponent implements OnInit, ComponentCanDeactivate {
   timezones: any[] = []
   languages: any[] = []
 
@@ -28,6 +31,13 @@ export class OptionsComponent implements OnInit {
     public web3Service: Web3Service,
     public utilService: UtilService
   ) { }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    this.configService.firstLoad = true
+    this.configService.saveFirstLoad()
+    return true
+  }
 
   ngOnInit(): void {
     this.timezones = timezones

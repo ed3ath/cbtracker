@@ -1,5 +1,6 @@
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { EventService } from 'src/app/services/event.service';
 import { Web3Service } from 'src/app/services/web3.service';
@@ -8,13 +9,15 @@ import { ConfigService } from 'src/app/services/config.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { UtilService } from 'src/app/services/util.service';
 
+import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
   isLoading = true
   isLoadingCurrency = true
   isGen2 = false
@@ -50,6 +53,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     public utilService: UtilService
   ) {
     this.accounts = this.groupService.getActiveGroupAccounts()
+  }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    this.configService.firstLoad = true
+    this.configService.saveFirstLoad()
+    return true
   }
 
   default() {
