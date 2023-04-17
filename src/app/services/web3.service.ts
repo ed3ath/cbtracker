@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
+import * as _ from 'lodash'
 import * as ethers from 'ethers'
-import {
-  Multicall
-} from 'ethereum-multicall';
 
 import { EventService } from './event.service';
 import { ConfigService } from './config.service';
@@ -22,6 +20,7 @@ import treasuryAbi from 'build/contracts/Treasury.json'
 import questAbi from 'build/contracts/SimpleQuests.json'
 import equipmentAbi from 'build/contracts/EquipmentManager.json'
 import raidAbi from 'build/contracts/Raid1.json'
+import multicallAbi from 'build/contracts/MultiCall.json'
 
 const other = ['characters', 'weapons', 'shields', 'equipment']
 
@@ -64,21 +63,21 @@ export class Web3Service {
     return localRpcUrls[chain] ? localRpcUrls[chain] : this.chainInfo[chain].rpcUrls[0]
   }
 
-  getConfigAddress(chain: string, contract: string) {
-    return this.chainInfo[chain][this.envName[contract]]
+  getConfigAddress(contract: string) {
+    return this.chainInfo[this.configService.chain][this.envName[contract]]
   }
 
-  getProvider(chain: string) {
-    return new ethers.providers.JsonRpcProvider(this.getChainRpc(chain))
+  getProvider() {
+    return new ethers.JsonRpcProvider(this.getChainRpc(this.configService.chain))
   }
 
-  getOtherContractAddress(chain: string, nft: string): string {
-    return this.otherAddress[chain][nft]
+  getOtherContractAddress(nft: string): string {
+    return this.otherAddress[this.configService.chain][nft]
   }
 
   async getNetwork(url: string) {
     try {
-      const rpc = new ethers.providers.JsonRpcProvider(url)
+      const rpc = new ethers.JsonRpcProvider(url)
       return (await rpc.getNetwork()).chainId
     } catch (e) {
       return -1
@@ -89,28 +88,54 @@ export class Web3Service {
     return +this.chainInfo[chain].VUE_APP_NETWORK_ID
   }
 
-  getContract(chain: string, contract: string): any {
-    return new ethers.Contract(other.includes(contract) ? this.getOtherContractAddress(chain, contract) : this.getConfigAddress(chain, contract), this.abis[contract], this.getProvider(chain))
+  getContract(contract: string): any {
+    return new ethers.Contract(other.includes(contract) ? this.getOtherContractAddress(contract) : this.getConfigAddress(contract), this.abis[contract], this.getProvider())
   }
 
-  getChainSymbol(chain: string) {
-    return this.chainInfo[chain].currencySymbol
+  getChainSymbol() {
+    return this.chainInfo[this.configService.chain].currencySymbol
   }
 
-  async getBalance(chain: string, address: string) {
-    return await this.getProvider(chain).getBalance(address)
+  async getBalance(address: string) {
+    return await this.getProvider().getBalance(address)
   }
 
-  getMulticallAddress(chain: string) {
-    return this.chainInfo[chain].VUE_APP_MULTICALL_CONTRACT_ADDRESS
+  getMulticallAddress() {
+    return this.chainInfo[this.configService.chain].VUE_APP_MULTICALL_CONTRACT_ADDRESS
   }
 
-  getMulticall(chain: string) {
-    const options: any = { ethersProvider: this.getProvider(chain), tryAggregate: false }
-    if (['COINEX', 'METER', 'SKALE'].includes(chain)) {
-      options.multicallCustomContractAddress = this.getMulticallAddress(chain)
+  getMulticall() {
+    return new ethers.Contract(this.getMulticallAddress(), multicallAbi, this.getProvider())
+  }
+
+  getCalls(name: string, params: any) {
+    return params.map((param: any) => ({
+      name,
+      params: [param],
+    }))
+  }
+
+  getBatchCallData(abi: any, address: string, calls: any) {
+    return {
+      abi,
+      calls: calls.map((call: any) => ({
+        address,
+        name: call.name,
+        params: call.params
+      }))
     }
-    return new Multicall(options)
+  }
+
+
+  async multicall({ abi, calls }: any) {
+    const itf = new ethers.Interface(abi)
+    const contract = this.getMulticall()
+    const calldata = calls.map((call: any) => [
+      call.address.toLowerCase(),
+      itf.encodeFunctionData(call.name, call.params)
+    ])
+    const { returnData } = await contract['aggregate'](calldata)
+    return returnData.map((data: any, i: number) => itf.decodeFunctionResult(calls[i].name, data))
   }
 
   parseMulticallResult(result: any) {
@@ -129,142 +154,81 @@ export class Web3Service {
   }
 
   multicallBnToNumber(val: any, format = false) {
-    const num = ethers.BigNumber.from(val.hex).toString()
+    const num = parseInt(val.hex, 16)
     if (format) {
-      return +ethers.utils.formatEther(num)
+      return +ethers.formatEther(num)
     }
     return +num
   }
 
   async getReputationLevelRequirements() {
-    const conQuest = this.getContract(this.configService.chain, 'quest')
-    const conMultiCall = this.getMulticall(this.configService.chain)
+    const conQuest = this.getContract('quest')
     const calls = [
       {
-        reference: 'VAR_REPUTATION_LEVEL_2',
-        methodName: 'VAR_REPUTATION_LEVEL_2',
-        methodParameters: []
+        name: 'VAR_REPUTATION_LEVEL_2',
+        params: []
       },
       {
-        reference: 'VAR_REPUTATION_LEVEL_3',
-        methodName: 'VAR_REPUTATION_LEVEL_3',
-        methodParameters: []
+        name: 'VAR_REPUTATION_LEVEL_3',
+        params: []
       },
       {
-        reference: 'VAR_REPUTATION_LEVEL_4',
-        methodName: 'VAR_REPUTATION_LEVEL_4',
-        methodParameters: []
+        name: 'VAR_REPUTATION_LEVEL_4',
+        params: []
       },
       {
-        reference: 'VAR_REPUTATION_LEVEL_5',
-        methodName: 'VAR_REPUTATION_LEVEL_5',
-        methodParameters: []
+        name: 'VAR_REPUTATION_LEVEL_5',
+        params: []
       }
     ]
-    const result = await conMultiCall.call([
-      {
-        reference: 'repRequirements',
-        contractAddress: this.getConfigAddress(this.configService.chain, 'quest'),
-        abi: this.abis['quest'],
-        calls
-      },
-    ])
+    const result = await this.multicall(this.getBatchCallData(this.abis['quest'], this.getConfigAddress('quest'), calls))
+    const [VAR_REPUTATION_LEVEL_2, VAR_REPUTATION_LEVEL_3, VAR_REPUTATION_LEVEL_4, VAR_REPUTATION_LEVEL_5] = result.map((i: any) => this.utilService.bnToNumber(i))
 
-    const [VAR_REPUTATION_LEVEL_2, VAR_REPUTATION_LEVEL_3, VAR_REPUTATION_LEVEL_4, VAR_REPUTATION_LEVEL_5] = result.results['repRequirements'].callsReturnContext.map((i: any) => i.returnValues[0])
-
-    const requirementsRaw = await conQuest.getVars([
+    const requirementsRaw = (await conQuest.getVars([
       VAR_REPUTATION_LEVEL_2,
       VAR_REPUTATION_LEVEL_3,
       VAR_REPUTATION_LEVEL_4,
       VAR_REPUTATION_LEVEL_5,
-    ])
+    ])).map((i: any) => this.utilService.bnToNumber(i))
 
     return {
-      level2: +requirementsRaw[0],
-      level3: +requirementsRaw[1],
-      level4: +requirementsRaw[2],
-      level5: +requirementsRaw[3],
-    };
+      level2: requirementsRaw[0],
+      level3: requirementsRaw[1],
+      level4: requirementsRaw[2],
+      level5: requirementsRaw[3]
+    }
   }
 
   async getPartners() {
-    const treasuryContract = this.getContract(this.configService.chain, 'treasury')
-    const multicallContract = this.getMulticall(this.configService.chain)
+    const treasuryContract = this.getContract('treasury')
     const partnerIds = await treasuryContract.getActivePartnerProjectsIds()
-    const results = this.parseMulticallResult(await multicallContract.call([{
-      reference: 'treasury',
-      contractAddress: this.getConfigAddress(this.configService.chain, 'treasury'),
-      abi: this.abis['treasury'],
-      calls: partnerIds.map((partnerId: any) => ({
-        reference: partnerId,
-        methodName: 'partneredProjects',
-        methodParameters: [partnerId]
-      }))
-    },
-    {
-      reference: 'ratio',
-      contractAddress: this.getConfigAddress(this.configService.chain, 'treasury'),
-      abi: this.abis['treasury'],
-      calls: partnerIds.map((partnerId: any) => ({
-        reference: partnerId,
-        methodName: 'getSkillToPartnerRatio',
-        methodParameters: [partnerId]
-      }))
-    }]))
 
-    return results.treasury?.map((partner: any, i: number) => ({
-      id: this.multicallBnToNumber(partner[0]),
-      name: partner[1],
-      symbol: partner[2],
-      address: partner[3],
-      supply: this.multicallBnToNumber(partner[4]),
-      price: this.multicallBnToNumber(partner[5], true),
-      ratio: this.multicallBnToNumber(results.ratio[i][0], true)
+    const calls = [
+      ...this.getCalls('partneredProjects', partnerIds.map((id: number | string) => this.utilService.bnToNumber(id))),
+      ...this.getCalls('getSkillToPartnerRatio', partnerIds.map((id: number | string) => this.utilService.bnToNumber(id)))
+    ]
+
+    const results = await this.multicall(this.getBatchCallData(this.abis['treasury'], this.getConfigAddress('treasury'), calls))
+    const [partner, ratio] = this.utilService.splitArray(results, 2, partnerIds.length)
+
+    return partnerIds.map((id: any, i: number) => ({
+      id: this.utilService.bnToNumber(id),
+      name: partner[i][1],
+      symbol: partner[i][2],
+      address: partner[i][3],
+      supply: this.utilService.bnToNumber(partner[i][4]),
+      price: +this.utilService.fromEther(this.utilService.bnToNumber(partner[i][5])),
+      ratio: +this.utilService.fromEther(this.utilService.bnToNumber(ratio[i]))
     }))
   }
 
   async getAccountBalances(accounts: string[], isGen2: boolean) {
-    const treasuryContract = this.getContract(this.configService.chain, 'treasury')
-    const multicallContract = this.getMulticall(this.configService.chain)
-    const balanceCall = accounts.map((address: string) => {
-      return {
-        reference: address,
-        methodName: 'balanceOf',
-        methodParameters: [address]
-      }
-    })
-    const unclaimedCall = accounts.map((address: string) => {
-      if (isGen2 && this.configService.chain === 'BNB') {
-        return {
-          reference: address,
-          methodName: 'userVars',
-          methodParameters: [address, 10011]
-        }
-      }
-      return {
-        reference: address,
-        methodName: 'getTokenRewardsFor',
-        methodParameters: [address]
-      }
-    })
-    const calls = [];
-    calls.push({
-      reference: 'wallet',
-      contractAddress: this.getConfigAddress(this.configService.chain, isGen2 && this.configService.chain === 'BNB' ? 'valor' : 'skill'),
-      abi: this.abis['token'],
-      calls: balanceCall
-    })
-    calls.push({
-      reference: 'unclaimed',
-      contractAddress: this.getConfigAddress(this.configService.chain, 'cryptoblades'),
-      abi: this.abis['cryptoblades'],
-      calls: unclaimedCall
-    })
+    const treasuryContract = this.getContract('treasury')
+    const walletBalances = await this.multicall(this.getBatchCallData(this.abis['token'], this.getConfigAddress(isGen2 && this.configService.chain === 'BNB' ? 'valor' : 'skill'), this.getCalls('balanceOf', accounts)))
+    const unclaimedBalances = await this.multicall(this.getBatchCallData(this.abis['cryptoblades'], this.getConfigAddress('cryptoblades'), isGen2 && this.configService.chain === 'BNB' ? this.getCalls('userVars', accounts.map((account: string) => [account, 10011])) : this.getCalls('getTokenRewardsFor', accounts)))
     const gasBalance = await Promise.all(accounts.map(async (address: string) => {
-      return ethers.utils.formatEther((await this.getBalance(this.configService.chain, address)).toString())
+      return ethers.formatEther((await this.getBalance(address)).toString())
     }))
-    const results = await multicallContract.call(calls)
-
     const partners = await this.getPartners()
     let ratio = 0
     let price = 0
@@ -278,15 +242,15 @@ export class Web3Service {
         rewardId = partners.find((i: any) => i.symbol === 'VALOR')?.id
       }
       if (rewardId) {
-        this.multiplier = +ethers.utils.formatEther(await treasuryContract.getProjectMultiplier(rewardId))
+        this.multiplier = +ethers.formatEther(await treasuryContract.getProjectMultiplier(rewardId))
       }
     }
 
     return {
       ratio, balances: accounts.map((address: string, i: number) => {
         const gas = gasBalance[i]
-        const unclaimed = this.multicallBnToNumber(results.results['unclaimed'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
-        const wallet = this.multicallBnToNumber(results.results['wallet'].callsReturnContext.find((i: any) => i.reference === address)?.returnValues[0], true)
+        const unclaimed = +this.utilService.fromEther(this.utilService.bnToNumber(walletBalances[i]))
+        const wallet = +this.utilService.fromEther(this.utilService.bnToNumber(unclaimedBalances[i]))
         const claimable = unclaimed * this.multiplier
         return {
           gas,

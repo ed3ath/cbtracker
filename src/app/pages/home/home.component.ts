@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   async loadData() {
     const time = new Date().getTime()
     this.isLoading = true
-    this.multicallContract = this.web3Service.getMulticall(this.configService.chain)
+    this.multicallContract = this.web3Service.getMulticall()
 
     if (this.accounts.length > 0) {
       const balanceCall = this.accounts.map((address: string) => {
@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       for (const nft of ['characters', 'weapons', 'shields']) {
         calls.push({
           reference: nft,
-          contractAddress: this.web3Service.getOtherContractAddress(this.configService.chain, nft),
+          contractAddress: this.web3Service.getOtherContractAddress(nft),
           abi: this.web3Service.abis[nft],
           calls: balanceCall
         })

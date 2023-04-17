@@ -86,7 +86,7 @@ export class GroupService {
 
   checkAccountAddressExists(address: string) {
     const accounts = this.getActiveGroupAccounts()
-    return accounts.includes(ethers.utils.getAddress(address))
+    return accounts.includes(ethers.getAddress(address))
   }
 
   setAccountName(name: string, address: string) {
@@ -102,13 +102,13 @@ export class GroupService {
   }
 
   isValidAddress(address: string) {
-    return ethers.utils.isAddress(address)
+    return ethers.isAddress(address)
   }
 
   addGroupAccount(name: string, address: string) {
     if (this.isValidAddress(address) && !this.checkAccountNameExists(name) && !this.checkAccountAddressExists(address)) {
       const accounts = this.getActiveGroupAccounts()
-      accounts.push(ethers.utils.getAddress(address))
+      accounts.push(ethers.getAddress(address))
       this.setActiveGroupAccounts(accounts)
       this.setAccountName(name, address)
     }
