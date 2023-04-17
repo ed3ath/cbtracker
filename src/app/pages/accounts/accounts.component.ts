@@ -91,6 +91,9 @@ export class AccountsComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     this.eventService.subscribe('version_changed', () => {
       this.initAll()
     })
+    this.eventService.subscribe('currency_changed', () => {
+      this.loadPrices()
+    })
 
     if (this.configService.firstLoad) {
       this.configService.firstLoad = false
