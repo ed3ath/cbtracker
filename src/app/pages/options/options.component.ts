@@ -98,7 +98,7 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
       const chain = event.target.dataset.chain
       this.web3Service.getNetwork(rpcUrl).then((networkId: any) => {
         if (networkId > 0) {
-          if (networkId === this.web3Service.getNetworkId(chain)) {
+          if (+networkId === +this.web3Service.getNetworkId(chain)) {
             this.configService.rpcUrls = { ...this.configService.rpcUrls, [chain]: rpcUrl }
             this.configService.saveRpcUrls()
           } else {
