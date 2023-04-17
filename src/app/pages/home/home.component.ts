@@ -107,26 +107,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.multicallContract = this.web3Service.getMulticall()
 
     if (this.accounts.length > 0) {
-      const balanceCall = this.accounts.map((address: string) => {
-        return {
-          reference: address,
-          methodName: 'balanceOf',
-          methodParameters: [address]
-        }
-      })
-      const calls = [];
-      for (const nft of ['characters', 'weapons', 'shields']) {
-        calls.push({
-          reference: nft,
-          contractAddress: this.web3Service.getOtherContractAddress(nft),
-          abi: this.web3Service.abis[nft],
-          calls: balanceCall
-        })
-      }
-      const results = this.web3Service.parseMulticallResult(await this.multicallContract.call(calls))
-      this.nfts.characters = results.characters.reduce((a: number, b: any) => a + this.web3Service.multicallBnToNumber(b[0]), 0)
-      this.nfts.weapons = results.weapons.reduce((a: number, b: any) => a + this.web3Service.multicallBnToNumber(b[0]), 0)
-      this.nfts.shields = results.shields.reduce((a: number, b: any) => a + this.web3Service.multicallBnToNumber(b[0]), 0)
+      this.nfts.characters = [...await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['characters'], this.web3Service.getOtherContractAddress('characters'), this.accounts.map((account: string) => ({
+        name: 'balanceOf',
+        params: [account]
+      }))))].reduce((a: number, b: any) => a + this.utilService.bnToNumber(b), 0)
+      this.nfts.weapons = [...await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['weapons'], this.web3Service.getOtherContractAddress('weapons'), this.accounts.map((account: string) => ({
+        name: 'balanceOf',
+        params: [account]
+      }))))].reduce((a: number, b: any) => a + this.utilService.bnToNumber(b), 0)
+      this.nfts.shields = [...await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['shields'], this.web3Service.getOtherContractAddress('shields'), this.accounts.map((account: string) => ({
+        name: 'balanceOf',
+        params: [account]
+      }))))].reduce((a: number, b: any) => a + this.utilService.bnToNumber(b), 0)
     }
     await this.loadPrices()
     await this.loadBalances()
