@@ -16,17 +16,17 @@ export class AdsComponent implements OnInit {
 
   zones: any = {
     '728x90': {
-      id: '790de8a419154ae596dc8aee2a95fca3',
+      id: '88f39f238572423eabecaafa91ab88a5',
       width: 728,
       height: 90
     },
     '300x250': {
-      id: '8658ef860f9f4f45ba8c94f86e9a6692',
+      id: 'd4d4478362894383b4ded8c7ded56fc2',
       width: 300,
       height: 250
     },
     '468x60': {
-      id: '5f51530f35a94425a2fc0b331c4d644f',
+      id: 'd93d4cbd0b7340689d403728633a1142',
       width: 468,
       height: 60
     },
@@ -36,27 +36,32 @@ export class AdsComponent implements OnInit {
       height: 250
     },
     '160x600': {
-      id: 'a9f49465453d435bbacd00adbd5884c5',
+      id: '0a450c5cef4a477cabf07d84cea8b8c7',
       width: 160,
       height: 600
     },
+    '300x600': {
+      id: 'f0ce25d422da4f3d8b11d83afda6b6bb',
+      width: 300,
+      height: 600
+    },
     '970x90': {
-      id: '4f9e30a14ade4f62b7886f5fb3d9d15f',
+      id: 'b589c4164c814e46a31d800c1f83a87b',
       width: 970,
       height: 90
     },
     '750x100': {
-      id: '7a06303233c5475e906ca50f542d1a74',
+      id: 'b959ccc724d34dd6b6d2c7e8bae91a9b',
       width: 750,
       height: 100
     },
     '320x100': {
-      id: '895cf1fdc6194af49d7ce3d9c9517032',
+      id: '473ab1390eff499f9b5fb39bf75735da',
       width: 320,
       height: 100
     },
     '320x50': {
-      id: 'f4009e443caa48e4b91d19260bf5ebb5',
+      id: '1c008826686b4ea596fd7257359252af',
       width: 320,
       height: 50
     }
