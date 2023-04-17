@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
       if (val instanceof NavigationEnd) {
         this.page = this.router.url.split('tracker/')[1];
         this.setActivePage(this.page)
-        if (this.variableService.adScript) {
+        /*if (this.variableService.adScript) {
           this.variableService.adScript.remove()
         }
         this.variableService.adScript = this.scriptService.loadJsScript(`(function(__htavim){
@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
           s.settings = __htavim || {};
           s.src = "\/\/nowhaphopi.com\/d.mPFezadOGUlDtBPS3vpBvfbSmOVkJQZhDi0a0gN\/j\/gE4kMHzwYM1gL\/THQx2\/O\/D\/g\/zcNej-YL";
           l.parentNode.insertBefore(s, l);
-          })()`)
+          })()`)*/
       }
     });
   }
