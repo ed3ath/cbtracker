@@ -249,8 +249,8 @@ export class Web3Service {
     return {
       ratio, balances: accounts.map((address: string, i: number) => {
         const gas = gasBalance[i]
-        const unclaimed = +this.utilService.fromEther(this.utilService.bnToNumber(walletBalances[i]))
-        const wallet = +this.utilService.fromEther(this.utilService.bnToNumber(unclaimedBalances[i]))
+        const unclaimed = +this.utilService.fromEther(this.utilService.bnToNumber(unclaimedBalances[i]))
+        const wallet = +this.utilService.fromEther(this.utilService.bnToNumber(walletBalances[i]))
         const claimable = unclaimed * this.multiplier
         return {
           gas,
