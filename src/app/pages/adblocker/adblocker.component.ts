@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { ScriptService } from 'src/app/services/script.service';
 
 @Component({
   selector: 'app-adblocker',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdblockerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private scriptService: ScriptService) { }
 
   ngOnInit(): void {
+    this.scriptService.detectAdblocker().then((res: boolean) => {
+      if (res) this.router.navigate(['/tracker/home'])
+    })
   }
 
 }
