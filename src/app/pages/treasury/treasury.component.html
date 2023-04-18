@@ -34,9 +34,9 @@
               dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]"
               type="button"
               data-te-collapse-init
-              data-te-collapse-collapsed
+              data-te-collapse-collapsed="true"
               [attr.data-te-target]="'#partner-content-' + i "
-              aria-expanded="false"
+              aria-expanded="true"
               [attr.aria-controls]="'#partner-content-' + i ">
 
               <div class="w-12 mr-4" style="content: url({{partner.data[0]}});"></div>
@@ -64,16 +64,17 @@
           <!-- content -->
           <div
             [id]="'partner-content-' + i"
-            class="!visible hidden"
+            class="!visible"
             [attr.aria-labelledby]="'partner-head-' + i"
-            data-te-collapse-item>
+            data-te-collapse-item
+            data-te-collapse-show>
             <div class="px-5 py-4">
               <h4 class="text-2xl text-warning-500 mb-4">Token: <span
                   class="text-gray-900 dark:text-white">${{partner.symbol}}</span></h4>
               <div
-                class="grid w-full grid-rows-2 grid-flow-col gap-2">
+                class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2 2xl:grid-cols-3">
 
-                <div class="col-span-3 grid grid-cols-2 gap-4">
+                <div class="col-span-2 grid grid-cols-2 gap-4">
                   <div class="row-span-2 border border-2 border-warning-500 dark:border-warning-200 p-4">
                     <p class="text-warning-500">SKILL/{{partner.symbol}}</p>
                     <span class="dark:text-white">{{utilService.formatSkillRatio(partner.ratio)}}</span>
@@ -83,7 +84,7 @@
                     <span class="dark:text-white">x{{utilService.formatNumber(partner.multiplier)}}</span>
                   </div>
                 </div>
-                <div class="col-span-3 grid grid-cols-2 gap-4">
+                <div class="col-span-2 grid grid-cols-2 gap-4">
                   <div class="row-span-2 border border-2 border-warning-500 dark:border-warning-200 p-4">
                     <p class="text-warning-500">$/Unclaimed</p>
                     <span class="dark:text-white">{{utilService.moneyPerUnclaimed(partner.price, partner.ratio, partner.multiplier)}}</span>
@@ -92,6 +93,9 @@
                     <p class="text-warning-500">Distribution</p>
                     <span class="dark:text-white">{{partner.distribution}} days</span>
                   </div>
+                </div>
+                <div class="col-span-4 row-span-4 grid gap-4 items-center justify-center bg-cover bg-center text-center">
+                  <app-ads provider="a-ads" type="728x90" dynamic="728x90"></app-ads>
                 </div>
               </div>
               <div class="w-full justify-center py-4 text-gray-900 dark:text-white">

@@ -12,6 +12,7 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
 export class AdsComponent implements OnInit {
   @Input() provider = 'coinserom'
   @Input() type = '728x90'
+  @Input() dynamic = '728x90'
 
   safeUrl!: SafeResourceUrl
 
@@ -55,9 +56,9 @@ export class AdsComponent implements OnInit {
     this.zone = this.zones[this.type]
     this.responsiveService.screenWidth$.subscribe((width: number) => {
       const rectangles = ['970x90', '728x90', '468x60', '320x50']
-      if (width >= 970 && rectangles.includes(this.type) && this.provider !== 'coinserom') {
+      if (width >= 970 && rectangles.includes(this.type) && this.provider !== 'coinserom' && this.dynamic === '970x90') {
         this.zone = this.zones['970x90']
-      } else if (width >= 728 && rectangles.includes(this.type)) {
+      } else if (width >= 728 && rectangles.includes(this.type) && this.dynamic === '728x90') {
         this.zone = this.zones['728x90']
       } else if (width >= 468 && rectangles.includes(this.type)) {
         this.zone = this.zones['468x60']
