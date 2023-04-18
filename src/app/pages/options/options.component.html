@@ -55,7 +55,8 @@
                 focus:ring-4 focus:ring-success-300 font-medium rounded-lg
                 text-sm
                 px-5 py-2.5 text-center dark:bg-success-600
-                dark:hover:bg-success-700 dark:focus:ring-success-800" (click)="showImport()">Import</button>
+                dark:hover:bg-success-700 dark:focus:ring-success-800"
+                (click)="showImport()">Import</button>
             </div>
           </div>
           <div class="col-start-1 col-span-6 sm:col-span-3">
@@ -67,8 +68,17 @@
                 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg
                 text-sm
                 px-5 py-2.5 text-center dark:bg-primary-600
-                dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="exportData()">Export</button>
+                dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                (click)="exportData()">Export</button>
             </div></div>
+        </div>
+      </div>
+      <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg
+        shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6
+        dark:bg-gray-800">
+        <h3 class="mb-4 text-xl font-semibold dark:text-white">Sponsor</h3>
+        <div class="flex justify-center items-center text-center">
+          <app-ads provider="a-ads" type="300x250"></app-ads>
         </div>
       </div>
     </div>
@@ -136,8 +146,11 @@
               dark:text-white dark:focus:ring-primary-500
               dark:focus:border-primary-500"
               (change)="setFightMultiplier($event)">
-              <option [value]="multiplier" class="uppercase" *ngFor="let multiplier of
-                [1, 2, 3, 4, 5]" [selected]="multiplier === configService.fightMultiplier">x{{multiplier}} ({{multiplier * 40}} Stamina)</option>
+              <option [value]="multiplier" class="uppercase" *ngFor="let
+                multiplier of
+                [1, 2, 3, 4, 5]" [selected]="multiplier ===
+                configService.fightMultiplier">x{{multiplier}} ({{multiplier *
+                40}} Stamina)</option>
             </select>
           </div>
           <div class="col-start-1 col-span-6 sm:col-span-2">
@@ -224,7 +237,8 @@
             </div>
             <label for="news-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="news-alert" class="sr-only" [checked]="configService.newsAlert" (click)="toggleNewsAlert()">
+              <input type="checkbox" id="news-alert" class="sr-only"
+                [checked]="configService.newsAlert" (click)="toggleNewsAlert()">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>
@@ -239,7 +253,9 @@
             </div>
             <label for="account-alert" class="relative flex items-center
               cursor-pointer">
-              <input type="checkbox" id="account-alert" class="sr-only" [checked]="configService.accountAlert" (click)="toggleAccountAlert()">
+              <input type="checkbox" id="account-alert" class="sr-only"
+                [checked]="configService.accountAlert"
+                (click)="toggleAccountAlert()">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>
