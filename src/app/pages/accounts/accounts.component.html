@@ -208,6 +208,9 @@
                               Reputation
                             </th>
                             <th scope="col" class="px-6 py-3">
+                              Current Exp
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                               Unc. Exp
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -256,6 +259,10 @@
                               <div class="h-4 bg-gray-200 rounded-full
                                 dark:bg-gray-700 w-12 mb-6 mt-1"></div>
                             </td>
+                            <td class="px-6 py-4">
+                              <div class="h-4 bg-gray-200 rounded-full
+                                dark:bg-gray-700 w-12 mb-6 mt-1"></div>
+                            </td>
                           </tr>
                           <tr class="bg-white border-b dark:bg-gray-900
                             dark:border-gray-700" *ngFor="let char of
@@ -272,10 +279,13 @@
                               {{char.data.traitName}}
                             </td>
                             <td class="px-6 py-4">
-                              {{char.power}}
+                              {{utilService.formatNumber(char.power, 0)}} / {{utilService.formatNumber(utilService.getCharacterPowerByLevel(char.data.level) * 4, 0)}}
                             </td>
                             <td class="px-6 py-4">
                               {{char.rank}}
+                            </td>
+                            <td class="px-6 py-4">
+                              {{char.data.xp}}
                             </td>
                             <td class="px-6 py-4">
                               {{char.exp}}
