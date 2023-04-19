@@ -53,6 +53,8 @@ export class NavbarComponent implements OnInit {
             script.remove()
           })
           this.scriptService.loadExternalJsScript('evadav-ads', 'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js', true)
+        } else {
+          document.querySelector('script#evadav-ads')?.remove()
         }
       }
     });
