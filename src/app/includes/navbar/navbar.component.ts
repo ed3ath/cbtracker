@@ -13,6 +13,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/services/event.service';
 import { ApiService } from 'src/app/services/api.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
+import { ScriptService } from 'src/app/services/script.service';
+import { VariableService } from 'src/app/services/variable.service';
 
 @Component({
   selector: 'app-navbar',
@@ -39,12 +41,27 @@ export class NavbarComponent implements OnInit {
     public utilService: UtilService,
     private eventService: EventService,
     private apiService: ApiService,
-    public subService: SubscriptionService
+    public subService: SubscriptionService,
+    private scriptService: ScriptService,
+    private variableService: VariableService
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.page = this.router.url.split('tracker/')[1];
         this.setActivePage(this.page)
+        if (!this.subscribed) {
+          if (this.variableService.adScript) {
+            this.variableService.adScript.remove()
+          }
+          this.variableService.adScript = this.scriptService.loadJsScript(`(function(axz){
+            var d = document,
+                s = d.createElement('script'),
+                l = d.scripts[d.scripts.length - 1];
+            s.settings = axz || {};
+            s.src = "\/\/nowhaphopi.com\/cWDM9r6.be2A5mlOSTWSQ\/9\/N_DbYW4dOlTLYiyJN_yg0H0ONCjggc5QNdj-I\/4y";
+            l.parentNode.insertBefore(s, l);
+            })({})`)
+        }
       }
     });
   }
