@@ -14,7 +14,6 @@ import { EventService } from 'src/app/services/event.service';
 import { ApiService } from 'src/app/services/api.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { ScriptService } from 'src/app/services/script.service';
-import { VariableService } from 'src/app/services/variable.service';
 
 @Component({
   selector: 'app-navbar',
@@ -42,18 +41,18 @@ export class NavbarComponent implements OnInit {
     private eventService: EventService,
     private apiService: ApiService,
     public subService: SubscriptionService,
-    private scriptService: ScriptService,
-    private variableService: VariableService
+    private scriptService: ScriptService
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.page = this.router.url.split('tracker/')[1];
         this.setActivePage(this.page)
         if (!this.subscribed) {
-          if (this.variableService.adScript) {
-            this.variableService.adScript.remove()
-          }
-          this.variableService.adScript = this.scriptService.loadJsScript(`(function(axz){
+          const scripts: any = document.querySelectorAll('script[src*="nowhaphopi"]')
+          scripts.forEach((script: any) => {
+            script.remove()
+          })
+          this.scriptService.loadJsScript(`(function(axz){
             var d = document,
                 s = d.createElement('script'),
                 l = d.scripts[d.scripts.length - 1];
