@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ResponsiveService } from 'src/app/services/responsive.service';
@@ -10,7 +10,7 @@ import { SubscriptionService } from 'src/app/services/subscription.service';
   templateUrl: './ads.component.html',
   styleUrls: ['./ads.component.css']
 })
-export class AdsComponent {
+export class AdsComponent implements OnInit {
   @Input() provider = 'coinserom'
   @Input() type = '728x90'
   @Input() dynamic = '728x90'
@@ -88,6 +88,12 @@ export class AdsComponent {
         }
       }
     })
+  }
+
+  ngOnInit() {
+    if (!this.subscribed){
+      this.loadAds()
+    }
   }
 
   loadAds() {
