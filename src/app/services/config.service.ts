@@ -61,7 +61,7 @@ export class ConfigService {
 
   getAllGroups() {
     const list = JSON.parse(localStorage.getItem('groups') || '[]')
-    if (!this.subscribed) return list.splice(0, 3)
+    if (!this.subscribed) return list.splice(0, 1)
     return list
   }
 
