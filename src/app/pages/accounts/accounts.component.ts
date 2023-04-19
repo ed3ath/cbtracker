@@ -496,7 +496,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
   displayCurrency(i: number) {
     let display = ''
     if (this.screenWidth >= 580) {
-      display += ` | Unc: ${this.utilService.formatNumber(this.variableService.accountBalances && this.variableService.accountBalances[i] ? this.variableService.accountBalances[i].unclaimed : 0)}}${this.configService.display ? ' (' +
+      display += ` | Unc: ${this.utilService.formatNumber(this.variableService.accountBalances && this.variableService.accountBalances[i] ? this.variableService.accountBalances[i].unclaimed : 0)}${this.configService.display ? ' (' +
         this.utilService.convertTokenToLocalCurrency(this.variableService.accountBalances[i].unclaimed,
           this.configService.version, this.prices, this.configService.currency) + ')' : ''
         }`
