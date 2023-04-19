@@ -10,6 +10,7 @@ import { GroupService } from 'src/app/services/group.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
 import { CurrencyService } from 'src/app/services/currency.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
@@ -29,6 +30,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
 
   activeAccountIndex = -1
   simulations: any[] = []
+  screenWidth = 0
 
   simulating = false
   prices: any = {
@@ -45,7 +47,8 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
     public groupService: GroupService,
     public web3Service: Web3Service,
     public utilService: UtilService,
-    public currencyService: CurrencyService
+    public currencyService: CurrencyService,
+    private responsiveService: ResponsiveService
   ) {
     this.loadPrices()
   }
@@ -110,6 +113,12 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
     } else {
       this.isLoading = false
     }
+
+    this.screenWidth = this.responsiveService.screenWidth
+
+    this.responsiveService.screenWidth$.subscribe((width) => {
+      this.screenWidth = width
+    })
   }
 
   initAll() {
@@ -482,5 +491,39 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
       case 1: return 'bg-gray-700 text-white'
       default: return 'bg-gray-700 text-white'
     }
+  }
+
+  displayCurrency(i: number) {
+    let display = ''
+    if (this.screenWidth >= 580) {
+      display += ` | Unc: ${this.utilService.formatNumber(this.variableService.accountBalances && this.variableService.accountBalances[i] ? this.variableService.accountBalances[i].unclaimed : 0)}}${this.configService.display ? ' (' +
+        this.utilService.convertTokenToLocalCurrency(this.variableService.accountBalances[i].unclaimed,
+          this.configService.version, this.prices, this.configService.currency) + ')' : ''
+        }`
+    }
+    if (this.screenWidth >= 840) {
+      display += ` | Wallet:
+      ${this.utilService.formatNumber(this.variableService.accountBalances
+        && this.variableService.accountBalances[i] ?
+        this.variableService.accountBalances[i].wallet :
+        0)
+        }${this.configService.display ? ' (' +
+          this.utilService.convertTokenToLocalCurrency(this.variableService.accountBalances[i].wallet,
+            this.configService.version, this.prices, this.configService.currency) + ')' :
+          ''
+        }`
+    }
+    if (this.screenWidth >= 1080) {
+      display += ` | ${this.web3Service.getChainSymbol()}:
+      ${this.utilService.formatNumber(this.variableService.accountBalances
+        && this.variableService.accountBalances[i] ?
+        this.variableService.accountBalances[i].gas :
+        0)
+        }${this.configService.display ? ' (' +
+          this.utilService.convertGasToLocalCurrency(this.variableService.accountBalances[i].gas,
+            this.prices, this.configService.currency) + ')' : ''
+        } `
+    }
+    return display
   }
 }
