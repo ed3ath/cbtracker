@@ -111,7 +111,7 @@ export class Web3Service {
   getCalls(name: string, params: any) {
     return params.map((param: any) => ({
       name,
-      params: [param],
+      params: Array.isArray(param) ? param : [param],
     }))
   }
 

@@ -13,10 +13,11 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/services/event.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { ApiService } from 'src/app/services/api.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 
 import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
-const keys = ['currency', 'rpcUrls', 'display', 'theme', 'activeGroupIndex', 'expanded', 'names', 'chain', 'groups', 'timezone', 'version', 'newsAlert', 'accountAlert']
 @Component({
   selector: 'app-options',
   templateUrl: './options.component.html',
@@ -25,6 +26,7 @@ const keys = ['currency', 'rpcUrls', 'display', 'theme', 'activeGroupIndex', 'ex
 export class OptionsComponent implements OnInit, ComponentCanDeactivate {
   timezones: any[] = []
   languages: any[] = []
+  subscribed = false
 
   constructor(
     public configService: ConfigService,
@@ -33,7 +35,9 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
     public web3Service: Web3Service,
     public utilService: UtilService,
     private eventService: EventService,
-    private notifService: NotificationService
+    private notifService: NotificationService,
+    private apiService: ApiService,
+    private subService: SubscriptionService
   ) { }
 
   @HostListener('window:beforeunload')
@@ -46,61 +50,77 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
   ngOnInit(): void {
     this.timezones = timezones
     this.languages = languages
+    this.subService.subscription$.subscribe((subscribed) => {
+      this.subscribed = subscribed
+    })
   }
 
-  toggleDisplay() {
+  async toggleDisplay() {
     this.configService.display = !this.configService.display
     this.configService.saveDisplay()
+    await this.updateRemoteConfig()
   }
 
-  setCurrency(event: any) {
+  async setCurrency(event: any) {
     this.currencyService.setActiveCurrency(event.target ? event.target.value : this.configService.currency)
+    await this.updateRemoteConfig()
   }
 
-  setChain(event: any) {
+  async setChain(event: any) {
     this.web3Service.setActiveChain(event.target ? event.target.value : this.configService.chain)
+    await this.updateRemoteConfig()
   }
 
-  setTimezone(event: any) {
+  async setTimezone(event: any) {
     this.configService.timezone = event.target ? event.target.value : this.configService.timezone
     this.configService.saveTimezone()
+    await this.updateRemoteConfig()
   }
 
-  setLanguage(event: any) {
+  async setLanguage(event: any) {
     this.configService.language = event.target ? event.target.value : this.configService.language
     this.configService.saveLanguage()
+    await this.updateRemoteConfig()
   }
 
-  setFightMultiplier(event: any) {
+  async setFightMultiplier(event: any) {
     this.eventService.publish('multiplier_changed', +event.target.value)
     this.configService.setFightMultiplier(event.target ? +event.target.value : this.configService.fightMultiplier)
+    await this.updateRemoteConfig()
   }
 
-  toggleNewsAlert() {
-    this.configService.newsAlert = !this.configService.newsAlert
-    this.configService.saveNewsAlert()
-    if (this.configService.newsAlert && this.notifService.getPermission() !== "granted") {
-      this.notifService.requestPermission()
+  async toggleNewsAlert() {
+    if (this.subscribed) {
+      this.configService.newsAlert = !this.configService.newsAlert
+      this.configService.saveNewsAlert()
+      await this.updateRemoteConfig()
+      if (this.configService.newsAlert && this.notifService.getPermission() !== "granted") {
+        this.notifService.requestPermission()
+      }
     }
   }
 
-  toggleAccountAlert() {
-    this.configService.accountAlert = !this.configService.accountAlert
-    this.configService.saveAccountAlert()
-    if (this.configService.accountAlert && this.notifService.getPermission() !== "granted") {
-      this.notifService.requestPermission()
+  async toggleAccountAlert() {
+    if (this.subscribed) {
+      this.configService.accountAlert = !this.configService.accountAlert
+      this.configService.saveAccountAlert()
+      await this.updateRemoteConfig()
+      if (this.configService.accountAlert && this.notifService.getPermission() !== "granted") {
+        this.notifService.requestPermission()
+      }
     }
   }
 
-  setRpcUrl(event: any) {
-    if (event.target) {
+  async setRpcUrl(event: any) {
+    if (event.target && this.subscribed) {
       const rpcUrl = event.target.value
       const chain = event.target.dataset.chain
-      this.web3Service.getNetwork(rpcUrl).then((networkId: any) => {
+      this.web3Service.getNetwork(rpcUrl).then(async (networkId: any) => {
         if (+networkId > 0) {
           if (+networkId === +this.web3Service.getNetworkId(chain)) {
             this.configService.rpcUrls = { ...this.configService.rpcUrls, [chain]: rpcUrl }
             this.configService.saveRpcUrls()
+            await this.updateRemoteConfig()
           } else {
             Swal.fire('', `Mismatch network Id. RPC URL provided returns ${networkId}. Require: ${this.web3Service.getNetworkId(chain)}`, 'error')
           }
@@ -129,12 +149,20 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
             const res = fileReader.result
             if (res && this.utilService.isValidJson(res.toString())) {
               const data = JSON.parse(res.toString())
-              keys.forEach(key => {
+              const accepted: any = {}
+              this.configService.configKeys.forEach(key => {
                 if (data[key]) {
                   localStorage.setItem(key, this.utilService.isArrayOrObject(data[key]) ? JSON.stringify(data[key]) : `${data[key]}`)
+                  accepted[key] = data[key]
                 }
               })
               localStorage.setItem('firstLoad', 'true')
+              if (this.subscribed) {
+                await this.apiService.saveConfig({
+                  token: this.configService.userToken,
+                  config: accepted
+                })
+              }
               Swal.fire('', 'Data successfully imported', 'success')
             }
           }
@@ -146,14 +174,7 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
 
   exportData() {
     const fileName = `CBTracker-V2-${new Date().getTime()}.json`
-    const a: any = {};
-    for (var i = 0; i < localStorage.length; i++) {
-      const k: any = localStorage.key(i);
-      if (keys.includes(k)) {
-        const v = this.utilService.parseOrNot(localStorage.getItem(k))
-        a[k] = v;
-      }
-    }
+    const a = this.configService.getAllConfig()
     const textToSave = JSON.stringify(a)
     const textToSaveAsBlob = new Blob([textToSave], {
       type: "text/plain"
@@ -166,6 +187,15 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
     downloadLink.style.display = "none";
     document.body.appendChild(downloadLink);
     downloadLink.click();
+  }
+
+  async updateRemoteConfig() {
+    if (this.configService.userToken) {
+      await this.apiService.saveConfig({
+        token: this.configService.userToken,
+        config: this.configService.getAllConfig()
+      })
+    }
   }
 
 }

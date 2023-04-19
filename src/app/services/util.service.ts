@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import seedrandom from 'seedrandom'
 import BigNumber from 'bignumber.js'
 import * as ethers from 'ethers'
+import jwt_decode from "jwt-decode";
 
 import characterNames from 'src/app/data/character-names.json'
 
@@ -551,5 +552,9 @@ export class UtilService {
       }
     }
     return newArr
+  }
+
+  decodeToken(token: string) {
+    return jwt_decode(token)
   }
 }
