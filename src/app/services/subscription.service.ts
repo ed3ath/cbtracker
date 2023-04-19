@@ -33,7 +33,7 @@ export class SubscriptionService {
       })
       this.configService.subscribed = res.success
       this.user = res.data.user
-      this.expiry = res.data.expiry
+      this.expiry = +res.data.expiry
       if (res.data.token) {
         this.configService.userToken = res.data.token
         this.configService.saveUserToken()
