@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ResponsiveService } from 'src/app/services/responsive.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 
 
 @Component({
@@ -9,14 +10,14 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
   templateUrl: './ads.component.html',
   styleUrls: ['./ads.component.css']
 })
-export class AdsComponent implements OnInit {
+export class AdsComponent {
   @Input() provider = 'coinserom'
   @Input() type = '728x90'
   @Input() dynamic = '728x90'
 
   safeUrl!: SafeResourceUrl
-
   zone: any;
+  subscribed = false
 
   zones: any = {
     '728x90': {
@@ -50,10 +51,17 @@ export class AdsComponent implements OnInit {
       height: 50
     }
   }
-  constructor(public responsiveService: ResponsiveService, public sanitizer: DomSanitizer) { }
-
-  ngOnInit(): void {
-    this.zone = this.zones[this.type]
+  constructor(
+    public responsiveService: ResponsiveService,
+    public sanitizer: DomSanitizer,
+    private subService: SubscriptionService
+  ) {
+    this.subService.subscription$.subscribe((subscribed) => {
+      this.subscribed = subscribed
+      if (!this.subscribed){
+        this.loadAds()
+      }
+    })
     this.responsiveService.screenWidth$.subscribe((width: number) => {
       const rectangles = ['970x90', '728x90', '468x60', '320x50']
       if (width >= 970 && rectangles.includes(this.type) && this.provider !== 'coinserom' && this.dynamic === '970x90') {
@@ -80,9 +88,12 @@ export class AdsComponent implements OnInit {
         }
       }
     })
-    if (this.provider) {
+  }
+
+  loadAds() {
+    this.zone = this.zones[this.type]
+    if (this.provider === 'a-ads' && this.zone) {
       this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`//ad.a-ads.com/${this.zone.id}?size=${this.type}`)
     }
   }
-
 }

@@ -327,7 +327,6 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
 
   async loadData() {
     this.isLoading = true
-    this.default()
     const time = new Date().getTime()
     const characterContract = this.web3Service.getContract('characters')
     const cryptobladesContract = this.web3Service.getContract('cryptoblades')
@@ -379,6 +378,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
             const power = this.utilService.bnToNumber(charsInfo[1])
             const stamina = this.utilService.bnToNumber(charsInfo[2])
             const rep = this.utilService.bnToNumber(charsInfo[3])
+
             const exp = this.utilService.bnToNumber(charsExp[j])
 
             if (stamina >= this.configService.fightMultiplier * 40) {

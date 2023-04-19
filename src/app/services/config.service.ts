@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 
+import { UtilService } from './util.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
+  subscribed = false
   fightMultiplier = 1
   expanded = false
   theme = 'dark'
@@ -17,8 +20,10 @@ export class ConfigService {
   rpcUrls: any
   newsAlert = false
   accountAlert = false
+  userToken = ''
+  configKeys = ['currency', 'rpcUrls', 'display', 'theme', 'activeGroupIndex', 'expanded', 'names', 'chain', 'groups', 'timezone', 'version', 'newsAlert', 'accountAlert']
 
-  constructor() {
+  constructor(private utilService: UtilService) {
     this.fightMultiplier = this.getFightMultiplier()
     this.expanded = this.getExpanded()
     this.theme = this.getTheme()
@@ -32,6 +37,7 @@ export class ConfigService {
     this.rpcUrls = this.getRpcUrls()
     this.newsAlert = this.getNewsAlert()
     this.accountAlert = this.getAccountAlert()
+    this.userToken = this.getUserToken()
   }
 
   getFightMultiplier() {
@@ -54,7 +60,9 @@ export class ConfigService {
   }
 
   getAllGroups() {
-    return JSON.parse(localStorage.getItem('groups') || '[]')
+    const list = JSON.parse(localStorage.getItem('groups') || '[]')
+    if (!this.subscribed) return list.splice(0, 3)
+    return list
   }
 
   getAllAccountNames() {
@@ -140,26 +148,57 @@ export class ConfigService {
   }
 
   getRpcUrls() {
-    return JSON.parse(localStorage.getItem('rpcUrls') || '{}')
+    return this.subscribed ? JSON.parse(localStorage.getItem('rpcUrls') || '{}') : '{}'
   }
 
   saveRpcUrls() {
-    localStorage.setItem('rpcUrls', JSON.stringify(this.rpcUrls))
+    if (this.subscribed) localStorage.setItem('rpcUrls', JSON.stringify(this.rpcUrls))
   }
 
   getNewsAlert() {
-    return localStorage.getItem('newsAlert') === 'true'
+    return this.subscribed && localStorage.getItem('newsAlert') === 'true'
   }
 
   saveNewsAlert() {
-    localStorage.setItem('newsAlert', `${this.newsAlert}`)
+    if (this.subscribed) localStorage.setItem('newsAlert', `${this.newsAlert}`)
   }
 
   getAccountAlert() {
-    return localStorage.getItem('accountAlert') === 'true'
+    return this.subscribed && localStorage.getItem('accountAlert') === 'true'
   }
 
   saveAccountAlert() {
-    localStorage.setItem('accountAlert', `${this.accountAlert}`)
+    if (this.subscribed) localStorage.setItem('accountAlert', `${this.accountAlert}`)
+  }
+
+  getUserToken() {
+    return localStorage.getItem('userToken') || ''
+  }
+
+  saveUserToken() {
+    localStorage.setItem('userToken', this.userToken)
+  }
+
+  getAllConfig() {
+    const accepted: any = {}
+    for (var i = 0; i < localStorage.length; i++) {
+      const k: any = localStorage.key(i);
+      if (this.configKeys.includes(k)) {
+        const v = this.utilService.parseOrNot(localStorage.getItem(k))
+        accepted[k] = v
+      }
+    }
+    return accepted
+  }
+
+  saveRemoteConfig(config: any) {
+    if (this.subscribed && config) {
+      this.configKeys.forEach(key => {
+        if (config[key]) {
+          localStorage.setItem(key, this.utilService.isArrayOrObject(config[key]) ? JSON.stringify(config[key]) : `${config[key]}`)
+        }
+      })
+      localStorage.setItem('firstLoad', 'true')
+    }
   }
 }

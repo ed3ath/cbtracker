@@ -7,8 +7,8 @@ import { ConfigService } from './config.service';
   providedIn: 'root',
 })
 export class GroupService {
-
   constructor(private configService: ConfigService) { }
+
 
   getGroupName(index: number) {
     const groups = this.configService.getAllGroups()
@@ -17,7 +17,8 @@ export class GroupService {
 
   getGroupAccounts(index: number) {
     const groups = this.configService.getAllGroups()
-    return groups[index]?.accounts || []
+    const accounts = groups[index]?.accounts || []
+    return !this.configService.subscribed ? accounts.splice(0, 8) : accounts
   }
 
   getActiveGroupName() {
