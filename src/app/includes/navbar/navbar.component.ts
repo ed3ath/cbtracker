@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   createDrawer!: DrawerInterface
   userInfoDrawer!: DrawerInterface
   subscribed = false
+  isCreating = false
 
   constructor(
     private router: Router,
@@ -177,6 +178,8 @@ export class NavbarComponent implements OnInit {
             }
           }
           this.loginDrawer.hide()
+          elUser.value = ''
+          elPin.value = ''
           Swal.fire('', 'Login successful', 'success')
         } else {
           Swal.fire('', res.error, 'error')
@@ -193,6 +196,7 @@ export class NavbarComponent implements OnInit {
       if (elPin.value !== elPin2.value) {
         Swal.fire('', 'Pin doesn\'t match', 'error')
       } else {
+        this.isCreating = true
         this.apiService.create({
           user: elUser.value,
           pin: elPin.value
@@ -203,10 +207,13 @@ export class NavbarComponent implements OnInit {
               this.configService.saveUserToken()
             }
             this.createDrawer.hide()
+            elUser.value = ''
+            elPin.value = ''
             Swal.fire('', 'Account created.', 'success')
           } else {
             Swal.fire('', res.error, 'error')
           }
+          this.isCreating = false
         })
       }
     }
