@@ -48,18 +48,11 @@ export class NavbarComponent implements OnInit {
         this.page = this.router.url.split('tracker/')[1];
         this.setActivePage(this.page)
         if (!this.subscribed) {
-          const scripts: any = document.querySelectorAll('script[src*="nowhaphopi"]')
+          const scripts: any = document.querySelectorAll('iframe[src*="app.web3ads.net"]')
           scripts.forEach((script: any) => {
             script.remove()
           })
-          this.scriptService.loadJsScript(`(function(axz){
-            var d = document,
-                s = d.createElement('script'),
-                l = d.scripts[d.scripts.length - 1];
-            s.settings = axz || {};
-            s.src = "\/\/nowhaphopi.com\/cWDM9r6.be2A5mlOSTWSQ\/9\/N_DbYW4dOlTLYiyJN_yg0H0ONCjggc5QNdj-I\/4y";
-            l.parentNode.insertBefore(s, l);
-            })({})`)
+          this.scriptService.loadExternalJsScript('evadav-ads', 'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js', true)
         }
       }
     });
@@ -187,7 +180,7 @@ export class NavbarComponent implements OnInit {
             if (res.data.subscribed) {
               this.configService.subscribed = res.data.subscribed
               this.subscribed = res.data.subscribed
-              this.subService.expiry = res.data.expiry
+              this.subService.expiry = +res.data.expiry
               this.subService.user = res.data.user
               this.subService.subscription$.next(res.data.subscribed)
               this.configService.saveRemoteConfig(res.data.config)
