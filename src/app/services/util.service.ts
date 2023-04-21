@@ -344,6 +344,7 @@ export class UtilService {
     const stars = (+properties) & 0x7;
     return {
       id: +id, properties,
+      traitNum,
       element: this.traitNumberToName(traitNum),
       stat1: this.statNumberToName(stat1Type), stat1Value, stat1Type,
       stat2: this.statNumberToName(stat2Type), stat2Value, stat2Type,

@@ -132,9 +132,9 @@ export class MarketComponent implements OnInit {
         this.mainHeaders = this.shieldHeaders
       }
       this.loadList()
-    } else if (index === 'element') {
+    } else if (index === 'element' || index === 'traitName') {
       if (+this.filter[index] >= 0) {
-        this.filteredListings = [...this.listings.filter((i: any) => +i.trait === +this.filter[index])]
+        this.filteredListings = [...this.listings.filter((i: any) => +i.trait === +this.filter[index] || +i.traitNum === +this.filter[index])]
       } else {
         this.filteredListings = [...this.listings]
       }
@@ -142,7 +142,7 @@ export class MarketComponent implements OnInit {
       this.setPage(-this.clientFilter.page)
     } else if (index === 'minPrice' || index === 'maxPrice') {
       if (+this.filter[index] > 0) {
-        this.filteredListings = [...this.listings.filter((i: any) => i.price >= +this.filter.minPrice && i.price <= +this.filter.maxPrice)]
+        this.filteredListings = [...this.listings.filter((i: any) => +i.finalPrice >= +this.filter.minPrice && +i.finalPrice <= +this.filter.maxPrice)]
       } else {
         this.filteredListings = [...this.listings]
       }
@@ -262,8 +262,8 @@ export class MarketComponent implements OnInit {
       this.listings = nftsInfo.map((nftInfo: any, i: number) => ({
         ...nftInfo,
         seller: listings[2][i],
-        price: this.utilService.bnToNumber(listings[3][i]),
-        finalPrice: this.utilService.bnToNumber(nftPrices[i])
+        price: +this.utilService.formatNumber(this.utilService.fromEther(this.utilService.bnToNumber(listings[3][i]))),
+        finalPrice: +this.utilService.formatNumber(this.utilService.fromEther(this.utilService.bnToNumber(nftPrices[i])))
       }))
       this.filteredListings = [...this.listings]
       this.setFilter()
@@ -276,7 +276,6 @@ export class MarketComponent implements OnInit {
   }
 
   setPage(page: number) {
-    console.log(this.clientFilter)
     if (this.filteredListings.length > 0) {
       const nextPage = this.clientFilter.page + page
       if (nextPage >= 0 && nextPage < this.clientFilter.pages) {
