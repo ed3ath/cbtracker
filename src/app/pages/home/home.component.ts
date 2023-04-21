@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   isLoading = true
   isLoadingCurrency = true
   isGen2 = false
-  multicallContract: any
   accounts: any[] = []
   partners: any[] = []
 
@@ -114,7 +113,6 @@ export class HomeComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   async loadData() {
     const time = new Date().getTime()
     this.isLoading = true
-    this.multicallContract = this.web3Service.getMulticall()
 
     if (this.accounts.length > 0) {
       this.nfts.characters = [...await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['characters'], this.web3Service.getOtherContractAddress('characters'), this.accounts.map((account: string) => ({

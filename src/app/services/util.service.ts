@@ -324,6 +324,34 @@ export class UtilService {
     }
   }
 
+  shieldFromContract(id: string | number, data: any) {
+    const properties = data[0];
+    const stat1 = data[1];
+    const stat2 = data[2];
+    const stat3 = data[3];
+
+    const stat1Value = +stat1;
+    const stat2Value = +stat2;
+    const stat3Value = +stat3;
+
+    const statPattern = this.getStatPatternFromProperties(+properties);
+    const stat1Type = this.getStat1Trait(statPattern);
+    const stat2Type = this.getStat2Trait(statPattern);
+    const stat3Type = this.getStat3Trait(statPattern);
+
+    const traitNum = this.getWeaponTraitFromProperties(+properties);
+
+    const stars = (+properties) & 0x7;
+    return {
+      id: +id, properties,
+      element: this.traitNumberToName(traitNum),
+      stat1: this.statNumberToName(stat1Type), stat1Value, stat1Type,
+      stat2: this.statNumberToName(stat2Type), stat2Value, stat2Type,
+      stat3: this.statNumberToName(stat3Type), stat3Value, stat3Type,
+      stars,
+    };
+  }
+
   getRandom(rng: () => number, arr: string | any[]) {
     return arr[Math.floor(rng() * arr.length)]
   }

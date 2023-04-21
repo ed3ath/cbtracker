@@ -20,6 +20,7 @@ import treasuryAbi from 'build/contracts/Treasury.json'
 import questAbi from 'build/contracts/SimpleQuests.json'
 import equipmentAbi from 'build/contracts/EquipmentManager.json'
 import raidAbi from 'build/contracts/Raid1.json'
+import marketAbi from 'build/contracts/NFTMarket.json'
 import multicallAbi from 'build/contracts/MultiCall.json'
 
 const other = ['characters', 'weapons', 'shields', 'equipment']
@@ -52,7 +53,8 @@ export class Web3Service {
       treasury: treasuryAbi.abi,
       quest: questAbi.abi,
       equipment: equipmentAbi.abi,
-      raid: raidAbi.abi
+      raid: raidAbi.abi,
+      market: marketAbi.abi
     }
     this.envName = envName
     this.otherAddress = otherAddress

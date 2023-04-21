@@ -12,6 +12,7 @@ import { TreasuryComponent } from './pages/treasury/treasury.component';
 import { OptionsComponent } from './pages/options/options.component';
 import { AdsComponent } from './includes/ads/ads.component';
 import { AdblockerComponent } from './pages/adblocker/adblocker.component';
+import { MarketComponent } from './pages/market/market.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AdblockerComponent } from './pages/adblocker/adblocker.component';
     TreasuryComponent,
     OptionsComponent,
     AdsComponent,
-    AdblockerComponent
+    AdblockerComponent,
+    MarketComponent
   ],
   imports: [
     BrowserModule,

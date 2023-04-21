@@ -14,6 +14,7 @@ const ABIS = [
   'IStakingRewards',
   'SimpleQuests',
   'EquipmentManager',
+  'NFTMarket',
   'SkillStakingRewardsUpgradeable',
   'SkillStakingRewardsUpgradeable90',
   'SkillStakingRewardsUpgradeable180',
@@ -31,6 +32,17 @@ const appConfigTask = async () => {
   await fs.writeJson(`./build/app-config.json`, appConfig);
 };
 
+const task = async () => {
+  fs.ensureDirSync('./build/contracts');
+
+  await Promise.all(ABIS.map(async (name) => {
+    const abi = await axios.get(`${ABI_URL}/${name}.json`).then((res) => res.data);
+
+    await fs.writeJson(`./build/contracts/${name}.json`, abi);
+  }));
+
+};
+
 const nftRetrievalTask = async () => {
   const config = require('../build/app-config.json')
   const { abi } = require('../build/contracts/CryptoBlades.json')
@@ -38,13 +50,13 @@ const nftRetrievalTask = async () => {
   const other = {}
 
   for (const chain of config.supportedChains) {
-    const contract = new ethers.Contract(config.environments.production.chains[chain].VUE_APP_CRYPTOBLADES_CONTRACT_ADDRESS, abi, new ethers.providers.JsonRpcProvider(config.environments.production.chains[chain].rpcUrls[0]))
+    const contract = new ethers.Contract(config.environments.production.chains[chain].VUE_APP_CRYPTOBLADES_CONTRACT_ADDRESS, abi, new ethers.JsonRpcProvider(config.environments.production.chains[chain].rpcUrls[0]))
     const characters = await contract.characters()
     const weapons = await contract.weapons()
     const blacksmith = await contract.blacksmith()
 
-    const bsContract = new ethers.Contract(blacksmith, require('../build/contracts/Blacksmith.json').abi, new ethers.providers.JsonRpcProvider(config.environments.production.chains[chain].rpcUrls[0]))
-    const raidContract = new ethers.Contract(config.environments.production.chains[chain].VUE_APP_RAID_CONTRACT_ADDRESS, require('../build/contracts/Raid1.json').abi, new ethers.providers.JsonRpcProvider(config.environments.production.chains[chain].rpcUrls[0]))
+    const bsContract = new ethers.Contract(blacksmith, require('../build/contracts/Blacksmith.json').abi, new ethers.JsonRpcProvider(config.environments.production.chains[chain].rpcUrls[0]))
+    const raidContract = new ethers.Contract(config.environments.production.chains[chain].VUE_APP_RAID_CONTRACT_ADDRESS, require('../build/contracts/Raid1.json').abi, new ethers.JsonRpcProvider(config.environments.production.chains[chain].rpcUrls[0]))
     const shields = await bsContract.shields()
     const linkId = (await raidContract.LINK_EQUIPMENT_MANAGER()).toString()
     const equipment = await raidContract.links(linkId)
@@ -59,5 +71,5 @@ const nftRetrievalTask = async () => {
   await fs.writeFile(`./build/other.json`, JSON.stringify(other));
 }
 
-appConfigTask().then(() => nftRetrievalTask())
+task().then(() => appConfigTask().then(() => nftRetrievalTask()))
 

@@ -1,0 +1,444 @@
+<div class="pt4 flex justify-center items-center text-center">
+  <app-ads provider="coinserom" type="728x90"></app-ads>
+</div>
+<div class="px-2 pt-4 mb-16">
+  <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm
+    2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+      <div class="grid w-full gap-4 mt-4 grid-cols-1 md:grid-cols-3
+        lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 p-4 bg-white
+        dark:bg-gray-900">
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">NFT Type</label>
+          <select id="nft-type" class="bg-gray-50 border border-gray-300
+            text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            (change)="setMainFilter('nftType', $event)">
+            <option selected>-- Choose a NFT Type --</option>
+            <option value="characters">Characters</option>
+            <option value="weapons">Weapons</option>
+            <option value="shields">Shields</option>
+          </select>
+        </div>
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Element</label>
+          <select id="element" class="bg-gray-50 border border-gray-300
+            text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            (change)="setMainFilter('element', $event)">
+            <option value="-1" selected>-- All element --</option>
+            <option value="0">Fire</option>
+            <option value="1">Earth</option>
+            <option value="2">Lightning</option>
+            <option value="3">Water</option>
+          </select>
+        </div>
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Min. Price</label>
+          <input type="number" min="0" max="9999999999" id="minPrice"
+            class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Min. Level" (change)="setMainFilter('minPrice',
+            $event)" [value]="filter.minPrice">
+        </div>
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Max. Price</label>
+          <input type="number" min="0" max="9999999999" id="maxPrice"
+            class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Max. Level" (change)="setMainFilter('maxPrice',
+            $event)" [value]="filter.maxPrice">
+        </div>
+        <!-- character filters -->
+        <div class="relative" *ngIf="filter.nftType === 'characters'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Min. Level</label>
+          <input type="number" min="1" max="255" id="minLevel" class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Min. Level" (change)="setCharFilter('minLevel',
+            $event)" [value]="charFilters.minLevel">
+        </div>
+        <div class="relative" *ngIf="filter.nftType === 'characters'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Max. Level</label>
+          <input type="number" min="1" max="255" id="maxLevel" class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Max. Level" (change)="setCharFilter('maxLevel',
+            $event)" [value]="charFilters.maxLevel">
+        </div>
+        <div class="relative" *ngIf="filter.nftType === 'characters'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Min. Power</label>
+          <input type="number" min="1000" max="99999999999" id="minPower"
+            class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Min. Power" (change)="setCharFilter('minPower',
+            $event)" [value]="charFilters.minPower">
+        </div>
+        <div class="relative" *ngIf="filter.nftType === 'characters'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Max. Power</label>
+          <input type="number" min="1000" max="99999999999" id="maxPower"
+            class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Max. Power" (change)="setCharFilter('maxPower',
+            $event)" [value]="charFilters.maxPower">
+        </div>
+        <!-- end character filters -->
+        <!-- weapon filters -->
+        <div class="relative" *ngIf="filter.nftType === 'weapons'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Min. Stars</label>
+          <input type="number" min="1" max="5" id="minStars" class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Min. Stars" (change)="setWeaponFilter('minStars',
+            $event)" [value]="weaponFilters.minStars">
+        </div>
+        <div class="relative" *ngIf="filter.nftType === 'weapons'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Max. Stars</label>
+          <input type="number" min="1" max="5" id="maxStars" class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Max. Stars" (change)="setWeaponFilter('maxStars',
+            $event)" [value]="weaponFilters.maxStars">
+        </div>
+        <div class="relative" *ngIf="filter.nftType === 'weapons'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Min. Power</label>
+          <input type="number" min="1000" max="99999999999" id="minPower"
+            class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Min. Power" (change)="setWeaponFilter('minPower',
+            $event)" [value]="weaponFilters.minPower">
+        </div>
+        <div class="relative" *ngIf="filter.nftType === 'weapons'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Max. Power</label>
+          <input type="number" min="1000" max="99999999999" id="maxPower"
+            class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Max. Power" (change)="setWeaponFilter('maxPower',
+            $event)" [value]="weaponFilters.maxPower">
+        </div>
+        <!-- end weapon filters -->
+        <!-- weapon filters -->
+        <div class="relative" *ngIf="filter.nftType === 'shields'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Min. Stars</label>
+          <input type="number" min="1" max="5" id="minStars" class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Min. Stars" (change)="setShieldFilter('minStars',
+            $event)" [value]="shieldFilters.minStars">
+        </div>
+        <div class="relative" *ngIf="filter.nftType === 'shields'">
+          <label class="block mb-2 text-sm font-medium text-gray-900
+            dark:text-white" for="file_input">Max. Stars</label>
+          <input type="number" min="1" max="5" id="maxStars" class="bg-gray-50
+            border
+            border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Max. Stars" (change)="setShieldFilter('maxStars',
+            $event)" [value]="shieldFilters.maxStars">
+        </div>
+        <!-- end weapon filters -->
+      </div>
+      <div class="w-full text-sm text-left text-gray-500 dark:text-gray-400 p-5"
+        *ngIf="loading && !nodata">
+        <div role="status" class="relative flex items-center justify-center
+          bg-cover bg-center text-center p-4">
+          <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin
+            dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858
+              100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50
+              0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144
+              50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094
+              90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50
+              9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079
+                33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452
+                15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754
+                1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843
+                41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501
+                6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511
+                9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928
+                12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849
+                25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083
+                38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+              </svg>
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <div class="w-full overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-500
+              dark:text-gray-400"
+              *ngIf="!loading">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50
+                dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" class="px-6 py-3" *ngFor="let header of
+                    mainHeaders;
+                    let i=index">
+                    <div class="flex items-center">
+                      {{header.name}}
+                      <a (click)="toggleSort(header.id)" *ngIf="header.sort"
+                        class="cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3
+                          ml-1"
+                          aria-hidden="true" fill="currentColor" viewBox="0 0
+                          320
+                          512">
+                          <path [attr.fill]="tableSorts && tableSorts[header.id]
+                            ===
+                            'asc' ? 'white' : ''" d="M27.66 224h264.7c24.6 0
+                            36.89-29.78
+                            19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055
+                            0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2
+                            3.055
+                            224 27.66 224z"/>
+                            <path [attr.fill]="tableSorts &&
+                              tableSorts[header.id]
+                              ===
+                              'desc' ? 'white' : ''" d="M292.3 288H27.66c-24.6
+                              0-36.89
+                              29.77-19.54
+                              47.12l132.5 136.8C145.9 477.3 152.1 480 160
+                              480c7.053 0
+                              14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8
+                              316.9
+                              288
+                              292.3 288z" />
+                            </svg>
+                          </a>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of
+                      displayedListings[clientFilter.page];
+                      let
+                      i=index">
+                      <td class="px-6 py-4">
+                        {{item.id}}
+                      </td>
+                      <td class="px-6 py-4">
+                        <span [class]="utilService.elementColor(item.traitName || item.element)">{{item.traitName || item.element}}</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        {{(item.level || item.stars) + 1}}
+                      </td>
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'characters'">
+                        {{item.rep ? item.rep : 0}}
+                      </td>
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons' || filter.nftType === 'shields'">
+                        {{item.stat1Value ? item.stat1Value : 0}} {{utilService.statNumberToName(item.stat1Type)}}
+                      </td>
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons' || filter.nftType === 'shields'">
+                        {{item.stat2Value ? item.stat2Value : 0}} {{utilService.statNumberToName(item.stat2Type)}}
+                      </td>
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons' || filter.nftType === 'shields'">
+                        {{item.stat3Value ? item.stat3Value : 0}} {{utilService.statNumberToName(item.stat3Type)}}
+                      </td>
+                      <td class="px-6 py-4" *ngIf="filter.nftType !== 'shields'">
+                        {{item.power || item.bonusPower}}
+                      </td>
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'characters'">
+                        {{item.stamina ? item.stamina : 0}}
+                      </td>
+                      <td class="px-6 py-4">
+                        {{item.seller}}
+                      </td>
+                      <td class="px-6 py-4">
+                        {{utilService.formatNumber(utilService.fromEther(item.finalPrice))}}
+                      </td>
+                      <td class="px-6 py-4">
+                        <a target="_blank" [href]="getLink(item.id)"
+                          class="text-warning-500">Buy</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav class="grid w-full gap-4 mt-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 p-5"
+                aria-label="Table
+                navigation" *ngIf="!loading">
+                <div class="inline-flex items-center col-span-1 md:col-span-1
+                  lg:col-span-2 xl:col-span-2 2xl:col-span-3">
+                  <button (click)="setBatch(-1)" class="block px-3 py-2 ml-0
+                    leading-tight text-gray-500
+                    bg-white border border-gray-300 rounded-l-lg
+                    hover:bg-gray-100
+                    hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700
+                    dark:text-gray-400 dark:hover:bg-gray-700
+                    dark:hover:text-white col-span-1 md:col-span-1 lg:col-span-1
+                    xl:col-span-2 2xl:col-span-2">
+                    <span class="sr-only">Previous</span>
+                    <svg class="w-5 h-5" aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path
+                        fill-rule="evenodd" d="M12.707 5.293a1 1 0 010
+                        1.414L9.414
+                        10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0
+                        010-1.414l4-4a1
+                        1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  </button>
+                  <span class="text-sm font-normal text-gray-500
+                    dark:text-gray-400 px-4 col-span-1 md:col-span-1
+                    lg:col-span-1 xl:col-span-2 2xl:col-span-2">Showing
+                    <span class="font-semibold text-gray-900 dark:text-white">{{filteredListings.length
+                      > 0
+                      ? clientFilter.offset + 1 : 0}}-{{clientFilter.offset +
+                      displayedListings[clientFilter.page]?.length || 0}}</span>
+                    of <span class="font-semibold text-gray-900
+                      dark:text-white">{{filteredListings.length}}</span>
+                  </span>
+                  <button (click)="setBatch(1)" class="block px-3 py-2
+                    leading-tight
+                    text-gray-500
+                    bg-white border border-gray-300 rounded-r-lg
+                    hover:bg-gray-100
+                    hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700
+                    dark:text-gray-400 dark:hover:bg-gray-700
+                    dark:hover:text-white">
+                    <span class="sr-only">Next</span>
+                    <svg class="w-5 h-5" aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fill-rule="evenodd" d="M7.293 14.707a1 1 0
+                        010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4
+                        4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd"></path></svg>
+                  </button>
+                  <span class="text-sm font-normal text-gray-500
+                    dark:text-gray-400 px-4">Retrieved
+                    <span class="font-semibold text-gray-900 dark:text-white">{{filter.offset
+                      + 1}}</span> to
+                    <span class="font-semibold text-gray-900 dark:text-white">{{filter.offset
+                      + filter.limit}}</span> of
+                    <span class="font-semibold text-gray-900 dark:text-white">{{maxListing}}</span>
+                  </span>
+                </div>
+                <div class="grid col-span-2 col-end-auto">
+                  <ul class="inline-flex items-center justify-end">
+                    <li>
+                      <button (click)="setPage(-1)" class="block px-3 py-2 ml-0
+                        leading-tight text-gray-500
+                        bg-white border border-gray-300 rounded-l-lg
+                        hover:bg-gray-100
+                        hover:text-gray-700 dark:bg-gray-800
+                        dark:border-gray-700
+                        dark:text-gray-400 dark:hover:bg-gray-700
+                        dark:hover:text-white">
+                        <span class="sr-only">Previous</span>
+                        <svg class="w-5 h-5" aria-hidden="true"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"><path
+                            fill-rule="evenodd" d="M12.707 5.293a1 1 0 010
+                            1.414L9.414
+                            10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0
+                            010-1.414l4-4a1
+                            1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                      </button>
+                    </li>
+                    <li>
+                      <span class="px-3 py-2 leading-tight text-blue-600 border
+                        border-bl
+                        text-blue-600 border border-blue-300 bg-blue-50
+                        hover:bg-blue-100
+                        hover:text-blue-700 dark:border-gray-700
+                        dark:bg-gray-700
+                        dark:text-white">{{clientFilter.page + 1}}</span>
+                    </li>
+                    <li>
+                      <button (click)="setPage(1)" class="block px-3 py-2
+                        leading-tight
+                        text-gray-500
+                        bg-white border border-gray-300 rounded-r-lg
+                        hover:bg-gray-100
+                        hover:text-gray-700 dark:bg-gray-800
+                        dark:border-gray-700
+                        dark:text-gray-400 dark:hover:bg-gray-700
+                        dark:hover:text-white">
+                        <span class="sr-only">Next</span>
+                        <svg class="w-5 h-5" aria-hidden="true"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"><path
+                            fill-rule="evenodd" d="M7.293 14.707a1 1 0
+                            010-1.414L10.586
+                            10
+                            7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010
+                            1.414l-4
+                            4a1
+                            1
+                            0
+                            01-1.414 0z" clip-rule="evenodd"></path></svg>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+
+          </div>
+        </div>

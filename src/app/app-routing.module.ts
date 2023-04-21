@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AccountsComponent } from './pages/accounts/accounts.component';
 import { TreasuryComponent } from './pages/treasury/treasury.component';
+import { MarketComponent } from './pages/market/market.component';
 import { OptionsComponent } from './pages/options/options.component';
 import { AdblockerComponent } from './pages/adblocker/adblocker.component';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent, canActivate: [AdblockerGuard] },
       { path: 'accounts', component: AccountsComponent, canActivate: [AdblockerGuard] },
       { path: 'treasury', component: TreasuryComponent, canActivate: [AdblockerGuard] },
+      { path: 'market', component: MarketComponent, canActivate: [AdblockerGuard] },
       { path: 'options', component: OptionsComponent, canActivate: [AdblockerGuard] },
       { path: 'adblocker', component: AdblockerComponent},
       { path: '*', redirectTo: '/home', pathMatch: 'full' },
