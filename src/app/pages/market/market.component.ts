@@ -110,7 +110,7 @@ export class MarketComponent implements OnInit {
     public web3Service: Web3Service,
     public utilService: UtilService,
     private subService: SubscriptionService,
-    private configService: ConfigService
+    public configService: ConfigService
   ) { }
 
   ngOnInit(): void {

@@ -78,7 +78,8 @@
         dark:bg-gray-800" *ngIf="!subscribed">
         <h3 class="mb-4 text-xl font-semibold dark:text-white">Sponsor</h3>
         <div class="flex justify-center items-center text-center">
-          <app-ads provider="a-ads" type="300x250"></app-ads>
+          <div id="ezoic-pub-ad-placeholder-109" *ngIf="!configService.subscribed"></div>
+          <!--<app-ads provider="a-ads" type="300x250"></app-ads>-->
         </div>
       </div>
     </div>

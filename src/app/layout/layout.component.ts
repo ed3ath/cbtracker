@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd } from '@angular/router';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-layout',
@@ -10,13 +11,7 @@ import { NavigationEnd, Router } from '@angular/router';
 export class LayoutComponent implements OnInit {
   page = 'home'
 
-  constructor(private router: Router) {
-    router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.page = this.router.url.split('tracker/')[1];
-      }
-    });
-  }
+  constructor(public configService: ConfigService) {}
 
   ngOnInit(): void { }
 

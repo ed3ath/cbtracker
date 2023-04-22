@@ -201,6 +201,10 @@
               block" (click)="login()">Login</button>
           </div>
         </form>
+        <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
+        <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+          <div id="ezoic-pub-ad-placeholder-105"></div>
+        </div>
       </div>
       <!-- create drawer -->
       <div id="create-menu" #createMenu class="fixed top-0 right-0 z-40 h-screen
@@ -271,6 +275,10 @@
               dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
               block" (click)="createAccount()" [disabled]="isCreating ? 'true' : null">Create Account</button>
           </div>
+          <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
+          <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+            <div id="ezoic-pub-ad-placeholder-105"></div>
+          </div>
         </form>
       </div>
       <!-- user info drawer -->
@@ -304,6 +312,10 @@
           focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm
           px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600
           dark:focus:ring-red-900" (click)="logout()">Logout</button>
+        <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
+        <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+          <div id="ezoic-pub-ad-placeholder-105"></div>
+        </div>
       </div>
     </div>
     <!-- main menu-->

@@ -33,7 +33,8 @@
             focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            (change)="setMainFilter(filter.nftType === 'character' ? 'traitName' : 'element', $event)">
+            (change)="setMainFilter(filter.nftType === 'character' ? 'traitName'
+            : 'element', $event)">
             <option value="-1" selected>-- All element --</option>
             <option value="0">Fire</option>
             <option value="1">Earth</option>
@@ -280,27 +281,37 @@
                         {{item.id}}
                       </td>
                       <td class="px-6 py-4">
-                        <span [class]="utilService.elementColor(item.traitName || item.element)">{{item.traitName || item.element}}</span>
+                        <span [class]="utilService.elementColor(item.traitName
+                          || item.element)">{{item.traitName || item.element}}</span>
                       </td>
                       <td class="px-6 py-4">
                         {{(item.level || item.stars) + 1}}
                       </td>
-                      <td class="px-6 py-4" *ngIf="filter.nftType === 'characters'">
+                      <td class="px-6 py-4" *ngIf="filter.nftType ===
+                        'characters'">
                         {{item.rep ? item.rep : 0}}
                       </td>
-                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons' || filter.nftType === 'shields'">
-                        {{item.stat1Value ? item.stat1Value : 0}} {{utilService.statNumberToName(item.stat1Type)}}
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons'
+                        || filter.nftType === 'shields'">
+                        {{item.stat1Value ? item.stat1Value : 0}}
+                        {{utilService.statNumberToName(item.stat1Type)}}
                       </td>
-                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons' || filter.nftType === 'shields'">
-                        {{item.stat2Value ? item.stat2Value : 0}} {{utilService.statNumberToName(item.stat2Type)}}
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons'
+                        || filter.nftType === 'shields'">
+                        {{item.stat2Value ? item.stat2Value : 0}}
+                        {{utilService.statNumberToName(item.stat2Type)}}
                       </td>
-                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons' || filter.nftType === 'shields'">
-                        {{item.stat3Value ? item.stat3Value : 0}} {{utilService.statNumberToName(item.stat3Type)}}
+                      <td class="px-6 py-4" *ngIf="filter.nftType === 'weapons'
+                        || filter.nftType === 'shields'">
+                        {{item.stat3Value ? item.stat3Value : 0}}
+                        {{utilService.statNumberToName(item.stat3Type)}}
                       </td>
-                      <td class="px-6 py-4" *ngIf="filter.nftType !== 'shields'">
+                      <td class="px-6 py-4" *ngIf="filter.nftType !==
+                        'shields'">
                         {{item.power || item.bonusPower}}
                       </td>
-                      <td class="px-6 py-4" *ngIf="filter.nftType === 'characters'">
+                      <td class="px-6 py-4" *ngIf="filter.nftType ===
+                        'characters'">
                         {{item.stamina ? item.stamina : 0}}
                       </td>
                       <td class="px-6 py-4">
@@ -317,7 +328,8 @@
                   </tbody>
                 </table>
               </div>
-              <nav class="grid w-full gap-4 mt-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 p-5"
+              <nav class="grid w-full gap-4 mt-4 grid-cols-1 md:grid-cols-3
+                lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 p-5"
                 aria-label="Table
                 navigation" *ngIf="!loading">
                 <div class="inline-flex items-center col-span-1 md:col-span-1
@@ -441,4 +453,9 @@
             </div>
 
           </div>
+        </div>
+
+        <div class="pt-4 flex justify-center items-center text-center">
+          <div id="ezoic-pub-ad-placeholder-107" *ngIf="!configService.subscribed"></div>
+          <!--<app-ads provider="a-ads" type="468x60" dynamic="468x60"></app-ads>-->
         </div>
