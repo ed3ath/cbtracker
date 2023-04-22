@@ -53,10 +53,13 @@ export class NavbarComponent implements OnInit {
             script.remove()
           })
           this.scriptService.loadExternalJsScript('evadav-ads', 'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js', true)
-          //this.scriptService.loadExternalJsScript('evadav-ads2', 'https://xdiwbc.com/pw/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyNDMsInNyYyI6Mn0=eyJ.js', true)
+          this.scriptService.loadExternalJsScript('rich-ads', 'https://richinfo.co/richpartners/pops/js/richads-pu-ob.js', false, null, {
+            'data-pubid': "877517",
+            'data-siteid': "328436"
+          })
         } else {
           document.querySelector('script#evadav-ads')?.remove()
-          //document.querySelector('script#evadav-ads2')?.remove()
+          document.querySelector('rich-ads')?.remove()
         }
       }
     });

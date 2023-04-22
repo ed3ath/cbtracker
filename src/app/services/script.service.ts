@@ -14,7 +14,9 @@ export class ScriptService {
     script.src = src;
     script.id = id;
     if (data) {
-      script.setAttribute('data-cfasync', 'false');
+      Object.keys(data).forEach((attr) => {
+        script.setAttribute(attr, data[attr]);
+      })
     }
     if (async) {
       script.async = true;
