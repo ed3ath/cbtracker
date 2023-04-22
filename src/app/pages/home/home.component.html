@@ -1,5 +1,6 @@
 <div class="pt-4 flex justify-center items-center text-center">
-  <app-ads provider="a-ads" type="728x90"></app-ads>
+  <!--<app-ads provider="a-ads" type="728x90"></app-ads>-->
+  <div id="ezoic-pub-ad-placeholder-102" *ngIf="!configService.subscribed"></div>
 </div>
 <div class="px-2 pt-4" *ngIf="isLoading">
   <div
