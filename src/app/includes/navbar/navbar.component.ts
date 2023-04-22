@@ -47,19 +47,13 @@ export class NavbarComponent implements OnInit {
       if (val instanceof NavigationEnd) {
         this.page = this.router.url.split('tracker/')[1];
         this.setActivePage(this.page)
-        if (!this.subscribed) {
+        if (this.subscribed) {
           const scripts: any = document.querySelectorAll('iframe[src*="app.web3ads.net"]')
           scripts.forEach((script: any) => {
             script.remove()
           })
-          this.scriptService.loadExternalJsScript('evadav-ads', 'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js', true)
-          this.scriptService.loadExternalJsScript('rich-ads', 'https://richinfo.co/richpartners/pops/js/richads-pu-ob.js', false, null, {
-            'data-pubid': "877517",
-            'data-siteid': "328436"
-          })
-        } else {
           document.querySelector('script#evadav-ads')?.remove()
-          document.querySelector('rich-ads')?.remove()
+          document.querySelector('script#rich-ads')?.remove()
         }
       }
     });
