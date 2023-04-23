@@ -333,9 +333,7 @@
                 <!-- ads -->
                 <div class="w-full row-span-2 p-2 flex items-center
                   justify-center">
-                  <div id="ezoic-pub-ad-placeholder-104"
-                    *ngIf="!configService.subscribed"></div>
-                  <!--<app-ads provider="a-ads" type="250x250"></app-ads>-->
+                  <app-ads provider="a-ads" type="250x250"></app-ads>
                 </div>
                 <!-- end ads -->
               </div>
@@ -403,7 +401,7 @@
           block" (click)="showAddAccountDrawer()">Add Account</button>
         <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
         <div class="mt-4 py-4" *ngIf="!configService.subscribed">
-          <div id="ezoic-pub-ad-placeholder-105"></div>
+          <app-ads type="300x250"></app-ads>
         </div>
       </div>
       <!-- end groups drawer -->
@@ -441,7 +439,7 @@
             block" (click)="saveNewGroup()">Save</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
           <div class="mt-4 py-4" *ngIf="!configService.subscribed">
-            <div id="ezoic-pub-ad-placeholder-105"></div>
+            <app-ads type="300x250"></app-ads>
           </div>
         </form>
       </div>
@@ -489,7 +487,7 @@
             block" (click)="deleteGroup()">Delete</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
           <div class="mt-4 py-4" *ngIf="!configService.subscribed">
-            <div id="ezoic-pub-ad-placeholder-105"></div>
+            <app-ads type="300x250"></app-ads>
           </div>
         </form>
       </div>
@@ -543,7 +541,7 @@
             block" (click)="saveAccount()">Save</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
           <div class="mt-4 py-4" *ngIf="!configService.subscribed">
-            <div id="ezoic-pub-ad-placeholder-105"></div>
+            <app-ads type="300x250"></app-ads>
           </div>
         </form>
       </div>
@@ -623,7 +621,7 @@
             block" (click)="deleteAccount()" [disabled]="isLoading">Delete</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
           <div class="mt-4 py-4" *ngIf="!configService.subscribed">
-            <div id="ezoic-pub-ad-placeholder-105"></div>
+            <app-ads type="300x250"></app-ads>
           </div>
         </form>
       </div>
@@ -704,7 +702,7 @@
           </div>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
           <div class="mt-4 py-4" *ngIf="!configService.subscribed">
-            <div id="ezoic-pub-ad-placeholder-105"></div>
+            <app-ads type="300x250"></app-ads>
           </div>
         </form>
       </div>
@@ -742,6 +740,5 @@
 
 
   <div class="pt-4 flex justify-center items-center text-center">
-    <div id="ezoic-pub-ad-placeholder-110" *ngIf="!configService.subscribed"></div>
-    <!--<app-ads provider="a-ads" type="468x60" dynamic="468x60"></app-ads>-->
+    <app-ads provider="a-ads" type="468x60" dynamic="468x60"></app-ads>
   </div>

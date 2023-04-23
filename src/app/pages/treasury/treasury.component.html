@@ -101,9 +101,6 @@
               <div class="w-full justify-center py-4 text-gray-900 dark:text-white">
                 {{partner.data[1]}}
               </div>
-              <div class="col-span-4 row-span-4 grid gap-4 items-center justify-center bg-cover bg-center text-center">
-                <div id="ezoic-pub-ad-placeholder-111" *ngIf="!configService.subscribed"></div>
-              </div>
             </div>
           </div>
 
@@ -114,6 +111,5 @@
 </div>
 
 <div class="pt-4 flex justify-center items-center text-center">
-  <div id="ezoic-pub-ad-placeholder-108" *ngIf="!configService.subscribed"></div>
-  <!--<app-ads provider="a-ads" type="468x60" dynamic="468x60"></app-ads>-->
+  <app-ads provider="a-ads" type="468x60" dynamic="468x60"></app-ads>
 </div>
