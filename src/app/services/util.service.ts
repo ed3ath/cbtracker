@@ -203,8 +203,8 @@ export class UtilService {
   characterFromContract(id: string | number, data: any) {
     const xp = data[0]
     const level = parseInt(data[1], 10)
-    const trait = +data[2]
-    const traitName = this.traitNumberToName(+data[2])
+    const traitNum = +data[2]
+    const traitName = this.traitNumberToName(traitNum)
     const staminaTimestamp = data[3]
     const head = +data[4]
     const arms = +data[5]
@@ -216,7 +216,7 @@ export class UtilService {
       id: +id,
       xp,
       level,
-      trait,
+      traitNum,
       traitName,
       staminaTimestamp,
       head,

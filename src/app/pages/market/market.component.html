@@ -33,8 +33,7 @@
             focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            (change)="setMainFilter(filter.nftType === 'character' ? 'traitName'
-            : 'element', $event)">
+            (change)="setMainFilter('element', $event)">
             <option value="-1" selected>-- All element --</option>
             <option value="0">Fire</option>
             <option value="1">Earth</option>
@@ -285,7 +284,7 @@
                           || item.element)">{{item.traitName || item.element}}</span>
                       </td>
                       <td class="px-6 py-4">
-                        {{(item.level || item.stars) + 1}}
+                        {{(filter.nftType === 'characters' ? item.level || 0 : item.stars || 0) + 1}}
                       </td>
                       <td class="px-6 py-4" *ngIf="filter.nftType ===
                         'characters'">

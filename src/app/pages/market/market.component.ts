@@ -28,7 +28,7 @@ export class MarketComponent implements OnInit {
     minPrice: 0,
     maxPrice: 9999999999,
     nftType: '',
-    limit: 150,
+    limit: 50,
     offset: 0
   }
   clientFilter: any = {
@@ -39,6 +39,8 @@ export class MarketComponent implements OnInit {
     menuPages: []
   }
   mainHeaders: any[] = []
+
+  combinedFilters: any[] = []
 
   charHeaders = [
     { id: 'id', name: 'ID', sort: true },
@@ -68,7 +70,7 @@ export class MarketComponent implements OnInit {
     { id: 'stat1', name: 'Stat 1', sort: true },
     { id: 'stat2', name: 'Stat 2', sort: true },
     { id: 'stat3', name: 'Stat 3', sort: true },
-    { id: 'bonusPower', name: 'Bonus Power', sort: true},
+    { id: 'bonusPower', name: 'Bonus Power', sort: true },
     { id: 'seller', name: 'Seller', sort: true },
     { id: 'price', name: 'Price', sort: true },
     { id: 'buy', name: 'Buy', sort: false }
@@ -78,7 +80,7 @@ export class MarketComponent implements OnInit {
     element: -1,
     minStars: 1,
     maxStars: 5,
-    minPower: 1000,
+    minPower: 0,
     maxPower: 99999999
   }
 
@@ -118,70 +120,74 @@ export class MarketComponent implements OnInit {
     this.subService.subscription$.subscribe((subscribed: boolean) => {
       this.subscribed = subscribed
     })
+
+    this.combinedFilters = [{
+      key: 'level',
+      fn: (i: any) => i.level >= +this.charFilters.minLevel && i.level <= +this.charFilters.maxLevel
+    }]
   }
 
   setMainFilter(index: string, $event: any) {
-    this.filter[index] = $event.target?.value || this.filter[index]
+    this.filter[index] = index === 'nftType' ? $event.target?.value : +$event.target?.value
     if (index === 'nftType') {
       this.mainHeaders = []
+      this.combinedFilters = [
+        (i: any) => this.filter.element >= 0 ? i.traitNum === this.filter.element : i.traitNum >= 0,
+        (i: any) => +i.finalPrice >= this.filter.minPrice && +i.finalPrice <= this.filter.maxPrice
+      ]
       if (this.filter[index] === 'characters') {
         this.mainHeaders = this.charHeaders
+        this.combinedFilters = [
+          ...this.combinedFilters,
+          (i: any) => +(i.level || 0) + 1 >= +this.charFilters.minLevel && +(i.level || 0) + 1 <= +this.charFilters.maxLevel,
+          (i: any) => +(i.power || 0) >= +this.charFilters.minPower && +(i.power || 0) <= +this.charFilters.maxPower,
+          (i: any) => +(i.rep || 0) >= +this.charFilters.minRep && +(i.rep || 0) <= +this.charFilters.maxRep
+        ]
       } else if (this.filter[index] === 'weapons') {
         this.mainHeaders = this.weaponHeaders
+        this.combinedFilters = [
+          ...this.combinedFilters,
+          (i: any) => +(i.stars || 0) + 1 >= +this.weaponFilters.minStars && +(i.stars || 0) + 1 <= +this.weaponFilters.maxStars,
+          (i: any) => +i.bonusPower >= +this.weaponFilters.minPower && +i.bonusPower <= +this.weaponFilters.maxPower
+        ]
       } else if (this.filter[index] === 'shields') {
         this.mainHeaders = this.shieldHeaders
+        this.combinedFilters = [
+          ...this.combinedFilters,
+          (i: any) => +(i.stars || 0) + 1 >= +this.shieldFilters.minStars && +(i.stars || 0) + 1 <= +this.shieldFilters.maxStars
+        ]
       }
       this.loadList()
-    } else if (index === 'element' || index === 'traitName') {
-      if (+this.filter[index] >= 0) {
-        this.filteredListings = [...this.listings.filter((i: any) => +i.trait === +this.filter[index] || +i.traitNum === +this.filter[index])]
-      } else {
-        this.filteredListings = [...this.listings]
-      }
+    } else {
+      this.filteredListings = [...this.getFilteredResults()]
       this.setFilter()
-      this.setPage(-this.clientFilter.page)
-    } else if (index === 'minPrice' || index === 'maxPrice') {
-      if (+this.filter[index] > 0) {
-        this.filteredListings = [...this.listings.filter((i: any) => +i.finalPrice >= +this.filter.minPrice && +i.finalPrice <= +this.filter.maxPrice)]
-      } else {
-        this.filteredListings = [...this.listings]
-      }
-      this.setFilter()
-      this.setPage(-this.clientFilter.page)
     }
   }
 
   setCharFilter(index: string, $event: any) {
-    this.charFilters[index] = $event.target?.value || this.charFilters[index]
-    if (index === 'minLevel' || index === 'maxLevel') {
-      this.filteredListings = [...this.listings.filter((i: any) => (i.level + 1) >= +this.charFilters.minLevel && (i.level + 1) <= +this.charFilters.maxLevel)]
-      this.setFilter()
-    } else if (index === 'minPower' || index === 'maxPower') {
-      this.filteredListings = [...this.listings.filter((i: any) => i.power >= +this.charFilters.minPower && i.power <= +this.charFilters.maxPower)]
-      this.setFilter()
-    } else if (index === 'minRep' || index === 'maxRep') {
-      this.filteredListings = [...this.listings.filter((i: any) => i.rep >= +this.charFilters.minRep && i.rep <= +this.charFilters.maxRep)]
-      this.setFilter()
-    }
+    this.charFilters[index] = +($event.target?.value || 0)
+    this.filteredListings = [...this.getFilteredResults()]
+    this.setFilter()
+  }
+
+  getFilteredResults() {
+    let temp: any[] = [...this.listings]
+    this.combinedFilters.forEach((filter: any) => {
+      temp = [...temp.filter(filter)]
+    })
+    return temp
   }
 
   setWeaponFilter(index: string, $event: any) {
-    this.weaponFilters[index] = $event.target?.value || this.weaponFilters[index]
-    if (index === 'minStars' || index === 'maxStars') {
-      this.filteredListings = [...this.listings.filter((i: any) => (i.stars + 1) >= +this.weaponFilters.minStars && (i.stars + 1) <= +this.weaponFilters.maxStars)]
-      this.setFilter()
-    } else if (index === 'minPower' || index === 'maxPower') {
-      this.filteredListings = [...this.listings.filter((i: any) => i.bonusPower >= +this.weaponFilters.minPower && i.bonusPower <= +this.weaponFilters.maxPower)]
-      this.setFilter()
-    }
+    this.weaponFilters[index] = +($event.target?.value || 0)
+    this.filteredListings = [...this.getFilteredResults()]
+    this.setFilter()
   }
 
   setShieldFilter(index: string, $event: any) {
-    this.shieldFilters[index] = $event.target?.value || this.shieldFilters[index]
-    if (index === 'minStars' || index === 'maxStars') {
-      this.filteredListings = [...this.listings.filter((i: any) => (i.stars + 1) >= +this.shieldFilters.minStars && (i.stars + 1) <= +this.shieldFilters.maxStars)]
-      this.setFilter()
-    }
+    this.shieldFilters[index] = +($event.target?.value || 0)
+    this.filteredListings = [...this.getFilteredResults()]
+    this.setFilter()
   }
 
   setFilter() {
@@ -265,7 +271,7 @@ export class MarketComponent implements OnInit {
         price: +this.utilService.formatNumber(this.utilService.fromEther(this.utilService.bnToNumber(listings[3][i]))),
         finalPrice: +this.utilService.formatNumber(this.utilService.fromEther(this.utilService.bnToNumber(nftPrices[i])))
       }))
-      this.filteredListings = [...this.listings]
+      this.filteredListings = [...this.getFilteredResults()]
       this.setFilter()
       this.loading = false
     }
@@ -307,7 +313,6 @@ export class MarketComponent implements OnInit {
     }
     if (nextBatch >= 0 && nextBatch + this.filter.limit <= this.maxListing) {
       this.filter.offset = nextBatch
-      console.log(this.filter)
       this.loadList()
     }
   }

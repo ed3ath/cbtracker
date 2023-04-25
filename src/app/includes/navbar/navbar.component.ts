@@ -43,23 +43,10 @@ export class NavbarComponent implements OnInit {
     public subService: SubscriptionService,
     private scriptService: ScriptService
   ) {
-    router.events.subscribe((val) => {
+    this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.page = this.router.url.split('tracker/')[1];
         this.setActivePage(this.page)
-        const evaDav = document.querySelector('script#evadav-ads')
-        const richAds = document.querySelector('script#rich-ads')
-        if (!this.subscribed) {
-          if (!evaDav) {
-            this.scriptService.loadExternalJsScript('evadav-ads', 'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js', true)
-          }
-          if (!richAds) {
-            this.scriptService.loadExternalJsScript('rich-ads', 'https://richinfo.co/richpartners/pops/js/richads-pu-ob.js', false, null, {
-              'data-pubid': '877517',
-              'data-siteid': '328436'
-            })
-          }
-        }
       }
     });
   }
@@ -99,6 +86,19 @@ export class NavbarComponent implements OnInit {
     this.createDrawer = new Drawer(document.getElementById('create-menu'), options)
     this.userInfoDrawer = new Drawer(document.getElementById('user-info-menu'), options)
     this.subscribed = await this.subService.checkToken()
+    const evaDav = document.querySelector('script#evadav-ads')
+    const richAds = document.querySelector('script#rich-ads')
+    if (!this.configService.subscribed) {
+      if (!evaDav) {
+        this.scriptService.loadExternalJsScript('evadav-ads', 'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js', true)
+      }
+      if (!richAds) {
+        this.scriptService.loadExternalJsScript('rich-ads', 'https://richinfo.co/richpartners/pops/js/richads-pu-ob.js', false, null, {
+          'data-pubid': '877517',
+          'data-siteid': '328436'
+        })
+      }
+    }
   }
 
   setCurrency(currency: string) {
@@ -136,8 +136,6 @@ export class NavbarComponent implements OnInit {
     this.createDrawer.hide()
     if (!this.configService.userToken) {
       this.loginDrawer.show()
-    } else if (!this.subscribed) {
-      this.showSubscriptionModal()
     } else {
       this.userInfoDrawer.show()
     }

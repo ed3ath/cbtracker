@@ -40,9 +40,10 @@ export class SubscriptionService {
       }
       this.subscription$.next(this.configService.subscribed)
       return res.success
+    } else {
+      this.configService.subscribed = false
+      this.subscription$.next(false)
+      return false
     }
-    this.configService.subscribed = false
-    this.subscription$.next(false)
-    return false
   }
 }
