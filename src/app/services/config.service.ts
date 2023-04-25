@@ -201,4 +201,13 @@ export class ConfigService {
       localStorage.setItem('firstLoad', 'true')
     }
   }
+
+  async updateRemoteConfig(apiService: any) {
+    if (this.userToken) {
+      await apiService.saveConfig({
+        token: this.userToken,
+        config: this.getAllConfig()
+      })
+    }
+  }
 }

@@ -54,4 +54,12 @@ export class ApiService {
   async saveConfig(data: any) {
     return await this.execute(HttpMethod.POST, "/api/players/config", data);
   }
+
+  async getUnreadAlerts(data: any) {
+    return await this.execute(HttpMethod.GET, "/api/alerts/unread", null, data);
+  }
+
+  async markAlertAsRead(data: any) {
+    return await this.execute(HttpMethod.POST, "/api/alerts/read", data);
+  }
 }

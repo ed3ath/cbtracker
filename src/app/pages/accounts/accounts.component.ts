@@ -11,6 +11,7 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { UtilService } from 'src/app/services/util.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { ResponsiveService } from 'src/app/services/responsive.service';
+import { ApiService } from 'src/app/services/api.service';
 
 import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
@@ -48,7 +49,8 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
     public web3Service: Web3Service,
     public utilService: UtilService,
     public currencyService: CurrencyService,
-    private responsiveService: ResponsiveService
+    private responsiveService: ResponsiveService,
+    private apiService: ApiService
   ) {
     this.loadPrices()
   }
@@ -203,6 +205,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
         this.loadGroups()
         this.setGroupIndex(newGroupIndex)
         this.newGroupDrawer.hide()
+        this.configService.updateRemoteConfig(this.apiService)
         Swal.fire('', 'New group have been added.', 'success')
       } else {
         Swal.fire('', 'Group already exist.', 'error')
@@ -217,6 +220,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
       this.groupService.setActiveGroupName(el.value)
       this.loadGroups()
       this.manageGroupDrawer.hide()
+      this.configService.updateRemoteConfig(this.apiService)
       Swal.fire('', 'Changes have been saved.', 'success')
       el.value = ''
     }
@@ -243,6 +247,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
         this.groupService.deleteActiveGroup()
         this.loadGroups()
         this.manageGroupDrawer.hide()
+        this.configService.updateRemoteConfig(this.apiService)
         Swal.fire('', `Group "${groupName}" has been deleted.`, 'success')
       }
     })
@@ -263,6 +268,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
         this.loadGroups()
         this.variableService.readyToFight = this.groupService.getActiveGroupAccounts().map(() => 0)
         this.addAccountDrawer.hide()
+        this.configService.updateRemoteConfig(this.apiService)
         this.loadData()
         Swal.fire('', `Account "${elName.value}" have been added.`, 'success')
         elName.value = ''
@@ -282,6 +288,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
         this.groupService.setAccountName(elName.value, elAddress.value)
         this.loadGroups()
         this.manageAccountDrawer.hide()
+        this.configService.updateRemoteConfig(this.apiService)
         Swal.fire('', `Account "${elName.value}" have been saved.`, 'success')
         elName.value = ''
         elAddress.value = ''
@@ -318,6 +325,7 @@ export class AccountsComponent implements OnInit, ComponentCanDeactivate {
 
           this.loadGroups()
           this.manageAccountDrawer.hide()
+          this.configService.updateRemoteConfig(this.apiService)
           Swal.fire('', `The account "${elAddress.value}" has been deleted.`, 'success')
         }
       })

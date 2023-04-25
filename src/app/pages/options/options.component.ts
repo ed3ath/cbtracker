@@ -58,42 +58,42 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
   async toggleDisplay() {
     this.configService.display = !this.configService.display
     this.configService.saveDisplay()
-    await this.updateRemoteConfig()
+    await this.configService.updateRemoteConfig(this.apiService)
   }
 
   async setCurrency(event: any) {
     this.currencyService.setActiveCurrency(event.target ? event.target.value : this.configService.currency)
-    await this.updateRemoteConfig()
+    await this.configService.updateRemoteConfig(this.apiService)
   }
 
   async setChain(event: any) {
     this.web3Service.setActiveChain(event.target ? event.target.value : this.configService.chain)
-    await this.updateRemoteConfig()
+    await this.configService.updateRemoteConfig(this.apiService)
   }
 
   async setTimezone(event: any) {
     this.configService.timezone = event.target ? event.target.value : this.configService.timezone
     this.configService.saveTimezone()
-    await this.updateRemoteConfig()
+    await this.configService.updateRemoteConfig(this.apiService)
   }
 
   async setLanguage(event: any) {
     this.configService.language = event.target ? event.target.value : this.configService.language
     this.configService.saveLanguage()
-    await this.updateRemoteConfig()
+    await this.configService.updateRemoteConfig(this.apiService)
   }
 
   async setFightMultiplier(event: any) {
     this.eventService.publish('multiplier_changed', +event.target.value)
     this.configService.setFightMultiplier(event.target ? +event.target.value : this.configService.fightMultiplier)
-    await this.updateRemoteConfig()
+    await this.configService.updateRemoteConfig(this.apiService)
   }
 
   async toggleNewsAlert() {
     if (this.subscribed) {
       this.configService.newsAlert = !this.configService.newsAlert
       this.configService.saveNewsAlert()
-      await this.updateRemoteConfig()
+      await this.configService.updateRemoteConfig(this.apiService)
       if (this.configService.newsAlert && this.notifService.getPermission() !== "granted") {
         this.notifService.requestPermission()
       }
@@ -104,7 +104,7 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
     if (this.subscribed) {
       this.configService.accountAlert = !this.configService.accountAlert
       this.configService.saveAccountAlert()
-      await this.updateRemoteConfig()
+      await this.configService.updateRemoteConfig(this.apiService)
       if (this.configService.accountAlert && this.notifService.getPermission() !== "granted") {
         this.notifService.requestPermission()
       }
@@ -120,7 +120,7 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
           if (+networkId === +this.web3Service.getNetworkId(chain)) {
             this.configService.rpcUrls = { ...this.configService.rpcUrls, [chain]: rpcUrl }
             this.configService.saveRpcUrls()
-            await this.updateRemoteConfig()
+            await this.configService.updateRemoteConfig(this.apiService)
           } else {
             Swal.fire('', `Mismatch network Id. RPC URL provided returns ${networkId}. Require: ${this.web3Service.getNetworkId(chain)}`, 'error')
           }
@@ -187,15 +187,6 @@ export class OptionsComponent implements OnInit, ComponentCanDeactivate {
     downloadLink.style.display = "none";
     document.body.appendChild(downloadLink);
     downloadLink.click();
-  }
-
-  async updateRemoteConfig() {
-    if (this.configService.userToken) {
-      await this.apiService.saveConfig({
-        token: this.configService.userToken,
-        config: this.configService.getAllConfig()
-      })
-    }
   }
 
 }

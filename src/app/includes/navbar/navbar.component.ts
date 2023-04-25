@@ -28,8 +28,10 @@ export class NavbarComponent implements OnInit {
   loginDrawer!: DrawerInterface
   createDrawer!: DrawerInterface
   userInfoDrawer!: DrawerInterface
+  alertDrawer!: DrawerInterface
   subscribed = false
   isCreating = false
+  alerts: any[] = []
 
   constructor(
     private router: Router,
@@ -85,6 +87,7 @@ export class NavbarComponent implements OnInit {
     this.loginDrawer = new Drawer(document.getElementById('login-menu'), options);
     this.createDrawer = new Drawer(document.getElementById('create-menu'), options)
     this.userInfoDrawer = new Drawer(document.getElementById('user-info-menu'), options)
+    this.alertDrawer = new Drawer(document.getElementById('alert-menu'), options)
     this.subscribed = await this.subService.checkToken()
     const evaDav = document.querySelector('script#evadav-ads')
     const richAds = document.querySelector('script#rich-ads')
@@ -99,6 +102,9 @@ export class NavbarComponent implements OnInit {
         })
       }
     }
+    this.alerts = (await this.apiService.getUnreadAlerts({
+      token: this.configService.userToken
+    })).data
   }
 
   setCurrency(currency: string) {
@@ -112,10 +118,12 @@ export class NavbarComponent implements OnInit {
   }
 
   showCurrencyDrawer() {
+    this.hideAllDrawers()
     this.currencyDrawer.show()
   }
 
   showChainDrawer() {
+    this.hideAllDrawers()
     this.chainDrawer.show()
   }
 
@@ -133,7 +141,7 @@ export class NavbarComponent implements OnInit {
   }
 
   showLoginDrawer() {
-    this.createDrawer.hide()
+    this.hideAllDrawers()
     if (!this.configService.userToken) {
       this.loginDrawer.show()
     } else {
@@ -165,7 +173,7 @@ export class NavbarComponent implements OnInit {
   }
 
   showCreateDrawer() {
-    this.loginDrawer.hide()
+    this.hideAllDrawers()
     this.createDrawer.show()
   }
 
@@ -247,6 +255,40 @@ export class NavbarComponent implements OnInit {
     this.subService.expiry = 0
     this.subService.user = ''
     this.subService.subscription$.next(false)
+  }
+
+  hideAllDrawers() {
+    this.currencyDrawer.hide()
+    this.chainDrawer.hide()
+    this.loginDrawer.hide()
+    this.createDrawer.hide()
+    this.userInfoDrawer.hide()
+    this.alertDrawer.hide()
+  }
+
+  showAlerts() {
+    this.hideAllDrawers()
+    this.alertDrawer.show()
+  }
+
+  showAlertContent(id: number | string) {
+    const alertInfo = this.alerts.find((i: any) => i.id === id)
+    if (alertInfo) {
+      Swal.fire({
+        html: `<p><h3>${alertInfo.title}</h3></p><hr class="m-4"><p>${alertInfo.content}</p>`,
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: 'Close'
+      })
+      this.apiService.markAlertAsRead({
+        token: this.configService.userToken,
+        id: id
+      })
+      const alertIndex = this.alerts.findIndex((i: any) => i.id === id)
+      if (alertIndex >= 0) {
+        this.alerts.splice(alertIndex, 1)
+      }
+    }
   }
 
 }

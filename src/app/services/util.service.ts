@@ -586,4 +586,8 @@ export class UtilService {
   decodeToken(token: string) {
     return jwt_decode(token)
   }
+
+  limitText(str: string, limit = 60) {
+    return str.length - 3 < limit ? str : `${str.substring(0, limit)}...`
+  }
 }
