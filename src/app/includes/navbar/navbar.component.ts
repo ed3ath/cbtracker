@@ -1,9 +1,13 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Drawer, DrawerInterface } from 'flowbite';
+import { Drawer, DrawerInterface, Modal, ModalInterface } from 'flowbite';
 import { NavigationEnd, Router } from "@angular/router";
 import Swal from 'sweetalert2'
 import moment from 'moment'
+import {
+  IPayPalConfig,
+  ICreateOrderRequest
+} from 'ngx-paypal';
 
 import { Web3Service } from 'src/app/services/web3.service';
 import { ConfigService } from 'src/app/services/config.service';
@@ -29,9 +33,11 @@ export class NavbarComponent implements OnInit {
   createDrawer!: DrawerInterface
   userInfoDrawer!: DrawerInterface
   alertDrawer!: DrawerInterface
+  paypalModal!: ModalInterface
   subscribed = false
   isCreating = false
   alerts: any[] = []
+  payPalConfig?: IPayPalConfig
 
   constructor(
     private router: Router,
@@ -88,6 +94,12 @@ export class NavbarComponent implements OnInit {
     this.createDrawer = new Drawer(document.getElementById('create-menu'), options)
     this.userInfoDrawer = new Drawer(document.getElementById('user-info-menu'), options)
     this.alertDrawer = new Drawer(document.getElementById('alert-menu'), options)
+    this.paypalModal = new Modal(document.getElementById('paypal-modal'), {
+      placement: 'center',
+      backdrop: 'static',
+      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-90',
+      closable: false,
+    })
     this.subscribed = await this.subService.checkToken()
     const evaDav = document.querySelector('script#evadav-ads')
     const richAds = document.querySelector('script#rich-ads')
@@ -104,7 +116,7 @@ export class NavbarComponent implements OnInit {
     }
     this.alerts = (await this.apiService.getUnreadAlerts({
       token: this.configService.userToken
-    })).data
+    }))?.data || []
   }
 
   setCurrency(currency: string) {
@@ -150,6 +162,7 @@ export class NavbarComponent implements OnInit {
   }
 
   showSubscriptionModal() {
+    this.hideAllDrawers()
     Swal.fire({
       title: '',
       icon: 'info',
@@ -159,13 +172,60 @@ export class NavbarComponent implements OnInit {
       confirmButtonText: 'Subscribe'
     }).then((result) => {
       if (result.isConfirmed) {
-        const decoded: any = this.utilService.decodeToken(this.configService.userToken)
-        Swal.fire('', 'Generating payment link...', 'info')
-        this.apiService.createSubscription({
-          user: decoded.user
-        }).then(res => {
-          if (res.success) {
-            window.location.href = res.data.url
+        Swal.fire({
+          title: '',
+          text: 'Select payment method',
+          showDenyButton: true,
+          showCancelButton: true,
+          denyButtonText: 'PayPal (International)',
+          confirmButtonText: 'NextPay (PH e-Wallet/Banks)'
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            Swal.fire('', 'Generating payment link...', 'info')
+            const decoded: any = this.utilService.decodeToken(this.configService.userToken)
+            this.apiService.createSubscription({
+              user: decoded.user,
+              type: 'nextpay'
+            }).then(async (res) => {
+              if (res.success) {
+                window.open(res.data.url, '_blank')
+              }
+            })
+          } else if (result.isDenied) {
+            this.hideAllDrawers()
+            const decoded: any = this.utilService.decodeToken(this.configService.userToken)
+            const clientId = (await this.apiService.getPaypalClientId()).clientId
+            this.payPalConfig = {
+              clientId,
+              currency: 'PHP',
+              createOrderOnServer: () => this.apiService.createSubscription({
+                user: decoded.user,
+                type: 'paypal'
+              }).then((data) => data.data.referenceId),
+              onApprove: (data, actions) => {
+                actions.order.get().then(() => {
+                  this.paypalModal.hide()
+                  Swal.fire('', 'Payment Received! Your subscription will be processed shortly.', 'success')
+                });
+              },
+              authorizeOnServer: (data) =>
+              this.apiService.captureOrder({
+                id: data.orderID
+              }).then((res) => {
+                  if (res.success) {
+                    this.paypalModal.hide()
+                    Swal.fire('', 'Payment Received! Your subscription will be processed shortly.', 'success')
+                  } else {
+                    Swal.fire('', res.error, 'error')
+                  }
+              }),
+              onError: err => {
+                Swal.fire('', err.message, 'error')
+              },
+              onInit: () => {
+                this.paypalModal.show()
+              }
+            }
           }
         })
       }
@@ -189,11 +249,11 @@ export class NavbarComponent implements OnInit {
           if (res.data.token) {
             this.configService.userToken = res.data.token
             this.configService.saveUserToken()
+            this.subService.user = res.data.user
             if (res.data.subscribed) {
               this.configService.subscribed = res.data.subscribed
               this.subscribed = res.data.subscribed
               this.subService.expiry = +res.data.expiry
-              this.subService.user = res.data.user
               this.subService.subscription$.next(res.data.subscribed)
               this.configService.saveRemoteConfig(res.data.config)
             }

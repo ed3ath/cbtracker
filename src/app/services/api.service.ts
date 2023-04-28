@@ -62,4 +62,12 @@ export class ApiService {
   async markAlertAsRead(data: any) {
     return await this.execute(HttpMethod.POST, "/api/alerts/read", data);
   }
+
+  async getPaypalClientId() {
+    return await this.execute(HttpMethod.GET, "/paypal/clientId");
+  }
+
+  async captureOrder(data: any) {
+    return await this.execute(HttpMethod.POST, "/api/payments/capture", data);
+  }
 }
