@@ -3,20 +3,22 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 
 import { ScriptService } from '../services/script.service';
+import { SubscriptionService } from '../services/subscription.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdblockerGuard implements CanActivate {
 
-  constructor(private router: Router, private scriptService: ScriptService) {}
+  constructor(private router: Router, private scriptService: ScriptService, private subService: SubscriptionService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.scriptService.detectAdblocker().then(res => {
-      if (!res) this.router.navigate(['/tracker/adblocker']);
-      return res
+    return this.scriptService.detectAdblocker().then(async res => {
+      const subscribed = await this.subService.checkToken()
+      if (!res && !subscribed) this.router.navigate(['/tracker/adblocker']);
+      return res || subscribed
     })
   }
 

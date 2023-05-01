@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ScriptService } from 'src/app/services/script.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 
 @Component({
   selector: 'app-adblocker',
@@ -10,11 +11,12 @@ import { ScriptService } from 'src/app/services/script.service';
 })
 export class AdblockerComponent implements OnInit {
 
-  constructor(private router: Router, private scriptService: ScriptService) { }
+  constructor(private router: Router, private scriptService: ScriptService, private subService: SubscriptionService) { }
 
   ngOnInit(): void {
-    this.scriptService.detectAdblocker().then((res: boolean) => {
-      if (res) this.router.navigate(['/tracker/home'])
+    this.scriptService.detectAdblocker().then(async (res: boolean) => {
+      const subscribed = await this.subService.checkToken()
+      if (res || subscribed) this.router.navigate(['/tracker/home'])
     })
   }
 

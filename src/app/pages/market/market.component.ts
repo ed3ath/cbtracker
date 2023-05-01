@@ -119,6 +119,7 @@ export class MarketComponent implements OnInit {
     this.subscribed = this.configService.subscribed
     this.subService.subscription$.subscribe((subscribed: boolean) => {
       this.subscribed = subscribed
+      this.configService.subscribed = subscribed
     })
 
     this.combinedFilters = [{
@@ -264,9 +265,19 @@ export class MarketComponent implements OnInit {
         name: 'getFinalPrice',
         params: [nftAddress, nftId]
       }))))
+      const sellerStatus = await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['market'], this.web3Service.getConfigAddress('market'), listingIds.map((nftId: number, i: number) => ({
+        name: 'isUserBanned',
+        params: [listings[2][i]]
+      }))))
+      const targetBuyers = await this.web3Service.multicall(this.web3Service.getBatchCallData(this.web3Service.abis['market'], this.web3Service.getConfigAddress('market'), listingIds.map((nftId: number) => ({
+        name: 'getTargetBuyer',
+        params: [nftAddress, nftId]
+      }))))
 
       this.listings = nftsInfo.map((nftInfo: any, i: number) => ({
         ...nftInfo,
+        isBanned: sellerStatus[i],
+        buyer: targetBuyers[i],
         seller: listings[2][i],
         price: +this.utilService.formatNumber(this.utilService.fromEther(this.utilService.bnToNumber(listings[3][i]))),
         finalPrice: +this.utilService.formatNumber(this.utilService.fromEther(this.utilService.bnToNumber(nftPrices[i])))
