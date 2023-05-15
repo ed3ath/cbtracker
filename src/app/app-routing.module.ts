@@ -8,6 +8,8 @@ import { TreasuryComponent } from './pages/treasury/treasury.component';
 import { MarketComponent } from './pages/market/market.component';
 import { OptionsComponent } from './pages/options/options.component';
 import { AdblockerComponent } from './pages/adblocker/adblocker.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsComponent } from './terms/terms.component';
 
 import { AdblockerGuard } from './guard/adblocker.guard';
 import { DeactivateGuard } from './guard/deactivate.guard';
@@ -32,6 +34,14 @@ const routes: Routes = [
       { path: '*', redirectTo: '/home', pathMatch: 'full' },
     ],
     canDeactivate: [DeactivateGuard]
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
+  },
+  {
+    path: 'terms',
+    component: TermsComponent
   },
   {
     path: '*',

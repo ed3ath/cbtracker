@@ -14,6 +14,8 @@ import { OptionsComponent } from './pages/options/options.component';
 import { AdsComponent } from './includes/ads/ads.component';
 import { AdblockerComponent } from './pages/adblocker/adblocker.component';
 import { MarketComponent } from './pages/market/market.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsComponent } from './terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { MarketComponent } from './pages/market/market.component';
     OptionsComponent,
     AdsComponent,
     AdblockerComponent,
-    MarketComponent
+    MarketComponent,
+    PrivacyComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,
