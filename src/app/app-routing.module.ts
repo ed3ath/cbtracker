@@ -21,6 +21,14 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'privacy',
+    component: PrivacyComponent
+  },
+  {
+    path: 'terms',
+    component: TermsComponent
+  },
+  {
     path: 'tracker',
     component: LayoutComponent,
     children: [
@@ -34,14 +42,6 @@ const routes: Routes = [
       { path: '*', redirectTo: '/home', pathMatch: 'full' },
     ],
     canDeactivate: [DeactivateGuard]
-  },
-  {
-    path: 'privacy',
-    component: PrivacyComponent
-  },
-  {
-    path: 'terms',
-    component: TermsComponent
   },
   {
     path: '*',
