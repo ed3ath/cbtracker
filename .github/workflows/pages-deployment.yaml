@@ -16,17 +16,20 @@ jobs:
       run: yarn install
       shell: bash
     - name: Build
-      run: yarn run build
+      run: yarn build
       shell: bash
     - name: Publish
       uses: cloudflare/pages-action@1
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        projectName: cbtracker # e.g. 'my-project'
-        directory: dist # e.g. 'dist'
+        projectName: cbtracker
+        directory: dist
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 permissions:
   id-token: write
   checks: write
-  contents: write
+  contents: read
+  issues: write
+  security-events: write
+  pull-requests: write
