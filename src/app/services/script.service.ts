@@ -33,15 +33,20 @@ export class ScriptService {
     return script;
   }
 
-  public loadJsScript(text: string, element: any = undefined): HTMLScriptElement {
-    const script = document.createElement('script');
-    script.innerText = text;
-    if (element) {
-      element.appendChild(script)
-    } else {
-      document.head.appendChild(script);
+  public loadJsScript(id: string, text: string, element: any = undefined): HTMLScriptElement | void {
+    const exist = document.getElementById(id);
+    if (!exist) {
+      const script = document.createElement('script');
+      script.id = id;
+      script.innerText = text;
+      script.type = 'text/javascript'
+      if (element) {
+        element.appendChild(script)
+      } else {
+        document.head.appendChild(script);
+      }
+      return script;
     }
-    return script;
   }
 
   detectAdblocker(): Promise<boolean> {

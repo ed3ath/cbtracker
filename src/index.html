@@ -1,40 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CryptoBlades Tracker</title>
-    <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-    <script async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-203318880-1"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-203318880-1"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
       function gtag() {
-          dataLayer.push(arguments);
+        dataLayer.push(arguments);
       }
-      gtag('js', new Date());
-      gtag('config', 'UA-203318880-1');
+      gtag("js", new Date());
+      gtag("config", "UA-203318880-1");
     </script>
     <script>
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      if (document && document.documentElement) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        if (document && document.documentElement) {
+          document.documentElement.classList.add("dark");
+          localStorage.setItem("theme", "dark");
+        }
+      } else {
+        if (document && document.documentElement) {
+          document.documentElement.classList.remove("dark");
+          localStorage.setItem("theme", "light");
+        }
       }
-    } else {
-      if (document && document.documentElement) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
+    </script>
+    <script async src="//www.googletagservices.com/tag/js/gpt.js"></script>
+    <script async src="prebid.js"></script>
+    <script>
+      var PREBID_TIMEOUT = 1000;
+      var FAILSAFE_TIMEOUT = 2500;
+
+      var adUnits = [
+        {
+          code: "placementId_827",
+          mediaTypes: {
+            banner: {
+              sizes: [[728, 90]],
+            },
+          },
+          bids: [
+            {
+              bidder: "smartyads",
+              params: {
+                placementId: 827,
+              },
+            },
+          ],
+        },
+      ];
+
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
+      googletag.cmd.push(function () {
+        googletag.pubads().disableInitialLoad();
+      });
+
+      // Init Prebid.js
+      var pbjs = pbjs || {};
+      pbjs.que = pbjs.que || [];
+
+      pbjs.que.push(function () {
+        pbjs.addAdUnits(adUnits);
+        pbjs.requestBids({
+          bidsBackHandler: initAdserver,
+          timeout: PREBID_TIMEOUT,
+        });
+      });
+
+      function initAdserver() {
+        if (pbjs.initAdserverSet) return;
+        pbjs.initAdserverSet = true;
+        // Get all of the adUnit codes for the display adUnits
+        var displayAdUnitCodes = [];
+        adUnits.forEach(function (adUnit) {
+          displayAdUnitCodes.push(adUnit.code);
+        });
+        googletag.cmd.push(function () {
+          pbjs.que.push(function () {
+            pbjs.setTargetingForGPTAsync(displayAdUnitCodes);
+            googletag.pubads().refresh();
+          });
+        });
       }
-    }
-  </script>
+      // in case PBJS doesn't load
+      setTimeout(function () {
+        initAdserver();
+      }, FAILSAFE_TIMEOUT);
+    </script>
   </head>
   <body class="dark:bg-gray-900 antialiased">
     <app-root></app-root>

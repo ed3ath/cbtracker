@@ -125,14 +125,14 @@ export class NavbarComponent implements OnInit {
     const richAds = document.querySelector('script#rich-ads');
     if (!this.configService.subscribed) {
       if (!evaDav) {
-        this.scriptService.loadExternalJsScript(
+        /*this.scriptService.loadExternalJsScript(
           'evadav-ads',
           'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js',
           true
-        );
+        );*/
       }
       if (!richAds) {
-        this.scriptService.loadExternalJsScript(
+        /*this.scriptService.loadExternalJsScript(
           'rich-ads',
           'https://richinfo.co/richpartners/pops/js/richads-pu-ob.js',
           false,
@@ -141,7 +141,7 @@ export class NavbarComponent implements OnInit {
             'data-pubid': '877517',
             'data-siteid': '328436',
           }
-        );
+        );*/
       }
     }
     this.alerts =
