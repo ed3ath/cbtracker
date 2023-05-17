@@ -1,0 +1,113 @@
+name: Node.js Build
+'on':
+  workflow_dispatch: {}
+  push: {}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: lts/*
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.15
+      with:
+        versionSpec: 5.x
+    - id: determine_version
+      name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.9.15
+      with:
+        additionalArguments: /overrideconfig mode=Mainline
+    - name: Install Octopus Deploy CLI
+      uses: OctopusDeploy/install-octopus-cli-action@v1
+      with:
+        version: latest
+    - name: Install Dependencies
+      run: yarn install
+      shell: bash
+    - name: List Dependencies
+      run: yarn list --all > dependencies.txt
+      shell: bash
+    - name: Collect Dependencies
+      uses: actions/upload-artifact@v2
+      with:
+        name: Dependencies
+        path: dependencies.txt
+    - name: List Dependency Updates
+      run: yarn outdated > dependencyUpdates.txt
+      shell: bash
+    - name: Collect Dependency Updates
+      uses: actions/upload-artifact@v2
+      with:
+        name: Dependencies Updates
+        path: dependencyUpdates.txt
+    - name: Test
+      run: yarn test
+      shell: bash
+    - name: Build
+      run: yarn run build
+      shell: bash
+    - name: Package
+      run: |-
+        SOURCEPATH=.
+        OUTPUTPATH=.
+        # If there is a build directory, assume that is what we want to package
+        if [[ -d "build" ]]; then
+          SOURCEPATH=build
+        fi
+        octo pack \
+         --basePath ${SOURCEPATH} \
+         --outFolder ${OUTPUTPATH} \
+         --id cbtracker \
+         --version ${{ steps.determine_version.outputs.semVer }} \
+         --format zip \
+         --overwrite \
+         --include '**/*.html' \
+         --include '**/*.htm' \
+         --include '**/*.css' \
+         --include '**/*.js' \
+         --include '**/*.min' \
+         --include '**/*.map' \
+         --include '**/*.sql' \
+         --include '**/*.png' \
+         --include '**/*.jpg' \
+         --include '**/*.jpeg' \
+         --include '**/*.gif' \
+         --include '**/*.json' \
+         --include '**/*.env' \
+         --include '**/*.txt' \
+         --include '**/*.Procfile'
+      shell: bash
+    - name: Tag Release
+      uses: mathieudutour/github-tag-action@v6.1
+      with:
+        custom_tag: ${{ steps.determine_version.outputs.semVer }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - id: create_release
+      name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.determine_version.outputs.semVer }}+run${{ github.run_number }}-attempt${{ github.run_attempt }}
+        release_name: Release ${{ steps.determine_version.outputs.semVer }} Run ${{ github.run_number }} Attempt ${{ github.run_attempt }}
+        draft: ${{ github.ref == 'refs/heads/revamp' && 'false' || 'true' }}
+        name: ${{ github.ref == 'refs/heads/revamp' && 'false' || 'true' }}
+    - name: Upload Release Asset
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.determine_version.outputs.semVer }}+run${{ github.run_number }}-attempt${{ github.run_attempt }}
+        files: cbtracker.${{ steps.determine_version.outputs.semVer }}.zip
+    - name: Publish
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: cbtracker # e.g. 'my-project'
+          directory: YOUR_DIRECTORY_OF_STATIC_ASSETS # e.g. 'dist'
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+permissions:
+  id-token: write
+  checks: write
+  contents: write
