@@ -100,13 +100,13 @@ jobs:
         tag_name: ${{ steps.determine_version.outputs.semVer }}+run${{ github.run_number }}-attempt${{ github.run_attempt }}
         files: cbtracker.${{ steps.determine_version.outputs.semVer }}.zip
     - name: Publish
-        uses: cloudflare/pages-action@1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: cbtracker # e.g. 'my-project'
-          directory: YOUR_DIRECTORY_OF_STATIC_ASSETS # e.g. 'dist'
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      uses: cloudflare/pages-action@1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: cbtracker # e.g. 'my-project'
+        directory: YOUR_DIRECTORY_OF_STATIC_ASSETS # e.g. 'dist'
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 permissions:
   id-token: write
   checks: write
