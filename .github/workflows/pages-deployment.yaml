@@ -24,7 +24,7 @@ jobs:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: cbtracker # e.g. 'my-project'
-        directory: YOUR_DIRECTORY_OF_STATIC_ASSETS # e.g. 'dist'
+        directory: dist # e.g. 'dist'
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 permissions:
   id-token: write
