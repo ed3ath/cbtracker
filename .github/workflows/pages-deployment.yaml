@@ -33,3 +33,4 @@ permissions:
   issues: write
   security-events: write
   pull-requests: write
+  deployments: write
