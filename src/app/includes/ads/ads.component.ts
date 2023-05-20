@@ -3,7 +3,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ResponsiveService } from 'src/app/services/responsive.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
-import { ScriptService } from 'src/app/services/script.service';
 
 @Component({
   selector: 'app-ads',
@@ -14,7 +13,6 @@ export class AdsComponent implements OnInit, AfterViewInit {
   @Input() provider = 'coinserom';
   @Input() type = '728x90';
   @Input() dynamic = '728x90';
-  @Input() divId = '';
 
   safeUrl!: SafeResourceUrl;
   zone: any;
@@ -53,18 +51,10 @@ export class AdsComponent implements OnInit, AfterViewInit {
     },
   };
 
-  smartyZones: any = {
-    '728x90': {
-      id: 'placementId_827',
-      width: 728,
-      height: 90,
-    },
-  };
   constructor(
     public responsiveService: ResponsiveService,
     public sanitizer: DomSanitizer,
-    private subService: SubscriptionService,
-    private scriptService: ScriptService
+    private subService: SubscriptionService
   ) {
     this.subService.subscription$.subscribe((subscribed) => {
       this.subscribed = subscribed;
@@ -122,18 +112,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
   }
 
   loadAds() {
-    if (this.provider === 'smartyads') {
-      this.zone = this.smartyZones[this.type];
-    } else {
-      this.zone = this.zones[this.type];
-    }
-    if (this.provider === 'smartyads') {
-      const divSizes = [[this.zone.width, this.zone.height]];
-      this.scriptService.loadJsScript(`gs-${this.type}`, `googletag.cmd.push(function() { googletag.defineSlot('${this.zone.id}', ${JSON.stringify(divSizes)}, '${this.divId}').addService(googletag.pubads()); googletag.pubads().enableSingleRequest(); googletag.enableServices();});`);
-      this.scriptService.loadJsScript(`ga-${this.divId}`, `googletag.cmd.push(function() { googletag.display('${this.divId}'); });`,
-        document.getElementById(`${this.divId}`)
-      );
-    }
+    this.zone = this.zones[this.type];
     if (this.provider === 'a-ads' && this.zone) {
       this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`//ad.a-ads.com/${this.zone.id}?size=${this.type}`)
     }

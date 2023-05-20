@@ -28,8 +28,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/ads.txt",
-              "src/prebid.js"
+              "src/ads.txt"
             ],
             "styles": [
               "src/styles.css"

@@ -34,6 +34,7 @@
     "moment": "^2.29.4",
     "ngx-paypal": "9.0.0",
     "os-browserify": "^0.3.0",
+    "prebid.js": "^7.50.0",
     "process": "^0.11.10",
     "rxjs": "~7.5.0",
     "seedrandom": "^3.0.5",

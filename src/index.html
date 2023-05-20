@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
+    <script async src="https://api.kiprotect.com/v1/privacy-managers/45386c9a3491d082827d3438661d6988/klaro.js"></script>
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-203318880-1"
@@ -36,101 +37,6 @@
           localStorage.setItem("theme", "light");
         }
       }
-    </script>
-    <script async src="//www.googletagservices.com/tag/js/gpt.js"></script>
-    <script async src="prebid.js"></script>
-    <script>
-      var PREBID_TIMEOUT = 1000;
-      var FAILSAFE_TIMEOUT = 2500;
-
-      var adUnits = [
-        {
-          code: "placementId_827",
-          mediaTypes: {
-            banner: {
-              sizes: [[728, 90]],
-            },
-          },
-          bids: [
-            {
-              bidder: "smartyads",
-              params: {
-                placementId: 827,
-              },
-            },
-          ],
-        },
-        {
-          code: "placementId_822",
-          mediaTypes: {
-            banner: {
-              sizes: [[300, 250]],
-            },
-          },
-          bids: [
-            {
-              bidder: "smartyads",
-              params: {
-                placementId: 822,
-              },
-            },
-          ],
-        },
-        {
-          code: "placementId_823",
-          mediaTypes: {
-            banner: {
-              sizes: [[468, 60]],
-            },
-          },
-          bids: [
-            {
-              bidder: "smartyads",
-              params: {
-                placementId: 823,
-              },
-            },
-          ],
-        },
-      ];
-
-      var googletag = googletag || {};
-      googletag.cmd = googletag.cmd || [];
-      googletag.cmd.push(function () {
-        googletag.pubads().disableInitialLoad();
-      });
-
-      // Init Prebid.js
-      var pbjs = pbjs || {};
-      pbjs.que = pbjs.que || [];
-
-      pbjs.que.push(function () {
-        pbjs.addAdUnits(adUnits);
-        pbjs.requestBids({
-          bidsBackHandler: initAdserver,
-          timeout: PREBID_TIMEOUT,
-        });
-      });
-
-      function initAdserver() {
-        if (pbjs.initAdserverSet) return;
-        pbjs.initAdserverSet = true;
-        // Get all of the adUnit codes for the display adUnits
-        var displayAdUnitCodes = [];
-        adUnits.forEach(function (adUnit) {
-          displayAdUnitCodes.push(adUnit.code);
-        });
-        googletag.cmd.push(function () {
-          pbjs.que.push(function () {
-            pbjs.setTargetingForGPTAsync(displayAdUnitCodes);
-            googletag.pubads().refresh();
-          });
-        });
-      }
-      // in case PBJS doesn't load
-      setTimeout(function () {
-        initAdserver();
-      }, FAILSAFE_TIMEOUT);
     </script>
   </head>
   <body class="dark:bg-gray-900 antialiased">
