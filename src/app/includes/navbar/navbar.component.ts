@@ -144,12 +144,12 @@ export class NavbarComponent implements OnInit {
         );*/
       }
     }
-    this.alerts =
+    this.alerts = this.configService.userToken?
       (
         await this.apiService.getUnreadAlerts({
           token: this.configService.userToken,
         })
-      )?.data || [];
+      )?.data : [];
   }
 
   setCurrency(currency: string) {

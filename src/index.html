@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>CryptoBlades Tracker</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-    <script async src="https://api.kiprotect.com/v1/privacy-managers/45386c9a3491d082827d3438661d6988/klaro.js"></script>
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-203318880-1"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
+<head>
+  <meta charset="utf-8" />
+  <title>CryptoBlades Tracker</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-      function gtag() {
-        dataLayer.push(arguments);
+  <script defer type="text/javascript" src="https://cdn.kiprotect.com/klaro/v0.7.18/klaro.js"></script>
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-203318880-1"></script>
+  <!-- End Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "UA-203318880-1");
+  </script>
+  <script>
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      if (document && document.documentElement) {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
       }
-      gtag("js", new Date());
-      gtag("config", "UA-203318880-1");
-    </script>
-    <script>
-      if (
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        if (document && document.documentElement) {
-          document.documentElement.classList.add("dark");
-          localStorage.setItem("theme", "dark");
-        }
-      } else {
-        if (document && document.documentElement) {
-          document.documentElement.classList.remove("dark");
-          localStorage.setItem("theme", "light");
-        }
+    } else {
+      if (document && document.documentElement) {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
       }
-    </script>
-  </head>
-  <body class="dark:bg-gray-900 antialiased">
-    <app-root></app-root>
-  </body>
+    }
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KSHVSPS');</script>
+</head>
+
+<body class="dark:bg-gray-900 antialiased">
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KSHVSPS"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <app-root></app-root>
+</body>
+
 </html>

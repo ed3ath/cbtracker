@@ -30,6 +30,7 @@
     "flowbite": "^1.6.4",
     "https-browserify": "^1.0.0",
     "jwt-decode": "^3.1.2",
+    "klaro": "^0.7.18",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "ngx-paypal": "9.0.0",
