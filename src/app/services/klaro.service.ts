@@ -1,4 +1,4 @@
-import { HostListener, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { klaroConfig } from 'src/klaro-config';
 import { BehaviorSubject } from 'rxjs';
 
@@ -15,6 +15,7 @@ export class KlaroService {
 
   initialize(): void {
     this.klaro = window['klaro'];
+    this.klaro.resetManagers();
     this.klaro.setup(klaroConfig(this.event$));
     this.event$.subscribe((e: string) => {
       console.log(e)

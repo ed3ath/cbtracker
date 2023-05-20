@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ResponsiveService } from 'src/app/services/responsive.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
+import { KlaroService } from 'src/app/services/klaro.service';
 
 declare let window: any;
 
@@ -18,7 +19,9 @@ export class AdsComponent implements OnInit, AfterViewInit {
 
   safeUrl!: SafeResourceUrl;
   zone: any;
+  smartyZone: any;
   subscribed = false;
+  ready = false;
 
   zones: any = {
     '728x90': {
@@ -53,14 +56,43 @@ export class AdsComponent implements OnInit, AfterViewInit {
     },
   };
 
+  smartyZones: any = {
+    '728x90': {
+      id: 819,
+      width: 728,
+      height: 90,
+    },
+    '468x60': {
+      id: 823,
+      width: 468,
+      height: 60,
+    },
+    '300x250': {
+      id: 822,
+      width: 300,
+      height: 250,
+    },
+    '250x250': {
+      id: 953,
+      width: 250,
+      height: 250,
+    },
+    '320x100': {
+      id: 824,
+      width: 320,
+      height: 50,
+    },
+  };
+
   constructor(
     public responsiveService: ResponsiveService,
     public sanitizer: DomSanitizer,
-    private subService: SubscriptionService
+    private subService: SubscriptionService,
+    private klaroService: KlaroService
   ) {
     this.subService.subscription$.subscribe((subscribed) => {
       this.subscribed = subscribed;
-      if (!this.subscribed) {
+      if (!this.subscribed && this.ready) {
         this.loadAds();
       }
     });
@@ -102,25 +134,28 @@ export class AdsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.smartyZone = this.smartyZones[this.type];
+    this.zone = this.zones[this.type];
     if (!this.subscribed && this.provider == 'a-ads') {
+      this.ready = true
       this.loadAds();
     }
   }
 
   ngAfterViewInit() {
     if (!this.subscribed && this.provider == 'smartyads') {
+      this.ready = true
       this.loadAds();
     }
   }
 
   loadAds() {
-    this.zone = this.zones[this.type];
-    if (this.provider === 'smartyads') {
+    if (this.provider === 'smartyads' && this.klaroService.klaro?.getManager.consents['smarty-ads']) {
       var adUnits = [
         {
-          code: 'block_827',
-          placement_id: 827,
-          sizes: [728, 90],
+          code: `block_${this.smartyZone.id}`,
+          placement_id: this.smartyZone.id,
+          sizes: [this.smartyZone.width, this.smartyZone.height],
           coppa: 0,
           gdpr: 0,
           us_privacy: '',
