@@ -26,7 +26,7 @@ jobs:
         projectName: cbtracker
         directory: dist/cbtracker
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-        branch: revamp
+        branch: main
 permissions:
   id-token: write
   checks: write
