@@ -151,7 +151,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
   }
 
   loadAds() {
-    if (this.provider === 'smartyads' && this.klaroService.klaro?.getManager.consents['smarty-ads']) {
+    if (this.provider === 'smartyads' && this.klaroService.klaro?.getManager().consents['smarty-ads']) {
       var adUnits = [
         {
           code: this.divId,
