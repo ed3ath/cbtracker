@@ -12,8 +12,6 @@ import { GroupService } from 'src/app/services/group.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { UtilService } from 'src/app/services/util.service';
-import { KlaroService } from 'src/app/services/klaro.service';
-
 import { ComponentCanDeactivate } from 'src/app/guard/deactivate.guard';
 
 @Component({
@@ -55,8 +53,7 @@ export class HomeComponent
     public groupService: GroupService,
     public configService: ConfigService,
     public currencyService: CurrencyService,
-    public utilService: UtilService,
-    private klaroService: KlaroService
+    public utilService: UtilService
   ) {
     this.accounts = this.groupService.getActiveGroupAccounts();
   }
@@ -101,7 +98,6 @@ export class HomeComponent
     this.eventService.subscribe('version_changed', () => {
       this.loadBalances();
     });
-    // this.klaroService.initialize();
   }
 
   ngOnDestroy(): void {

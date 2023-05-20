@@ -24,7 +24,7 @@ jobs:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: cbtracker
-        directory: dist
+        directory: dist/cbtracker
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
         branch: revamp
 permissions:
