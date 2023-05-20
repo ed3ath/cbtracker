@@ -4,6 +4,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ResponsiveService } from 'src/app/services/responsive.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 
+declare let window: any;
+
 @Component({
   selector: 'app-ads',
   templateUrl: './ads.component.html',
@@ -100,21 +102,37 @@ export class AdsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    if (!this.subscribed && this.provider == "a-ads") {
+    if (!this.subscribed && this.provider == 'a-ads') {
       this.loadAds();
     }
   }
 
   ngAfterViewInit() {
-    if (!this.subscribed) {
+    if (!this.subscribed && this.provider == 'smartyads') {
       this.loadAds();
     }
   }
 
   loadAds() {
     this.zone = this.zones[this.type];
+    if (this.provider === 'smartyads') {
+      var adUnits = [
+        {
+          code: 'block_827',
+          placement_id: 827,
+          sizes: [728, 90],
+          coppa: 0,
+          gdpr: 0,
+          us_privacy: '',
+          gdpr_consent: '',
+        },
+      ];
+      window.smarty.buildUnits(adUnits);
+    }
     if (this.provider === 'a-ads' && this.zone) {
-      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`//ad.a-ads.com/${this.zone.id}?size=${this.type}`)
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        `//ad.a-ads.com/${this.zone.id}?size=${this.type}`
+      );
     }
   }
 }
