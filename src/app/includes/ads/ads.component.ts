@@ -16,6 +16,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
   @Input() provider = 'coinserom';
   @Input() type = '728x90';
   @Input() dynamic = '728x90';
+  @Input() divId = "";
 
   safeUrl!: SafeResourceUrl;
   zone: any;
@@ -153,7 +154,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
     if (this.provider === 'smartyads' && this.klaroService.klaro?.getManager.consents['smarty-ads']) {
       var adUnits = [
         {
-          code: `block_${this.smartyZone.id}`,
+          code: this.divId,
           placement_id: this.smartyZone.id,
           sizes: [this.smartyZone.width, this.smartyZone.height],
           coppa: 0,
