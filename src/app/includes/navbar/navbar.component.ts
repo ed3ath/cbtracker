@@ -16,7 +16,6 @@ import { SubscriptionService } from 'src/app/services/subscription.service';
 import { ScriptService } from 'src/app/services/script.service';
 import { KlaroService } from 'src/app/services/klaro.service';
 
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -148,12 +147,13 @@ export class NavbarComponent implements OnInit {
         );
       } */
     }
-    this.alerts = this.configService.userToken?
-      (
-        await this.apiService.getUnreadAlerts({
-          token: this.configService.userToken,
-        })
-      )?.data : [];
+    this.alerts = this.configService.userToken
+      ? (
+          await this.apiService.getUnreadAlerts({
+            token: this.configService.userToken,
+          })
+        )?.data
+      : [];
   }
 
   setCurrency(currency: string) {
@@ -241,51 +241,53 @@ export class NavbarComponent implements OnInit {
               this.configService.userToken
             );
             const clientId = (await this.apiService.getPaypalClientId())
-              .clientId;
-            this.payPalConfig = {
-              clientId,
-              currency: 'PHP',
-              createOrderOnServer: () =>
-                this.apiService
-                  .createSubscription({
-                    user: decoded.user,
-                    type: 'paypal',
-                  })
-                  .then((data) => data.data.referenceId),
-              onApprove: (data, actions) => {
-                actions.order.get().then(() => {
-                  this.paypalModal.hide();
-                  Swal.fire(
-                    '',
-                    'Payment Received! Your subscription will be processed shortly.',
-                    'success'
-                  );
-                });
-              },
-              authorizeOnServer: (data) =>
-                this.apiService
-                  .captureOrder({
-                    id: data.orderID,
-                  })
-                  .then((res) => {
-                    if (res.success) {
-                      this.paypalModal.hide();
-                      Swal.fire(
-                        '',
-                        'Payment Received! Your subscription will be processed shortly.',
-                        'success'
-                      );
-                    } else {
-                      Swal.fire('', res.error, 'error');
-                    }
-                  }),
-              onError: (err) => {
-                Swal.fire('', err.message, 'error');
-              },
-              onInit: () => {
-                this.paypalModal.show();
-              },
-            };
+              ?.clientId;
+            if (clientId) {
+              this.payPalConfig = {
+                clientId,
+                currency: 'PHP',
+                createOrderOnServer: () =>
+                  this.apiService
+                    .createSubscription({
+                      user: decoded.user,
+                      type: 'paypal',
+                    })
+                    .then((data) => data.data.referenceId),
+                onApprove: (data, actions) => {
+                  actions.order.get().then(() => {
+                    this.paypalModal.hide();
+                    Swal.fire(
+                      '',
+                      'Payment Received! Your subscription will be processed shortly.',
+                      'success'
+                    );
+                  });
+                },
+                authorizeOnServer: (data) =>
+                  this.apiService
+                    .captureOrder({
+                      id: data.orderID,
+                    })
+                    .then((res) => {
+                      if (res.success) {
+                        this.paypalModal.hide();
+                        Swal.fire(
+                          '',
+                          'Payment Received! Your subscription will be processed shortly.',
+                          'success'
+                        );
+                      } else {
+                        Swal.fire('', res.error, 'error');
+                      }
+                    }),
+                onError: (err) => {
+                  Swal.fire('', err.message, 'error');
+                },
+                onInit: () => {
+                  this.paypalModal.show();
+                },
+              };
+            }
           }
         });
       }
