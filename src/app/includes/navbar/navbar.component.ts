@@ -232,7 +232,13 @@ export class NavbarComponent implements OnInit {
               })
               .then(async (res) => {
                 if (res.success) {
-                  window.open(res.data.url, '_blank');
+                  Swal.fire({
+                    title: 'Subscribe',
+                    html: `Payment link:<br><a href="${res.data.url}" target="_blank">${res.data.url}</a>`,
+                    showCancelButton: false,
+                    showCloseButton: true,
+                    showConfirmButton: false
+                  });
                 }
               });
           } else if (result.isDenied) {

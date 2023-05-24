@@ -26,24 +26,26 @@ export class SubscriptionService {
       const res = await this.apiService.checkToken({
         token: this.configService.userToken
       })
-      this.configService.configKeys.forEach(key => {
-        if (res.config && res.config[key]) {
-          localStorage.setItem(key, this.utilService.isArrayOrObject(res.config[key]) ? JSON.stringify(res.config[key]) : `${res.config[key]}`)
+      if (res.success) {
+        this.configService.configKeys.forEach(key => {
+          if (res.config && res.config[key]) {
+            localStorage.setItem(key, this.utilService.isArrayOrObject(res.config[key]) ? JSON.stringify(res.config[key]) : `${res.config[key]}`)
+          }
+        })
+        this.configService.subscribed = res.success
+        this.user = res.data.user
+        this.expiry = +res.data.expiry
+        if (res.data.token) {
+          this.configService.userToken = res.data.token
+          this.configService.saveUserToken()
         }
-      })
-      this.configService.subscribed = res.success
-      this.user = res.data.user
-      this.expiry = +res.data.expiry
-      if (res.data.token) {
-        this.configService.userToken = res.data.token
-        this.configService.saveUserToken()
+        this.subscription$.next(this.configService.subscribed)
+        return res.success
+      } else {
+        this.configService.subscribed = false
+        this.subscription$.next(false)
+        return false
       }
-      this.subscription$.next(this.configService.subscribed)
-      return res.success
-    } else {
-      this.configService.subscribed = false
-      this.subscription$.next(false)
-      return false
     }
   }
 }
