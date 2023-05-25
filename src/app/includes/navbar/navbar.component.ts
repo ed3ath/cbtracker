@@ -124,9 +124,13 @@ export class NavbarComponent implements OnInit {
     // const evaDav = document.querySelector('script#evadav-ads');
     // const richAds = document.querySelector('script#rich-ads');
     if (!this.configService.subscribed) {
-      const cookieBot = document.querySelector('script#CookieDeclaration');
+      const cookieBot = document.querySelector('script#Cookiebot');
       if (!cookieBot) {
-        this.scriptService.loadExternalJsScript('CookieDeclaration', 'https://consent.cookiebot.com/fa9a20bb-5163-4bc9-834d-6d653ac9c31d/cd.js', true)
+        this.scriptService.loadExternalJsScript('Cookiebot', 'https://consent.cookiebot.com/uc.js', false, null, {
+          'data-cbid': 'fa9a20bb-5163-4bc9-834d-6d653ac9c31d',
+          'data-blockingmode': 'auto',
+          'type': 'text/javascript'
+        })
       }
       /*if (!evaDav) {
         this.scriptService.loadExternalJsScript(
