@@ -51,6 +51,9 @@ export class ScriptService {
 
   detectAdblocker(): Promise<boolean> {
     return new Promise((resolve, reject) => {
+      if (!document.querySelector('script#adblocker-script')) {
+        document.querySelector('script#adblocker-script')?.remove()
+      }
       const script = this.loadExternalJsScript('adblocker-script', 'https://app.web3ads.net/main.js', true)
       script.onload = () => {
         resolve(true)

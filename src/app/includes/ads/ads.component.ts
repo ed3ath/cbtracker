@@ -3,7 +3,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ResponsiveService } from 'src/app/services/responsive.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
-import { KlaroService } from 'src/app/services/klaro.service';
 
 declare let window: any;
 
@@ -88,8 +87,7 @@ export class AdsComponent implements OnInit, AfterViewInit {
   constructor(
     public responsiveService: ResponsiveService,
     public sanitizer: DomSanitizer,
-    private subService: SubscriptionService,
-    private klaroService: KlaroService
+    private subService: SubscriptionService
   ) {
     this.subService.subscription$.subscribe((subscribed) => {
       this.subscribed = subscribed;

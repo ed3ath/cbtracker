@@ -14,8 +14,6 @@ import { EventService } from 'src/app/services/event.service';
 import { ApiService } from 'src/app/services/api.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { ScriptService } from 'src/app/services/script.service';
-import { KlaroService } from 'src/app/services/klaro.service';
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -46,8 +44,7 @@ export class NavbarComponent implements OnInit {
     private eventService: EventService,
     private apiService: ApiService,
     public subService: SubscriptionService,
-    private scriptService: ScriptService,
-    private klaroService: KlaroService
+    private scriptService: ScriptService
   ) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -123,10 +120,14 @@ export class NavbarComponent implements OnInit {
       closable: false,
     });
     this.subscribed = await this.subService.checkToken();
+
     // const evaDav = document.querySelector('script#evadav-ads');
     // const richAds = document.querySelector('script#rich-ads');
     if (!this.configService.subscribed) {
-      this.klaroService.initialize();
+      const cookieBot = document.querySelector('script#CookieDeclaration');
+      if (!cookieBot) {
+        this.scriptService.loadExternalJsScript('CookieDeclaration', 'https://consent.cookiebot.com/fa9a20bb-5163-4bc9-834d-6d653ac9c31d/cd.js', true)
+      }
       /*if (!evaDav) {
         this.scriptService.loadExternalJsScript(
           'evadav-ads',
