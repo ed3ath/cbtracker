@@ -7,5 +7,6 @@
   "AURORA": "aurora-near",
   "SKALE": "skale",
   "COINEX": "coinex-token",
-  "METER": "meter-stable"
+  "METER": "meter-stable",
+  "CRONOS": "crypto-com-chain"
 }
