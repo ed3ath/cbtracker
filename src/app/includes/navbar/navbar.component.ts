@@ -121,7 +121,7 @@ export class NavbarComponent implements OnInit {
     });
     this.subscribed = await this.subService.checkToken();
 
-    // const evaDav = document.querySelector('script#evadav-ads');
+    const evaDav = document.querySelector('script#evadav-ads');
     // const richAds = document.querySelector('script#rich-ads');
     if (!this.configService.subscribed) {
       // const cookieBot = document.querySelector('script#Cookiebot');
@@ -132,14 +132,14 @@ export class NavbarComponent implements OnInit {
       //     'type': 'text/javascript'
       //   })
       // }
-      /*if (!evaDav) {
+      if (!evaDav) {
         this.scriptService.loadExternalJsScript(
           'evadav-ads',
-          'https://ajfnee.com/p/waWQiOjExMzk1NDYsInNpZCI6MTIwMjE4Nywid2lkIjo0NDUyMzYsInNyYyI6Mn0=eyJ.js',
+          'https://nwwais.com/pw/waWQiOjExMzk1NDYsInNpZCI6MTMwNDc3MCwid2lkIjo1MTYwNTEsInNyYyI6Mn0=eyJ.js',
           true
         );
       }
-      if (!richAds) {
+      /*if (!richAds) {
         this.scriptService.loadExternalJsScript(
           'rich-ads',
           'https://richinfo.co/richpartners/pops/js/richads-pu-ob.js',
