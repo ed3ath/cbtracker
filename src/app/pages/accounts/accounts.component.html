@@ -400,7 +400,7 @@
           dark:focus:ring-primary-800
           block" (click)="showAddAccountDrawer()">Add Account</button>
         <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-        <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+        <div class="mt-4 py-4">
           <app-ads type="300x250" provider="a-ads"  divId="box5"></app-ads>
         </div>
       </div>
@@ -438,7 +438,7 @@
             dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
             block" (click)="saveNewGroup()">Save</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-          <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+          <div class="mt-4 py-4">
             <app-ads type="300x250" provider="a-ads" divId="box6"></app-ads>
           </div>
         </form>
@@ -486,7 +486,7 @@
             dark:focus:ring-danger-800
             block" (click)="deleteGroup()">Delete</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-          <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+          <div class="mt-4 py-4">
             <app-ads type="300x250" provider="a-ads" divId="box7"></app-ads>
           </div>
         </form>
@@ -540,7 +540,7 @@
             dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
             block" (click)="saveAccount()">Save</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-          <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+          <div class="mt-4 py-4">
             <app-ads type="300x250" provider="a-ads" divId="box8"></app-ads>
           </div>
         </form>
@@ -620,7 +620,7 @@
             dark:focus:ring-danger-800
             block" (click)="deleteAccount()" [disabled]="isLoading">Delete</button>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-          <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+          <div class="mt-4 py-4">
             <app-ads type="300x250" provider="a-ads" divId="box9"></app-ads>
           </div>
         </form>
@@ -701,7 +701,7 @@
             </div>
           </div>
           <hr class="h-px my-4 bg-warning-200 border-0 dark:bg-warning-700">
-          <div class="mt-4 py-4" *ngIf="!configService.subscribed">
+          <div class="mt-4 py-4">
             <app-ads type="300x250" provider="a-ads" divId="box10"></app-ads>
           </div>
         </form>

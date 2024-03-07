@@ -11,8 +11,6 @@ import { CurrencyService } from 'src/app/services/currency.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/services/event.service';
-import { ApiService } from 'src/app/services/api.service';
-import { SubscriptionService } from 'src/app/services/subscription.service';
 import { ScriptService } from 'src/app/services/script.service';
 @Component({
   selector: 'app-navbar',
@@ -24,12 +22,8 @@ export class NavbarComponent implements OnInit {
   page = '';
   currencyDrawer!: DrawerInterface;
   chainDrawer!: DrawerInterface;
-  loginDrawer!: DrawerInterface;
-  createDrawer!: DrawerInterface;
-  userInfoDrawer!: DrawerInterface;
   alertDrawer!: DrawerInterface;
   paypalModal!: ModalInterface;
-  subscribed = false;
   isCreating = false;
   alerts: any[] = [];
   payPalConfig?: IPayPalConfig;
@@ -42,8 +36,6 @@ export class NavbarComponent implements OnInit {
     public themeService: ThemeService,
     public utilService: UtilService,
     private eventService: EventService,
-    private apiService: ApiService,
-    public subService: SubscriptionService,
     private scriptService: ScriptService
   ) {
     this.router.events.subscribe((val) => {
@@ -96,18 +88,6 @@ export class NavbarComponent implements OnInit {
       document.getElementById('chain-menu'),
       options
     );
-    this.loginDrawer = new Drawer(
-      document.getElementById('login-menu'),
-      options
-    );
-    this.createDrawer = new Drawer(
-      document.getElementById('create-menu'),
-      options
-    );
-    this.userInfoDrawer = new Drawer(
-      document.getElementById('user-info-menu'),
-      options
-    );
     this.alertDrawer = new Drawer(
       document.getElementById('alert-menu'),
       options
@@ -119,27 +99,25 @@ export class NavbarComponent implements OnInit {
         'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-90',
       closable: false,
     });
-    this.subscribed = await this.subService.checkToken();
 
     const evaDav = document.querySelector('script#evadav-ads');
     // const richAds = document.querySelector('script#rich-ads');
-    if (!this.configService.subscribed) {
-      // const cookieBot = document.querySelector('script#Cookiebot');
-      // if (!cookieBot) {
-      //   this.scriptService.loadExternalJsScript('Cookiebot', 'https://consent.cookiebot.com/uc.js', false, null, {
-      //     'data-cbid': 'fa9a20bb-5163-4bc9-834d-6d653ac9c31d',
-      //     'data-blockingmode': 'auto',
-      //     'type': 'text/javascript'
-      //   })
-      // }
-      if (!evaDav) {
-        this.scriptService.loadExternalJsScript(
-          'evadav-ads',
-          'https://nwwais.com/pw/waWQiOjExMzk1NDYsInNpZCI6MTMwNDc3MCwid2lkIjo1MTYwNTEsInNyYyI6Mn0=eyJ.js',
-          true
-        );
-      }
-      /*if (!richAds) {
+    // const cookieBot = document.querySelector('script#Cookiebot');
+    // if (!cookieBot) {
+    //   this.scriptService.loadExternalJsScript('Cookiebot', 'https://consent.cookiebot.com/uc.js', false, null, {
+    //     'data-cbid': 'fa9a20bb-5163-4bc9-834d-6d653ac9c31d',
+    //     'data-blockingmode': 'auto',
+    //     'type': 'text/javascript'
+    //   })
+    // }
+    if (!evaDav) {
+      this.scriptService.loadExternalJsScript(
+        'evadav-ads',
+        'https://nwwais.com/pw/waWQiOjExMzk1NDYsInNpZCI6MTMwNDc3MCwid2lkIjo1MTYwNTEsInNyYyI6Mn0=eyJ.js',
+        true
+      );
+    }
+    /*if (!richAds) {
         this.scriptService.loadExternalJsScript(
           'rich-ads',
           'https://richinfo.co/richpartners/pops/js/richads-pu-ob.js',
@@ -151,14 +129,7 @@ export class NavbarComponent implements OnInit {
           }
         );
       } */
-    }
-    this.alerts = this.configService.userToken
-      ? (
-          await this.apiService.getUnreadAlerts({
-            token: this.configService.userToken,
-          })
-        )?.data
-      : [];
+    this.alerts = []
   }
 
   setCurrency(currency: string) {
@@ -197,192 +168,6 @@ export class NavbarComponent implements OnInit {
     return true;
   }
 
-  showLoginDrawer() {
-    this.hideAllDrawers();
-    if (!this.configService.userToken) {
-      this.loginDrawer.show();
-    } else {
-      this.userInfoDrawer.show();
-    }
-  }
-
-  showSubscriptionModal() {
-    this.hideAllDrawers();
-    Swal.fire({
-      title: '',
-      icon: 'info',
-      text: 'CB Tracker subscription costs P299/Month',
-      showDenyButton: false,
-      showCancelButton: true,
-      confirmButtonText: 'Subscribe',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: '',
-          text: 'Select payment method',
-          showDenyButton: true,
-          showCancelButton: true,
-          denyButtonText: 'PayPal (International)',
-          confirmButtonText: 'NextPay (PH e-Wallet/Banks)',
-        }).then(async (result) => {
-          if (result.isConfirmed) {
-            Swal.fire('', 'Generating payment link...', 'info');
-            const decoded: any = this.utilService.decodeToken(
-              this.configService.userToken
-            );
-            this.apiService
-              .createSubscription({
-                user: decoded.user,
-                type: 'nextpay',
-              })
-              .then(async (res) => {
-                if (res.success) {
-                  Swal.fire({
-                    title: 'Subscribe',
-                    html: `Payment link:<br><a href="${res.data.url}" target="_blank">${res.data.url}</a>`,
-                    showCancelButton: false,
-                    showCloseButton: true,
-                    showConfirmButton: false
-                  });
-                }
-              });
-          } else if (result.isDenied) {
-            this.hideAllDrawers();
-            const decoded: any = this.utilService.decodeToken(
-              this.configService.userToken
-            );
-            const clientId = (await this.apiService.getPaypalClientId())
-              ?.clientId;
-            if (clientId) {
-              this.payPalConfig = {
-                clientId,
-                currency: 'PHP',
-                createOrderOnServer: () =>
-                  this.apiService
-                    .createSubscription({
-                      user: decoded.user,
-                      type: 'paypal',
-                    })
-                    .then((data) => data.data.referenceId),
-                onApprove: (data, actions) => {
-                  actions.order.get().then(() => {
-                    this.paypalModal.hide();
-                    Swal.fire(
-                      '',
-                      'Payment Received! Your subscription will be processed shortly.',
-                      'success'
-                    );
-                  });
-                },
-                authorizeOnServer: (data) =>
-                  this.apiService
-                    .captureOrder({
-                      id: data.orderID,
-                    })
-                    .then((res) => {
-                      if (res.success) {
-                        this.paypalModal.hide();
-                        Swal.fire(
-                          '',
-                          'Payment Received! Your subscription will be processed shortly.',
-                          'success'
-                        );
-                      } else {
-                        Swal.fire('', res.error, 'error');
-                      }
-                    }),
-                onError: (err) => {
-                  Swal.fire('', err.message, 'error');
-                },
-                onInit: () => {
-                  this.paypalModal.show();
-                },
-              };
-            }
-          }
-        });
-      }
-    });
-  }
-
-  showCreateDrawer() {
-    this.hideAllDrawers();
-    this.createDrawer.show();
-  }
-
-  login() {
-    const elUser = <HTMLInputElement>(
-      document.getElementById('input-login-user')
-    );
-    const elPin = <HTMLInputElement>document.getElementById('input-login-pin');
-    if (elUser.value && elPin.value) {
-      this.apiService
-        .login({
-          user: elUser.value,
-          pin: elPin.value,
-        })
-        .then((res: any) => {
-          if (res.success) {
-            if (res.data.token) {
-              this.configService.userToken = res.data.token;
-              this.configService.saveUserToken();
-              this.subService.user = res.data.user;
-              if (res.data.subscribed) {
-                this.configService.subscribed = res.data.subscribed;
-                this.subscribed = res.data.subscribed;
-                this.subService.expiry = +res.data.expiry;
-                this.subService.subscription$.next(res.data.subscribed);
-                this.configService.saveRemoteConfig(res.data.config);
-              }
-            }
-            this.loginDrawer.hide();
-            elUser.value = '';
-            elPin.value = '';
-            Swal.fire('', 'Login successful', 'success');
-          } else {
-            Swal.fire('', res.error, 'error');
-          }
-        });
-    }
-  }
-
-  createAccount() {
-    const elUser = <HTMLInputElement>(
-      document.getElementById('input-create-user')
-    );
-    const elPin = <HTMLInputElement>document.getElementById('input-create-pin');
-    const elPin2 = <HTMLInputElement>(
-      document.getElementById('input-create-pin2')
-    );
-    if (elUser.value && elPin.value && elPin2.value) {
-      if (elPin.value !== elPin2.value) {
-        Swal.fire('', "Pin doesn't match", 'error');
-      } else {
-        this.isCreating = true;
-        this.apiService
-          .create({
-            user: elUser.value,
-            pin: elPin.value,
-          })
-          .then((res: any) => {
-            if (res.success) {
-              if (res.data.token) {
-                this.configService.userToken = res.data.token;
-                this.configService.saveUserToken();
-              }
-              this.createDrawer.hide();
-              elUser.value = '';
-              elPin.value = '';
-              Swal.fire('', 'Account created.', 'success');
-            } else {
-              Swal.fire('', res.error, 'error');
-            }
-            this.isCreating = false;
-          });
-      }
-    }
-  }
-
   formatDate(date: any) {
     if (date > 0) {
       return moment(new Date(date * 1000)).format('MMM Do YYYY, h:mm A');
@@ -390,22 +175,9 @@ export class NavbarComponent implements OnInit {
       return 'Expired';
     }
   }
-
-  logout() {
-    this.userInfoDrawer.hide();
-    this.configService.userToken = '';
-    this.configService.saveUserToken();
-    this.subService.expiry = 0;
-    this.subService.user = '';
-    this.subService.subscription$.next(false);
-  }
-
   hideAllDrawers() {
     this.currencyDrawer.hide();
     this.chainDrawer.hide();
-    this.loginDrawer.hide();
-    this.createDrawer.hide();
-    this.userInfoDrawer.hide();
     this.alertDrawer.hide();
   }
 
@@ -422,10 +194,6 @@ export class NavbarComponent implements OnInit {
         showConfirmButton: false,
         showCancelButton: true,
         cancelButtonText: 'Close',
-      });
-      this.apiService.markAlertAsRead({
-        token: this.configService.userToken,
-        id: id,
       });
       const alertIndex = this.alerts.findIndex((i: any) => i.id === id);
       if (alertIndex >= 0) {

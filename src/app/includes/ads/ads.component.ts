@@ -2,7 +2,6 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ResponsiveService } from 'src/app/services/responsive.service';
-import { SubscriptionService } from 'src/app/services/subscription.service';
 
 declare let window: any;
 
@@ -20,7 +19,6 @@ export class AdsComponent implements OnInit, AfterViewInit {
   safeUrl!: SafeResourceUrl;
   zone: any;
   smartyZone: any;
-  subscribed = false;
   ready = false;
 
   zones: any = {
@@ -86,15 +84,11 @@ export class AdsComponent implements OnInit, AfterViewInit {
 
   constructor(
     public responsiveService: ResponsiveService,
-    public sanitizer: DomSanitizer,
-    private subService: SubscriptionService
+    public sanitizer: DomSanitizer
   ) {
-    this.subService.subscription$.subscribe((subscribed) => {
-      this.subscribed = subscribed;
-      if (!this.subscribed && this.ready) {
-        this.loadAds();
-      }
-    });
+    if (this.ready) {
+      this.loadAds();
+    }
     this.responsiveService.screenWidth$.subscribe((width: number) => {
       const rectangles = ['970x90', '728x90', '468x60', '320x50'];
       if (
@@ -135,17 +129,13 @@ export class AdsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.smartyZone = this.smartyZones[this.type];
     this.zone = this.zones[this.type];
-    if (!this.subscribed && this.provider == 'a-ads') {
-      this.ready = true
+    this.ready = true
       this.loadAds();
-    }
   }
 
   ngAfterViewInit() {
-    if (!this.subscribed && this.provider == 'smartyads') {
-      this.ready = true
+    this.ready = true
       this.loadAds();
-    }
   }
 
   loadAds() {

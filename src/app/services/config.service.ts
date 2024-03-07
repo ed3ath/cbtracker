@@ -6,7 +6,6 @@ import { UtilService } from './util.service';
   providedIn: 'root'
 })
 export class ConfigService {
-  subscribed = false
   fightMultiplier = 1
   expanded = false
   theme = 'dark'
@@ -20,7 +19,6 @@ export class ConfigService {
   rpcUrls: any
   newsAlert = false
   accountAlert = false
-  userToken = ''
   configKeys = ['currency', 'rpcUrls', 'display', 'theme', 'activeGroupIndex', 'expanded', 'names', 'chain', 'groups', 'timezone', 'version', 'newsAlert', 'accountAlert']
 
   constructor(private utilService: UtilService) {
@@ -37,7 +35,6 @@ export class ConfigService {
     this.rpcUrls = this.getRpcUrls()
     this.newsAlert = this.getNewsAlert()
     this.accountAlert = this.getAccountAlert()
-    this.userToken = this.getUserToken()
   }
 
   getFightMultiplier() {
@@ -60,9 +57,7 @@ export class ConfigService {
   }
 
   getAllGroups() {
-    const list = JSON.parse(localStorage.getItem('groups') || '[]')
-    if (!this.subscribed) return list.splice(0, 1)
-    return list
+    return JSON.parse(localStorage.getItem('groups') || '[]')
   }
 
   getAllAccountNames() {
@@ -148,35 +143,27 @@ export class ConfigService {
   }
 
   getRpcUrls() {
-    return this.subscribed ? JSON.parse(localStorage.getItem('rpcUrls') || '{}') : '{}'
+    return JSON.parse(localStorage.getItem('rpcUrls') || '{}')
   }
 
   saveRpcUrls() {
-    if (this.subscribed) localStorage.setItem('rpcUrls', JSON.stringify(this.rpcUrls))
+    localStorage.setItem('rpcUrls', JSON.stringify(this.rpcUrls))
   }
 
   getNewsAlert() {
-    return this.subscribed && localStorage.getItem('newsAlert') === 'true'
+    return localStorage.getItem('newsAlert') === 'true'
   }
 
   saveNewsAlert() {
-    if (this.subscribed) localStorage.setItem('newsAlert', `${this.newsAlert}`)
+    localStorage.setItem('newsAlert', `${this.newsAlert}`)
   }
 
   getAccountAlert() {
-    return this.subscribed && localStorage.getItem('accountAlert') === 'true'
+    return localStorage.getItem('accountAlert') === 'true'
   }
 
   saveAccountAlert() {
-    if (this.subscribed) localStorage.setItem('accountAlert', `${this.accountAlert}`)
-  }
-
-  getUserToken() {
-    return localStorage.getItem('userToken') || ''
-  }
-
-  saveUserToken() {
-    localStorage.setItem('userToken', this.userToken)
+   localStorage.setItem('accountAlert', `${this.accountAlert}`)
   }
 
   getAllConfig() {
@@ -191,23 +178,14 @@ export class ConfigService {
     return accepted
   }
 
-  saveRemoteConfig(config: any) {
-    if (this.subscribed && config) {
+  saveConfig(config: any) {
+    if (config) {
       this.configKeys.forEach(key => {
         if (config[key]) {
           localStorage.setItem(key, this.utilService.isArrayOrObject(config[key]) ? JSON.stringify(config[key]) : `${config[key]}`)
         }
       })
       localStorage.setItem('firstLoad', 'true')
-    }
-  }
-
-  async updateRemoteConfig(apiService: any) {
-    if (this.userToken) {
-      await apiService.saveConfig({
-        token: this.userToken,
-        config: this.getAllConfig()
-      })
     }
   }
 }
