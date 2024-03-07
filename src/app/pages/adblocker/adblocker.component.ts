@@ -18,4 +18,8 @@ export class AdblockerComponent implements OnInit {
     })
   }
 
+  copy() {
+    navigator.clipboard.writeText('0x2548696795a3bCd6A8fAe7602fc26DD95A612574');
+  }
+
 }
