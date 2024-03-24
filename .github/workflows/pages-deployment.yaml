@@ -1,7 +1,9 @@
 name: Node.js Build
 'on':
   workflow_dispatch: {}
-  push: {}
+  push:
+    branches:
+        - public
 jobs:
   build:
     runs-on: ubuntu-latest

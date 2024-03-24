@@ -75,7 +75,7 @@
       </div>
       <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg
         shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6
-        dark:bg-gray-800" *ngIf="!subscribed">
+        dark:bg-gray-800">
         <h3 class="mb-4 text-xl font-semibold dark:text-white">Sponsor</h3>
         <div class="flex justify-center items-center text-center">
           <app-ads  provider="a-ads" type="300x250" divId="box11"></app-ads>
@@ -213,7 +213,7 @@
               focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700
               dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
               dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              required="" [disabled]="!this.subscribed ? 'true' : null" [value]="web3Service.getChainRpc(chain)"
+              required="" [value]="web3Service.getChainRpc(chain)"
               (change)="setRpcUrl($event)" [attr.data-chain]="chain">
           </div>
 
@@ -237,7 +237,7 @@
             <label for="news-alert" class="relative flex items-center
               cursor-pointer">
               <input type="checkbox" id="news-alert" class="sr-only"
-                [checked]="configService.newsAlert && subscribed" (click)="toggleNewsAlert()" [disabled]="!this.subscribed ? 'true' : null">
+                [checked]="configService.newsAlert" (click)="toggleNewsAlert()">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>
@@ -253,8 +253,8 @@
             <label for="account-alert" class="relative flex items-center
               cursor-pointer">
               <input type="checkbox" id="account-alert" class="sr-only"
-                [checked]="configService.accountAlert && subscribed"
-                (click)="toggleAccountAlert()" [disabled]="!this.subscribed ? 'true' : null">
+                [checked]="configService.accountAlert"
+                (click)="toggleAccountAlert()">
               <span class="h-6 bg-gray-200 border border-gray-200 rounded-full
                 w-11 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span>
             </label>

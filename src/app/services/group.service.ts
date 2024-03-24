@@ -17,8 +17,7 @@ export class GroupService {
 
   getGroupAccounts(index: number) {
     const groups = this.configService.getAllGroups()
-    const accounts = groups[index]?.accounts || []
-    return !this.configService.subscribed ? accounts.splice(0, 4) : accounts
+    return groups[index]?.accounts || []
   }
 
   getActiveGroupName() {
