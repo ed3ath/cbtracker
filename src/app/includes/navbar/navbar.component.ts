@@ -92,15 +92,15 @@ export class NavbarComponent implements OnInit {
       document.getElementById('alert-menu'),
       options
     );
-    this.paypalModal = new Modal(document.getElementById('paypal-modal'), {
-      placement: 'center',
-      backdrop: 'static',
-      backdropClasses:
-        'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-90',
-      closable: false,
-    });
+    // this.paypalModal = new Modal(document.getElementById('paypal-modal'), {
+    //   placement: 'center',
+    //   backdrop: 'static',
+    //   backdropClasses:
+    //     'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-90',
+    //   closable: false,
+    // });
 
-    const evaDav = document.querySelector('script#evadav-ads');
+    // const evaDav = document.querySelector('script#evadav-ads');
     // const richAds = document.querySelector('script#rich-ads');
     // const cookieBot = document.querySelector('script#Cookiebot');
     // if (!cookieBot) {
@@ -110,13 +110,13 @@ export class NavbarComponent implements OnInit {
     //     'type': 'text/javascript'
     //   })
     // }
-    if (!evaDav) {
-      this.scriptService.loadExternalJsScript(
-        'evadav-ads',
-        'https://nwwais.com/pw/waWQiOjExMzk1NDYsInNpZCI6MTMwNDc3MCwid2lkIjo1MTYwNTEsInNyYyI6Mn0=eyJ.js',
-        true
-      );
-    }
+    // if (!evaDav) {
+    //   this.scriptService.loadExternalJsScript(
+    //     'evadav-ads',
+    //     'https://nwwais.com/pw/waWQiOjExMzk1NDYsInNpZCI6MTMwNDc3MCwid2lkIjo1MTYwNTEsInNyYyI6Mn0=eyJ.js',
+    //     true
+    //   );
+    // }
     /*if (!richAds) {
         this.scriptService.loadExternalJsScript(
           'rich-ads',

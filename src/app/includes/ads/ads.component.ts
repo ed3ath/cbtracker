@@ -27,6 +27,11 @@ export class AdsComponent implements OnInit, AfterViewInit {
       width: 728,
       height: 90,
     },
+    '728x90-2': {
+      id: '2312149',
+      width: 728,
+      height: 90,
+    },
     '970x90': {
       id: '2202296',
       width: 970,
