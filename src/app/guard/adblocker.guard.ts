@@ -14,10 +14,7 @@ export class AdblockerGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.scriptService.detectAdblocker().then(async res => {
-      if (!res) this.router.navigate(['/tracker/adblocker']);
-      return res
-    })
+    return true
   }
 
 }
